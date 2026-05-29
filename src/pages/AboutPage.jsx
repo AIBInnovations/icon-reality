@@ -120,19 +120,21 @@ export default function AboutPage() {
     resize();
     window.addEventListener('resize', resize);
 
-    let st = null;
+    let gsapCtx = null;
     bootstrap.then(() => {
       if (!mounted) return;
       setReady(true);
       resize();
-      st = ScrollTrigger.create({
-        trigger: wrap,
-        start: 'top top',
-        end: () => `+=${window.innerHeight * 2.5}`,
-        pin: true,
-        scrub: 0.4,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => draw(self.progress),
+      // Scoped context so revert() unwinds pinSpacer cleanly on unmount
+      gsapCtx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: wrap,
+          start: 'top top',
+          end: 'bottom bottom', // CSS position:sticky on .about-video__sticky handles the visual pin
+          scrub: 0.4,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => draw(self.progress),
+        });
       });
       ScrollTrigger.refresh();
     });
@@ -140,7 +142,7 @@ export default function AboutPage() {
     return () => {
       mounted = false;
       window.removeEventListener('resize', resize);
-      if (st) st.kill();
+      if (gsapCtx) gsapCtx.revert();
     };
   }, []);
 
@@ -168,18 +170,20 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* VIDEO BAND — scroll-scrubbed canvas (pinned, like Hero) */}
+      {/* VIDEO BAND — scroll-scrubbed canvas (sticky child) */}
       <section ref={wrapRef} className="about-video">
-        <div ref={innerRef} className="about-video__shell">
-          <canvas ref={canvasRef} className="about-video__canvas" />
-          {!ready && (
-            <div className="about-video__loading" aria-hidden>
-              <div className="about-video__loading-bar">
-                <span style={{ width: `${bootProgress * 100}%` }} />
+        <div className="about-video__sticky">
+          <div ref={innerRef} className="about-video__shell">
+            <canvas ref={canvasRef} className="about-video__canvas" />
+            {!ready && (
+              <div className="about-video__loading" aria-hidden>
+                <div className="about-video__loading-bar">
+                  <span style={{ width: `${bootProgress * 100}%` }} />
+                </div>
+                <span className="about-video__loading-txt">PREPARING THE STORY</span>
               </div>
-              <span className="about-video__loading-txt">PREPARING THE STORY</span>
-            </div>
-          )}
+            )}
+          </div>
         </div>
       </section>
 

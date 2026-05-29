@@ -26,7 +26,10 @@ export default function Header() {
         </nav>
 
         <Link to="/" className="site-header__brand" aria-label="Icon Realty home">
-          <img src="/icon-logo.png" alt="Icon Realty" className="site-header__logo" />
+          <span className="site-header__logo-wrap">
+            <img src="/icon-logo.png" alt="Icon Realty" className="site-header__logo" />
+            <img src="/icon-logo.png" alt="" aria-hidden="true" className="site-header__logo site-header__logo--white" />
+          </span>
         </Link>
 
         <div className="site-header__actions">
@@ -42,14 +45,34 @@ export default function Header() {
       </div>
 
       <div className={`site-header__sheet ${open ? 'is-open' : ''}`}>
-        <nav>
-          <Link to="/">Home</Link>
-          <Link to="/about">About</Link>
-          <Link to="/projects">Projects</Link>
-          <a href="#testimonials">Testimonials</a>
-          <a href="#contact">Contact</a>
-        </nav>
-        <a href="mailto:iconrealty2@icloud.com">iconrealty2@icloud.com</a>
+        <div className="site-header__sheet-inner">
+          <div className="site-header__sheet-col site-header__sheet-col--nav">
+            <span className="site-header__sheet-eyebrow">Explore</span>
+            <nav>
+              <Link to="/">Home</Link>
+              <Link to="/about">About</Link>
+              <Link to="/projects">Projects</Link>
+              <a href="#testimonials">Testimonials</a>
+              <a href="#contact">Contact</a>
+            </nav>
+          </div>
+
+          <div className="site-header__sheet-col site-header__sheet-col--contact">
+            <span className="site-header__sheet-eyebrow">Get in touch</span>
+            <a href="mailto:iconrealty2@icloud.com" className="site-header__sheet-link">iconrealty2@icloud.com</a>
+            <a href="tel:+919999999999" className="site-header__sheet-link">+91 99999 99999</a>
+            <p className="site-header__sheet-address">
+              Icon Realty<br/>
+              Indore, Madhya Pradesh
+            </p>
+            <a
+              href="mailto:iconrealty2@icloud.com?subject=Book%20a%20Site%20Visit"
+              className="cta site-header__sheet-cta"
+            >
+              Book a Site Visit
+            </a>
+          </div>
+        </div>
       </div>
     </header>
   );

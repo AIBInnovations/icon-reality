@@ -1,10 +1,19 @@
+/* Outer section provides scroll length for the scrub.
+   Sticky child stays visible while the user scrolls through the section. */
 .hero {
   position: relative;
-  height: 100vh;
   width: 100%;
-  padding: 14px;
+  height: 400vh; /* 100vh visible + 300vh of scrub distance */
   background: var(--bg);
   color: #fff;
+}
+
+.hero__sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 14px;
 }
 
 .hero__inner {

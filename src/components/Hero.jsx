@@ -108,41 +108,42 @@ export default function Hero() {
     resize();
     window.addEventListener('resize', resize);
 
-    let st = null;
+    let gsapCtx = null;
 
     bootstrap.then(() => {
       if (!mounted) return;
       setReady(true);
       resize();
 
-      st = ScrollTrigger.create({
-        trigger: wrap,
-        start: 'top top',
-        end: () => `+=${window.innerHeight * 3}`,
-        pin: true,
-        scrub: 0.4,
-        invalidateOnRefresh: true,
-        onUpdate: (self) => {
-          draw(self.progress);
-          // copy slides up WITHIN its own clip wrapper (capped at wrapper height — never escapes)
-          const p = self.progress;
-          const clip = copyClipRef.current;
-          const inner = copyInnerRef.current;
-          if (clip && inner) {
-            const clipH = clip.clientHeight;
-            const maxTravel = inner.offsetHeight + 24; // travel until fully clipped
-            // hide by 22% scroll progress so the rest of the pin is video only
-            const t = Math.min(1, p / 0.22);
-            const y = -t * maxTravel;
-            inner.style.transform = `translate3d(0, ${y}px, 0)`;
-          }
-          // arrow moves up and clears fast
-          if (arrowRef.current) {
-            const ay = -Math.min(1, p / 0.10) * 80;
-            arrowRef.current.style.transform = `translate3d(-50%, ${ay}px, 0)`;
-            arrowRef.current.style.opacity = Math.max(0, 1 - p / 0.12);
-          }
-        },
+      // gsap.context() scopes the pin + ScrollTriggers, so a single ctx.revert()
+      // cleanly unwinds the pinSpacer wrapper GSAP injects. Required for React
+      // to remove the <section> on route change without
+      // "Failed to execute 'removeChild' on 'Node'" errors.
+      gsapCtx = gsap.context(() => {
+        ScrollTrigger.create({
+          trigger: wrap,
+          start: 'top top',
+          end: 'bottom bottom', // CSS position:sticky on .hero__sticky handles the visual pin
+          scrub: 0.4,
+          invalidateOnRefresh: true,
+          onUpdate: (self) => {
+            draw(self.progress);
+            const p = self.progress;
+            const clip = copyClipRef.current;
+            const inner = copyInnerRef.current;
+            if (clip && inner) {
+              const maxTravel = inner.offsetHeight + 24;
+              const t = Math.min(1, p / 0.22);
+              const y = -t * maxTravel;
+              inner.style.transform = `translate3d(0, ${y}px, 0)`;
+            }
+            if (arrowRef.current) {
+              const ay = -Math.min(1, p / 0.10) * 80;
+              arrowRef.current.style.transform = `translate3d(-50%, ${ay}px, 0)`;
+              arrowRef.current.style.opacity = Math.max(0, 1 - p / 0.12);
+            }
+          },
+        });
       });
 
       ScrollTrigger.refresh();
@@ -151,13 +152,13 @@ export default function Hero() {
     return () => {
       mounted = false;
       window.removeEventListener('resize', resize);
-      if (st) st.kill();
-      ScrollTrigger.getAll().forEach((t) => t.kill());
+      if (gsapCtx) gsapCtx.revert();
     };
   }, []);
 
   return (
     <section ref={wrapRef} className="hero" id="top">
+      <div className="hero__sticky">
       <div ref={innerRef} className="hero__inner">
         <canvas ref={canvasRef} className="hero__canvas" />
         {!ready && (
@@ -187,6 +188,7 @@ export default function Hero() {
             <path d="M7 1V31M7 31L1 25M7 31L13 25" stroke="currentColor" strokeWidth="1.4"/>
           </svg>
         </div>
+      </div>
       </div>
     </section>
   );

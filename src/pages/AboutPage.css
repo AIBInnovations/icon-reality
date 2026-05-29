@@ -43,13 +43,20 @@
   margin: 0 auto;
 }
 
-/* VIDEO — pinned scroll-scrub */
+/* VIDEO — sticky scroll-scrub (no GSAP pin → no DOM wrapping conflict with React) */
 .about-video {
   position: relative;
-  height: 100vh;
   width: 100%;
-  padding: 14px;
+  height: 350vh; /* 100vh visible + 250vh scrub */
   background: var(--bg);
+}
+
+.about-video__sticky {
+  position: sticky;
+  top: 0;
+  width: 100%;
+  height: 100vh;
+  padding: 14px;
 }
 
 .about-video__shell {

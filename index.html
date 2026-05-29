@@ -9,8 +9,42 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <title>Icon Realty — An address that rises to your standard.</title>
+    <style>
+      html, body { background: #F6F2EC; margin: 0; }
+      /* Initial loader: paints before React mounts, replaced by app render */
+      #initial-loader {
+        position: fixed; inset: 0; z-index: 9998;
+        background: #F6F2EC;
+        display: flex; align-items: center; justify-content: center;
+        flex-direction: column; gap: 22px;
+        font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+      }
+      #initial-loader img {
+        width: 140px; height: auto; display: block;
+        animation: ilPulse 1.6s ease-in-out infinite;
+      }
+      #initial-loader .il-bar {
+        width: 180px; height: 2px; background: rgba(20,20,20,0.10);
+        border-radius: 2px; overflow: hidden; position: relative;
+      }
+      #initial-loader .il-bar span {
+        position: absolute; inset: 0; background: #F2B68F;
+        transform-origin: left;
+        animation: ilProgress 1.2s cubic-bezier(0.65, 0, 0.18, 1) infinite;
+      }
+      #initial-loader .il-label {
+        font-size: 10px; letter-spacing: 0.32em; color: #6B6B6B; font-weight: 500;
+      }
+      @keyframes ilPulse { 0%,100% { opacity: .8; transform: scale(1); } 50% { opacity: 1; transform: scale(1.04); } }
+      @keyframes ilProgress { 0% { transform: translateX(-100%); } 50% { transform: translateX(0); } 100% { transform: translateX(100%); } }
+    </style>
   </head>
   <body>
+    <div id="initial-loader">
+      <img src="/icon-logo.png" alt="" aria-hidden="true" />
+      <div class="il-bar"><span></span></div>
+      <span class="il-label">LOADING</span>
+    </div>
     <div id="root"></div>
     <script type="module" src="/src/main.jsx"></script>
   </body>
