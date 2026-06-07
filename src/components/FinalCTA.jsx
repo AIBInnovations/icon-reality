@@ -20,17 +20,17 @@ export default function FinalCTA() {
           </Reveal>
 
           <Reveal className="final-cta__actions" delay={0.15}>
-            <a href="mailto:info@iconrealty.homes?subject=Book%20a%20Site%20Visit" className="cta final-cta__primary">
+            <a href="mailto:iconrealty2@icloud.com?subject=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace" className="cta final-cta__primary">
               Book a Site Visit
             </a>
-            <a href="tel:+919999999999" className="cta cta--ghost final-cta__secondary">
-              +91 99999 99999
+            <a href="tel:+919425942510" className="cta cta--ghost final-cta__secondary">
+              +91 9425 9425 10 / 11
             </a>
           </Reveal>
 
           <Reveal className="final-cta__foot" delay={0.2}>
             <span className="final-cta__foot-k">Or write to us</span>
-            <a className="final-cta__foot-v" href="mailto:info@iconrealty.homes">info@iconrealty.homes</a>
+            <a className="final-cta__foot-v" href="mailto:iconrealty2@icloud.com">iconrealty2@icloud.com</a>
           </Reveal>
         </div>
 

@@ -39,6 +39,27 @@
   line-height: 1.55;
 }
 
+.trust__architect {
+  margin-bottom: 36px;
+  padding: 20px 22px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: var(--bg-2);
+  font-size: clamp(15px, 1.05vw, 17px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+.trust__architect strong { color: var(--ink); font-weight: 600; }
+.trust__architect-k {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--peach-deep);
+  margin-bottom: 8px;
+}
+
 .trust__points ul {
   display: flex;
   flex-direction: column;

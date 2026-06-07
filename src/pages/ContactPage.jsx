@@ -16,13 +16,13 @@ const channels = [
     ),
   },
   {
-    key: 'alt-email',
-    eyebrow: 'Sales',
-    value: 'info@iconrealty.com',
-    href: 'mailto:info@iconrealty.com',
+    key: 'whatsapp',
+    eyebrow: 'WhatsApp',
+    value: '+91 9425 9425 10',
+    href: 'https://wa.me/919425942510?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Oscar%20Palace.',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
-        <path d="M21 8.5V17a2 2 0 01-2 2H5a2 2 0 01-2-2V8.5M3 8.5L12 14l9-5.5M3 8.5L12 3l9 5.5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
+        <path d="M4 5h16a1 1 0 011 1v10a1 1 0 01-1 1H9l-4 4V6a1 1 0 011-1z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
       </svg>
     ),
   },
@@ -70,7 +70,7 @@ export default function ContactPage() {
   const handleSubmit = (e) => {
     e.preventDefault();
     if (!form.consent) return;
-    const subject = encodeURIComponent('Enquiry from Icon Realty website');
+    const subject = encodeURIComponent('Enquiry — Oscar Palace (website)');
     const body = encodeURIComponent(
       `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\n\n${form.message}`
     );
@@ -87,7 +87,7 @@ export default function ContactPage() {
               Channels
             </Reveal>
             <Reveal as="h2" className="display contact-info__heading" delay={0.05}>
-              Three ways to reach<br/>the team.
+              A few ways to reach<br/>the team.
             </Reveal>
 
             <div className="contact-info__list">
@@ -99,8 +99,8 @@ export default function ContactPage() {
                 >
                   <a
                     href={c.href}
-                    target={c.key === 'address' ? '_blank' : undefined}
-                    rel={c.key === 'address' ? 'noreferrer' : undefined}
+                    target={c.key === 'address' || c.key === 'whatsapp' ? '_blank' : undefined}
+                    rel={c.key === 'address' || c.key === 'whatsapp' ? 'noreferrer' : undefined}
                     className="contact-info__row"
                   >
                     <span className="contact-info__icon">{c.icon}</span>

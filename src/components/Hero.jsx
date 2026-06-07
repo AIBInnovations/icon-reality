@@ -172,11 +172,12 @@ export default function Hero() {
         <div className="hero__copy container">
           <div ref={copyClipRef} className="hero__copy-clip">
             <div ref={copyInnerRef} className="hero__copy-inner">
+              <span className="hero__eyebrow">Oscar Palace · Indore</span>
               <h1 className="display hero__headline">
                 An address that rises,<br/>to your standard.
               </h1>
               <p className="hero__sub">
-                A premium plotted development by Icon Realty.
+                A premium residential project on the Indore–Nagpur Highway.
               </p>
             </div>
           </div>

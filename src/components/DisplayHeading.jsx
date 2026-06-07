@@ -5,16 +5,16 @@ import Reveal from './Reveal';
 import './DisplayHeading.css';
 
 const TRAIL_IMAGES = [
-  '/images/projects/01.jpg',
-  '/images/projects/02.jpg',
-  '/images/projects/03.jpg',
-  '/images/projects/04.jpg',
-  '/images/projects/05.jpg',
-  '/images/projects/06.jpg',
-  '/images/projects/07.jpg',
-  '/images/projects/08.jpg',
-  '/images/projects/09.jpg',
-  '/images/projects/10.jpg',
+  '/images/projects/oscar-palace-gate.jpg',
+  '/images/projects/oscar-palace-1.jpg',
+  '/images/projects/oscar-palace-4.jpg',
+  '/images/projects/oscar-palace-2.jpg',
+  '/images/projects/oscar-palace-3.jpg',
+  '/images/projects/oscar-fort.webp',
+  '/images/projects/oscar-palace-5.jpg',
+  '/images/projects/saatvik-vihar.jpg',
+  '/images/projects/eden-garden.jpg',
+  '/images/projects/labham-city.png',
 ];
 
 const SPAWN_DISTANCE = 90; // px of mouse movement before spawning next image
@@ -155,9 +155,10 @@ export default function DisplayHeading() {
           </span>
         </h2>
         <Reveal as="p" className="display-section__lede" delay={0.05}>
-          We rethink the standard of plotted living with thoughtful design and a long-term vision.
-          From layout and amenities to surroundings and security, every detail is considered —
-          so your space feels effortless, considered, and unmistakably your own.
+          Oscar Palace is drawn from the grammar of Indian heritage — the symmetry of royal
+          courtyards, the rhythm of carved arches, and the quiet grandeur once reserved for kings
+          and empires. Every baradari, chhatri, and tree-lined axis is composed so your address
+          carries the dignity of a palace with the ease of a modern home.
         </Reveal>
       </div>
 

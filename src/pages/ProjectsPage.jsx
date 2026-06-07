@@ -42,12 +42,12 @@ export default function ProjectsPage() {
           <h1 className="display projects-hero__title">
             <span className="projects-hero__line">
               <span className="projects-hero__line-inner" ref={(el) => (lineRefs.current[0] = el)}>
-                Eight ongoing.
+                Currently building.
               </span>
             </span>
             <span className="projects-hero__line">
               <span className="projects-hero__line-inner" ref={(el) => (lineRefs.current[1] = el)}>
-                Eight delivered.
+                Already lived in.
               </span>
             </span>
           </h1>

@@ -296,6 +296,15 @@
   margin-top: 2px;
 }
 
+.service-modal__actions {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 12px;
+  margin-top: 2px;
+}
+.service-modal__actions .service-modal__cta { margin-top: 0; }
+
 @media (max-width: 720px) {
   .service-modal__panel {
     top: 0; right: 0; bottom: 0;

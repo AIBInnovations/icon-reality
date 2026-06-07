@@ -2,6 +2,7 @@ import Hero from '../components/Hero';
 import TrustSection from '../components/TrustSection';
 import DisplayHeading from '../components/DisplayHeading';
 import ServicesGrid from '../components/ServicesGrid';
+import AboutPostcard from '../components/AboutPostcard';
 import ForBuyers from '../components/ForBuyers';
 import PillarsCards from '../components/PillarsCards';
 import ProjectsCarousel from '../components/ProjectsCarousel';
@@ -15,6 +16,7 @@ export default function HomePage() {
       <Hero />
       <DisplayHeading />
       <ServicesGrid />
+      <AboutPostcard />
       <PillarsCards />
       <TrustSection />
       <ProjectsCarousel />

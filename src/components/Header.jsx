@@ -61,7 +61,7 @@ export default function Header() {
           <div className="site-header__sheet-col site-header__sheet-col--contact">
             <span className="site-header__sheet-eyebrow">Get in touch</span>
             <a href="mailto:iconrealty2@icloud.com" className="site-header__sheet-link">iconrealty2@icloud.com</a>
-            <a href="tel:+919999999999" className="site-header__sheet-link">+91 99999 99999</a>
+            <a href="tel:+919425942510" className="site-header__sheet-link">+91 9425 9425 10 / 11</a>
             <p className="site-header__sheet-address">
               Icon Realty<br/>
               Indore, Madhya Pradesh

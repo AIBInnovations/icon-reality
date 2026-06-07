@@ -76,7 +76,7 @@
   cursor: default;
 }
 
-.carousel__card video {
+.carousel__card img {
   position: absolute;
   inset: 0;
   width: 100%;
@@ -85,7 +85,7 @@
   transform: scale(1.04);
   transition: transform 1.2s ease;
 }
-.carousel__card.is-active video {
+.carousel__card.is-active img {
   transform: scale(1);
 }
 

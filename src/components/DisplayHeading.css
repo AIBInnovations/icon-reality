@@ -134,14 +134,15 @@
     width: 100px; height: 132px;
   }
 
-  /* ===== MIDDLE ROW — flank the centered text ===== */
+  /* ===== MIDDLE ROW — flank the centered text, kept inside equal side padding
+     (positive left/right so they no longer bleed off the screen edges) ===== */
   .display-section__trail-img:nth-child(4) {       /* MID-LEFT */
-    top: 290px; left: -14px;
-    width: 80px; height: 140px;
+    top: 290px; left: 8px;
+    width: 64px; height: 124px;
   }
   .display-section__trail-img:nth-child(5) {       /* MID-RIGHT */
-    top: 310px; right: -10px;
-    width: 76px; height: 130px;
+    top: 310px; right: 8px;
+    width: 64px; height: 124px;
   }
 
   /* ===== BOTTOM ROW — left / center / right ===== */

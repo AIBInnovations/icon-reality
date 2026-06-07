@@ -12,7 +12,7 @@ export default function TrustSection() {
     <section className="trust" id="about">
       <div className="container trust__grid">
         <Reveal className="trust__image-wrap">
-          <img src="/images/trust.jpg" alt="Icon Realty — premium plotted developments" />
+          <img src="/images/projects/oscar-palace-1.jpg" alt="Oscar Palace — heritage landmark tower" />
         </Reveal>
 
         <div className="trust__copy">
@@ -20,9 +20,16 @@ export default function TrustSection() {
             A trusted address<br/>for premium living
           </Reveal>
           <Reveal as="p" className="trust__lede" delay={0.05}>
-            Icon Realty is crafted for those who value space, peace, and a sense of arrival.
-            We design every plot with the long view in mind — owners who care about quality,
-            growth, and the way a place makes a family feel.
+            Oscar Palace is crafted for those who value space, peace, and a sense of arrival.
+            Every plot is designed with the long view in mind — for owners who care about
+            quality, growth, and the way a place makes a family feel.
+          </Reveal>
+
+          <Reveal as="p" className="trust__architect" delay={0.08}>
+            <span className="trust__architect-k">The architect</span>
+            Designed by <strong>Ravi Gupta Ji</strong> of Jaipur — the architect behind several
+            Oberoi hotels, Suryagarh Palace, and other landmark heritage properties — whose
+            vocabulary of arches, courtyards, and symmetry gives Oscar Palace its royal character.
           </Reveal>
 
           <Reveal className="trust__points" delay={0.1}>

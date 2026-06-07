@@ -1,31 +1,19 @@
-import { useEffect, useRef, useState } from 'react';
+import { useState } from 'react';
 import Reveal from './Reveal';
 import './ProjectsCarousel.css';
 
+// Each card shows the project's own real render (the only videos available are
+// Oscar Palace footage, so images keep every card matched to its project).
 const projects = [
-  { name: 'OSCAR PALACE',     meta: 'Hingonia · 64 acres',          src: '/video/Oscar(R1)_1.mp4' },
-  { name: 'OSCAR FORT',       meta: 'Bicholi · Royal estate',       src: '/video/Oscar(R2)_2.mp4' },
-  { name: 'OSCAR BILLIONAIRE',meta: 'Bicholi · Premium plots',      src: '/video/Oscar(R3)_1.mp4' },
-  { name: 'SAATVIK VIHAR',    meta: 'Manglia · Family living',      src: '/video/Oscar(R4)_1.mp4' },
-  { name: 'SIDDHAYATAN',      meta: 'Manglia · Community-first',    src: '/video/Oscar(R5)_1.mp4' },
+  { name: 'OSCAR PALACE',      meta: 'Indore–Nagpur Hwy · Royal estate', src: '/images/projects/oscar-palace-gate.jpg' },
+  { name: 'OSCAR FORT',        meta: 'Bicholi Mardana · Royal estate',   src: '/images/projects/oscar-fort.webp' },
+  { name: 'OSCAR BILLIONAIRE', meta: 'Bicholi Hapsi · Premium plots',    src: '/images/projects/oscar-billionaire.png' },
+  { name: 'SAATVIK VIHAR',     meta: 'Manglia · Family living',          src: '/images/projects/saatvik-vihar.jpg' },
+  { name: 'SIDDHAYATAN',       meta: 'Manglia · Community-first',        src: '/images/projects/siddhayatan.jpg' },
 ];
 
 export default function ProjectsCarousel() {
   const [active, setActive] = useState(2); // start with the middle card
-  const videoRefs = useRef([]);
-
-  useEffect(() => {
-    videoRefs.current.forEach((v, i) => {
-      if (!v) return;
-      if (i === active) {
-        v.currentTime = 0;
-        const p = v.play();
-        if (p && typeof p.catch === 'function') p.catch(() => {});
-      } else {
-        v.pause();
-      }
-    });
-  }, [active]);
 
   const prev = () => setActive((p) => (p - 1 + projects.length) % projects.length);
   const next = () => setActive((p) => (p + 1) % projects.length);
@@ -39,7 +27,7 @@ export default function ProjectsCarousel() {
             Projects shaping<br/>the skyline.
           </Reveal>
           <Reveal as="p" className="carousel__lede" delay={0.1}>
-            Five flagship developments across Indore — each one a quiet, considered statement. Pick a project to see how it moves.
+            Five flagship developments across Indore — each one a quiet, considered statement. Pick a project to take a closer look.
           </Reveal>
         </div>
 
@@ -51,14 +39,7 @@ export default function ProjectsCarousel() {
               onClick={() => setActive(i)}
               aria-label={`Show ${p.name}`}
             >
-              <video
-                ref={(el) => (videoRefs.current[i] = el)}
-                src={p.src}
-                muted
-                loop
-                playsInline
-                preload="metadata"
-              />
+              <img src={p.src} alt={p.name} loading="lazy" />
               <div className="carousel__card-veil" />
               <div className="carousel__card-caption">
                 <span className="carousel__card-label">{p.name}</span>
