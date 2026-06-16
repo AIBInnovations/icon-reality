@@ -76,7 +76,7 @@
     position: relative;
     padding: 0;
     overflow: hidden;
-    height: 720px;
+    height: 600px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -85,8 +85,8 @@
   .display-section__inner {
     position: relative;
     z-index: 4;
-    width: 200px;
-    max-width: 62vw;
+    width: 340px;
+    max-width: 88vw;
     text-align: center;
     padding: 0;
   }
@@ -125,16 +125,16 @@
   /* ===== TOP ROW — left / center / right ===== */
   .display-section__trail-img:nth-child(1) {       /* TOP-LEFT */
     top: 16px; left: 6px;
-    width: 92px; height: 125px;
+    width: 100px; height: 140px;
   }
   .display-section__trail-img:nth-child(2) {       /* TOP-CENTER — tall */
-    top: 6px; left: 50%;
-    width: 108px; height: 160px;
+    top: 16px; left: 50%;
+    width: 116px; height: 168px;
     transform: translateX(-50%);
   }
   .display-section__trail-img:nth-child(3) {       /* TOP-RIGHT */
-    top: 28px; right: 6px;
-    width: 100px; height: 132px;
+    top: 16px; right: 6px;
+    width: 100px; height: 140px;
   }
 
   /* ===== MIDDLE ROW — flank the centered text, kept inside equal side padding
@@ -151,18 +151,21 @@
   /* ===== BOTTOM ROW — left / center / right ===== */
   .display-section__trail-img:nth-child(6) {       /* BOTTOM-LEFT */
     bottom: 16px; left: 6px;
-    width: 90px; height: 122px;
+    width: 100px; height: 140px;
   }
   .display-section__trail-img:nth-child(7) {       /* BOTTOM-CENTER — biggest */
-    bottom: 6px; left: 50%;
-    width: 112px; height: 162px;
+    bottom: 16px; left: 50%;
+    width: 116px; height: 168px;
     transform: translateX(-50%);
   }
   .display-section__trail-img:nth-child(8) {       /* BOTTOM-RIGHT */
-    bottom: 28px; right: 6px;
-    width: 96px; height: 134px;
+    bottom: 16px; right: 6px;
+    width: 100px; height: 140px;
   }
 
+  /* hide the two middle-row images on mobile */
+  .display-section__trail-img:nth-child(4),
+  .display-section__trail-img:nth-child(5),
   .display-section__trail-img:nth-child(9),
   .display-section__trail-img:nth-child(10) { display: none; }
 }
