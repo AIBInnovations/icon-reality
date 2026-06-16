@@ -773,11 +773,15 @@
   .project-features-modal__title { font-size: clamp(28px, 8vw, 42px); }
 
   .project-map { padding: 50px 0; }
-  .project-map__head { padding-inline: 12px; gap: 12px; }
+  /* single column so heading / address / CTA stack and align to the same
+     left edge as the map below */
+  .project-map__head { grid-template-columns: 1fr; padding-inline: 0; gap: 10px; }
   .project-map__heading { font-size: clamp(28px, 8vw, 42px); }
   .project-map__address { font-size: 15px; }
   .project-map__cta { align-self: flex-start; }
-  .project-map__frame { aspect-ratio: 4 / 3; margin: 0 8px; border-radius: 12px; max-height: none; }
+  /* no horizontal margin — the container gutter already insets it equally,
+     so the map stays centered instead of overflowing to the right */
+  .project-map__frame { aspect-ratio: 4 / 3; margin: 0; border-radius: 12px; max-height: none; }
 
   .project-highlights { padding: 50px 8px; }
   .project-highlights__heading { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
