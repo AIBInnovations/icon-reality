@@ -350,7 +350,7 @@ export default function ProjectDetailPage() {
               </a>
             </Reveal>
           </div>
-          <Reveal className="project-map__frame" delay={0.1}>
+          <div className="project-map__frame">
             <iframe
               title={`${name} location map`}
               src={`https://www.google.com/maps?q=${encodeURIComponent(`${name}, ${location}`)}&output=embed`}
@@ -361,7 +361,7 @@ export default function ProjectDetailPage() {
               referrerPolicy="no-referrer-when-downgrade"
               allowFullScreen
             />
-          </Reveal>
+          </div>
         </div>
       </section>
 

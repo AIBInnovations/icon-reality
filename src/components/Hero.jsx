@@ -7,7 +7,7 @@ const FRAME_COUNT = 476;
 const BOOTSTRAP_FRAMES = 80; // wait for these to load before activating scroll
 const frameUrl = (i) => `/frames/f${String(i + 1).padStart(3, '0')}.jpg`;
 
-export default function Hero() {
+export default function Hero({ onReady }) {
   const wrapRef = useRef(null);
   const innerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -113,6 +113,7 @@ export default function Hero() {
     bootstrap.then(() => {
       if (!mounted) return;
       setReady(true);
+      onReady && onReady();
       resize();
 
       // gsap.context() scopes the pin + ScrollTriggers, so a single ctx.revert()
@@ -172,7 +173,6 @@ export default function Hero() {
         <div className="hero__copy container">
           <div ref={copyClipRef} className="hero__copy-clip">
             <div ref={copyInnerRef} className="hero__copy-inner">
-              <span className="hero__eyebrow">Oscar Palace · Indore</span>
               <h1 className="display hero__headline">
                 An address that rises,<br/>to your standard.
               </h1>

@@ -169,10 +169,11 @@
   transform: rotate(90deg);
 }
 
-/* carousel wrapper */
+/* carousel wrapper — the close button (with its own circular bg) floats over
+   the top of the images, so only a little breathing room is needed up top */
 .service-modal__carousel-wrap {
   flex: 0 0 auto;
-  padding-top: 78px; /* room for the close button */
+  padding-top: 16px;
 }
 
 .service-modal__carousel {
@@ -215,11 +216,13 @@
 .service-modal__body {
   flex: 1 1 auto;
   min-height: 0;
-  padding: clamp(16px, 1.8vw, 24px) clamp(20px, 2.6vw, 36px) clamp(18px, 2vw, 26px);
+  padding: clamp(16px, 1.8vw, 24px) clamp(20px, 2.6vw, 36px) clamp(24px, 2.6vw, 36px);
   display: flex;
   flex-direction: column;
   gap: clamp(12px, 1.4vw, 18px);
-  overflow: hidden;
+  overflow-y: auto;
+  overflow-x: hidden;
+  -webkit-overflow-scrolling: touch;
 }
 
 .service-modal__title {
