@@ -14,7 +14,10 @@ export default function ProjectDetailPage() {
   const [openModal, setOpenModal] = useState(null); // 'amenities' | 'connectivity' | null
   const [displayedModal, setDisplayedModal] = useState(null);
 
-  useEffect(() => { window.scrollTo(0, 0); }, [slug]);
+  useEffect(() => {
+    if (window.lenis) window.lenis.scrollTo(0, { immediate: true });
+    else window.scrollTo(0, 0);
+  }, [slug]);
 
   // Keep modal content mounted during the slide-out animation
   useEffect(() => {
@@ -145,9 +148,11 @@ export default function ProjectDetailPage() {
               </span>
             )}
           </h1>
-          {tagline && (
+          {(tagline || slug === 'oscar-palace') && (
             <Reveal as="p" className="project-hero__lede" delay={0.6}>
-              {tagline}
+              {slug === 'oscar-palace'
+                ? 'A premium residential project on the Indore–Nagpur Highway.'
+                : tagline}
             </Reveal>
           )}
         </div>

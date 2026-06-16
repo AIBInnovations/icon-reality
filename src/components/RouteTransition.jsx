@@ -22,7 +22,13 @@ export default function RouteTransition() {
   useEffect(() => {
     setActive(true);
     document.body.style.overflow = '';
-    window.scrollTo(0, 0);
+    // Reset Lenis's internal target too — resetting only native scroll lets
+    // Lenis snap back to the previous position (e.g. the footer) on the new page.
+    if (window.lenis) {
+      window.lenis.scrollTo(0, { immediate: true });
+    } else {
+      window.scrollTo(0, 0);
+    }
 
     const t = setTimeout(() => {
       ScrollTrigger.refresh();

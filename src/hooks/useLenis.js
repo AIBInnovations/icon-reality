@@ -17,6 +17,10 @@ export function useLenis() {
 
     lenis.on('scroll', ScrollTrigger.update);
 
+    // Expose so route changes can reset Lenis's internal scroll target
+    // (resetting only native scroll lets Lenis snap back to the old position).
+    window.lenis = lenis;
+
     const raf = (time) => lenis.raf(time * 1000);
     gsap.ticker.add(raf);
     gsap.ticker.lagSmoothing(0);
@@ -24,6 +28,7 @@ export function useLenis() {
     return () => {
       gsap.ticker.remove(raf);
       lenis.destroy();
+      if (window.lenis === lenis) delete window.lenis;
     };
   }, []);
 }
