@@ -6,7 +6,7 @@ const services = [
   {
     title: 'PLOT LAYOUTS',
     image: '/images/services/plot-layouts.png',
-    downloadUrl: '/downloads/oscar-palace-plot-layout.pdf',
+    downloadUrl: '/downloads/oscar-palace-brochure.pdf',
     downloadLabel: 'Download Plot Layout',
     body: 'A residential plotted project laid out on royal principles — wide avenues, east and west facing plots, and Vastu-compliant orientations across every block.',
     body2: 'Maximum roads run 100 ft and 60 ft wide, so every approach feels generous. Plots range from 3,000 to 20,000 sq ft, with reserved-frontage corners kept for landmark homes and orientations chosen so morning light reaches the right rooms.',
@@ -55,7 +55,7 @@ const services = [
   {
     title: 'LOCATION',
     image: '/images/services/location.png',
-    downloadUrl: '/downloads/oscar-palace-location-plan.pdf',
+    downloadUrl: '/downloads/oscar-palace-brochure.pdf',
     downloadLabel: 'Download Location Plan',
     body: 'On the new Indore–Nagpur Highway — a corridor set to reshape the infrastructure and road connectivity of Indore, with the city close and the calm intact.',
     body2: 'Top-rated schools sit within 4 km, hospitals and retail are two minutes away, and the expressway is a minute from the gate. The airport is a clear 27 km run. Close enough for the city to be useful, far enough for the calm to be real.',

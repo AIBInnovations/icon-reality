@@ -52,7 +52,7 @@ export const projectsList = [
       'Maximum roads 100 ft & 60 ft wide',
       'Bank loans available on every plot',
     ],
-    brochure_url: 'https://iconrealty.homes/wp-content/uploads/2025/11/Oscar-Palace-Brochure-v2.pdf',
+    brochure_url: '/downloads/oscar-palace-brochure.pdf',
     hero_image: '/images/oscar/entrance/entrance-1.jpg',
     gallery: [
       '/images/oscar/entrance/entrance-2.jpg',
