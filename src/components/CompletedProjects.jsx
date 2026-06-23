@@ -8,7 +8,7 @@ import './CompletedProjects.css';
 // shown as clean brand tiles. Singapore Business Park (LIG Square) still needs a
 // photo from the client — neutral placeholder for now.
 const landmarks = [
-  { slug: 'oscar-palace',            name: 'Oscar Palace',            location: 'Hingonia, Indore',        image: '/images/projects/oscar-palace-gate.jpg' },
+  { slug: 'oscar-palace',            name: 'Oscar Palace',            location: 'Hingonia, Indore',        image: '/images/oscar/entrance/entrance-1.jpg' },
   { slug: 'oscar-fort',              name: 'Oscar Fort',              location: 'Bicholi Mardana, Indore', image: '/images/projects/oscar-fort.webp' },
   { slug: 'oscar-billionaire',       name: 'Oscar Billionaire',       location: 'Bicholi Hapsi, Indore',   image: '/images/projects/oscar-billionaire.png' },
   { slug: 'eden-garden',             name: 'Eden Garden',             location: 'Ambamoliya, Indore',      image: '/images/projects/eden-garden.jpg' },

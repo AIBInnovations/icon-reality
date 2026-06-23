@@ -3,7 +3,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 250vh; /* 100vh visible + 150vh of scrub distance — ~3 scrolls to clear the intro */
+  height: 185vh; /* 100vh visible + 85vh of scrub distance — quicker to scroll through */
   background: var(--bg);
   color: #fff;
 }
@@ -158,8 +158,8 @@
 }
 
 @media (max-width: 720px) {
-  /* shorter scrub on mobile — faster to consume, ~3 scrolls */
-  .hero { height: 170vh; }
+  /* shorter scrub on mobile — faster to consume */
+  .hero { height: 140vh; }
   .hero__eyebrow { font-size: 10px; letter-spacing: 0.28em; margin-bottom: 12px; }
   .hero__sticky { padding: 8px; }
   .hero__inner { border-radius: 14px; }

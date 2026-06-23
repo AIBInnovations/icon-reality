@@ -111,7 +111,7 @@ export default function ProjectDetailPage() {
   const {
     name, tagline, location, total_area, plot_sizes, status,
     description, amenities = [], connectivity = [], highlights = [],
-    gallery = [], hero_image, brochure_url,
+    gallery = [], hero_image, brochure_url, amenityImages = {},
   } = project;
 
   const statusLabel = status === 'trending' ? 'Trending now' : 'Completed';
@@ -308,8 +308,15 @@ export default function ProjectDetailPage() {
 
               <ul className="project-features-modal__list">
                 {(displayedModal === 'amenities' ? amenities : connectivity).map((item, i) => (
-                  <li key={item + i} className="project-features-modal__item">
-                    {displayedModal === 'amenities' ? (
+                  <li
+                    key={item + i}
+                    className={`project-features-modal__item ${displayedModal === 'amenities' && amenityImages[item] ? 'project-features-modal__item--media' : ''}`}
+                  >
+                    {displayedModal === 'amenities' && amenityImages[item] ? (
+                      <span className="project-features-modal__thumb">
+                        <img src={amenityImages[item]} alt={item} loading="lazy" />
+                      </span>
+                    ) : displayedModal === 'amenities' ? (
                       <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
                         <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                       </svg>

@@ -22,9 +22,9 @@ const services = [
       { k: 'Facing', v: 'East & West' },
     ],
     gallery: [
-      '/images/projects/oscar-palace-1.jpg',
-      '/images/projects/oscar-palace-gate.jpg',
-      '/images/projects/oscar-palace-3.jpg',
+      '/images/oscar/layout/layout-1.jpg',
+      '/images/oscar/layout/layout-2.jpg',
+      '/images/oscar/layout/layout-3.jpg',
     ],
   },
   {
@@ -44,10 +44,12 @@ const services = [
       { k: 'Security', v: '24×7 multi-tier' },
     ],
     gallery: [
-      '/images/projects/oscar-palace-4.jpg',
-      '/images/projects/oscar-palace-3.jpg',
-      '/images/projects/oscar-palace-2.jpg',
-      '/images/projects/oscar-palace-5.jpg',
+      '/images/oscar/park/park-1.jpg',
+      '/images/oscar/temple/temple-1.jpg',
+      '/images/oscar/park/park-2.jpg',
+      '/images/oscar/amenities/amenity-1.jpg',
+      '/images/oscar/park/park-5.jpg',
+      '/images/oscar/amenities/amenity-3.jpg',
     ],
   },
   {
@@ -69,9 +71,10 @@ const services = [
       { k: 'Schools nearby', v: '4+ rated' },
     ],
     gallery: [
-      '/images/projects/oscar-palace-gate.jpg',
-      '/images/projects/oscar-palace-1.jpg',
-      '/images/projects/oscar-fort.webp',
+      '/images/oscar/entrance/entrance-1.jpg',
+      '/images/oscar/entrance/entrance-3.jpg',
+      '/images/oscar/entrance/entrance-2.jpg',
+      '/images/oscar/entrance/entrance-4.jpg',
     ],
   },
   {
@@ -91,9 +94,10 @@ const services = [
       { k: 'Flexibility', v: 'Hold · build · resell' },
     ],
     gallery: [
-      '/images/projects/oscar-palace-3.jpg',
-      '/images/projects/oscar-palace-gate.jpg',
-      '/images/projects/oscar-palace-1.jpg',
+      '/images/oscar/photos/photo-1.jpg',
+      '/images/oscar/photos/photo-8.jpg',
+      '/images/oscar/photos/photo-4.jpg',
+      '/images/oscar/photos/photo-11.jpg',
     ],
   },
 ];

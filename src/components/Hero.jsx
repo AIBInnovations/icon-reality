@@ -4,7 +4,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Hero.css';
 
 const FRAME_COUNT = 476;
-const BOOTSTRAP_FRAMES = 80; // wait for these to load before activating scroll
+const BOOTSTRAP_FRAMES = 40; // wait for these to load before activating scroll
 const frameUrl = (i) => `/frames/f${String(i + 1).padStart(3, '0')}.jpg`;
 
 export default function Hero({ onReady }) {

@@ -5,7 +5,7 @@ import './ProjectsCarousel.css';
 // Each card shows the project's own real render (the only videos available are
 // Oscar Palace footage, so images keep every card matched to its project).
 const projects = [
-  { name: 'OSCAR PALACE',      meta: 'Indore–Nagpur Hwy · Royal estate', src: '/images/projects/oscar-palace-gate.jpg' },
+  { name: 'OSCAR PALACE',      meta: 'Indore–Nagpur Hwy · Royal estate', src: '/images/oscar/entrance/entrance-1.jpg' },
   { name: 'OSCAR FORT',        meta: 'Bicholi Mardana · Royal estate',   src: '/images/projects/oscar-fort.webp' },
   { name: 'OSCAR BILLIONAIRE', meta: 'Bicholi Hapsi · Premium plots',    src: '/images/projects/oscar-billionaire.png' },
   { name: 'SAATVIK VIHAR',     meta: 'Manglia · Family living',          src: '/images/projects/saatvik-vihar.jpg' },

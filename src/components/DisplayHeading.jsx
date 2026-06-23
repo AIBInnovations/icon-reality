@@ -5,16 +5,16 @@ import Reveal from './Reveal';
 import './DisplayHeading.css';
 
 const TRAIL_IMAGES = [
-  '/images/projects/oscar-palace-gate.jpg',
-  '/images/projects/oscar-palace-1.jpg',
-  '/images/projects/oscar-palace-4.jpg',
-  '/images/projects/oscar-palace-2.jpg',
-  '/images/projects/oscar-palace-3.jpg',
-  '/images/projects/oscar-fort.webp',
-  '/images/projects/oscar-palace-5.jpg',
-  '/images/projects/saatvik-vihar.jpg',
-  '/images/projects/eden-garden.jpg',
-  '/images/projects/labham-city.png',
+  '/images/oscar/entrance/entrance-1.jpg',
+  '/images/oscar/temple/temple-1.jpg',
+  '/images/oscar/park/park-1.jpg',
+  '/images/oscar/photos/photo-1.jpg',
+  '/images/oscar/entrance/entrance-2.jpg',
+  '/images/oscar/amenities/amenity-1.jpg',
+  '/images/oscar/photos/photo-8.jpg',
+  '/images/oscar/park/park-7.jpg',
+  '/images/oscar/photos/photo-4.jpg',
+  '/images/oscar/entrance/entrance-3.jpg',
 ];
 
 const SPAWN_DISTANCE = 90; // px of mouse movement before spawning next image
