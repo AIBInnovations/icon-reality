@@ -112,9 +112,12 @@ export default function Hero({ onReady }) {
 
     bootstrap.then(() => {
       if (!mounted) return;
+      // Paint the first frame BEFORE signalling ready, so when the PageLoader
+      // lifts the hero is already showing — no preview/loading flash.
+      resize();
+      draw(stateRef.current.progress);
       setReady(true);
       onReady && onReady();
-      resize();
 
       // gsap.context() scopes the pin + ScrollTriggers, so a single ctx.revert()
       // cleanly unwinds the pinSpacer wrapper GSAP injects. Required for React
