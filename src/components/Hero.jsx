@@ -1,13 +1,12 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Hero.css';
 
 const FRAME_COUNT = 476;
-const BOOTSTRAP_FRAMES = 40; // wait for these to load before activating scroll
 const frameUrl = (i) => `/frames/f${String(i + 1).padStart(3, '0')}.jpg`;
 
-export default function Hero({ onReady }) {
+export default function Hero({ onReady, onProgress }) {
   const wrapRef = useRef(null);
   const innerRef = useRef(null);
   const canvasRef = useRef(null);
@@ -15,8 +14,6 @@ export default function Hero({ onReady }) {
   const copyInnerRef = useRef(null);
   const arrowRef = useRef(null);
   const stateRef = useRef({ images: [], lastF: -1, progress: 0 });
-  const [ready, setReady] = useState(false);
-  const [bootProgress, setBootProgress] = useState(0);
 
   useEffect(() => {
     const canvas = canvasRef.current;
@@ -74,49 +71,45 @@ export default function Hero({ onReady }) {
       }
     };
 
-    // ---- preload all frames in parallel
+    // ---- preload ALL frames in parallel, and only reveal the hero once every
+    // frame is in memory. The PageLoader stays up for the whole load, so the
+    // hero never paints a partial / "preview" state to the user.
     const images = [];
     let loaded = 0;
+    let lastPct = -1;
+    let resolveAll;
+    const allLoaded = new Promise((res) => { resolveAll = res; });
+    const bump = () => {
+      loaded++;
+      const frac = loaded / FRAME_COUNT;
+      const pct = Math.floor(frac * 100);
+      if (pct !== lastPct) { // throttle progress reports to ~1 per percent
+        lastPct = pct;
+        onProgress && onProgress(frac);
+      }
+      if (loaded >= FRAME_COUNT) resolveAll();
+    };
     for (let i = 0; i < FRAME_COUNT; i++) {
       const img = new Image();
       img.decoding = 'async';
-      img.onload = () => {
-        loaded++;
-        if (loaded <= BOOTSTRAP_FRAMES) {
-          setBootProgress(Math.min(1, loaded / BOOTSTRAP_FRAMES));
-        }
-      };
-      img.onerror = () => { loaded++; };
+      img.onload = bump;
+      img.onerror = bump;
       img.src = frameUrl(i);
       images.push(img);
     }
     stateRef.current.images = images;
-
-    // Wait for bootstrap frames (sequential first ~80 to give early scroll a smooth start)
-    const bootstrap = Promise.all(
-      images.slice(0, BOOTSTRAP_FRAMES).map((img) =>
-        new Promise((res) => {
-          if (img.complete) res();
-          else {
-            img.addEventListener('load', () => res(), { once: true });
-            img.addEventListener('error', () => res(), { once: true });
-          }
-        })
-      )
-    );
 
     resize();
     window.addEventListener('resize', resize);
 
     let gsapCtx = null;
 
-    bootstrap.then(() => {
+    allLoaded.then(() => {
       if (!mounted) return;
       // Paint the first frame BEFORE signalling ready, so when the PageLoader
-      // lifts the hero is already showing — no preview/loading flash.
+      // lifts the hero is already showing — fully loaded, no preview/flash.
       resize();
       draw(stateRef.current.progress);
-      setReady(true);
       onReady && onReady();
 
       // gsap.context() scopes the pin + ScrollTriggers, so a single ctx.revert()
@@ -165,12 +158,6 @@ export default function Hero({ onReady }) {
       <div className="hero__sticky">
       <div ref={innerRef} className="hero__inner">
         <canvas ref={canvasRef} className="hero__canvas" />
-        {!ready && (
-          <div className="hero__loading" aria-hidden>
-            <div className="hero__loading-bar"><span style={{ width: `${bootProgress * 100}%` }} /></div>
-            <span className="hero__loading-txt">PREPARING THE VIEW</span>
-          </div>
-        )}
         <div className="hero__veil" />
 
         <div className="hero__copy container">

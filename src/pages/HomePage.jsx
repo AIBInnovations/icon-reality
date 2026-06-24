@@ -14,18 +14,22 @@ import FinalCTA from '../components/FinalCTA';
 
 export default function HomePage() {
   const [heroReady, setHeroReady] = useState(false);
+  const [loadProgress, setLoadProgress] = useState(0);
 
-  // Safety net: never let the loader hang if the hero never signals ready
-  // (e.g. a very slow connection). 12s gives the frame sequence ample time.
+  // Safety net: never let the loader hang forever if frames fail to load on a
+  // very slow connection. 45s is generous for the full ~62MB frame sequence.
   useEffect(() => {
-    const t = setTimeout(() => setHeroReady(true), 12000);
+    const t = setTimeout(() => setHeroReady(true), 45000);
     return () => clearTimeout(t);
   }, []);
 
   return (
     <>
-      {!heroReady && <PageLoader />}
-      <Hero onReady={() => setHeroReady(true)} />
+      {!heroReady && <PageLoader progress={loadProgress} />}
+      <Hero
+        onProgress={setLoadProgress}
+        onReady={() => setHeroReady(true)}
+      />
       <DisplayHeading />
       <ServicesGrid />
       <AboutPostcard />
