@@ -360,6 +360,8 @@ export const projectsList = [
     ],
     brochure_url: 'https://iconrealty.homes/wp-content/uploads/2025/11/IIT_Greens_Brochure_Design-1-1.pdf',
     hero_image: '/images/projects/iit-greens.jpg',
+    video_url: '/video/iit-greens-walkthrough.mp4',
+    video_poster: '/images/projects/iit-greens.jpg',
     gallery: [
       'https://iconrealty.homes/wp-content/uploads/2025/11/iit-green-banner-1.png',
       'https://iconrealty.homes/wp-content/uploads/2025/11/1.jpg',

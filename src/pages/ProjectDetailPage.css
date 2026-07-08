@@ -184,7 +184,7 @@
   line-height: 1.02;
   margin-bottom: clamp(24px, 3vw, 42px);
 }
-/* full-bleed with equal side padding, centered — same placement as the hero image */
+/* natural 16:9 video ratio, with equal left/right padding, centered like the hero image */
 .project-video__stage {
   padding: 0 14px;
 }
@@ -196,7 +196,6 @@
   background: #000;
   box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
   aspect-ratio: 16 / 9;
-  max-height: 70vh;   /* matches the hero image cap so it never gets too tall */
 }
 .project-video__player {
   display: block;
@@ -209,7 +208,7 @@
   .project-video { padding: 50px 0; }
   .project-video__heading { font-size: clamp(26px, 8vw, 38px); padding-inline: 12px; }
   .project-video__stage { padding: 0 8px; }
-  .project-video__frame { border-radius: 14px; aspect-ratio: 16 / 9; }
+  .project-video__frame { border-radius: 14px; }
 }
 
 /* ============ FEATURES (combined Amenities + Connectivity) ============ */
