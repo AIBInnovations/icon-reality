@@ -166,6 +166,52 @@
   font-weight: 500;
 }
 
+/* ============ WALKTHROUGH VIDEO ============ */
+.project-video {
+  padding: clamp(50px, 6vw, 96px) 0;
+  background: var(--bg);
+}
+.project-video__eyebrow {
+  color: var(--peach-deep);
+  margin-bottom: 14px;
+  display: inline-block;
+}
+.project-video__heading {
+  font-size: clamp(32px, 4.5vw, 64px);
+  font-weight: 600;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  line-height: 1.02;
+  margin-bottom: clamp(24px, 3vw, 42px);
+}
+/* full-bleed with equal side padding, centered — same placement as the hero image */
+.project-video__stage {
+  padding: 0 14px;
+}
+.project-video__frame {
+  position: relative;
+  width: 100%;
+  border-radius: 18px;
+  overflow: hidden;
+  background: #000;
+  box-shadow: 0 24px 60px rgba(0, 0, 0, 0.18);
+  aspect-ratio: 16 / 9;
+  max-height: 70vh;   /* matches the hero image cap so it never gets too tall */
+}
+.project-video__player {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+@media (max-width: 720px) {
+  .project-video { padding: 50px 0; }
+  .project-video__heading { font-size: clamp(26px, 8vw, 38px); padding-inline: 12px; }
+  .project-video__stage { padding: 0 8px; }
+  .project-video__frame { border-radius: 14px; aspect-ratio: 16 / 9; }
+}
+
 /* ============ FEATURES (combined Amenities + Connectivity) ============ */
 .project-features {
   padding: clamp(60px, 8vw, 110px) 0;

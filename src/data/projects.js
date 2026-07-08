@@ -54,6 +54,8 @@ export const projectsList = [
     ],
     brochure_url: '/downloads/oscar-palace-brochure.pdf',
     hero_image: '/images/oscar/entrance/entrance-1.jpg',
+    video_url: '/video/oscar-palace-walkthrough.mp4',
+    video_poster: '/images/oscar/entrance/entrance-1.jpg',
     gallery: [
       '/images/oscar/entrance/entrance-2.jpg',
       '/images/oscar/temple/temple-1.jpg',

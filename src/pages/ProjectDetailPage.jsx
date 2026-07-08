@@ -5,6 +5,51 @@ import Reveal from '../components/Reveal';
 import { projectsBySlug } from '../data/projects';
 import './ProjectDetailPage.css';
 
+/* Showcase film: autoplays (muted) when scrolled into view, pauses when it
+   leaves the viewport. No controls bar, plays at 1.5× speed. */
+function ProjectVideo({ src, poster }) {
+  const ref = useRef(null);
+
+  useEffect(() => {
+    const el = ref.current;
+    if (!el) return;
+    el.muted = true;                 // required for autoplay to be allowed
+    const setRate = () => { el.playbackRate = 1.5; };
+    setRate();
+    el.addEventListener('loadedmetadata', setRate);
+
+    const io = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setRate();
+          el.play().catch(() => {});
+        } else {
+          el.pause();
+        }
+      },
+      { threshold: 0.4 }             // start once ~40% of the video is on screen
+    );
+    io.observe(el);
+    return () => {
+      io.disconnect();
+      el.removeEventListener('loadedmetadata', setRate);
+    };
+  }, []);
+
+  return (
+    <video
+      ref={ref}
+      className="project-video__player"
+      src={src}
+      poster={poster}
+      muted
+      loop
+      playsInline
+      preload="metadata"
+    />
+  );
+}
+
 export default function ProjectDetailPage() {
   const { slug } = useParams();
   const project = projectsBySlug[slug];
@@ -112,6 +157,7 @@ export default function ProjectDetailPage() {
     name, tagline, location, total_area, plot_sizes, status,
     description, amenities = [], connectivity = [], highlights = [],
     gallery = [], hero_image, brochure_url, amenityImages = {},
+    video_url, video_poster,
   } = project;
 
   const statusLabel = status === 'trending' ? 'Trending now' : 'Completed';
@@ -204,6 +250,23 @@ export default function ProjectDetailPage() {
           </Reveal>
         </div>
       </section>
+
+      {/* ====== WALKTHROUGH VIDEO ====== */}
+      {video_url && (
+        <section className="project-video">
+          <div className="container">
+            <Reveal as="span" className="eyebrow project-video__eyebrow">The film</Reveal>
+            <Reveal as="h2" className="display project-video__heading" delay={0.05}>
+              Walk through {name}.
+            </Reveal>
+          </div>
+          <Reveal className="project-video__stage" delay={0.1}>
+            <div className="project-video__frame">
+              <ProjectVideo src={video_url} poster={video_poster || hero_image} />
+            </div>
+          </Reveal>
+        </section>
+      )}
 
       {/* ====== FEATURES (amenities + connectivity) ====== */}
       {(amenities.length > 0 || connectivity.length > 0) && (

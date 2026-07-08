@@ -39,8 +39,8 @@ export default function CompletedProjects() {
 
       <div className="container">
         <div className="completed__grid">
-          {landmarks.map((p, i) => (
-            <Reveal key={p.slug} delay={i * 0.04}>
+          {landmarks.map((p) => (
+            <div key={p.slug}>
               <Link to={`/projects/${p.slug}`} className="completed__card">
                 <div className={`completed__media${p.brand ? ' completed__media--brand' : ''}`}>
                   <img src={p.image} alt={`${p.name} — ${p.location}`} loading="lazy" />
@@ -51,7 +51,7 @@ export default function CompletedProjects() {
                   <span className="completed__location">{p.location}</span>
                 </div>
               </Link>
-            </Reveal>
+            </div>
           ))}
         </div>
       </div>
