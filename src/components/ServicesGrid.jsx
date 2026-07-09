@@ -113,6 +113,7 @@ function ServiceCarousel({ images, title }) {
   const trackRef = useRef(null);
   const pausedRef = useRef(false);   // true while hovering / touching
   const dragRef = useRef(null);      // { startX, startScroll } during a mouse drag
+  const resumeRef = useRef(null);    // timer that re-enables auto-scroll after an arrow tap
   const [grabbing, setGrabbing] = useState(false);
 
   const slides = [...images, ...images, ...images];
@@ -152,7 +153,14 @@ function ServiceCarousel({ images, title }) {
   };
 
   const nudge = (dir) => {
-    viewportRef.current?.scrollBy({ left: dir * slideAmount(), behavior: 'smooth' });
+    const vp = viewportRef.current;
+    if (!vp) return;
+    // Pause auto-scroll so it doesn't overwrite scrollLeft and cancel the arrow's
+    // smooth scroll; resume shortly after the scroll settles.
+    pausedRef.current = true;
+    vp.scrollBy({ left: dir * slideAmount(), behavior: 'smooth' });
+    clearTimeout(resumeRef.current);
+    resumeRef.current = setTimeout(() => { pausedRef.current = false; }, 1500);
   };
 
   // Mouse drag-to-scroll (touch relies on native horizontal scrolling).
@@ -350,7 +358,9 @@ export default function ServicesGrid() {
                     </a>
                   )}
                   <a
-                    href="mailto:iconrealty2@icloud.com?subject=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace"
+                    href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace"
+                    target="_blank"
+                    rel="noreferrer"
                     className={`cta service-modal__cta ${open.downloadUrl ? 'cta--ghost' : ''}`}
                   >
                     Book a Site Visit

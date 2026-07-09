@@ -22,20 +22,26 @@ export default function RouteTransition() {
   useEffect(() => {
     setActive(true);
     document.body.style.overflow = '';
-    // Reset Lenis's internal target too — resetting only native scroll lets
-    // Lenis snap back to the previous position (e.g. the footer) on the new page.
-    if (window.lenis) {
-      window.lenis.scrollTo(0, { immediate: true });
-    } else {
+
+    // Force every new page to start at the hero (top). Resetting once up-front
+    // isn't enough: the incoming page hasn't laid out yet, so if it's shorter
+    // than the scroll position we came from (e.g. clicking a card near the page
+    // bottom), the reset gets clamped to the new page's bottom = the footer.
+    const toTop = () => {
+      if (window.lenis) window.lenis.scrollTo(0, { immediate: true, force: true });
       window.scrollTo(0, 0);
-    }
+    };
+    toTop();
+    // and again next frame, once the new route has rendered
+    const raf = requestAnimationFrame(toTop);
 
     const t = setTimeout(() => {
       ScrollTrigger.refresh();
+      toTop(); // final reset after layout + ScrollTrigger settle, before reveal
       setActive(false);
     }, MIN_LOADER_MS);
 
-    return () => clearTimeout(t);
+    return () => { clearTimeout(t); cancelAnimationFrame(raf); };
   }, [pathname]);
 
   return active ? <PageLoader /> : null;

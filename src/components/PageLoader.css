@@ -6,6 +6,13 @@
   display: flex;
   align-items: center;
   justify-content: center;
+  transform: translateY(0);
+  transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+  will-change: transform;
+}
+/* when the hero is ready, the loader slides up off-screen to reveal it */
+.page-loader.is-leaving {
+  transform: translateY(-100%);
 }
 
 .page-loader__inner {

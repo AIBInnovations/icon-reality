@@ -20,7 +20,7 @@ export default function FinalCTA() {
           </Reveal>
 
           <Reveal className="final-cta__actions" delay={0.15}>
-            <a href="mailto:iconrealty2@icloud.com?subject=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace" className="cta final-cta__primary">
+            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace" target="_blank" rel="noreferrer" className="cta final-cta__primary">
               Book a Site Visit
             </a>
             <a href="tel:+919425942510" className="cta cta--ghost final-cta__secondary">

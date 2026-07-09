@@ -15,7 +15,7 @@ export default function Footer() {
               Over two decades of trust, 15+ landmark projects, 4,500+ happy families — Icon Realty builds addresses that quietly change everything.
             </Reveal>
             <Reveal delay={0.1}>
-              <a href="mailto:iconrealty2@icloud.com?subject=Book%20a%20Site%20Visit" className="cta">Book a Site Visit</a>
+              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Site%20Visit" target="_blank" rel="noreferrer" className="cta">Book a Site Visit</a>
             </Reveal>
           </div>
 

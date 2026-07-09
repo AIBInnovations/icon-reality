@@ -1,22 +1,30 @@
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import Reveal from './Reveal';
 import './ProjectsCarousel.css';
 
 // Each card shows the project's own real render (the only videos available are
 // Oscar Palace footage, so images keep every card matched to its project).
 const projects = [
-  { name: 'OSCAR PALACE',      meta: 'Indore–Nagpur Hwy · Royal estate', src: '/images/oscar/entrance/entrance-1.jpg' },
-  { name: 'OSCAR FORT',        meta: 'Bicholi Mardana · Royal estate',   src: '/images/projects/oscar-fort.webp' },
-  { name: 'OSCAR BILLIONAIRE', meta: 'Bicholi Hapsi · Premium plots',    src: '/images/projects/oscar-billionaire.png' },
-  { name: 'SAATVIK VIHAR',     meta: 'Manglia · Family living',          src: '/images/projects/saatvik-vihar.jpg' },
-  { name: 'SIDDHAYATAN',       meta: 'Manglia · Community-first',        src: '/images/projects/siddhayatan.jpg' },
+  { name: 'OSCAR PALACE',      slug: 'oscar-palace',      meta: 'Indore–Nagpur Hwy · Royal estate', src: '/images/oscar/entrance/entrance-1.jpg' },
+  { name: 'OSCAR FORT',        slug: 'oscar-fort',        meta: 'Bicholi Mardana · Royal estate',   src: '/images/projects/oscar-fort.webp' },
+  { name: 'OSCAR BILLIONAIRE', slug: 'oscar-billionaire', meta: 'Bicholi Hapsi · Premium plots',    src: '/images/projects/oscar-billionaire.png' },
+  { name: 'SAATVIK VIHAR',     slug: 'saatvik-vihar',     meta: 'Manglia · Family living',          src: '/images/projects/saatvik-vihar.jpg' },
+  { name: 'SIDDHAYATAN',       slug: 'siddhayatan',       meta: 'Manglia · Community-first',        src: '/images/projects/siddhayatan.jpg' },
 ];
 
 export default function ProjectsCarousel() {
   const [active, setActive] = useState(2); // start with the middle card
+  const navigate = useNavigate();
 
   const prev = () => setActive((p) => (p - 1 + projects.length) % projects.length);
   const next = () => setActive((p) => (p + 1) % projects.length);
+
+  // First tap on a card expands it; tapping the already-open card opens its page.
+  const handleCard = (i) => {
+    if (i === active) navigate(`/projects/${projects[i].slug}`);
+    else setActive(i);
+  };
 
   return (
     <section className="carousel" id="views">
@@ -36,14 +44,15 @@ export default function ProjectsCarousel() {
             <button
               key={p.name}
               className={`carousel__card ${i === active ? 'is-active' : ''}`}
-              onClick={() => setActive(i)}
-              aria-label={`Show ${p.name}`}
+              onClick={() => handleCard(i)}
+              aria-label={i === active ? `Open ${p.name} project page` : `Show ${p.name}`}
             >
               <img src={p.src} alt={p.name} loading="lazy" />
               <div className="carousel__card-veil" />
               <div className="carousel__card-caption">
                 <span className="carousel__card-label">{p.name}</span>
                 <span className="carousel__card-meta">{p.meta}</span>
+                <span className="carousel__card-open">View project →</span>
               </div>
             </button>
           ))}

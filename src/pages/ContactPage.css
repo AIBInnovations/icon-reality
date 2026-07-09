@@ -188,7 +188,6 @@
   border-radius: 18px;
   padding: clamp(24px, 2.8vw, 36px);
   border: 1px solid var(--line);
-  box-shadow: 0 30px 70px -40px rgba(20, 20, 20, 0.15);
 }
 
 .contact-form {

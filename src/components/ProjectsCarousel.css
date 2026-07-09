@@ -137,6 +137,21 @@
   text-transform: uppercase;
   opacity: .88;
 }
+/* "View project" cue — only shown on the open card, hints a second tap opens it */
+.carousel__card-open {
+  margin-top: 8px;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  opacity: 0;
+  transform: translateY(6px);
+  transition: opacity .5s ease .25s, transform .5s ease .25s;
+}
+.carousel__card.is-active .carousel__card-open {
+  opacity: .95;
+  transform: translateY(0);
+}
 
 /* ============ CONTROLS ============ */
 .carousel__controls {

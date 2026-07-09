@@ -34,7 +34,7 @@ export default function Header() {
         </Link>
 
         <div className="site-header__actions">
-          <a href="mailto:iconrealty2@icloud.com?subject=Book%20a%20Site%20Visit" className="cta">Book a Site Visit</a>
+          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Site%20Visit" target="_blank" rel="noreferrer" className="cta">Book a Site Visit</a>
           <button
             className={`hamburger ${open ? 'is-open' : ''}`}
             onClick={() => setOpen(o => !o)}
@@ -67,7 +67,9 @@ export default function Header() {
               Indore, Madhya Pradesh
             </p>
             <a
-              href="mailto:iconrealty2@icloud.com?subject=Book%20a%20Site%20Visit"
+              href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Site%20Visit"
+              target="_blank"
+              rel="noreferrer"
               className="cta site-header__sheet-cta"
             >
               Book a Site Visit

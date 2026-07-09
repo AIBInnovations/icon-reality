@@ -11,17 +11,22 @@
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Special+Elite&family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
-    <title>Oscar Palace — A premium residential project on the Indore–Nagpur Highway</title>
+    <title>Icon Realty — Premium plotted developments in Indore</title>
     <style>
       html, body { background: #F6F2EC; margin: 0; }
       /* Initial loader: paints before React mounts, replaced by app render */
       #initial-loader {
-        position: fixed; inset: 0; z-index: 9998;
+        position: fixed; inset: 0; z-index: 10000;
         background: #F6F2EC;
         display: flex; align-items: center; justify-content: center;
         flex-direction: column; gap: 22px;
         font-family: 'Outfit', system-ui, -apple-system, sans-serif;
+        transform: translateY(0);
+        transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
+        will-change: transform;
       }
+      /* slides up to reveal the hero once its frame sequence has preloaded */
+      #initial-loader.is-leaving { transform: translateY(-100%); }
       #initial-loader img {
         width: 140px; height: auto; display: block;
         animation: ilPulse 1.6s ease-in-out infinite;

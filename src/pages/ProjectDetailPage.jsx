@@ -50,9 +50,40 @@ function ProjectVideo({ src, poster }) {
   );
 }
 
+// Decorative hero flank cutouts per project — like Oscar Palace's birds, each
+// project gets its own themed pair (gold to match the brand; IIT Greens stays
+// green). Elements drift with scroll parallax; hovering offers the brochure
+// when a local PDF exists. Sources: Wikimedia Commons (public domain / CC).
+const flankPair = (slug) => ({
+  left: `/images/flanks/${slug}-left.png`,
+  right: `/images/flanks/${slug}-right.png`,
+});
+const FLANKS = {
+  'oscar-palace': { left: '/images/oscar/3.png', right: '/images/oscar/4.png' },
+  // client-provided art (left image mirrored on the right)
+  'oscar-fort':              flankPair('oscar-fort'),
+  'oscar-billionaire':       flankPair('oscar-billionaire'),
+  'saatvik-vihar':           flankPair('saatvik-vihar'),
+  'eden-garden':             flankPair('eden-garden'),
+  'labham-city':             flankPair('labham-city'),
+  'iit-greens':              flankPair('iit-greens'),
+  'dream-victoria':          flankPair('dream-victoria'),
+  'victoria-park':           flankPair('victoria-park'),
+  'singapore-business-park': flankPair('singapore-business-park'),
+  // gold placeholders (Wikimedia Commons) until the client provides art
+  'siddhayatan':             flankPair('siddhayatan'),
+  'glamour-highway-city':    flankPair('glamour-highway-city'),
+  'glamour-hill-city':       flankPair('glamour-hill-city'),
+  'ruchi-enclave':           flankPair('ruchi-enclave'),
+  'ruchi-lifescapes':        flankPair('ruchi-lifescapes'),
+  'singapore-corridor':      flankPair('singapore-corridor'),
+  'singapore-lifestyle-2':   flankPair('singapore-lifestyle-2'),
+};
+
 export default function ProjectDetailPage() {
   const { slug } = useParams();
   const project = projectsBySlug[slug];
+  const flank = FLANKS[slug];
   const lineRefs = useRef([]);
   const flankLeftRef = useRef(null);
   const flankRightRef = useRef(null);
@@ -105,10 +136,10 @@ export default function ProjectDetailPage() {
     return () => tween.kill();
   }, [slug]);
 
-  // Scroll parallax for the Oscar Palace flank cutouts — the two images drift
+  // Scroll parallax for the hero flank cutouts — the two images drift
   // at different speeds/directions as the hero scrolls past.
   useEffect(() => {
-    if (slug !== 'oscar-palace') return;
+    if (!FLANKS[slug]) return;
     const left = flankLeftRef.current;
     const right = flankRightRef.current;
     if (!left && !right) return;
@@ -117,7 +148,8 @@ export default function ProjectDetailPage() {
       const heroSection = (left || right).closest('.project-hero');
       const make = (el, from, to, fadeDelay) => {
         if (!el) return;
-        const img = el.querySelector('img');
+        // animate the whole link block (image + hint text) so they drift together
+        const img = el.querySelector('.project-hero__flank-link') || el.querySelector('img');
         // entrance fade (opacity on the wrapper, so it won't fight the parallax y)
         gsap.fromTo(el, { opacity: 0 }, { opacity: 1, duration: 1, ease: 'power3.out', delay: fadeDelay });
         // scrubbed parallax (y on the inner img); scrub: 1 adds smoothing lag
@@ -156,25 +188,63 @@ export default function ProjectDetailPage() {
   const {
     name, tagline, location, total_area, plot_sizes, status,
     description, amenities = [], connectivity = [], highlights = [],
-    gallery = [], hero_image, brochure_url, amenityImages = {},
+    gallery: rawGallery = [], hero_image, brochure_url, amenityImages = {},
     video_url, video_poster,
   } = project;
 
+  // Hide gallery images hosted externally (iconrealty.homes) — they don't load
+  // here. Only show local images; an all-external gallery collapses the section.
+  // TODO: repopulate with local images once the client provides them.
+  const gallery = rawGallery.filter((src) => !/^https?:\/\//i.test(src));
+
   const statusLabel = status === 'trending' ? 'Trending now' : 'Completed';
+
+  // Hovering a flank element offers the project's brochure. NOTE: external
+  // (iconrealty.homes) brochure URLs are dead remnants of the old site — swap
+  // them for local PDFs in projects.js as the client provides them.
+  const localBrochure = brochure_url || null;
+
+  const flankSide = (side) => {
+    const img = (
+      <>
+        <img src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
+        {localBrochure && (
+          <span className="project-hero__flank-hint">Download Brochure</span>
+        )}
+      </>
+    );
+    return (
+      <div
+        className={`project-hero__flank project-hero__flank--${side}${slug !== 'oscar-palace' ? ' project-hero__flank--compact' : ''}`}
+        ref={side === 'left' ? flankLeftRef : flankRightRef}
+      >
+        {localBrochure ? (
+          <a
+            className="project-hero__flank-link"
+            href={localBrochure}
+            download
+            target="_blank"
+            rel="noreferrer"
+            aria-label={`Download the ${name} brochure`}
+          >
+            {img}
+          </a>
+        ) : (
+          <div className="project-hero__flank-link project-hero__flank-link--static">{img}</div>
+        )}
+      </div>
+    );
+  };
 
   return (
     <>
       {/* ====== HERO ====== */}
-      <section className={`project-hero ${slug === 'oscar-palace' ? 'project-hero--flanked' : ''}`}>
+      <section className={`project-hero ${flank ? 'project-hero--flanked' : ''}`}>
         <div className="container project-hero__inner">
-          {slug === 'oscar-palace' && (
+          {flank && (
             <>
-              <div className="project-hero__flank project-hero__flank--left" ref={flankLeftRef}>
-                <img src="/images/oscar/3.png" alt="" aria-hidden="true" loading="lazy" />
-              </div>
-              <div className="project-hero__flank project-hero__flank--right" ref={flankRightRef}>
-                <img src="/images/oscar/4.png" alt="" aria-hidden="true" loading="lazy" />
-              </div>
+              {flankSide('left')}
+              {flankSide('right')}
             </>
           )}
           <Reveal as="span" className="eyebrow project-hero__eyebrow">
@@ -396,10 +466,8 @@ export default function ProjectDetailPage() {
       </div>
 
       {/* ====== LOCATION / MAP ====== */}
-      <section className={`project-map ${slug === 'oscar-palace' ? 'project-map--landbg' : ''}`}>
-        {slug === 'oscar-palace' && (
-          <div className="project-map__bg" aria-hidden="true" />
-        )}
+      <section className="project-map project-map--landbg">
+        <div className="project-map__bg" aria-hidden="true" />
         <div className="container project-map__inner">
           <div className="project-map__head">
             <Reveal as="span" className="eyebrow project-map__eyebrow">Find it</Reveal>

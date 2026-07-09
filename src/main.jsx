@@ -6,10 +6,12 @@ import App from './App.jsx'
 // double-mount (causes "removeChild" errors). No effect on production behavior.
 createRoot(document.getElementById('root')).render(<App />)
 
-// Remove the static initial loader from index.html once React has rendered.
-// We wait one frame after mount so the React PageLoader is in the DOM and
-// covers the same area — no flash gap between handoff.
+// The homepage keeps the static loader up through its hero-frame preload and
+// slides it away itself (see HomePage). On every other route there's nothing to
+// preload, so remove it as soon as React has painted the page.
 requestAnimationFrame(() => {
-  const el = document.getElementById('initial-loader');
-  if (el) el.remove();
+  if (window.location.pathname !== '/') {
+    const el = document.getElementById('initial-loader');
+    if (el) el.remove();
+  }
 });
