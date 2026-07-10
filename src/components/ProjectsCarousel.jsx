@@ -1,17 +1,17 @@
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Reveal from './Reveal';
+import { projectsList } from '../data/projects';
 import './ProjectsCarousel.css';
 
-// Each card shows the project's own real render (the only videos available are
-// Oscar Palace footage, so images keep every card matched to its project).
-const projects = [
-  { name: 'OSCAR PALACE',      slug: 'oscar-palace',      meta: 'Indore–Nagpur Hwy · Royal estate', src: '/images/oscar/entrance/entrance-1.jpg' },
-  { name: 'OSCAR FORT',        slug: 'oscar-fort',        meta: 'Bicholi Mardana · Royal estate',   src: '/images/oscar-fort/thumb.jpg' },
-  { name: 'OSCAR BILLIONAIRE', slug: 'oscar-billionaire', meta: 'Bicholi Hapsi · Premium plots',    src: '/images/oscar-billionaire/gallery-1.jpg' },
-  { name: 'SAATVIK VIHAR',     slug: 'saatvik-vihar',     meta: 'Manglia · Family living',          src: '/images/projects/saatvik-vihar.jpg' },
-  { name: 'SIDDHAYATAN',       slug: 'siddhayatan',       meta: 'Manglia · Community-first',        src: '/images/siddhayatan/hero.jpg' },
-];
+const projects = projectsList
+  .filter((project) => project.status === 'trending')
+  .map((project) => ({
+    name: project.name.toUpperCase(),
+    slug: project.slug,
+    meta: `${project.location.replace(/, Indore$/, '')} · ${project.total_area}`,
+    src: project.thumbnail || project.hero_image,
+  }));
 
 export default function ProjectsCarousel() {
   const [active, setActive] = useState(2); // start with the middle card
@@ -35,7 +35,7 @@ export default function ProjectsCarousel() {
             Projects shaping<br/>the skyline.
           </Reveal>
           <Reveal as="p" className="carousel__lede" delay={0.1}>
-            Five flagship developments across Indore — each one a quiet, considered statement. Pick a project to take a closer look.
+            Eight flagship developments across Indore — each one a quiet, considered statement. Pick a project to take a closer look.
           </Reveal>
         </div>
 

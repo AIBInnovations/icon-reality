@@ -102,7 +102,7 @@ export const projectsList = [
       'Infinity swimming pool and fully equipped gymnasium',
       'Seamless blend of regal architecture with contemporary lifestyle',
     ],
-    brochure_url: 'https://iconrealty.homes/wp-content/uploads/2025/11/Oscar_fort_brochure.pdf',
+    brochure_url: '/downloads/oscar-fort-brochure.pdf',
     hero_image: '/images/oscar-fort/hero.jpg',
     video_url: '/video/oscar-fort-walkthrough.mp4',
     video_poster: '/images/oscar-fort/hero.jpg',

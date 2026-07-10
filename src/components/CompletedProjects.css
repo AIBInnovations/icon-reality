@@ -136,7 +136,7 @@
   .completed__head { margin-bottom: 28px; }
   .completed__title { font-size: clamp(28px, 8vw, 42px); margin-bottom: 14px; padding-inline: 12px; }
   .completed__lede { font-size: 15px; padding: 0 12px; }
-  /* 2-col grid all the way down on mobile — keeps 8 cards compact, no long scroll */
+  /* 2-col grid all the way down on mobile keeps the 15-card portfolio compact. */
   .completed__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
   .completed__card { gap: 8px; }
   .completed__media { aspect-ratio: 1 / 1; border-radius: 6px; }

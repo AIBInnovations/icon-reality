@@ -58,7 +58,7 @@
 
 .carousel__card {
   position: relative;
-  width: 170px;           /* inactive sliver */
+  width: clamp(68px, 6.6vw, 105px);
   height: 100%;
   flex-shrink: 0;
   cursor: pointer;
@@ -71,8 +71,7 @@
   transition: width .85s cubic-bezier(0.65, 0, 0.18, 1);
 }
 .carousel__card.is-active {
-  /* slightly wider than 9:16 — ~52vh at 75vh tall keeps it portrait but more substantial */
-  width: clamp(320px, 52vh, 560px);
+  width: clamp(300px, 35vw, 500px);
   cursor: default;
 }
 
