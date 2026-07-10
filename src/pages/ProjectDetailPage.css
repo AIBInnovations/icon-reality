@@ -12,13 +12,18 @@
   flex-direction: column;
   align-items: center;
   position: relative;
+  isolation: isolate;
+}
+
+.project-hero__flanks {
+  display: contents;
 }
 
 /* Flanking images (Oscar Palace) — transparent cutout PNGs, float freely */
 .project-hero__flank {
   position: absolute;
   top: 50%;
-  width: clamp(260px, 25vw, 440px);
+  width: clamp(180px, 16vw, 300px);
   transform: translateY(-50%);
   z-index: 1;
   pointer-events: none;
@@ -63,26 +68,101 @@
   color: var(--ink);
 }
 .project-hero__flank--left {
-  left: clamp(40px, 7vw, 140px);
+  left: clamp(12px, 2.4vw, 40px);
 }
 .project-hero__flank--right {
-  right: clamp(40px, 7vw, 140px);
+  right: clamp(12px, 2.4vw, 40px);
 }
 /* themed elements on the other project pages sit much smaller than
    Oscar Palace's birds — accents, not centerpieces */
 .project-hero__flank--compact {
-  width: clamp(150px, 14vw, 260px);
+  width: clamp(110px, 9.5vw, 170px);
 }
 /* Siddhayatan's Om / flower artwork already reads big — keep it smaller and
    push it further out toward the edges so the two don't crowd the title */
 .project-hero__flank--sm {
-  width: clamp(110px, 10vw, 180px);
+  width: clamp(84px, 7vw, 130px);
 }
-.project-hero__flank--sm.project-hero__flank--left  { left: clamp(8px, 2vw, 40px); }
-.project-hero__flank--sm.project-hero__flank--right { right: clamp(8px, 2vw, 40px); }
+.project-hero__flank--sm.project-hero__flank--left  { left: clamp(10px, 2vw, 28px); }
+.project-hero__flank--sm.project-hero__flank--right { right: clamp(10px, 2vw, 28px); }
+
+.project-hero--flanked .project-hero__eyebrow,
+.project-hero--flanked .project-hero__title,
+.project-hero--flanked .project-hero__lede {
+  position: relative;
+  z-index: 2;
+}
+
+.project-hero--flanked .project-hero__title,
+.project-hero--flanked .project-hero__lede {
+  padding-inline: clamp(12px, 2vw, 28px);
+}
+
+@media (max-width: 1200px) {
+  .project-hero__flank {
+    width: clamp(140px, 13vw, 210px);
+  }
+
+  .project-hero__flank--compact {
+    width: clamp(90px, 8vw, 120px);
+  }
+
+  .project-hero__flank--left {
+    left: clamp(8px, 2vw, 24px);
+  }
+
+  .project-hero__flank--right {
+    right: clamp(8px, 2vw, 24px);
+  }
+
+  .project-hero--flanked .project-hero__title {
+    font-size: clamp(44px, 7.2vw, 86px);
+  }
+}
 
 @media (max-width: 960px) {
-  .project-hero__flank { display: none; }
+  .project-hero__eyebrow { order: 1; }
+  .project-hero__title { order: 2; }
+  .project-hero__flanks {
+    order: 3;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    gap: clamp(18px, 8vw, 44px);
+    width: 100%;
+    margin: -4px 0 clamp(14px, 4vw, 22px);
+    pointer-events: none;
+  }
+  .project-hero__lede { order: 4; }
+
+  .project-hero__flank,
+  .project-hero__flank--compact,
+  .project-hero__flank--sm {
+    position: static;
+    top: auto;
+    right: auto;
+    left: auto;
+    display: block;
+    width: clamp(56px, 18vw, 92px);
+    transform: none;
+    opacity: 1;
+  }
+
+  .project-hero__flank--compact {
+    width: clamp(48px, 15vw, 76px);
+  }
+
+  .project-hero__flank--sm {
+    width: clamp(44px, 13vw, 64px);
+  }
+
+  .project-hero__flank-link {
+    pointer-events: auto;
+  }
+
+  .project-hero__flank-hint {
+    display: none;
+  }
 }
 
 .project-hero__eyebrow {
@@ -102,6 +182,16 @@
   flex-direction: column;
   align-items: center;
   font-family: var(--font-display);
+}
+
+.project-hero__title-desktop {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+}
+
+.project-hero__title-mobile {
+  display: none;
 }
 
 .project-hero__line {
@@ -854,8 +944,39 @@
 
 @media (max-width: 720px) {
   .project-hero { padding: 110px 0 40px; }
-  .project-hero__title { font-size: clamp(40px, 12vw, 64px); padding-inline: 12px; }
-  .project-hero__lede { font-size: 15px; padding: 0 12px; }
+  .project-hero--flanked .project-hero__title,
+  .project-hero__title {
+    display: block;
+    width: 100%;
+    min-width: 0;
+    font-size: clamp(30px, 8vw, 42px);
+    padding-inline: 12px;
+  }
+  .project-hero__title-desktop {
+    display: none;
+  }
+  .project-hero__title-mobile {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .project-hero__line {
+    width: 100%;
+    max-width: 100%;
+    min-width: 0;
+  }
+  .project-hero__line-inner {
+    max-width: 100%;
+    white-space: normal;
+    overflow-wrap: anywhere;
+  }
+  .project-hero--flanked .project-hero__lede,
+  .project-hero__lede {
+    width: 100%;
+    max-width: 32ch;
+    font-size: 14px;
+    padding: 0 12px;
+  }
 
   .project-banner { padding: 0 8px 50px; }
   .project-banner__shell { border-radius: 14px; aspect-ratio: 4 / 3; }

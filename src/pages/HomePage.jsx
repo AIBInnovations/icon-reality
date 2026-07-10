@@ -21,6 +21,16 @@ export default function HomePage() {
     typeof document !== 'undefined' ? document.getElementById('initial-loader') : null
   );
 
+  const setStaticLoaderProgress = (progress) => {
+    const el = staticLoader.current;
+    if (!el) return;
+
+    const pct = Math.round(Math.min(1, Math.max(0, progress)) * 100);
+    const number = el.querySelector('#initial-loader-percent');
+
+    if (number) number.textContent = `${pct}%`;
+  };
+
   // Safety net: never let the loader hang forever if frames fail to load on a
   // very slow connection. 45s is generous for the full ~62MB frame sequence.
   useEffect(() => {
@@ -41,7 +51,11 @@ export default function HomePage() {
   return (
     <>
       <Hero
-        onReady={() => setHeroReady(true)}
+        onProgress={setStaticLoaderProgress}
+        onReady={() => {
+          setStaticLoaderProgress(1);
+          setHeroReady(true);
+        }}
       />
       <DisplayHeading />
       <ServicesGrid />

@@ -198,6 +198,12 @@ export default function ProjectDetailPage() {
   const gallery = rawGallery.filter((src) => !/^https?:\/\//i.test(src));
 
   const statusLabel = status === 'trending' ? 'Trending now' : 'Completed';
+  const nameWords = name.split(' ');
+  const titleBreak = Math.ceil(nameWords.length / 2);
+  const desktopTitleLines = [
+    nameWords.slice(0, titleBreak).join(' '),
+    nameWords.slice(titleBreak).join(' '),
+  ].filter(Boolean);
 
   // Hovering a flank element offers the project's brochure. NOTE: external
   // (iconrealty.homes) brochure URLs are dead remnants of the old site — swap
@@ -242,27 +248,33 @@ export default function ProjectDetailPage() {
       <section className={`project-hero ${flank ? 'project-hero--flanked' : ''}`}>
         <div className="container project-hero__inner">
           {flank && (
-            <>
+            <div className="project-hero__flanks">
               {flankSide('left')}
               {flankSide('right')}
-            </>
+            </div>
           )}
           <Reveal as="span" className="eyebrow project-hero__eyebrow">
             {statusLabel} · {location}
           </Reveal>
           <h1 className="display project-hero__title">
-            <span className="project-hero__line">
-              <span className="project-hero__line-inner" ref={(el) => (lineRefs.current[0] = el)}>
-                {name.split(' ').slice(0, Math.ceil(name.split(' ').length / 2)).join(' ')}
-              </span>
-            </span>
-            {name.split(' ').length > 1 && (
-              <span className="project-hero__line">
-                <span className="project-hero__line-inner" ref={(el) => (lineRefs.current[1] = el)}>
-                  {name.split(' ').slice(Math.ceil(name.split(' ').length / 2)).join(' ')}
+            <span className="project-hero__title-desktop">
+              {desktopTitleLines.map((line, i) => (
+                <span className="project-hero__line" key={line}>
+                  <span className="project-hero__line-inner" ref={(el) => (lineRefs.current[i] = el)}>
+                    {line}
+                  </span>
                 </span>
-              </span>
-            )}
+              ))}
+            </span>
+            <span className="project-hero__title-mobile">
+              {nameWords.map((word) => (
+                <span className="project-hero__line" key={word}>
+                  <span className="project-hero__line-inner">
+                    {word}
+                  </span>
+                </span>
+              ))}
+            </span>
           </h1>
           {(tagline || slug === 'oscar-palace') && (
             <Reveal as="p" className="project-hero__lede" delay={0.6}>
