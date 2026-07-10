@@ -215,7 +215,7 @@ export default function ProjectDetailPage() {
     );
     return (
       <div
-        className={`project-hero__flank project-hero__flank--${side}${slug !== 'oscar-palace' ? ' project-hero__flank--compact' : ''}`}
+        className={`project-hero__flank project-hero__flank--${side}${slug !== 'oscar-palace' ? ' project-hero__flank--compact' : ''}${slug === 'siddhayatan' ? ' project-hero__flank--sm' : ''}`}
         ref={side === 'left' ? flankLeftRef : flankRightRef}
       >
         {localBrochure ? (

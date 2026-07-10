@@ -62,15 +62,19 @@
   color: var(--ink);
 }
 .project-hero__flank--left {
-  left: clamp(0px, 3vw, 50px);
+  left: clamp(40px, 7vw, 140px);
 }
 .project-hero__flank--right {
-  right: clamp(0px, 3vw, 50px);
+  right: clamp(40px, 7vw, 140px);
 }
 /* themed elements on the other project pages sit much smaller than
    Oscar Palace's birds — accents, not centerpieces */
 .project-hero__flank--compact {
-  width: clamp(120px, 11vw, 200px);
+  width: clamp(150px, 14vw, 260px);
+}
+/* Siddhayatan's Om / flower artwork already reads big — keep it smaller */
+.project-hero__flank--sm {
+  width: clamp(110px, 10vw, 180px);
 }
 
 @media (max-width: 960px) {
