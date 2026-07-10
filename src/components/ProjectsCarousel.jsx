@@ -7,10 +7,10 @@ import './ProjectsCarousel.css';
 // Oscar Palace footage, so images keep every card matched to its project).
 const projects = [
   { name: 'OSCAR PALACE',      slug: 'oscar-palace',      meta: 'Indore–Nagpur Hwy · Royal estate', src: '/images/oscar/entrance/entrance-1.jpg' },
-  { name: 'OSCAR FORT',        slug: 'oscar-fort',        meta: 'Bicholi Mardana · Royal estate',   src: '/images/projects/oscar-fort.webp' },
-  { name: 'OSCAR BILLIONAIRE', slug: 'oscar-billionaire', meta: 'Bicholi Hapsi · Premium plots',    src: '/images/projects/oscar-billionaire.png' },
+  { name: 'OSCAR FORT',        slug: 'oscar-fort',        meta: 'Bicholi Mardana · Royal estate',   src: '/images/oscar-fort/thumb.jpg' },
+  { name: 'OSCAR BILLIONAIRE', slug: 'oscar-billionaire', meta: 'Bicholi Hapsi · Premium plots',    src: '/images/oscar-billionaire/gallery-1.jpg' },
   { name: 'SAATVIK VIHAR',     slug: 'saatvik-vihar',     meta: 'Manglia · Family living',          src: '/images/projects/saatvik-vihar.jpg' },
-  { name: 'SIDDHAYATAN',       slug: 'siddhayatan',       meta: 'Manglia · Community-first',        src: '/images/projects/siddhayatan.jpg' },
+  { name: 'SIDDHAYATAN',       slug: 'siddhayatan',       meta: 'Manglia · Community-first',        src: '/images/siddhayatan/hero.jpg' },
 ];
 
 export default function ProjectsCarousel() {

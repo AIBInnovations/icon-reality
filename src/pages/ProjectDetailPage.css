@@ -49,8 +49,9 @@
   display: block;
   margin-top: 10px;
   text-align: center;
+  white-space: nowrap;   /* keep "Download Brochure" on one line under small art */
   font-size: 11px;
-  letter-spacing: 0.18em;
+  letter-spacing: 0.16em;
   text-transform: uppercase;
   font-weight: 600;
   color: var(--muted);
@@ -72,10 +73,13 @@
 .project-hero__flank--compact {
   width: clamp(150px, 14vw, 260px);
 }
-/* Siddhayatan's Om / flower artwork already reads big — keep it smaller */
+/* Siddhayatan's Om / flower artwork already reads big — keep it smaller and
+   push it further out toward the edges so the two don't crowd the title */
 .project-hero__flank--sm {
   width: clamp(110px, 10vw, 180px);
 }
+.project-hero__flank--sm.project-hero__flank--left  { left: clamp(8px, 2vw, 40px); }
+.project-hero__flank--sm.project-hero__flank--right { right: clamp(8px, 2vw, 40px); }
 
 @media (max-width: 960px) {
   .project-hero__flank { display: none; }
