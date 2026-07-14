@@ -205,18 +205,22 @@ export default function ProjectDetailPage() {
     nameWords.slice(titleBreak).join(' '),
   ].filter(Boolean);
 
-  // Hovering a flank element offers the project's brochure. NOTE: external
-  // (iconrealty.homes) brochure URLs are dead remnants of the old site — swap
-  // them for local PDFs in projects.js as the client provides them.
-  const localBrochure = brochure_url || null;
+  // Every project offers its brochure from the hero flanks. Projects with a
+  // local PDF get a direct download; the rest open a pre-filled brochure
+  // request in Gmail (same address as the "Book a Site Visit" buttons) so no
+  // page is ever left without a brochure action. NOTE: the old iconrealty.homes
+  // brochure URLs served HTML, not PDFs — replace with local PDFs in
+  // projects.js as the client provides them.
+  const hasPdf = Boolean(brochure_url);
+  const brochureHref = brochure_url ||
+    `https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=${encodeURIComponent(`Brochure request — ${name}`)}`;
+  const brochureLabel = hasPdf ? 'Download Brochure' : 'Request Brochure';
 
   const flankSide = (side) => {
     const img = (
       <>
         <img src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
-        {localBrochure && (
-          <span className="project-hero__flank-hint">Download Brochure</span>
-        )}
+        <span className="project-hero__flank-hint">{brochureLabel}</span>
       </>
     );
     return (
@@ -224,20 +228,16 @@ export default function ProjectDetailPage() {
         className={`project-hero__flank project-hero__flank--${side}${slug !== 'oscar-palace' ? ' project-hero__flank--compact' : ''}${slug === 'siddhayatan' ? ' project-hero__flank--sm' : ''}`}
         ref={side === 'left' ? flankLeftRef : flankRightRef}
       >
-        {localBrochure ? (
-          <a
-            className="project-hero__flank-link"
-            href={localBrochure}
-            download
-            target="_blank"
-            rel="noreferrer"
-            aria-label={`Download the ${name} brochure`}
-          >
-            {img}
-          </a>
-        ) : (
-          <div className="project-hero__flank-link project-hero__flank-link--static">{img}</div>
-        )}
+        <a
+          className="project-hero__flank-link"
+          href={brochureHref}
+          {...(hasPdf ? { download: true } : {})}
+          target="_blank"
+          rel="noreferrer"
+          aria-label={hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`}
+        >
+          {img}
+        </a>
       </div>
     );
   };
@@ -559,32 +559,29 @@ export default function ProjectDetailPage() {
         <div className="project-finalcta__shell">
           <div className="container project-finalcta__inner">
 
-            {/* Project-specific block (brochure / talk to us) */}
+            {/* Project-specific block — brochure download or request */}
             <div className="project-finalcta__block">
               <Reveal as="span" className="eyebrow project-finalcta__eyebrow">
-                {brochure_url ? 'Brochure' : 'Get in touch'}
+                Brochure
               </Reveal>
               <Reveal as="h2" className="display project-finalcta__title" delay={0.05}>
-                {brochure_url ? `Take ${name} home.` : `Want a closer look at ${name}?`}
+                {hasPdf ? `Take ${name} home.` : `Want the ${name} brochure?`}
               </Reveal>
               <Reveal as="p" className="project-finalcta__lede" delay={0.1}>
-                {brochure_url
+                {hasPdf
                   ? 'Full plot sizes, master plan, and the long view — packaged in a single download.'
-                  : "Get in touch — we'll walk you through the plot, the planning, and what life here looks like."}
+                  : "Tell us where to send it — we'll email over the full brochure with plot sizes, master plan, and pricing."}
               </Reveal>
               <Reveal className="project-finalcta__actions" delay={0.15}>
-                {brochure_url ? (
-                  <a href={brochure_url} target="_blank" rel="noreferrer" className="cta project-finalcta__primary">
-                    Download the brochure
-                  </a>
-                ) : (
-                  <a
-                    href={`mailto:iconrealty2@icloud.com?subject=Enquiry%20about%20${encodeURIComponent(name)}`}
-                    className="cta project-finalcta__primary"
-                  >
-                    Talk to us
-                  </a>
-                )}
+                <a
+                  href={brochureHref}
+                  {...(hasPdf ? { download: true } : {})}
+                  target="_blank"
+                  rel="noreferrer"
+                  className="cta project-finalcta__primary"
+                >
+                  {hasPdf ? 'Download the brochure' : 'Request the brochure'}
+                </a>
                 <Link to="/projects" className="cta cta--ghost project-finalcta__ghost">
                   All projects
                 </Link>

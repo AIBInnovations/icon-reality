@@ -18,6 +18,7 @@ const PORTFOLIO_ORDER = [
   'ruchi-lifescapes',
   'singapore-corridor',
   'singapore-lifestyle-2',
+  'singapore-business-park',
   'dream-victoria',
 ];
 
@@ -32,7 +33,7 @@ export default function CompletedProjects() {
       <div className="container completed__head">
         <Reveal as="span" className="eyebrow completed__eyebrow">The Icon Realty portfolio</Reveal>
         <Reveal as="h2" className="display completed__title" delay={0.05}>
-          Fifteen landmarks.<br/>Thousands of homes.
+          Sixteen landmarks.<br/>Thousands of homes.
         </Reveal>
         <Reveal as="p" className="completed__lede" delay={0.1}>
           Icon Realty has shaped landmarks right across Indore — from Oscar Palace
