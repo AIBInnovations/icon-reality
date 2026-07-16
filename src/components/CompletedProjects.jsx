@@ -29,7 +29,6 @@ const landmarks = PORTFOLIO_ORDER
 export default function CompletedProjects() {
   return (
     <section className="completed" id="completed">
-      <img className="completed__art" src="/images/oscar/landmarks-art.png" alt="" aria-hidden="true" />
       <div className="container completed__head">
         <Reveal as="span" className="eyebrow completed__eyebrow">The Icon Realty portfolio</Reveal>
         <Reveal as="h2" className="display completed__title" delay={0.05}>

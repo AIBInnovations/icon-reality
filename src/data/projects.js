@@ -607,7 +607,7 @@ export const projectsList = [
     amenities: ['Commercial frontage', 'Planned roads', 'Green common areas', 'Secure boundary'],
     connectivity: ['LIG Square — central Indore', 'Schools, hospitals & markets within easy reach', 'Quick city-wide connectivity'],
     highlights: ['Central LIG Square location', 'Live-work flexibility', 'High footfall & visibility'],
-    brochure_url: null,
+    brochure_url: '/downloads/singapore-business-park-brochure.pdf',
     hero_image: '/images/singapore-business-park/hero.jpg',
     gallery: [
       '/images/singapore-business-park/gallery-1.jpg',
