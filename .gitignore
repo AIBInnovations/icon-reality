@@ -31,3 +31,7 @@ dist-ssr
 *.bak
 *.orig
 public/video/*.bak
+
+# env / secrets
+.env
+.env.*

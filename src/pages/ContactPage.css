@@ -283,6 +283,14 @@
   pointer-events: none;
 }
 
+.contact-form__status {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.contact-form__status--ok { color: #2e7d4f; }
+.contact-form__status--err { color: #b3402e; }
+
 @media (max-width: 880px) {
   .contact-grid__inner { grid-template-columns: 1fr; gap: 50px; }
   .contact-info { position: static; }

@@ -59,6 +59,7 @@ const socials = [
 
 export default function ContactPage() {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '', consent: false });
+  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
 
   useEffect(() => { window.scrollTo(0, 0); }, []);
 
@@ -67,14 +68,27 @@ export default function ContactPage() {
     setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
   };
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-    if (!form.consent) return;
-    const subject = encodeURIComponent('Enquiry — Oscar Palace (website)');
-    const body = encodeURIComponent(
-      `Name: ${form.name}\nPhone: ${form.phone}\nEmail: ${form.email}\n\n${form.message}`
-    );
-    window.location.href = `mailto:iconrealty2@icloud.com?subject=${subject}&body=${body}`;
+    if (!form.consent || status === 'sending') return;
+    setStatus('sending');
+    try {
+      const res = await fetch('/api/contact', {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify({
+          name: form.name,
+          phone: form.phone,
+          email: form.email,
+          message: form.message,
+        }),
+      });
+      if (!res.ok) throw new Error('send failed');
+      setStatus('sent');
+      setForm({ name: '', phone: '', email: '', message: '', consent: false });
+    } catch {
+      setStatus('error');
+    }
   };
 
   return (
@@ -198,9 +212,24 @@ export default function ContactPage() {
                 <span>I have read and accept the privacy policy.</span>
               </label>
 
-              <button type="submit" className="cta contact-form__submit" disabled={!form.consent}>
-                Send Request
+              <button
+                type="submit"
+                className="cta contact-form__submit"
+                disabled={!form.consent || status === 'sending'}
+              >
+                {status === 'sending' ? 'Sending…' : 'Send Request'}
               </button>
+
+              {status === 'sent' && (
+                <p className="contact-form__status contact-form__status--ok" role="status">
+                  Thank you — your request has been sent. We'll get back to you shortly.
+                </p>
+              )}
+              {status === 'error' && (
+                <p className="contact-form__status contact-form__status--err" role="alert">
+                  Something went wrong. Please try again, or call us directly at +91 9425 9425 10.
+                </p>
+              )}
             </form>
           </Reveal>
         </div>
