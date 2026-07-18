@@ -36,7 +36,7 @@
   width: 100%;
   overflow: hidden;
   padding: 20px 0 60px;
-  height: clamp(360px, 44vh, 460px);
+  height: clamp(360px, calc(var(--svh, 1vh) * 44), 460px);
 }
 
 .testimonials__track {
@@ -142,7 +142,7 @@
   .testimonials__shell { border-radius: 14px; padding: 50px 0 32px; }
   .testimonials__head { margin-bottom: 32px; }
   .testimonials__title { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
-  .testimonials__viewport { padding: 14px 0 36px; height: clamp(380px, 56vh, 460px); }
+  .testimonials__viewport { padding: 14px 0 36px; height: clamp(380px, calc(var(--svh, 1vh) * 56), 460px); }
   .testimonial { padding: 22px 20px; gap: 16px; width: min(560px, 90vw); margin-left: calc(min(560px, 90vw) / -2); }
   .testimonial__quote { font-size: 15px; padding-inline: 12px; }
   .testimonial__name { font-size: 15px; }

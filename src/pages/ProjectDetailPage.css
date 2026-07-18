@@ -225,7 +225,7 @@
   overflow: hidden;
   background: #0a0a0a;
   aspect-ratio: 16 / 9;
-  max-height: 70vh;
+  max-height: calc(var(--svh, 1vh) * 70);
 }
 
 .project-banner__shell img {
@@ -693,7 +693,7 @@
   position: relative;
   width: 100%;
   aspect-ratio: 21 / 9; /* wide cinematic — less vertical real estate */
-  max-height: 60vh;
+  max-height: calc(var(--svh, 1vh) * 60);
   border-radius: 14px;
   overflow: hidden;
   background: var(--bg-2);

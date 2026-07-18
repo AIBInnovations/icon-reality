@@ -352,7 +352,7 @@
   }
   .service-modal__close { width: 44px; height: 44px; top: 16px; right: 16px; }
   .service-modal__carousel-wrap { padding-top: 64px; }
-  .service-modal__carousel { height: 36vh; }
+  .service-modal__carousel { height: calc(var(--svh, 1vh) * 36); }
   .service-modal__slide { width: 70%; }
   .service-modal__nav { width: 36px; height: 36px; }
   .service-modal__stat-row { grid-template-columns: repeat(2, 1fr); }

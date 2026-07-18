@@ -78,7 +78,7 @@
 
 @media (max-width: 880px) {
   .trust__grid { grid-template-columns: 1fr; }
-  .trust__image-wrap { aspect-ratio: 4/5; max-height: 70vh; }
+  .trust__image-wrap { aspect-ratio: 4/5; max-height: calc(var(--svh, 1vh) * 70); }
 }
 
 @media (max-width: 720px) {

@@ -3,7 +3,7 @@
 .hero {
   position: relative;
   width: 100%;
-  height: 185vh; /* 100vh visible + 85vh of scrub distance — quicker to scroll through */
+  height: calc(var(--svh, 1vh) * 185); /* 100vh visible + 85vh scrub — --svh is frozen so mobile browser bars can't resize it mid-scroll */
   background: var(--bg);
   color: #fff;
 }
@@ -12,7 +12,7 @@
   position: sticky;
   top: 0;
   width: 100%;
-  height: 100vh;
+  height: calc(var(--svh, 1vh) * 100);
   padding: 14px;
 }
 
@@ -158,12 +158,10 @@
 }
 
 @media (max-width: 720px) {
-  /* shorter scrub on mobile — faster to consume.
-     svh = small viewport height: sized to the screen with the browser's
-     top/bottom bars visible, and stable while they hide/show on scroll
-     (vh fallback for older browsers). */
-  .hero { height: 140vh; height: 140svh; }
-  .hero__sticky { height: 100svh; }
+  /* shorter scrub on mobile — faster to consume. --svh (frozen px unit set
+     in index.html) stays constant while the browser's bars hide/show on
+     scroll, even in in-app WebViews where svh/vh recompute. */
+  .hero { height: calc(var(--svh, 1vh) * 140); }
   .hero__eyebrow { font-size: 10px; letter-spacing: 0.28em; margin-bottom: 12px; }
   .hero__sticky { padding: 8px; }
   .hero__inner { border-radius: 14px; }

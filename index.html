@@ -12,6 +12,29 @@
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
     <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Special+Elite&family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
     <title>Icon Realty — Premium plotted developments in Indore</title>
+    <script>
+      /* Freeze the viewport-height unit (--svh) in px so mobile browsers /
+         in-app WebViews hiding their top & bottom bars on scroll can't
+         resize every vh-based section mid-scroll (= the layout shift).
+         Re-frozen only on rotation or a real window resize. */
+      (function () {
+        var w = window.innerWidth, h = window.innerHeight;
+        var touch = window.matchMedia('(hover: none), (pointer: coarse)').matches;
+        var set = function () {
+          document.documentElement.style.setProperty('--svh', window.innerHeight / 100 + 'px');
+        };
+        set();
+        window.addEventListener('resize', function () {
+          var nw = window.innerWidth, nh = window.innerHeight;
+          /* touch devices: height-only changes under 25% of the taller state
+             are the browser's own bars (iOS Safari's can be ~27% of the small
+             viewport) — rotation changes width, split-screen changes more */
+          if (touch && nw === w && Math.abs(nh - h) / Math.max(nh, h) < 0.25) return;
+          w = nw; h = nh;
+          set();
+        });
+      })();
+    </script>
     <style>
       html, body { background: #F6F2EC; margin: 0; }
       /* Initial loader: paints before React mounts, replaced by app render */

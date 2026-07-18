@@ -49,7 +49,7 @@
   display: flex;
   gap: 10px;
   width: 100%;
-  height: clamp(480px, 75vh, 760px);
+  height: clamp(480px, calc(var(--svh, 1vh) * 75), 760px);
   padding: 0 clamp(20px, 4vw, 56px);
   margin-bottom: clamp(36px, 4vw, 56px);
   justify-content: center;
@@ -206,7 +206,7 @@
   .carousel__lede { font-size: 15px; padding: 0 12px; }
   /* Mobile: hide non-active slivers, show only the active card centered */
   .carousel__accordion {
-    height: clamp(440px, 64vh, 580px);
+    height: clamp(440px, calc(var(--svh, 1vh) * 64), 580px);
     padding: 0 14px;
     gap: 0;
   }

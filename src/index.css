@@ -48,7 +48,7 @@ body {
 /* Keeps the footer below the fold while a route's lazy chunk is still loading
    (Suspense fallback fills the page, but ensures no flash of footer pulled up). */
 main {
-  min-height: 100vh;
+  min-height: calc(var(--svh, 1vh) * 100);
 }
 
 /* Mobile: tighten the global container gutter so unframed sections (Pillars,
