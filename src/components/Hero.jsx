@@ -27,6 +27,13 @@ export default function Hero({ onReady, onProgress }) {
     let cw = 0, ch = 0;
 
     const resize = () => {
+      // Mobile browser bars collapsing on scroll fire resize with an unchanged
+      // box — setting canvas.width blanks the frame, so skip the reallocation
+      // and just repaint.
+      if (inner.clientWidth === cw && inner.clientHeight === ch) {
+        draw(stateRef.current.progress);
+        return;
+      }
       cw = inner.clientWidth;
       ch = inner.clientHeight;
       canvas.width = Math.floor(cw * dpr);

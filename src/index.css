@@ -60,6 +60,8 @@ main {
   :root {
     --gutter: 8px;
   }
+  /* svh: stable while the mobile browser's bars hide/show on scroll */
+  main { min-height: 100svh; }
 }
 
 /* lenis */

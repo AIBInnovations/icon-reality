@@ -158,8 +158,12 @@
 }
 
 @media (max-width: 720px) {
-  /* shorter scrub on mobile — faster to consume */
-  .hero { height: 140vh; }
+  /* shorter scrub on mobile — faster to consume.
+     svh = small viewport height: sized to the screen with the browser's
+     top/bottom bars visible, and stable while they hide/show on scroll
+     (vh fallback for older browsers). */
+  .hero { height: 140vh; height: 140svh; }
+  .hero__sticky { height: 100svh; }
   .hero__eyebrow { font-size: 10px; letter-spacing: 0.28em; margin-bottom: 12px; }
   .hero__sticky { padding: 8px; }
   .hero__inner { border-radius: 14px; }

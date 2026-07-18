@@ -109,7 +109,10 @@
 }
 
 @media (max-width: 720px) {
-  .about-video { padding: 8px; }
+  /* svh: stable while the mobile browser's bars hide/show on scroll
+     (base vh rules remain as fallback for older browsers) */
+  .about-video { padding: 8px; height: 350svh; }
+  .about-video__sticky { height: 100svh; }
   .about-video__shell { border-radius: 14px; }
 }
 

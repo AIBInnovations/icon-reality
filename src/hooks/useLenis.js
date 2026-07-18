@@ -5,6 +5,12 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 
 gsap.registerPlugin(ScrollTrigger);
 
+// Mobile browsers fire window resize when their top/bottom bars collapse on
+// scroll; a full ScrollTrigger refresh mid-scroll makes pinned/scrubbed
+// sections visibly jump. Only genuine size changes (rotation, split-screen)
+// should trigger a refresh.
+ScrollTrigger.config({ ignoreMobileResize: true });
+
 export function useLenis() {
   useEffect(() => {
     // Never let the browser restore a previous scroll position on navigation —
