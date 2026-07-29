@@ -5,6 +5,7 @@ import Header from './components/Header';
 import Footer from './components/Footer';
 import PageLoader from './components/PageLoader';
 import RouteTransition from './components/RouteTransition';
+import QuickDock from './components/QuickDock';
 
 // code-split each route so the user never downloads About/Projects JS until they navigate there
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -33,6 +34,7 @@ export default function App() {
         </Suspense>
       </main>
       <Footer />
+      <QuickDock />
     </BrowserRouter>
   );
 }

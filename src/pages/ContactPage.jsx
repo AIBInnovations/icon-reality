@@ -1,6 +1,7 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import Reveal from '../components/Reveal';
 import FinalCTA from '../components/FinalCTA';
+import EnquiryForm from '../components/EnquiryForm';
 import './ContactPage.css';
 
 const channels = [
@@ -58,38 +59,7 @@ const socials = [
 ];
 
 export default function ContactPage() {
-  const [form, setForm] = useState({ name: '', phone: '', email: '', message: '', consent: false });
-  const [status, setStatus] = useState('idle'); // idle | sending | sent | error
-
   useEffect(() => { window.scrollTo(0, 0); }, []);
-
-  const handleChange = (e) => {
-    const { name, value, type, checked } = e.target;
-    setForm((f) => ({ ...f, [name]: type === 'checkbox' ? checked : value }));
-  };
-
-  const handleSubmit = async (e) => {
-    e.preventDefault();
-    if (!form.consent || status === 'sending') return;
-    setStatus('sending');
-    try {
-      const res = await fetch('/api/contact', {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({
-          name: form.name,
-          phone: form.phone,
-          email: form.email,
-          message: form.message,
-        }),
-      });
-      if (!res.ok) throw new Error('send failed');
-      setStatus('sent');
-      setForm({ name: '', phone: '', email: '', message: '', consent: false });
-    } catch {
-      setStatus('error');
-    }
-  };
 
   return (
     <>
@@ -146,91 +116,7 @@ export default function ContactPage() {
 
           {/* RIGHT — form */}
           <Reveal className="contact-form-wrap" delay={0.15}>
-            <form className="contact-form" onSubmit={handleSubmit}>
-              <span className="contact-form__eyebrow">Send a request</span>
-              <h3 className="contact-form__heading">Book a site visit.</h3>
-
-              <div className="contact-form__field">
-                <label htmlFor="cf-name">Full name</label>
-                <input
-                  id="cf-name"
-                  name="name"
-                  type="text"
-                  required
-                  value={form.name}
-                  onChange={handleChange}
-                  placeholder="Your name"
-                />
-              </div>
-
-              <div className="contact-form__row">
-                <div className="contact-form__field">
-                  <label htmlFor="cf-phone">Phone</label>
-                  <input
-                    id="cf-phone"
-                    name="phone"
-                    type="tel"
-                    required
-                    value={form.phone}
-                    onChange={handleChange}
-                    placeholder="+91 …"
-                  />
-                </div>
-                <div className="contact-form__field">
-                  <label htmlFor="cf-email">Email</label>
-                  <input
-                    id="cf-email"
-                    name="email"
-                    type="email"
-                    required
-                    value={form.email}
-                    onChange={handleChange}
-                    placeholder="you@email.com"
-                  />
-                </div>
-              </div>
-
-              <div className="contact-form__field">
-                <label htmlFor="cf-message">Requirement / Message</label>
-                <textarea
-                  id="cf-message"
-                  name="message"
-                  rows={5}
-                  value={form.message}
-                  onChange={handleChange}
-                  placeholder="Tell us which project interests you, plot size, timeline, anything else…"
-                />
-              </div>
-
-              <label className="contact-form__consent">
-                <input
-                  name="consent"
-                  type="checkbox"
-                  checked={form.consent}
-                  onChange={handleChange}
-                />
-                <span>I have read and accept the privacy policy.</span>
-              </label>
-
-              <button
-                type="submit"
-                className="cta contact-form__submit"
-                disabled={!form.consent || status === 'sending'}
-              >
-                {status === 'sending' ? 'Sending…' : 'Send Request'}
-              </button>
-
-              {status === 'sent' && (
-                <p className="contact-form__status contact-form__status--ok" role="status">
-                  Thank you — your request has been sent. We'll get back to you shortly.
-                </p>
-              )}
-              {status === 'error' && (
-                <p className="contact-form__status contact-form__status--err" role="alert">
-                  Something went wrong. Please try again, or call us directly at +91 9425 9425 10.
-                </p>
-              )}
-            </form>
+            <EnquiryForm />
           </Reveal>
         </div>
       </section>

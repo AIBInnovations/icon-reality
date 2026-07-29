@@ -1,0 +1,112 @@
+/* Shared enquiry form — rendered inside the Contact page's white card and
+   inside the QuickDock modal. Only the surrounding card differs. */
+
+.contact-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.contact-form__eyebrow {
+  color: var(--peach-deep);
+  font-size: 11px;
+  letter-spacing: 0.32em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.contact-form__heading {
+  font-family: var(--font-display);
+  font-size: clamp(26px, 3vw, 40px);
+  font-weight: 600;
+  letter-spacing: -0.01em;
+  line-height: 1.05;
+  margin: 0 0 12px;
+  color: var(--ink);
+}
+
+.contact-form__row {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 16px;
+}
+
+.contact-form__field {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.contact-form__field label {
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.contact-form__field input,
+.contact-form__field textarea {
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  padding: 10px 0 12px;
+  font-size: 16px;
+  color: var(--ink);
+  font-family: inherit;
+  width: 100%;
+  transition: border-color .25s ease;
+}
+.contact-form__field input:focus,
+.contact-form__field textarea:focus {
+  outline: none;
+  border-bottom-color: var(--peach-deep);
+}
+.contact-form__field textarea { resize: vertical; min-height: 110px; }
+.contact-form__field input::placeholder,
+.contact-form__field textarea::placeholder {
+  color: var(--muted);
+  opacity: 0.55;
+}
+
+.contact-form__consent {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: 13px;
+  color: var(--muted);
+  line-height: 1.5;
+  margin-top: 4px;
+  cursor: pointer;
+}
+.contact-form__consent input {
+  margin-top: 3px;
+  accent-color: var(--peach-deep);
+}
+
+.contact-form__submit {
+  align-self: flex-start;
+  margin-top: 12px;
+}
+.contact-form__submit:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+  pointer-events: none;
+}
+
+.contact-form__status {
+  margin-top: 14px;
+  font-size: 14px;
+  line-height: 1.5;
+}
+.contact-form__status--ok { color: #2e7d4f; }
+.contact-form__status--err { color: #b3402e; }
+
+@media (max-width: 880px) {
+  .contact-form__row { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .contact-form__heading { font-size: 24px; }
+  .contact-form__submit { width: 100%; justify-content: center; }
+}
