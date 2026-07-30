@@ -116,7 +116,7 @@ export default function ContactPage() {
 
           {/* RIGHT — form */}
           <Reveal className="contact-form-wrap" delay={0.15}>
-            <EnquiryForm />
+            <EnquiryForm source="Contact Page" project="Oscar Palace" />
           </Reveal>
         </div>
       </section>

@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import EnquiryForm from './EnquiryForm';
+import EnquiryModal from './EnquiryModal';
 import './QuickDock.css';
 
 const WHATSAPP = 'https://wa.me/919425942510?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Icon%20Realty.';
@@ -112,7 +112,6 @@ export default function QuickDock() {
   const [open, setOpen] = useState(false);
   const [modal, setModal] = useState(false);
   const dockRef = useRef(null);
-  const cardRef = useRef(null);
   const { pathname } = useLocation();
   const [lastPath, setLastPath] = useState(pathname);
 
@@ -124,13 +123,10 @@ export default function QuickDock() {
     setModal(false);
   }
 
-  // Esc closes the modal first, then the panel
+  // Esc closes the panel (the modal handles its own Esc)
   useEffect(() => {
-    const onKey = (e) => {
-      if (e.key !== 'Escape') return;
-      if (modal) setModal(false);
-      else if (open) setOpen(false);
-    };
+    if (!open || modal) return;
+    const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
   }, [open, modal]);
@@ -144,19 +140,6 @@ export default function QuickDock() {
     document.addEventListener('pointerdown', onDown);
     return () => document.removeEventListener('pointerdown', onDown);
   }, [open]);
-
-  // freeze the page behind the modal — Lenis drives scrolling, so stop it too
-  useEffect(() => {
-    if (!modal) return;
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
-    window.lenis?.stop();
-    cardRef.current?.focus();
-    return () => {
-      document.body.style.overflow = prevOverflow;
-      window.lenis?.start();
-    };
-  }, [modal]);
 
   const openForm = () => {
     setOpen(false);
@@ -267,34 +250,16 @@ export default function QuickDock() {
         </div>
       </div>
 
-      {modal && (
-        <div
-          className="qd-modal"
-          role="dialog"
-          aria-modal="true"
-          aria-labelledby="qd-modal-title"
-          onMouseDown={(e) => { if (e.target === e.currentTarget) setModal(false); }}
-        >
-          <div className="qd-modal__card" ref={cardRef} tabIndex={-1} data-lenis-prevent>
-            <button
-              type="button"
-              className="qd-modal__close"
-              onClick={() => setModal(false)}
-              aria-label="Close enquiry form"
-            >
-              <svg width="16" height="16" viewBox="0 0 14 14" fill="none" aria-hidden>
-                <path d="M1 1l12 12M13 1L1 13" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round"/>
-              </svg>
-            </button>
-            <EnquiryForm
-              idPrefix="qd"
-              eyebrow="Quick enquiry"
-              heading="Book a site visit."
-              headingId="qd-modal-title"
-            />
-          </div>
-        </div>
-      )}
+      <EnquiryModal
+        open={modal}
+        onClose={() => setModal(false)}
+        idPrefix="qd"
+        eyebrow="Quick enquiry"
+        heading="Book a site visit."
+        headingId="qd-modal-title"
+        source="Quick Links"
+        project="Oscar Palace"
+      />
     </>
   );
 }

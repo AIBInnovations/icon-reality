@@ -14,6 +14,10 @@ export default function EnquiryForm({
   heading = 'Book a site visit.',
   headingId,
   idPrefix = 'cf',
+  // sent to the CRM as sub_source_name / project_name so leads can be traced
+  // back to the exact form and project they came from
+  source = 'Website',
+  project,
 }) {
   const [form, setForm] = useState({ name: '', phone: '', email: '', message: '', consent: false });
   const [status, setStatus] = useState('idle'); // idle | sending | sent | error
@@ -36,12 +40,20 @@ export default function EnquiryForm({
           phone: form.phone,
           email: form.email,
           message: form.message,
+          source,
+          project,
         }),
       });
-      if (!res.ok) throw new Error('send failed');
+      if (!res.ok) {
+        // surface the real reason in the console — a 404 means the serverless
+        // function isn't running, a 500 means mail creds are missing/wrong
+        const detail = await res.text().catch(() => '');
+        throw new Error(`/api/contact responded ${res.status} ${detail}`);
+      }
       setStatus('sent');
       setForm({ name: '', phone: '', email: '', message: '', consent: false });
-    } catch {
+    } catch (err) {
+      console.error('[contact form]', err);
       setStatus('error');
     }
   };
@@ -96,7 +108,7 @@ export default function EnquiryForm({
         <textarea
           id={`${idPrefix}-message`}
           name="message"
-          rows={5}
+          rows={3}
           value={form.message}
           onChange={handleChange}
           placeholder="Tell us which project interests you, plot size, timeline, anything else…"

@@ -18,4 +18,9 @@ export default defineConfig([
       parserOptions: { ecmaFeatures: { jsx: true } },
     },
   },
+  {
+    // these run in Node, not the browser (process, console, Buffer…)
+    files: ['vite.config.js', 'eslint.config.js', 'api/**/*.js'],
+    languageOptions: { globals: globals.node },
+  },
 ])

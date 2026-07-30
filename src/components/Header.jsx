@@ -1,10 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
+import EnquiryModal from './EnquiryModal';
 import './Header.css';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
+  const [modal, setModal] = useState(false);
   const location = useLocation();
 
   useEffect(() => {
@@ -14,8 +16,10 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // close mobile drawer on route change
-  useEffect(() => { setOpen(false); }, [location.pathname]);
+  // close mobile drawer + modal on route change
+  useEffect(() => { setOpen(false); setModal(false); }, [location.pathname]);
+
+  const openForm = () => { setOpen(false); setModal(true); };
 
   return (
     <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
@@ -34,7 +38,7 @@ export default function Header() {
         </Link>
 
         <div className="site-header__actions">
-          <a href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Site%20Visit" target="_blank" rel="noreferrer" className="cta">Book a Site Visit</a>
+          <button type="button" className="cta" onClick={openForm}>Book a Site Visit</button>
           <button
             className={`hamburger ${open ? 'is-open' : ''}`}
             onClick={() => setOpen(o => !o)}
@@ -66,17 +70,26 @@ export default function Header() {
               Icon Realty<br/>
               Indore, Madhya Pradesh
             </p>
-            <a
-              href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Site%20Visit"
-              target="_blank"
-              rel="noreferrer"
+            <button
+              type="button"
               className="cta site-header__sheet-cta"
+              onClick={openForm}
             >
               Book a Site Visit
-            </a>
+            </button>
           </div>
         </div>
       </div>
+
+      <EnquiryModal
+        open={modal}
+        onClose={() => setModal(false)}
+        idPrefix="hdr"
+        eyebrow="Send a request"
+        heading="Book a site visit."
+        headingId="header-modal-title"
+        source="Header"
+      />
     </header>
   );
 }
