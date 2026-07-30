@@ -50,8 +50,10 @@
 }
 
 /* ============ GRID: info + form ============ */
+/* Top padding is small because the breadcrumb bar above already clears the
+   fixed floating header. */
 .contact-grid {
-  padding: clamp(110px, 12vw, 160px) 0 clamp(60px, 8vw, 100px);
+  padding: clamp(24px, 3vw, 40px) 0 clamp(60px, 8vw, 100px);
   background: var(--bg);
 }
 
@@ -197,7 +199,7 @@
 }
 
 @media (max-width: 720px) {
-  .contact-grid { padding: 110px 0 44px; }
+  .contact-grid { padding: 20px 0 44px; }
   .contact-info__heading { font-size: clamp(28px, 8vw, 40px); margin-bottom: 24px; }
   .contact-info__row {
     grid-template-columns: 40px 1fr 16px;

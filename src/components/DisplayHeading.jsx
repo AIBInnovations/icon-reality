@@ -137,6 +137,8 @@ export default function DisplayHeading() {
             src={src}
             alt=""
             className="display-section__trail-img"
+            loading="lazy"
+            decoding="async"
           />
         ))}
       </div>

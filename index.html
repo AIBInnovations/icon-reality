@@ -1,5 +1,5 @@
 <!doctype html>
-<html lang="en">
+<html lang="en-IN">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/x-icon" href="/favicon.ico" />
@@ -10,7 +10,30 @@
     <meta name="description" content="Oscar Palace — a premium residential plotting project on the Indore–Nagpur Highway. A luxury estate by Ruchi Realty, mindfully designed and marketed by Icon Realty." />
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link href="https://fonts.googleapis.com/css2?family=Caveat:wght@500;600;700&family=Cinzel:wght@500;600;700&family=Special+Elite&family=Outfit:wght@200;300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+    <!-- Only the weights the CSS actually uses: Outfit 300–700 (was 200–900,
+         i.e. 4 unused faces), Cinzel 500/600, Caveat 600, Special Elite.
+         Loaded non-render-blocking (media=print → all on load) so the font
+         request never sits on the critical path; display=swap covers the FOUT. -->
+    <link
+      rel="preload"
+      as="style"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cinzel:wght@500;600&family=Outfit:wght@300;400;500;600;700&family=Special+Elite&display=swap"
+    />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cinzel:wght@500;600&family=Outfit:wght@300;400;500;600;700&family=Special+Elite&display=swap"
+      media="print"
+      onload="this.media='all'"
+    />
+    <noscript>
+      <link
+        rel="stylesheet"
+        href="https://fonts.googleapis.com/css2?family=Caveat:wght@600&family=Cinzel:wght@500;600&family=Outfit:wght@300;400;500;600;700&family=Special+Elite&display=swap"
+      />
+    </noscript>
+    <!-- LCP on the home page is the first hero frame; fetch it at highest
+         priority alongside the HTML instead of waiting for the JS to ask. -->
+    <link rel="preload" as="image" href="/frames/f001.jpg" fetchpriority="high" />
     <title>Icon Realty — Premium plotted developments in Indore</title>
     <script>
       /* Freeze the viewport-height unit (--svh) in px so mobile browsers /

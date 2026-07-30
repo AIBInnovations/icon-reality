@@ -10,6 +10,8 @@ import ProjectsCarousel from '../components/ProjectsCarousel';
 import Testimonials from '../components/Testimonials';
 import CompletedProjects from '../components/CompletedProjects';
 import FinalCTA from '../components/FinalCTA';
+import Seo from '../seo/Seo';
+import { realEstateAgentSchema } from '../seo/schema';
 
 export default function HomePage() {
   const [heroReady, setHeroReady] = useState(false);
@@ -50,6 +52,13 @@ export default function HomePage() {
 
   return (
     <>
+      <Seo
+        title={null}
+        description="Icon Realty builds premium plotted developments in Indore — 20+ years, 15+ landmark projects and 4,500+ happy families. Explore Oscar Palace on the Indore–Nagpur Highway."
+        path="/"
+        jsonLd={realEstateAgentSchema()}
+      />
+
       <Hero
         onProgress={setStaticLoaderProgress}
         onReady={() => {

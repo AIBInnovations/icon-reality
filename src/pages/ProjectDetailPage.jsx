@@ -2,6 +2,15 @@ import { useEffect, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import gsap from 'gsap';
 import Reveal from '../components/Reveal';
+import Breadcrumbs from '../components/Breadcrumbs';
+import Seo from '../seo/Seo';
+import {
+  breadcrumbSchema,
+  projectSchema,
+  videoObjectSchema,
+  imageObjectSchema,
+} from '../seo/schema';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import { projectsBySlug } from '../data/projects';
 import './ProjectDetailPage.css';
 
@@ -85,6 +94,8 @@ export default function ProjectDetailPage() {
   const project = projectsBySlug[slug];
   const flank = FLANKS[slug];
   const lineRefs = useRef([]);
+  // matches the 720px breakpoint where the CSS used to swap title variants
+  const isMobile = useMediaQuery('(max-width: 720px)');
   const flankLeftRef = useRef(null);
   const flankRightRef = useRef(null);
   const [openModal, setOpenModal] = useState(null); // 'amenities' | 'connectivity' | null
@@ -173,6 +184,13 @@ export default function ProjectDetailPage() {
   if (!project) {
     return (
       <section className="project-notfound">
+        {/* an unknown slug is a genuine 404 — must never be indexed */}
+        <Seo
+          title="Project not found"
+          description="This project page does not exist. Browse all Icon Realty projects in Indore."
+          path={`/projects/${slug}`}
+          noindex
+        />
         <div className="container project-notfound__inner">
           <span className="eyebrow project-notfound__eyebrow">404</span>
           <h1 className="display project-notfound__title">Project not found.</h1>
@@ -242,8 +260,36 @@ export default function ProjectDetailPage() {
     );
   };
 
+  const trail = [
+    { name: 'Home', path: '/' },
+    { name: 'Projects', path: '/projects' },
+    { name, path: `/projects/${slug}` },
+  ];
+
+  // Trim to a clean meta description: first sentence of the copy, capped so
+  // Google doesn't truncate mid-word in the SERP.
+  const metaDescription = (() => {
+    const base = tagline || description || '';
+    const text = `${name}, ${location}. ${base}`.replace(/\s+/g, ' ').trim();
+    return text.length > 158 ? `${text.slice(0, 155).trimEnd()}…` : text;
+  })();
+
   return (
     <>
+      <Seo
+        title={`${name} — ${location}`}
+        description={metaDescription}
+        path={`/projects/${slug}`}
+        image={hero_image}
+        type="article"
+        jsonLd={[
+          breadcrumbSchema(trail),
+          projectSchema(project),
+          videoObjectSchema(project),
+          imageObjectSchema(hero_image, `${name}, ${location}`),
+        ]}
+      />
+
       {/* ====== HERO ====== */}
       <section className={`project-hero ${flank ? 'project-hero--flanked' : ''}`}>
         <div className="container project-hero__inner">
@@ -256,25 +302,32 @@ export default function ProjectDetailPage() {
           <Reveal as="span" className="eyebrow project-hero__eyebrow">
             {statusLabel} · {location}
           </Reveal>
+          {/* Only the variant for the current viewport is rendered. Both used
+              to be in the DOM with one hidden by CSS, which put the project
+              name in the H1 twice ("Oscar PalaceOscar Palace") for anything
+              reading raw text. */}
           <h1 className="display project-hero__title">
-            <span className="project-hero__title-desktop">
-              {desktopTitleLines.map((line, i) => (
-                <span className="project-hero__line" key={line}>
-                  <span className="project-hero__line-inner" ref={(el) => (lineRefs.current[i] = el)}>
-                    {line}
+            {isMobile ? (
+              <span className="project-hero__title-mobile">
+                {nameWords.map((word) => (
+                  <span className="project-hero__line" key={word}>
+                    <span className="project-hero__line-inner">
+                      {word}
+                    </span>
                   </span>
-                </span>
-              ))}
-            </span>
-            <span className="project-hero__title-mobile">
-              {nameWords.map((word) => (
-                <span className="project-hero__line" key={word}>
-                  <span className="project-hero__line-inner">
-                    {word}
+                ))}
+              </span>
+            ) : (
+              <span className="project-hero__title-desktop">
+                {desktopTitleLines.map((line, i) => (
+                  <span className="project-hero__line" key={line}>
+                    <span className="project-hero__line-inner" ref={(el) => (lineRefs.current[i] = el)}>
+                      {line}
+                    </span>
                   </span>
-                </span>
-              ))}
-            </span>
+                ))}
+              </span>
+            )}
           </h1>
           {(tagline || slug === 'oscar-palace') && (
             <Reveal as="p" className="project-hero__lede" delay={0.6}>
@@ -286,11 +339,13 @@ export default function ProjectDetailPage() {
         </div>
       </section>
 
+      <Breadcrumbs trail={trail} />
+
       {/* ====== HERO IMAGE ====== */}
       {hero_image && (
         <section className="project-banner">
           <div className="project-banner__shell">
-            <img src={hero_image} alt={`${name} — hero`} />
+            <img src={hero_image} alt={`${name} — hero`} loading="eager" fetchPriority="high" decoding="async" />
           </div>
         </section>
       )}

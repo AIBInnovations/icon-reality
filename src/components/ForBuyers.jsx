@@ -16,7 +16,7 @@ export default function ForBuyers() {
           </Reveal>
         </div>
         <Reveal className="forbuyers__image">
-          <img src="/images/for-buyers.jpg" alt="A refined home interior at an Icon Realty development" />
+          <img src="/images/for-buyers.jpg" alt="A refined home interior at an Icon Realty development" loading="lazy" decoding="async" />
         </Reveal>
       </div>
     </section>

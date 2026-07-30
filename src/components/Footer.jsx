@@ -9,7 +9,7 @@ export default function Footer() {
         <div className="footer__grid">
           <div className="footer__lead">
             <Reveal>
-              <img src="/icon-logo.png" alt="Icon Realty" className="footer__logo" />
+              <img src="/icon-logo.png" alt="Icon Realty" className="footer__logo" loading="lazy" decoding="async" />
             </Reveal>
             <Reveal as="p" className="footer__pitch" delay={0.05}>
               Over two decades of trust, 15+ landmark projects, 4,500+ happy families — Icon Realty builds addresses that quietly change everything.

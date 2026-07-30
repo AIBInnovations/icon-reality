@@ -5,7 +5,15 @@ import Reveal from '../components/Reveal';
 import Stats from '../components/Stats';
 import Testimonials from '../components/Testimonials';
 import FinalCTA from '../components/FinalCTA';
+import Breadcrumbs from '../components/Breadcrumbs';
+import Seo from '../seo/Seo';
+import { breadcrumbSchema, webPageSchema } from '../seo/schema';
 import './AboutPage.css';
+
+const TRAIL = [
+  { name: 'Home', path: '/' },
+  { name: 'About', path: '/about' },
+];
 
 const ABOUT_FRAME_COUNT = 192;
 const ABOUT_BOOTSTRAP = 60;
@@ -155,6 +163,20 @@ export default function AboutPage() {
 
   return (
     <>
+      <Seo
+        title="About Icon Realty — 20+ years of plotted development in Indore"
+        description="Two decades of trust, 15+ landmark projects and 4,500+ happy families. Meet the team behind Icon Realty's plotted developments in Indore, Madhya Pradesh."
+        path="/about"
+        jsonLd={[
+          breadcrumbSchema(TRAIL),
+          webPageSchema('AboutPage', {
+            name: 'About Icon Realty',
+            description: 'The story, values and team behind Icon Realty, Indore.',
+            path: '/about',
+          }),
+        ]}
+      />
+
       {/* MODUS-STYLE HERO */}
       <section className="about-hero">
         <div className="container about-hero__inner">
@@ -176,6 +198,8 @@ export default function AboutPage() {
           </Reveal>
         </div>
       </section>
+
+      <Breadcrumbs trail={TRAIL} />
 
       {/* VIDEO BAND — scroll-scrubbed canvas (sticky child) */}
       <section ref={wrapRef} className="about-video">
@@ -289,7 +313,7 @@ export default function AboutPage() {
           ].map((d, i) => (
             <Reveal key={d.name} className="team-card" delay={i * 0.08}>
               <div className="team-card__photo">
-                <img src={d.photo} alt={d.name} />
+                <img src={d.photo} alt={d.name} loading="lazy" decoding="async" />
               </div>
               <div className="team-card__veil" aria-hidden />
               <div className="team-card__body">

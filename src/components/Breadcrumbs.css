@@ -1,0 +1,67 @@
+/* Breadcrumb trail — uses the site's eyebrow language (11px, wide tracking,
+   uppercase, muted) so it reads as a quiet wayfinding line, not a nav bar. */
+/* Default: sits under a page hero, so it only needs breathing room. */
+.breadcrumbs {
+  background: var(--bg);
+  padding-top: clamp(10px, 1.6vw, 22px);
+  padding-bottom: 2px;
+}
+
+/* --top: the page has no hero above it, so clear the fixed floating header. */
+.breadcrumbs--top {
+  padding-top: clamp(96px, 11vw, 130px);
+}
+
+.breadcrumbs__list {
+  display: flex;
+  flex-wrap: wrap;
+  align-items: center;
+  gap: 8px;
+  font-size: 11px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 500;
+}
+
+.breadcrumbs__item {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.breadcrumbs__link {
+  color: var(--muted);
+  position: relative;
+  transition: color .2s ease;
+}
+.breadcrumbs__link::after {
+  content: '';
+  position: absolute;
+  left: 0; right: 0; bottom: -3px;
+  height: 1px;
+  background: currentColor;
+  transform: scaleX(0);
+  transform-origin: left;
+  transition: transform .3s ease;
+}
+.breadcrumbs__link:hover { color: var(--peach-deep); }
+.breadcrumbs__link:hover::after { transform: scaleX(1); }
+
+.breadcrumbs__sep {
+  color: var(--line);
+  color: rgba(20, 20, 20, 0.28);
+}
+
+.breadcrumbs__current {
+  color: var(--ink);
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+  max-width: 60vw;
+}
+
+@media (max-width: 720px) {
+  .breadcrumbs { padding-top: 92px; }
+  .breadcrumbs__list { font-size: 10px; gap: 6px; }
+  .breadcrumbs__item { gap: 6px; }
+}

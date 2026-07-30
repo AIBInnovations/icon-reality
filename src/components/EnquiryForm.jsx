@@ -14,6 +14,10 @@ export default function EnquiryForm({
   heading = 'Book a site visit.',
   headingId,
   idPrefix = 'cf',
+  // The form heading must sit one level below the host page's H1, otherwise the
+  // page skips a heading level (h1 → h3), which fails an accessibility/SEO
+  // heading-hierarchy audit.
+  headingLevel: Heading = 'h2',
   // sent to the CRM as sub_source_name / project_name so leads can be traced
   // back to the exact form and project they came from
   source = 'Website',
@@ -61,7 +65,7 @@ export default function EnquiryForm({
   return (
     <form className="contact-form" onSubmit={handleSubmit}>
       <span className="contact-form__eyebrow">{eyebrow}</span>
-      <h3 className="contact-form__heading" id={headingId}>{heading}</h3>
+      <Heading className="contact-form__heading" id={headingId}>{heading}</Heading>
 
       <div className="contact-form__field">
         <label htmlFor={`${idPrefix}-name`}>Full name</label>

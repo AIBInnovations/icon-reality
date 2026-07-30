@@ -12,7 +12,7 @@ export default function TrustSection() {
     <section className="trust" id="about">
       <div className="container trust__grid">
         <Reveal className="trust__image-wrap">
-          <img src="/images/oscar/photos/photo-1.jpg" alt="Oscar Palace — heritage landmark tower" />
+          <img src="/images/oscar/photos/photo-1.jpg" alt="Oscar Palace — heritage landmark tower" loading="lazy" decoding="async" />
         </Reveal>
 
         <div className="trust__copy">

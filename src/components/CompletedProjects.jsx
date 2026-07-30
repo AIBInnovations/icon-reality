@@ -20,6 +20,9 @@ const PORTFOLIO_ORDER = [
   'singapore-lifestyle-2',
   'singapore-business-park',
   'dream-victoria',
+  // was missing from this list, which left /projects/victoria-park an orphan
+  // page — in the sitemap but not linked from anywhere on the site
+  'victoria-park',
 ];
 
 const landmarks = PORTFOLIO_ORDER
@@ -32,7 +35,7 @@ export default function CompletedProjects() {
       <div className="container completed__head">
         <Reveal as="span" className="eyebrow completed__eyebrow">The Icon Realty portfolio</Reveal>
         <Reveal as="h2" className="display completed__title" delay={0.05}>
-          Sixteen landmarks.<br/>Thousands of homes.
+          Seventeen landmarks.<br/>Thousands of homes.
         </Reveal>
         <Reveal as="p" className="completed__lede" delay={0.1}>
           Icon Realty has shaped landmarks right across Indore — from Oscar Palace

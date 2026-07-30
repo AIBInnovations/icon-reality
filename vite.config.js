@@ -1,5 +1,6 @@
 import { defineConfig, loadEnv } from 'vite'
 import react from '@vitejs/plugin-react'
+import { seoAssets } from './plugins/seo-assets.js'
 
 // Vite doesn't run Vercel's /api functions, so `npm run dev` 404s on
 // /api/contact and every enquiry form shows "Something went wrong".
@@ -45,7 +46,13 @@ export default defineConfig(({ mode }) => {
   // bundle — that is governed separately by envPrefix, which stays at VITE_.
   Object.assign(process.env, loadEnv(mode, process.cwd(), ''))
 
+  // Only the real production deployment may be indexed. Vercel sets
+  // VERCEL_ENV to 'production' | 'preview' | 'development', so preview
+  // deployments and any local build get robots.txt Disallow + noindex.
+  const vercelEnv = process.env.VERCEL_ENV
+  const indexable = vercelEnv ? vercelEnv === 'production' : mode === 'production'
+
   return {
-    plugins: [react(), vercelApiDev()],
+    plugins: [react(), vercelApiDev(), seoAssets({ indexable })],
   }
 })

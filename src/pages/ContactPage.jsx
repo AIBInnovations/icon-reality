@@ -2,7 +2,15 @@ import { useEffect } from 'react';
 import Reveal from '../components/Reveal';
 import FinalCTA from '../components/FinalCTA';
 import EnquiryForm from '../components/EnquiryForm';
+import Breadcrumbs from '../components/Breadcrumbs';
+import Seo from '../seo/Seo';
+import { breadcrumbSchema, webPageSchema, realEstateAgentSchema } from '../seo/schema';
 import './ContactPage.css';
+
+const TRAIL = [
+  { name: 'Home', path: '/' },
+  { name: 'Contact', path: '/contact' },
+];
 
 const channels = [
   {
@@ -63,6 +71,23 @@ export default function ContactPage() {
 
   return (
     <>
+      <Seo
+        title="Contact Icon Realty — Indore"
+        description="Get in touch with Icon Realty, Indore. Call +91 9425 9425 10, WhatsApp us, or send an enquiry to book a site visit at Oscar Palace and our other plotted developments."
+        path="/contact"
+        jsonLd={[
+          breadcrumbSchema(TRAIL),
+          webPageSchema('ContactPage', {
+            name: 'Contact Icon Realty',
+            description: 'Phone, WhatsApp, email and office address for Icon Realty, Indore.',
+            path: '/contact',
+          }),
+          realEstateAgentSchema(),
+        ]}
+      />
+
+      <Breadcrumbs trail={TRAIL} variant="top" />
+
       <section className="contact-grid">
         <div className="container contact-grid__inner">
           {/* LEFT — channels + socials */}
@@ -70,7 +95,8 @@ export default function ContactPage() {
             <Reveal as="span" className="eyebrow contact-info__eyebrow">
               Channels
             </Reveal>
-            <Reveal as="h2" className="display contact-info__heading" delay={0.05}>
+            {/* the page's single H1 — was an H2, leaving /contact with no H1 */}
+            <Reveal as="h1" className="display contact-info__heading" delay={0.05}>
               A few ways to reach<br/>the team.
             </Reveal>
 

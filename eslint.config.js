@@ -20,7 +20,13 @@ export default defineConfig([
   },
   {
     // these run in Node, not the browser (process, console, Buffer…)
-    files: ['vite.config.js', 'eslint.config.js', 'api/**/*.js'],
+    files: ['vite.config.js', 'eslint.config.js', 'api/**/*.js', 'plugins/**/*.js'],
     languageOptions: { globals: globals.node },
+  },
+  {
+    // src/seo/site.js resolves the canonical origin from import.meta.env in the
+    // browser and process.env in build-time tooling, so it needs both.
+    files: ['src/seo/site.js'],
+    languageOptions: { globals: { ...globals.browser, ...globals.node } },
   },
 ])

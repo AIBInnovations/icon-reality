@@ -5,8 +5,16 @@ import Reveal from '../components/Reveal';
 import ProjectsCarousel from '../components/ProjectsCarousel';
 import CompletedProjects from '../components/CompletedProjects';
 import FinalCTA from '../components/FinalCTA';
+import Breadcrumbs from '../components/Breadcrumbs';
+import Seo from '../seo/Seo';
+import { breadcrumbSchema, projectListSchema } from '../seo/schema';
 import { projectsList } from '../data/projects';
 import './ProjectsPage.css';
+
+const TRAIL = [
+  { name: 'Home', path: '/' },
+  { name: 'Projects', path: '/projects' },
+];
 
 const trending = projectsList
   .filter((p) => p.status === 'trending')
@@ -36,6 +44,13 @@ export default function ProjectsPage() {
 
   return (
     <>
+      <Seo
+        title="Projects in Indore — plotted developments by Icon Realty"
+        description="Explore Icon Realty's plotted developments in Indore — Oscar Palace, Oscar Fort, IIT Greens, Labham City and more. Currently building and already lived in."
+        path="/projects"
+        jsonLd={[breadcrumbSchema(TRAIL), projectListSchema(projectsList)]}
+      />
+
       {/* HERO */}
       <section className="projects-hero">
         <div className="container projects-hero__inner">
@@ -56,6 +71,8 @@ export default function ProjectsPage() {
           </Reveal>
         </div>
       </section>
+
+      <Breadcrumbs trail={TRAIL} />
 
       <ProjectsCarousel />
 
