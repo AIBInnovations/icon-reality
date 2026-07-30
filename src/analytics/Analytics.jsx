@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
+import { trackEvent } from './track';
 
 /**
  * Google Analytics 4 for the SPA.
@@ -51,6 +52,40 @@ export default function Analytics() {
       page_title: document.title,
     });
   }, [pathname, search]);
+
+  // One delegated listener turns every contact/download link on the site into a
+  // GA event — no need to wire each of the many tel:/mailto:/WhatsApp/brochure
+  // links scattered across the header, footer, dock, contact & project pages,
+  // and any added later is tracked automatically. Capture phase so it still
+  // fires if a handler calls stopPropagation.
+  useEffect(() => {
+    if (!GA_ID) return;
+    const onClick = (e) => {
+      const a = e.target.closest?.('a[href]');
+      if (!a) return;
+      const href = a.getAttribute('href') || '';
+      const text = (a.textContent || '').trim().slice(0, 100);
+
+      if (href.startsWith('tel:')) {
+        trackEvent('call_click', { link_url: href, link_text: text });
+      } else if (href.startsWith('mailto:')) {
+        trackEvent('email_click', { link_url: href, link_text: text });
+      } else if (/wa\.me|whatsapp\.com/i.test(href)) {
+        trackEvent('whatsapp_click', { link_url: href, link_text: text });
+      } else if (/maps\.google|google\.[a-z.]+\/maps/i.test(href)) {
+        trackEvent('directions_click', { link_url: href, link_text: text });
+      } else if (/\.pdf($|\?)/i.test(href) || a.hasAttribute('download')) {
+        // GA4 recommended event name
+        trackEvent('file_download', {
+          file_name: href.split('/').pop()?.split('?')[0] || href,
+          link_url: href,
+          link_text: text,
+        });
+      }
+    };
+    document.addEventListener('click', onClick, true);
+    return () => document.removeEventListener('click', onClick, true);
+  }, []);
 
   return null;
 }

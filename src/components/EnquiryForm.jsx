@@ -1,4 +1,5 @@
 import { useState } from 'react';
+import { trackEvent } from '../analytics/track';
 import './EnquiryForm.css';
 
 /**
@@ -55,6 +56,9 @@ export default function EnquiryForm({
         throw new Error(`/api/contact responded ${res.status} ${detail}`);
       }
       setStatus('sent');
+      // GA4 recommended conversion event — one lead submitted. `source` tells
+      // which form (Website / Header / Quick Links) and `project` which project.
+      trackEvent('generate_lead', { source, project, form_id: idPrefix });
       setForm({ name: '', phone: '', email: '', message: '', consent: false });
     } catch (err) {
       console.error('[contact form]', err);
