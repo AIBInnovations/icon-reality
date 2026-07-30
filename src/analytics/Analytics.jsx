@@ -11,10 +11,15 @@ import { trackEvent } from './track';
  * including the first render. Automatic page_view is disabled in config to
  * avoid double-counting the initial load.
  *
- * Set VITE_GA_ID=G-XXXXXXXXXX in .env.local (dev) and in the Vercel dashboard
- * (production). Without it this component renders nothing and injects no script.
+ * The GA4 Measurement ID is public (it ships in the browser bundle either way),
+ * so it's hard-coded as the production default and does not depend on a Vercel
+ * build-time env var being wired up correctly. VITE_GA_ID still overrides it
+ * (e.g. to point a staging build at a different property). In `npm run dev`
+ * neither is used, so localhost traffic never reaches the live property.
  */
-const GA_ID = import.meta.env.VITE_GA_ID;
+const GA_ID =
+  import.meta.env.VITE_GA_ID ||
+  (import.meta.env.PROD ? 'G-XK2079RXKZ' : undefined);
 
 let initialised = false;
 function initGa() {
