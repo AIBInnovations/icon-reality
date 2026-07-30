@@ -1,6 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import EnquiryModal from './EnquiryModal';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import './QuickDock.css';
 
 const WHATSAPP = 'https://wa.me/919425942510?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Icon%20Realty.';
@@ -78,8 +78,8 @@ const ITEMS = [
   {
     key: 'email',
     title: 'Email Us',
-    sub: 'iconrealty2@icloud.com',
-    href: 'mailto:iconrealty2@icloud.com?subject=Enquiry%20from%20website',
+    sub: 'iconrealty02@gmail.com',
+    href: 'mailto:iconrealty02@gmail.com?subject=Enquiry%20from%20website',
     icon: icon(
       <>
         <path d="M3 7l9 6 9-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -110,26 +110,25 @@ const Arrow = () => (
 
 export default function QuickDock() {
   const [open, setOpen] = useState(false);
-  const [modal, setModal] = useState(false);
   const dockRef = useRef(null);
   const { pathname } = useLocation();
   const [lastPath, setLastPath] = useState(pathname);
+  const { openEnquiry } = useEnquiry();
 
-  // close everything on route change (adjust-state-during-render, so the dock
+  // close the panel on route change (adjust-state-during-render, so the dock
   // never paints open on the incoming page)
   if (lastPath !== pathname) {
     setLastPath(pathname);
     setOpen(false);
-    setModal(false);
   }
 
   // Esc closes the panel (the modal handles its own Esc)
   useEffect(() => {
-    if (!open || modal) return;
+    if (!open) return;
     const onKey = (e) => { if (e.key === 'Escape') setOpen(false); };
     window.addEventListener('keydown', onKey);
     return () => window.removeEventListener('keydown', onKey);
-  }, [open, modal]);
+  }, [open]);
 
   // click anywhere outside the dock closes the panel
   useEffect(() => {
@@ -143,7 +142,11 @@ export default function QuickDock() {
 
   const openForm = () => {
     setOpen(false);
-    setModal(true);
+    openEnquiry({
+      eyebrow: 'Quick enquiry',
+      source: 'Quick Links',
+      project: 'Oscar Palace',
+    });
   };
 
   const renderInner = (item) => (
@@ -250,16 +253,6 @@ export default function QuickDock() {
         </div>
       </div>
 
-      <EnquiryModal
-        open={modal}
-        onClose={() => setModal(false)}
-        idPrefix="qd"
-        eyebrow="Quick enquiry"
-        heading="Book a site visit."
-        headingId="qd-modal-title"
-        source="Quick Links"
-        project="Oscar Palace"
-      />
     </>
   );
 }

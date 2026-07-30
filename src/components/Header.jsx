@@ -1,12 +1,12 @@
 import { useEffect, useState } from 'react';
 import { Link, useLocation } from 'react-router-dom';
-import EnquiryModal from './EnquiryModal';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import './Header.css';
 
 export default function Header() {
   const [scrolled, setScrolled] = useState(false);
   const [open, setOpen] = useState(false);
-  const [modal, setModal] = useState(false);
+  const { openEnquiry } = useEnquiry();
   const location = useLocation();
 
   useEffect(() => {
@@ -16,10 +16,10 @@ export default function Header() {
     return () => window.removeEventListener('scroll', onScroll);
   }, []);
 
-  // close mobile drawer + modal on route change
-  useEffect(() => { setOpen(false); setModal(false); }, [location.pathname]);
+  // close mobile drawer on route change
+  useEffect(() => { setOpen(false); }, [location.pathname]);
 
-  const openForm = () => { setOpen(false); setModal(true); };
+  const openForm = () => { setOpen(false); openEnquiry({ source: 'Header' }); };
 
   return (
     <header className={`site-header ${scrolled ? 'is-scrolled' : ''}`}>
@@ -64,7 +64,7 @@ export default function Header() {
 
           <div className="site-header__sheet-col site-header__sheet-col--contact">
             <span className="site-header__sheet-eyebrow">Get in touch</span>
-            <a href="mailto:iconrealty2@icloud.com" className="site-header__sheet-link">iconrealty2@icloud.com</a>
+            <a href="mailto:iconrealty02@gmail.com" className="site-header__sheet-link">iconrealty02@gmail.com</a>
             <a href="tel:+919425942510" className="site-header__sheet-link">+91 9425 9425 10 / 11</a>
             <p className="site-header__sheet-address">
               Icon Realty<br/>
@@ -81,15 +81,6 @@ export default function Header() {
         </div>
       </div>
 
-      <EnquiryModal
-        open={modal}
-        onClose={() => setModal(false)}
-        idPrefix="hdr"
-        eyebrow="Send a request"
-        heading="Book a site visit."
-        headingId="header-modal-title"
-        source="Header"
-      />
     </header>
   );
 }

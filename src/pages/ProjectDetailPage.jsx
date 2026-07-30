@@ -11,6 +11,7 @@ import {
   imageObjectSchema,
 } from '../seo/schema';
 import { useMediaQuery } from '../hooks/useMediaQuery';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import { projectsBySlug } from '../data/projects';
 import './ProjectDetailPage.css';
 
@@ -91,6 +92,7 @@ const FLANKS = {
 
 export default function ProjectDetailPage() {
   const { slug } = useParams();
+  const { openEnquiry } = useEnquiry();
   const project = projectsBySlug[slug];
   const flank = FLANKS[slug];
   const lineRefs = useRef([]);
@@ -224,15 +226,31 @@ export default function ProjectDetailPage() {
   ].filter(Boolean);
 
   // Every project offers its brochure from the hero flanks. Projects with a
-  // local PDF get a direct download; the rest open a pre-filled brochure
-  // request in Gmail (same address as the "Book a Site Visit" buttons) so no
-  // page is ever left without a brochure action. NOTE: the old iconrealty.homes
-  // brochure URLs served HTML, not PDFs — replace with local PDFs in
-  // projects.js as the client provides them.
+  // local PDF get a direct download; the rest open the enquiry modal (a brochure
+  // request that lands in the CRM + inbox) so no page is ever left without a
+  // brochure action. NOTE: replace with local PDFs in projects.js as the client
+  // provides them.
   const hasPdf = Boolean(brochure_url);
-  const brochureHref = brochure_url ||
-    `https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=${encodeURIComponent(`Brochure request — ${name}`)}`;
   const brochureLabel = hasPdf ? 'Download Brochure' : 'Request Brochure';
+  const requestBrochure = () => openEnquiry({
+    eyebrow: 'Brochure request',
+    heading: `Request the ${name} brochure.`,
+    source: `Brochure — ${name}`,
+    project: name,
+  });
+
+  // Same brochure action rendered in two spots (hero flanks + final CTA):
+  // an <a download> when there's a PDF, else a <button> that opens the modal.
+  const brochureAction = ({ className, children, ariaLabel }) =>
+    hasPdf ? (
+      <a className={className} href={brochure_url} download target="_blank" rel="noreferrer" aria-label={ariaLabel}>
+        {children}
+      </a>
+    ) : (
+      <button type="button" className={className} onClick={requestBrochure} aria-label={ariaLabel}>
+        {children}
+      </button>
+    );
 
   const flankSide = (side) => {
     const img = (
@@ -246,16 +264,11 @@ export default function ProjectDetailPage() {
         className={`project-hero__flank project-hero__flank--${side}${slug !== 'oscar-palace' ? ' project-hero__flank--compact' : ''}${slug === 'siddhayatan' ? ' project-hero__flank--sm' : ''}`}
         ref={side === 'left' ? flankLeftRef : flankRightRef}
       >
-        <a
-          className="project-hero__flank-link"
-          href={brochureHref}
-          {...(hasPdf ? { download: true } : {})}
-          target="_blank"
-          rel="noreferrer"
-          aria-label={hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`}
-        >
-          {img}
-        </a>
+        {brochureAction({
+          className: 'project-hero__flank-link',
+          ariaLabel: hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`,
+          children: img,
+        })}
       </div>
     );
   };
@@ -628,15 +641,11 @@ export default function ProjectDetailPage() {
                   : "Tell us where to send it — we'll email over the full brochure with plot sizes, master plan, and pricing."}
               </Reveal>
               <Reveal className="project-finalcta__actions" delay={0.15}>
-                <a
-                  href={brochureHref}
-                  {...(hasPdf ? { download: true } : {})}
-                  target="_blank"
-                  rel="noreferrer"
-                  className="cta project-finalcta__primary"
-                >
-                  {hasPdf ? 'Download the brochure' : 'Request the brochure'}
-                </a>
+                {brochureAction({
+                  className: 'cta project-finalcta__primary',
+                  ariaLabel: hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`,
+                  children: hasPdf ? 'Download the brochure' : 'Request the brochure',
+                })}
                 <Link to="/projects" className="cta cta--ghost project-finalcta__ghost">
                   All projects
                 </Link>

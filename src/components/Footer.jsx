@@ -1,8 +1,10 @@
 import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import './Footer.css';
 
 export default function Footer() {
+  const { openEnquiry } = useEnquiry();
   return (
     <footer className="footer" id="contact">
       <div className="container">
@@ -15,7 +17,7 @@ export default function Footer() {
               Over two decades of trust, 15+ landmark projects, 4,500+ happy families — Icon Realty builds addresses that quietly change everything.
             </Reveal>
             <Reveal delay={0.1}>
-              <a href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Site%20Visit" target="_blank" rel="noreferrer" className="cta">Book a Site Visit</a>
+              <button type="button" className="cta" onClick={() => openEnquiry({ source: 'Footer' })}>Book a Site Visit</button>
             </Reveal>
           </div>
 
@@ -32,7 +34,7 @@ export default function Footer() {
 
             <div className="footer__col">
               <span className="footer__col-title">Contact</span>
-              <a href="mailto:iconrealty2@icloud.com">iconrealty2@icloud.com</a>
+              <a href="mailto:iconrealty02@gmail.com">iconrealty02@gmail.com</a>
               <a href="tel:+919425942510">+91 9425 9425 10</a>
               <a href="tel:+919425942511">+91 9425 9425 11</a>
               <a href="https://instagram.com/iconrealtyofficial" rel="noreferrer" target="_blank">Instagram</a>

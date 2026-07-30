@@ -7,6 +7,7 @@ import PageLoader from './components/PageLoader';
 import RouteTransition from './components/RouteTransition';
 import QuickDock from './components/QuickDock';
 import Analytics from './analytics/Analytics';
+import { EnquiryProvider } from './enquiry/EnquiryProvider';
 
 // code-split each route so the user never downloads About/Projects JS until they navigate there
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -21,24 +22,26 @@ export default function App() {
 
   return (
     <BrowserRouter>
-      <Analytics />
-      <Header />
-      <RouteTransition />
-      <main>
-        <Suspense fallback={<PageLoader />}>
-          <Routes>
-            <Route path="/" element={<HomePage />} />
-            <Route path="/about" element={<AboutPage />} />
-            <Route path="/projects" element={<ProjectsPage />} />
-            <Route path="/projects/:slug" element={<ProjectDetailPage />} />
-            <Route path="/contact" element={<ContactPage />} />
-            {/* a real 404, not the home page — see NotFoundPage */}
-            <Route path="*" element={<NotFoundPage />} />
-          </Routes>
-        </Suspense>
-      </main>
-      <Footer />
-      <QuickDock />
+      <EnquiryProvider>
+        <Analytics />
+        <Header />
+        <RouteTransition />
+        <main>
+          <Suspense fallback={<PageLoader />}>
+            <Routes>
+              <Route path="/" element={<HomePage />} />
+              <Route path="/about" element={<AboutPage />} />
+              <Route path="/projects" element={<ProjectsPage />} />
+              <Route path="/projects/:slug" element={<ProjectDetailPage />} />
+              <Route path="/contact" element={<ContactPage />} />
+              {/* a real 404, not the home page — see NotFoundPage */}
+              <Route path="*" element={<NotFoundPage />} />
+            </Routes>
+          </Suspense>
+        </main>
+        <Footer />
+        <QuickDock />
+      </EnquiryProvider>
     </BrowserRouter>
   );
 }

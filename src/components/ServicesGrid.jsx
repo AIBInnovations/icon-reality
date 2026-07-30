@@ -1,5 +1,6 @@
 import { useEffect, useRef, useState } from 'react';
 import Reveal from './Reveal';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import './ServicesGrid.css';
 
 const services = [
@@ -234,6 +235,7 @@ export default function ServicesGrid() {
   const [openIdx, setOpenIdx] = useState(-1);
   // keeps the panel content mounted during slide-out animation
   const [displayed, setDisplayed] = useState(null);
+  const { openEnquiry } = useEnquiry();
 
   useEffect(() => {
     if (openIdx >= 0) {
@@ -357,14 +359,13 @@ export default function ServicesGrid() {
                       {open.downloadLabel || 'Download PDF'}
                     </a>
                   )}
-                  <a
-                    href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace"
-                    target="_blank"
-                    rel="noreferrer"
+                  <button
+                    type="button"
                     className={`cta service-modal__cta ${open.downloadUrl ? 'cta--ghost' : ''}`}
+                    onClick={() => { setOpenIdx(-1); openEnquiry({ source: `Services — ${open.title || ''}`.trim(), project: 'Oscar Palace' }); }}
                   >
                     Book a Site Visit
-                  </a>
+                  </button>
                 </div>
               </div>
             </>

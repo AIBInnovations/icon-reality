@@ -16,8 +16,8 @@ const channels = [
   {
     key: 'email',
     eyebrow: 'Email',
-    value: 'iconrealty2@icloud.com',
-    href: 'mailto:iconrealty2@icloud.com?subject=Enquiry%20from%20website',
+    value: 'iconrealty02@gmail.com',
+    href: 'mailto:iconrealty02@gmail.com?subject=Enquiry%20from%20website',
     icon: (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M3 7l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>

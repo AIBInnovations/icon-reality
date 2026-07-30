@@ -1,6 +1,7 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import './AboutPostcard.css';
 
 gsap.registerPlugin(ScrollTrigger);
@@ -13,6 +14,7 @@ export default function AboutPostcard() {
   const birdLRef = useRef(null);
   const birdRRef = useRef(null);
   const [open, setOpen] = useState(false);
+  const { openEnquiry } = useEnquiry();
 
   useEffect(() => {
     const stage = stageRef.current;
@@ -100,7 +102,7 @@ export default function AboutPostcard() {
                   <path d="M3 7.5h8M7.5 4l3.5 3.5L7.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-              <a className="pc2-link" href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace" target="_blank" rel="noreferrer">Book a Site Visit</a>
+              <button type="button" className="pc2-link" onClick={() => openEnquiry({ source: 'About', project: 'Oscar Palace' })}>Book a Site Visit</button>
             </div>
           </div>
         </div>

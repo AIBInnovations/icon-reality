@@ -29,7 +29,7 @@ export const ORGANISATION = {
   name: SITE_NAME,
   legalName: 'Icon Realty',
   logo: '/icon-logo.png',
-  email: 'iconrealty2@icloud.com',
+  email: 'iconrealty02@gmail.com',
   telephone: ['+91-9425942510', '+91-9425942511'],
   address: {
     locality: 'Indore',

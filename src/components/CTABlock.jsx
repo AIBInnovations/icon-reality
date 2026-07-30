@@ -1,10 +1,12 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import './CTABlock.css';
 
 export default function CTABlock() {
   const ref = useRef(null);
+  const { openEnquiry } = useEnquiry();
 
   useEffect(() => {
     const el = ref.current;
@@ -43,7 +45,7 @@ export default function CTABlock() {
           Live different.<br/>Live better.
         </h2>
 
-        <a href="#contact" className="cta ctablock__cta">Book a Site Visit</a>
+        <button type="button" className="cta ctablock__cta" onClick={() => openEnquiry({ source: 'Home CTA' })}>Book a Site Visit</button>
 
         <div className="ctablock__signature">
           <div className="ctablock__avatars" aria-hidden>

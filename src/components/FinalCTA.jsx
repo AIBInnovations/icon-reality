@@ -1,7 +1,9 @@
 import Reveal from './Reveal';
+import { useEnquiry } from '../enquiry/enquiryContext';
 import './FinalCTA.css';
 
 export default function FinalCTA() {
+  const { openEnquiry } = useEnquiry();
   return (
     <section className="final-cta">
       <div className="final-cta__shell">
@@ -20,9 +22,9 @@ export default function FinalCTA() {
           </Reveal>
 
           <Reveal className="final-cta__actions" delay={0.15}>
-            <a href="https://mail.google.com/mail/?view=cm&fs=1&to=iconrealty02@gmail.com&su=Book%20a%20Visit%20%E2%80%94%20Oscar%20Palace" target="_blank" rel="noreferrer" className="cta final-cta__primary">
+            <button type="button" className="cta final-cta__primary" onClick={() => openEnquiry({ source: 'Final CTA', project: 'Oscar Palace' })}>
               Book a Site Visit
-            </a>
+            </button>
             <a href="tel:+919425942510" className="cta cta--ghost final-cta__secondary">
               +91 9425 9425 10 / 11
             </a>
@@ -30,7 +32,7 @@ export default function FinalCTA() {
 
           <Reveal className="final-cta__foot" delay={0.2}>
             <span className="final-cta__foot-k">Or write to us</span>
-            <a className="final-cta__foot-v" href="mailto:iconrealty2@icloud.com">iconrealty2@icloud.com</a>
+            <a className="final-cta__foot-v" href="mailto:iconrealty02@gmail.com">iconrealty02@gmail.com</a>
           </Reveal>
         </div>
 
