@@ -15,7 +15,9 @@ const projects = projectsList
   }));
 
 export default function ProjectsCarousel() {
-  const [active, setActive] = useState(2); // start with the middle card
+  // Open on the first card — Oscar Palace, the flagship — rather than whatever
+  // happens to sit in the middle of the trending list.
+  const [active, setActive] = useState(0);
   const navigate = useNavigate();
   // On phones the accordion is laid out as a 2-up grid (see the CSS) — every
   // card is already open, so there is nothing to expand and a tap should go

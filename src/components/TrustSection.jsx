@@ -12,7 +12,7 @@ export default function TrustSection() {
     <section className="trust" id="about">
       <div className="container trust__grid">
         <Reveal className="trust__image-wrap">
-          <img src="/images/oscar/photos/photo-1.jpg" alt="Oscar Palace — heritage landmark tower" loading="lazy" decoding="async" />
+          <img src="/images/trusted.png" alt="Mr. Nilesh Porwal — 15+ successful projects delivered, 1500+ happy families, a trust of over 2 decades" loading="lazy" decoding="async" />
         </Reveal>
 
         <div className="trust__copy">

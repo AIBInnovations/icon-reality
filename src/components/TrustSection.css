@@ -7,16 +7,23 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: clamp(40px, 6vw, 120px);
-  align-items: center;
+  /* stretch, not center, so the image column runs the full height of the copy
+     beside it — flush at the top and bottom rather than floating centred */
+  align-items: stretch;
 }
 
 .trust__image-wrap {
+  position: relative;
   border-radius: 6px;
   overflow: hidden;
-  aspect-ratio: 4 / 5;
+  height: 100%;
   background: var(--bg-2);
 }
+/* Absolute so the image contributes no intrinsic height of its own: the row is
+   sized purely by the copy column, and the photo fills whatever that comes to. */
 .trust__image-wrap img {
+  position: absolute;
+  inset: 0;
   width: 100%; height: 100%; object-fit: cover;
   transform: scale(1.02);
   transition: transform 1.4s cubic-bezier(0.2,0.8,0.2,1);
@@ -78,7 +85,15 @@
 
 @media (max-width: 880px) {
   .trust__grid { grid-template-columns: 1fr; }
-  .trust__image-wrap { aspect-ratio: 4/5; max-height: calc(var(--svh, 1vh) * 70); }
+  /* Stacked, there's no copy column alongside to match — height:100% would
+     collapse against an auto row, so the frame sizes itself. Short and wide,
+     because the artwork's top half is just the name plate: at 4/3 roughly the
+     lower 60% of the source survives the cover crop. */
+  .trust__image-wrap { height: auto; aspect-ratio: 4 / 3; max-height: calc(var(--svh, 1vh) * 70); }
+  /* Not `bottom` — that would butt "15+" right against the top edge and waste
+     the window on the empty margin under "2 DECADES". 85% keeps the three
+     figures centred with breathing room on both sides. Desktop is untouched. */
+  .trust__image-wrap img { object-position: center 85%; }
 }
 
 @media (max-width: 720px) {

@@ -30,7 +30,7 @@ const services = [
   },
   {
     title: 'AMENITIES',
-    image: '/images/services/amenities.png',
+    image: '/images/services/amenities.jpg',
     body: 'A 26,000 sq ft grand clubhouse, a temple, baradaris, and 2,80,000 sq ft of garden and open spaces — designed for daily life, not the brochure.',
     body2: 'We design for the hours you actually live in. Morning walks through landscaped gardens, evenings at the clubhouse, children at the play zone, and quiet corners for yoga and meditation — all held inside a secure, heritage-styled estate.',
     highlights: [
@@ -55,7 +55,7 @@ const services = [
   },
   {
     title: 'LOCATION',
-    image: '/images/services/location.png',
+    image: '/images/services/location.jpg',
     downloadUrl: '/downloads/oscar-palace-brochure.pdf',
     downloadLabel: 'Download Location Plan',
     body: 'On the new Indore–Nagpur Highway — a corridor set to reshape the infrastructure and road connectivity of Indore, with the city close and the calm intact.',
@@ -80,7 +80,7 @@ const services = [
   },
   {
     title: 'INVESTMENT',
-    image: '/images/services/investment.png',
+    image: '/images/services/investment.jpg',
     body: 'Buy early, hold long-term, watch appreciation — land you own, on a highway corridor with structural reasons to grow. Bank loans are available on every plot.',
     body2: 'Plotted developments in growth corridors have historically outperformed apartments on both appreciation and liquidity. Oscar Palace, on the Indore–Nagpur Highway, is positioned to be one of them.',
     highlights: [
