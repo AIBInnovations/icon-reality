@@ -1019,14 +1019,14 @@
     padding: 0 12px;
   }
 
-  /* Top: the breadcrumb trail sits directly above and was touching the image.
-     18px matches the step used between the hero elements.
-     Bottom: none — the overview section below already opens with 50px, and the
-     two stacked read as ~100px of dead space under the image. */
+  /* The image is bracketed by an equal 18px above (from the breadcrumb trail)
+     and below (from the overview) — the same step used between hero elements.
+     The gap below lives on .project-overview because the banner's own bottom
+     padding would stack on top of it. */
   .project-banner { padding: 18px 8px 0; }
   .project-banner__shell { border-radius: 14px; aspect-ratio: 4 / 3; }
 
-  .project-overview { padding: 50px 0; }
+  .project-overview { padding: 18px 0 50px; }
   .project-overview__heading { font-size: clamp(26px, 8vw, 38px); padding-inline: 12px; }
   .project-overview__desc { font-size: 15px; padding-inline: 12px; }
   .project-overview__stats { padding: 22px 20px; }
