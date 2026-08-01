@@ -227,6 +227,11 @@
     transition: transform .35s ease;
   }
   .carousel__card:active { transform: scale(0.98); }
+  /* odd project count → last tile runs full width instead of leaving a gap */
+  .carousel__card:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 10;
+  }
   .carousel__card img,
   .carousel__card.is-active img { transform: scale(1); }
   /* every tile reads as "open", so the caption is always on */

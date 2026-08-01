@@ -273,14 +273,15 @@
   /* Hamburger transparent — only the 3 lines show. mix-blend-mode: difference
      flips the lines black-on-light / white-on-dark automatically so they
      remain readable over any section as you scroll. */
+  /* Solid ink bars. mix-blend-mode: difference over the cream page background
+     rendered them a washed-out grey that was hard to see. */
   .hamburger {
     background: transparent;
     backdrop-filter: none;
     -webkit-backdrop-filter: none;
-    mix-blend-mode: difference;
   }
   .hamburger:hover { background: transparent; }
-  .hamburger span { background: #fff; }
+  .hamburger span { background: var(--ink); height: 2px; width: 20px; }
 
   .site-header__sheet { padding: 28px 24px 24px; }
   /* drawer also stays full-width, no scroll-expand */

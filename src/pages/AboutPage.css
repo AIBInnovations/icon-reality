@@ -234,7 +234,11 @@
   line-height: 1.55;
 }
 
-@media (max-width: 980px) { .about-vm__values-grid { grid-template-columns: repeat(2, 1fr); } }
+@media (max-width: 980px) {
+  .about-vm__values-grid { grid-template-columns: repeat(2, 1fr); }
+  /* odd value count → last card spans the row instead of leaving a blank cell */
+  .about-vm__values-grid > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
 /* 2-up all the way down — one column made four short value cards a long scroll */
 @media (max-width: 480px) {
   .about-vm__values-grid { gap: 10px; }

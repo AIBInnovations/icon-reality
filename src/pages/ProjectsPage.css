@@ -144,6 +144,9 @@
 
 @media (max-width: 980px) {
   .projects-list__grid { grid-template-columns: repeat(2, 1fr); }
+  /* odd project count → last card spans the row, no blank cell at the end */
+  .projects-list__grid > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .projects-list__grid > *:last-child:nth-child(odd) .projects-list__media { aspect-ratio: 16 / 10; }
 }
 @media (max-width: 720px) {
   .projects-hero { padding: 110px 0 40px; }

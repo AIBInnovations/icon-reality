@@ -130,6 +130,10 @@
 
 @media (max-width: 980px) {
   .completed__grid { grid-template-columns: repeat(2, 1fr); }
+  /* 9 completed projects → a lone card on the last row. Span it so the grid
+     never ends with a blank cell at bottom-right. */
+  .completed__grid > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
+  .completed__grid > *:last-child:nth-child(odd) .completed__media { aspect-ratio: 16 / 10; }
 }
 @media (max-width: 720px) {
   .completed { padding: 50px 0; }

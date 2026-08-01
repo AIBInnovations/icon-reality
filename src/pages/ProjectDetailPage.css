@@ -764,9 +764,12 @@
   margin-bottom: clamp(28px, 3.4vw, 48px);
 }
 
+/* auto-fit, not repeat(4, 1fr): projects carry 3, 4 or 5 highlights, and a
+   fixed 4-track grid left an empty cell at the end of the row for the 3-card
+   ones. Empty tracks collapse, so the cards always fill the row evenly. */
 .project-highlights__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr); /* 4 cards in 1 row — no orphan */
+  grid-template-columns: repeat(auto-fit, minmax(min(200px, 100%), 1fr));
   gap: clamp(14px, 1.6vw, 22px);
 }
 
@@ -836,9 +839,12 @@
   transition: transform .45s cubic-bezier(0.2, 0.8, 0.2, 1);
 }
 
-.project-gallery__grid > *:nth-child(3n + 1) .project-gallery__item { aspect-ratio: 4 / 5; } /* portrait */
-.project-gallery__grid > *:nth-child(3n + 2) .project-gallery__item { aspect-ratio: 4 / 3; } /* landscape */
-.project-gallery__grid > *:nth-child(3n + 3) .project-gallery__item { aspect-ratio: 1 / 1; } /* square */
+/* NOTE: the Reveal *is* the grid child (it takes .project-gallery__item as its
+   className), so these have to match the child itself — written as descendant
+   selectors they matched nothing and no ratio was ever applied. */
+.project-gallery__grid > .project-gallery__item:nth-child(3n + 1) { aspect-ratio: 4 / 5; } /* portrait */
+.project-gallery__grid > .project-gallery__item:nth-child(3n + 2) { aspect-ratio: 4 / 3; } /* landscape */
+.project-gallery__grid > .project-gallery__item:nth-child(3n + 3) { aspect-ratio: 1 / 1; } /* square */
 
 .project-gallery__item:hover { transform: translateY(-4px); }
 
@@ -856,15 +862,20 @@
 }
 
 /* Subtle stagger of one rounded corner per nth — keeps the rhythm playful */
-.project-gallery__grid > *:nth-child(3n)   .project-gallery__item { border-radius: 10px 32px 10px 10px; }
-.project-gallery__grid > *:nth-child(4n+2) .project-gallery__item { border-radius: 32px 10px 10px 10px; }
-.project-gallery__grid > *:nth-child(5n)   .project-gallery__item { border-radius: 10px 10px 32px 10px; }
+.project-gallery__grid > .project-gallery__item:nth-child(3n)   { border-radius: 10px 32px 10px 10px; }
+.project-gallery__grid > .project-gallery__item:nth-child(4n+2) { border-radius: 32px 10px 10px 10px; }
+.project-gallery__grid > .project-gallery__item:nth-child(5n)   { border-radius: 10px 10px 32px 10px; }
 
 @media (max-width: 880px) {
   .project-gallery__grid { grid-template-columns: repeat(2, 1fr); }
-  .project-gallery__grid > *:nth-child(n) .project-gallery__item { aspect-ratio: auto; }
-  .project-gallery__grid > *:nth-child(2n + 1) .project-gallery__item { aspect-ratio: 4 / 5; }
-  .project-gallery__grid > *:nth-child(2n + 2) .project-gallery__item { aspect-ratio: 4 / 3; }
+  .project-gallery__grid > .project-gallery__item:nth-child(2n + 1) { aspect-ratio: 4 / 5; }
+  .project-gallery__grid > .project-gallery__item:nth-child(2n + 2) { aspect-ratio: 4 / 3; }
+  /* Odd gallery counts (3, 5, 7, 9 are all common here) end on a single tile —
+     run it across both columns as a banner rather than leaving a blank cell. */
+  .project-gallery__grid > .project-gallery__item:last-child:nth-child(odd) {
+    grid-column: 1 / -1;
+    aspect-ratio: 16 / 10;
+  }
 }
 
 /* ============ BROCHURE / BACK ============ */
@@ -950,6 +961,9 @@
 /* ============ TABLET / MOBILE ============ */
 @media (max-width: 980px) {
   .project-highlights__grid { grid-template-columns: repeat(2, 1fr); } /* 4 cards → 2×2 */
+  /* 3 or 5 highlights leave a lone card on the last row — let it take the
+     full width instead of sitting next to a blank cell. */
+  .project-highlights__grid > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
 }
 @media (max-width: 880px) {
   .project-overview__grid { grid-template-columns: 1fr; }
@@ -1005,7 +1019,11 @@
     padding: 0 12px;
   }
 
-  .project-banner { padding: 0 8px 50px; }
+  /* Top: the breadcrumb trail sits directly above and was touching the image.
+     18px matches the step used between the hero elements.
+     Bottom: none — the overview section below already opens with 50px, and the
+     two stacked read as ~100px of dead space under the image. */
+  .project-banner { padding: 18px 8px 0; }
   .project-banner__shell { border-radius: 14px; aspect-ratio: 4 / 3; }
 
   .project-overview { padding: 50px 0; }
@@ -1058,7 +1076,8 @@
      every gallery a long scroll, and mixed ratios side by side left ragged
      gaps under the shorter tile. */
   .project-gallery__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .project-gallery__grid > *:nth-child(n) .project-gallery__item { aspect-ratio: 1 / 1; }
+  .project-gallery__grid > .project-gallery__item:nth-child(n) { aspect-ratio: 1 / 1; }
+  .project-gallery__grid > .project-gallery__item:last-child:nth-child(odd) { aspect-ratio: 16 / 10; }
 
   .project-brochure { padding: 40px 0; }
   .project-brochure__title { font-size: clamp(26px, 8vw, 38px); padding-inline: 12px; }
