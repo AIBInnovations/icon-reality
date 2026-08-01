@@ -54,5 +54,8 @@ export default defineConfig(({ mode }) => {
 
   return {
     plugins: [react(), vercelApiDev(), seoAssets({ indexable })],
+    // Bind 0.0.0.0 so the dev server is reachable from phones/other
+    // machines on the LAN, not just localhost.
+    server: { host: true },
   }
 })

@@ -371,61 +371,6 @@ export default function ProjectDetailPage() {
         </section>
       )}
 
-      {/* ====== OVERVIEW ====== */}
-      <section className="project-overview">
-        <div className="container project-overview__grid">
-          <div className="project-overview__copy">
-            <Reveal as="span" className="eyebrow project-overview__eyebrow">Overview</Reveal>
-            <Reveal as="h2" className="display project-overview__heading" delay={0.05}>
-              {tagline || `About ${name}`}
-            </Reveal>
-            <Reveal as="p" className="project-overview__desc" delay={0.1}>
-              {description}
-            </Reveal>
-          </div>
-
-          <Reveal className="project-overview__stats" delay={0.1}>
-            {total_area && (
-              <div className="project-overview__stat">
-                <span className="project-overview__stat-k">Total area</span>
-                <span className="project-overview__stat-v">{total_area}</span>
-              </div>
-            )}
-            {plot_sizes && (
-              <div className="project-overview__stat">
-                <span className="project-overview__stat-k">Plot sizes</span>
-                <span className="project-overview__stat-v">{plot_sizes}</span>
-              </div>
-            )}
-            <div className="project-overview__stat">
-              <span className="project-overview__stat-k">Status</span>
-              <span className="project-overview__stat-v">{statusLabel}</span>
-            </div>
-            <div className="project-overview__stat">
-              <span className="project-overview__stat-k">Location</span>
-              <span className="project-overview__stat-v">{location}</span>
-            </div>
-          </Reveal>
-        </div>
-      </section>
-
-      {/* ====== WALKTHROUGH VIDEO ====== */}
-      {video_url && (
-        <section className="project-video">
-          <div className="container">
-            <Reveal as="span" className="eyebrow project-video__eyebrow">The film</Reveal>
-            <Reveal as="h2" className="display project-video__heading" delay={0.05}>
-              Walk through {name}.
-            </Reveal>
-          </div>
-          <Reveal className="project-video__stage" delay={0.1}>
-            <div className="project-video__frame">
-              <ProjectVideo src={video_url} poster={video_poster || hero_image} />
-            </div>
-          </Reveal>
-        </section>
-      )}
-
       {/* ====== FEATURES (amenities + connectivity) ====== */}
       {(amenities.length > 0 || connectivity.length > 0) && (
         <section className="project-features">
@@ -495,6 +440,61 @@ export default function ProjectDetailPage() {
           </div>
         </section>
       )}
+
+      {/* ====== WALKTHROUGH VIDEO ====== */}
+      {video_url && (
+        <section className="project-video">
+          <div className="container">
+            <Reveal as="span" className="eyebrow project-video__eyebrow">The film</Reveal>
+            <Reveal as="h2" className="display project-video__heading" delay={0.05}>
+              Walk through {name}.
+            </Reveal>
+          </div>
+          <Reveal className="project-video__stage" delay={0.1}>
+            <div className="project-video__frame">
+              <ProjectVideo src={video_url} poster={video_poster || hero_image} />
+            </div>
+          </Reveal>
+        </section>
+      )}
+
+      {/* ====== OVERVIEW ====== */}
+      <section className="project-overview">
+        <div className="container project-overview__grid">
+          <div className="project-overview__copy">
+            <Reveal as="span" className="eyebrow project-overview__eyebrow">Overview</Reveal>
+            <Reveal as="h2" className="display project-overview__heading" delay={0.05}>
+              {tagline || `About ${name}`}
+            </Reveal>
+            <Reveal as="p" className="project-overview__desc" delay={0.1}>
+              {description}
+            </Reveal>
+          </div>
+
+          <Reveal className="project-overview__stats" delay={0.1}>
+            {total_area && (
+              <div className="project-overview__stat">
+                <span className="project-overview__stat-k">Total area</span>
+                <span className="project-overview__stat-v">{total_area}</span>
+              </div>
+            )}
+            {plot_sizes && (
+              <div className="project-overview__stat">
+                <span className="project-overview__stat-k">Plot sizes</span>
+                <span className="project-overview__stat-v">{plot_sizes}</span>
+              </div>
+            )}
+            <div className="project-overview__stat">
+              <span className="project-overview__stat-k">Status</span>
+              <span className="project-overview__stat-v">{statusLabel}</span>
+            </div>
+            <div className="project-overview__stat">
+              <span className="project-overview__stat-k">Location</span>
+              <span className="project-overview__stat-v">{location}</span>
+            </div>
+          </Reveal>
+        </div>
+      </section>
 
       {/* ====== MODAL ====== */}
       <div
