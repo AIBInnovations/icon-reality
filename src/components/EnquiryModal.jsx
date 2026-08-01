@@ -24,12 +24,16 @@ export default function EnquiryModal({ open, onClose, headingId = 'enquiry-modal
 
     const prevOverflow = document.body.style.overflow;
     document.body.style.overflow = 'hidden';
+    // Drops the fixed header — the scrim is translucent, so the logo and
+    // hamburger otherwise read straight through it (see Header.css).
+    document.body.classList.add('has-modal');
     window.lenis?.stop();
     cardRef.current?.focus();
 
     return () => {
       window.removeEventListener('keydown', onKey);
       document.body.style.overflow = prevOverflow;
+      document.body.classList.remove('has-modal');
       window.lenis?.start();
     };
   }, [open, onClose]);

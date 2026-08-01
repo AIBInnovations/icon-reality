@@ -6,7 +6,7 @@ import './ServicesGrid.css';
 const services = [
   {
     title: 'PLOT LAYOUTS',
-    image: '/images/services/plot-layouts.png',
+    image: '/images/services/plot-layouts.jpg',
     downloadUrl: '/downloads/oscar-palace-brochure.pdf',
     downloadLabel: 'Download Plot Layout',
     body: 'A residential plotted project laid out on royal principles — wide avenues, east and west facing plots, and Vastu-compliant orientations across every block.',
@@ -247,12 +247,16 @@ export default function ServicesGrid() {
     }
   }, [openIdx]);
 
-  // Lock body scroll while modal is open
+  // Lock body scroll while modal is open, and hide the fixed header behind it
   useEffect(() => {
     if (openIdx >= 0) {
       const prev = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
+      document.body.classList.add('has-modal');
+      return () => {
+        document.body.style.overflow = prev;
+        document.body.classList.remove('has-modal');
+      };
     }
   }, [openIdx]);
 

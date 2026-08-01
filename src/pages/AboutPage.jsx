@@ -27,6 +27,9 @@ export default function AboutPage() {
   const stateRef = useRef({ images: [], progress: 0 });
   const [ready, setReady] = useState(false);
   const [bootProgress, setBootProgress] = useState(0);
+  // Which director card is expanded. Desktop reveals the bio on :hover, but
+  // touch has no hover — without this the bio is unreachable on mobile.
+  const [openBio, setOpenBio] = useState(null);
 
   useEffect(() => {
     window.scrollTo(0, 0);
@@ -311,7 +314,22 @@ export default function AboutPage() {
               bio: 'Under his direction, Icon Realty has evolved from a promising vision into one of Indore\'s most trusted names. Champion of transparency, ethical practice, and a long view that puts families ahead of quarters.',
             },
           ].map((d, i) => (
-            <Reveal key={d.name} className="team-card" delay={i * 0.08}>
+            <Reveal
+              key={d.name}
+              className={`team-card ${openBio === i ? 'is-open' : ''}`}
+              delay={i * 0.08}
+              role="button"
+              tabIndex={0}
+              aria-expanded={openBio === i}
+              aria-label={`${d.name} — read bio`}
+              onClick={() => setOpenBio((o) => (o === i ? null : i))}
+              onKeyDown={(e) => {
+                if (e.key === 'Enter' || e.key === ' ') {
+                  e.preventDefault();
+                  setOpenBio((o) => (o === i ? null : i));
+                }
+              }}
+            >
               <div className="team-card__photo">
                 <img src={d.photo} alt={d.name} loading="lazy" decoding="async" />
               </div>
@@ -321,6 +339,17 @@ export default function AboutPage() {
                 <span className="team-card__role">{d.role}</span>
                 <p className="team-card__bio">{d.bio}</p>
               </div>
+
+              {/* Standing affordance — the card looked inert, so nobody knew the
+                  bio was behind a hover/tap. Sits outside __body and absolutely
+                  positioned: the hidden bio still reserves its height, so an
+                  in-flow cue would be pushed away from the name. */}
+              <span className="team-card__cta" aria-hidden>
+                View
+                <svg width="13" height="13" viewBox="0 0 14 14" fill="none">
+                  <path d="M3 7H11M7 3L11 7L7 11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+                </svg>
+              </span>
             </Reveal>
           ))}
           </div>

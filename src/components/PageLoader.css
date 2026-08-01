@@ -9,6 +9,9 @@
   transform: translateY(0);
   transition: transform 0.9s cubic-bezier(0.76, 0, 0.24, 1);
   will-change: transform;
+  /* without this the cover appears between two frames, which reads as a hard
+     cut on every route change */
+  animation: pageLoaderIn 0.28s ease both;
 }
 /* when the hero is ready, the loader slides up off-screen to reveal it */
 .page-loader.is-leaving {

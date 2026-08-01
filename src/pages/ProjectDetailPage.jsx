@@ -118,12 +118,16 @@ export default function ProjectDetailPage() {
     }
   }, [openModal]);
 
-  // Lock body scroll while modal is open
+  // Lock body scroll while modal is open, and hide the fixed header behind it
   useEffect(() => {
     if (openModal) {
       const prev = document.body.style.overflow;
       document.body.style.overflow = 'hidden';
-      return () => { document.body.style.overflow = prev; };
+      document.body.classList.add('has-modal');
+      return () => {
+        document.body.style.overflow = prev;
+        document.body.classList.remove('has-modal');
+      };
     }
   }, [openModal]);
 

@@ -64,6 +64,20 @@ main {
   main { min-height: 100svh; }
 }
 
+/* Page transition: a plain opacity fade on the incoming route. Deliberately
+   opacity-only — a transform here would create a containing block and break
+   the position:fixed modals that live inside <main>. */
+.page-fade { animation: pageFadeIn 0.38s ease both; }
+
+@keyframes pageFadeIn {
+  from { opacity: 0; }
+  to   { opacity: 1; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .page-fade { animation: none; }
+}
+
 /* lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

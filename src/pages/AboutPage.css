@@ -344,7 +344,10 @@
   object-position: center 28%;
   display: block;
 }
-.team-card:hover .team-card__photo {
+/* .is-open mirrors every :hover state below so touch devices, which never
+   fire hover, get the same reveal from a tap. */
+.team-card:hover .team-card__photo,
+.team-card.is-open .team-card__photo {
   top: 0;
   left: 0;
   width: 100%;
@@ -363,7 +366,8 @@
   transition: opacity .5s ease;
   z-index: 3;
 }
-.team-card:hover .team-card__veil { opacity: 1; }
+.team-card:hover .team-card__veil,
+.team-card.is-open .team-card__veil { opacity: 1; }
 
 .team-card__body {
   position: absolute;
@@ -379,7 +383,7 @@
 
 .team-card__name {
   font-family: var(--font-display);
-  font-size: clamp(20px, 1.8vw, 26px);
+  font-size: clamp(17px, 1.4vw, 21px);
   font-weight: 600;
   color: #F4F0EA;
   letter-spacing: 0.02em;
@@ -388,15 +392,15 @@
 }
 
 .team-card__role {
-  font-size: 10px;
-  letter-spacing: 0.22em;
+  font-size: 9px;
+  letter-spacing: 0.2em;
   text-transform: uppercase;
   color: rgba(244, 240, 234, 0.55);
   font-weight: 500;
 }
 
 .team-card__bio {
-  font-size: 13px;
+  font-size: 12px;
   line-height: 1.5;
   color: rgba(244, 240, 234, 0.78);
   max-width: 32ch;
@@ -405,9 +409,38 @@
   transform: translateY(8px);
   transition: opacity .45s ease .15s, transform .45s ease .15s;
 }
-.team-card:hover .team-card__bio {
+.team-card:hover .team-card__bio,
+.team-card.is-open .team-card__bio {
   opacity: 1;
   transform: translateY(0);
+}
+
+.team-card__cta {
+  position: absolute;
+  left: 50%;
+  bottom: 24px;
+  transform: translateX(-50%);
+  z-index: 5;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  gap: 6px;
+  padding: 6px 14px;
+  border: 1px solid rgba(244, 240, 234, 0.35);
+  border-radius: 999px;
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(244, 240, 234, 0.9);
+  transition: opacity .3s ease, gap .3s ease;
+}
+/* Once the bio is showing the prompt has done its job — drop it so the two
+   don't compete for the same corner of the card. */
+.team-card:hover .team-card__cta,
+.team-card.is-open .team-card__cta {
+  opacity: 0;
+  pointer-events: none;
 }
 
 @media (max-width: 880px) {

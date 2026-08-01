@@ -365,8 +365,15 @@
 }
 
 /* ============ FEATURES (combined Amenities + Connectivity) ============ */
+/* Full-bleed --bg-2 against the page's --bg reads as a seam where it meets the
+   banner — two near-identical creams with a hard edge between them. Inset it by
+   the same 14px gutter the banner uses and give it the shell's 18px radius, so
+   the tint reads as its own panel sitting on the page rather than a colour
+   change in the background. Same treatment on .project-gallery below. */
 .project-features {
   padding: clamp(60px, 8vw, 110px) 0;
+  margin-inline: 14px;
+  border-radius: 18px;
   background: var(--bg-2);
 }
 
@@ -801,6 +808,8 @@
 /* ============ GALLERY ============ */
 .project-gallery {
   padding: clamp(60px, 8vw, 110px) 0;
+  margin-inline: 14px;
+  border-radius: 18px;
   background: var(--bg-2);
 }
 
@@ -1020,18 +1029,20 @@
   }
 
   /* The image is bracketed by an equal 18px above (from the breadcrumb trail)
-     and below (from the overview) — the same step used between hero elements.
-     The gap below lives on .project-overview because the banner's own bottom
-     padding would stack on top of it. */
-  .project-banner { padding: 18px 8px 0; }
+     and below — the same step used between hero elements. The gap below lives
+     on the banner itself rather than on whichever section follows it, so it
+     survives sections being reordered or dropped (the video, features and
+     gallery blocks are all conditional). */
+  .project-banner { padding: 18px 8px; }
   .project-banner__shell { border-radius: 14px; aspect-ratio: 4 / 3; }
 
-  .project-overview { padding: 18px 0 50px; }
+  .project-overview { padding: 50px 0; }
   .project-overview__heading { font-size: clamp(26px, 8vw, 38px); padding-inline: 12px; }
   .project-overview__desc { font-size: 15px; padding-inline: 12px; }
   .project-overview__stats { padding: 22px 20px; }
 
-  .project-features { padding: 50px 0; }
+  /* gutter + radius track the banner shell's mobile values, not the desktop ones */
+  .project-features { padding: 50px 0; margin-inline: 8px; border-radius: 14px; }
   .project-features__heading { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
   /* Amenities + Connectivity side by side. They were stacked at 880px with a
      280px floor, so the pair alone ran ~600px before the map. */
@@ -1070,7 +1081,7 @@
   .project-highlights__heading { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
   .project-highlights__card { padding: 24px 22px; min-height: 0; }
 
-  .project-gallery { padding: 50px 0; }
+  .project-gallery { padding: 50px 0; margin-inline: 8px; border-radius: 14px; }
   .project-gallery__heading { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
   /* Two even columns, one shared ratio. A single stacked column at 4:5 made
      every gallery a long scroll, and mixed ratios side by side left ragged

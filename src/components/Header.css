@@ -7,6 +7,20 @@
   pointer-events: none;
   display: flex;
   justify-content: center;
+  /* visibility is in here so it flips only after the fade, and so the header's
+     children — which re-enable pointer-events — can't swallow clicks meant for
+     the modal while it's invisible. */
+  transition: opacity .22s ease, visibility .22s ease;
+}
+
+/* A modal owns the screen. Its scrim is translucent and blurred, so a header
+   left standing doesn't get covered — the logo and hamburger read straight
+   through it, and on mobile the card is bottom-aligned so they sit in open
+   scrim. Set by EnquiryModal and the project features modal. */
+body.has-modal .site-header {
+  opacity: 0;
+  pointer-events: none;
+  visibility: hidden;
 }
 
 .site-header__inner {

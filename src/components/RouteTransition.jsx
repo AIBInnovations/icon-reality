@@ -1,26 +1,21 @@
-import { useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import PageLoader from './PageLoader';
-
-const MIN_LOADER_MS = 750; // never flash for less than this
 
 /**
- * Combined transition controller:
- *  - on every route change (and on initial mount):
- *    - shows a full-screen PageLoader for at least MIN_LOADER_MS
- *    - clears any leftover body scroll lock
- *    - scrolls to top instantly (no Lenis fight)
- *    - refreshes ScrollTrigger AFTER the new page committed its effects
- *  - the loader sits above the footer/header (z-index 9999, position:fixed)
- *    so the page never visibly "boots" without it.
+ * Route-change side effects. No cover, no loader — navigating from the nav bar
+ * used to drop a full-screen PageLoader for 550ms and then wipe it away, which
+ * made every link feel like a page reload. The new page now cross-fades in
+ * (see .page-fade in index.css) and this component just handles the mechanics:
+ *
+ *  - clears any leftover body scroll lock (e.g. an open modal)
+ *  - scrolls to top instantly (no Lenis fight)
+ *  - refreshes ScrollTrigger once the new page has committed its effects
  */
 export default function RouteTransition() {
   const { pathname } = useLocation();
-  const [active, setActive] = useState(true); // start true so first paint covers everything
 
   useEffect(() => {
-    setActive(true);
     document.body.style.overflow = '';
 
     // Force every new page to start at the hero (top). Resetting once up-front
@@ -35,14 +30,15 @@ export default function RouteTransition() {
     // and again next frame, once the new route has rendered
     const raf = requestAnimationFrame(toTop);
 
+    // Short enough to land inside the fade-in, so the final clamp correction
+    // isn't visible as a jump.
     const t = setTimeout(() => {
       ScrollTrigger.refresh();
-      toTop(); // final reset after layout + ScrollTrigger settle, before reveal
-      setActive(false);
-    }, MIN_LOADER_MS);
+      toTop();
+    }, 150);
 
     return () => { clearTimeout(t); cancelAnimationFrame(raf); };
   }, [pathname]);
 
-  return active ? <PageLoader /> : null;
+  return null;
 }
