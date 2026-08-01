@@ -204,21 +204,49 @@
   .carousel__head { margin-bottom: 32px; }
   .carousel__title { font-size: clamp(30px, 8vw, 44px); padding-inline: 12px; }
   .carousel__lede { font-size: 15px; padding: 0 12px; }
-  /* Mobile: hide non-active slivers, show only the active card centered */
+  /* Mobile: the accordion becomes a 2-up grid. The desktop behaviour (one
+     card open, arrows to step through) meant a ~580px card per screen and a
+     tap-tap-tap to reach the last project — every card is visible here and
+     one tap opens it (ProjectsCarousel.jsx switches on the same breakpoint). */
   .carousel__accordion {
-    height: clamp(440px, calc(var(--svh, 1vh) * 64), 580px);
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 10px;
+    height: auto;
     padding: 0 14px;
-    gap: 0;
+    margin-bottom: 0;
   }
-  .carousel__card { display: none; }
+  .carousel__card,
   .carousel__card.is-active {
     display: block;
     width: 100%;
-    max-width: 360px;
+    max-width: none;
+    height: auto;
+    aspect-ratio: 3 / 4;
+    cursor: pointer;
+    transition: transform .35s ease;
   }
-  .carousel__card-label { font-size: 22px; }
-  .carousel__card-meta { font-size: 11px; }
-  .carousel__card-caption { left: 22px; bottom: 22px; }
-  .carousel__controls { padding: 0 20px; }
-  .carousel__buttons button { width: 48px; height: 48px; }
+  .carousel__card:active { transform: scale(0.98); }
+  .carousel__card img,
+  .carousel__card.is-active img { transform: scale(1); }
+  /* every tile reads as "open", so the caption is always on */
+  .carousel__card-caption,
+  .carousel__card.is-active .carousel__card-caption {
+    opacity: 1;
+    transform: none;
+    left: 12px;
+    right: 12px;
+    bottom: 11px;
+    gap: 2px;
+    white-space: normal;
+  }
+  .carousel__card-label { font-size: 15px; line-height: 1.15; letter-spacing: 0.02em; }
+  .carousel__card-meta { font-size: 9px; letter-spacing: 0.1em; }
+  .carousel__card-open { display: none; }
+  .carousel__card-veil,
+  .carousel__card:not(.is-active) .carousel__card-veil {
+    background: linear-gradient(180deg, rgba(0,0,0,0.05) 30%, rgba(0,0,0,0.68) 100%);
+  }
+  /* arrows + counter drive the accordion only — nothing to step through here */
+  .carousel__controls { display: none; }
 }

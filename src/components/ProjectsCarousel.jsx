@@ -2,6 +2,7 @@ import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import Reveal from './Reveal';
 import { projectsList } from '../data/projects';
+import { useMediaQuery } from '../hooks/useMediaQuery';
 import './ProjectsCarousel.css';
 
 const projects = projectsList
@@ -16,13 +17,17 @@ const projects = projectsList
 export default function ProjectsCarousel() {
   const [active, setActive] = useState(2); // start with the middle card
   const navigate = useNavigate();
+  // On phones the accordion is laid out as a 2-up grid (see the CSS) — every
+  // card is already open, so there is nothing to expand and a tap should go
+  // straight to the project.
+  const isGrid = useMediaQuery('(max-width: 720px)');
 
   const prev = () => setActive((p) => (p - 1 + projects.length) % projects.length);
   const next = () => setActive((p) => (p + 1) % projects.length);
 
   // First tap on a card expands it; tapping the already-open card opens its page.
   const handleCard = (i) => {
-    if (i === active) navigate(`/projects/${projects[i].slug}`);
+    if (isGrid || i === active) navigate(`/projects/${projects[i].slug}`);
     else setActive(i);
   };
 
@@ -45,7 +50,7 @@ export default function ProjectsCarousel() {
               key={p.name}
               className={`carousel__card ${i === active ? 'is-active' : ''}`}
               onClick={() => handleCard(i)}
-              aria-label={i === active ? `Open ${p.name} project page` : `Show ${p.name}`}
+              aria-label={isGrid || i === active ? `Open ${p.name} project page` : `Show ${p.name}`}
             >
               <img src={p.src} alt={p.name} loading="lazy" />
               <div className="carousel__card-veil" />

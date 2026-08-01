@@ -349,6 +349,14 @@ export default function ProjectDetailPage() {
                 : tagline}
             </Reveal>
           )}
+          {/* Mobile-only brochure CTA. On desktop the action lives in the flank
+              hint under each cutout, but the artwork shrinks too far on phones
+              for that label to fit — so it gets its own button here. */}
+          {brochureAction({
+            className: 'cta project-hero__brochure',
+            ariaLabel: hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`,
+            children: brochureLabel,
+          })}
         </div>
       </section>
 

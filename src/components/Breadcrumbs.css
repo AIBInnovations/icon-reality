@@ -61,7 +61,11 @@
 }
 
 @media (max-width: 720px) {
-  .breadcrumbs { padding-top: 92px; }
+  /* Only the --top variant has to clear the fixed header. The default sits
+     under a page hero that already supplies the gap — giving it 92px here put
+     ~130px of dead space between every mobile hero and its trail. */
+  .breadcrumbs { padding-top: 12px; }
+  .breadcrumbs--top { padding-top: 92px; }
   .breadcrumbs__list { font-size: 10px; gap: 6px; }
   .breadcrumbs__item { gap: 6px; }
 }

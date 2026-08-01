@@ -75,7 +75,11 @@
 @media (max-width: 720px) {
   .pillars { padding: 40px 0; }
   .pillars__title { font-size: clamp(30px, 9vw, 48px); margin-bottom: 36px; padding-inline: 12px; }
-  .pillar { padding: 24px 20px; min-height: 280px; }
-  .pillar__name { font-size: 22px; }
+  /* These are text cards — 2-up would be unreadable at 390px, so they stay
+     stacked but size to their content instead of holding a 280px floor that
+     made each one fill the screen. */
+  .pillar { padding: 22px 20px 28px; min-height: 0; gap: 12px; }
+  .pillar__name { font-size: 20px; }
   .pillar__body { font-size: 15px; }
+  .pillar__deco { height: 60px; }
 }

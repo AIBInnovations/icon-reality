@@ -90,6 +90,10 @@
   .stats__card { padding: 18px 16px; gap: 8px; }
   .stats__value { font-size: clamp(28px, 9vw, 40px); }
 }
+/* Stays 2-up down to the narrowest phone — a single column turned four short
+   stat cards into four screens of scrolling. */
 @media (max-width: 480px) {
-  .stats__grid { grid-template-columns: 1fr; }
+  .stats__grid { gap: 10px; }
+  .stats__card { padding: 16px 12px; }
+  .stats__sub { font-size: 11px; }
 }
