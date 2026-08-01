@@ -149,7 +149,10 @@
   .projects-hero { padding: 110px 0 40px; }
   .projects-hero__title { font-size: clamp(42px, 12vw, 70px); padding-inline: 12px; }
   .projects-hero__lede { font-size: 15px; padding: 0 12px; }
-  .projects-list { padding: 40px 0; }
+  /* Hidden on phones: the carousel above already shows every trending project
+     as a grid here, so this section only repeated it. Desktop keeps it — there
+     the carousel is an accordion showing one project at a time. */
+  .projects-list { display: none; }
   .projects-list__head { margin-bottom: 32px; }
   .projects-list__title { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
   .projects-list__grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
