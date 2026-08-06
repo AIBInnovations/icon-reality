@@ -17,7 +17,11 @@ const TRAIL = [
 
 const ABOUT_FRAME_COUNT = 192;
 const ABOUT_BOOTSTRAP = 60;
-const aboutFrame = (i) => `/about-frames/f${String(i + 1).padStart(3, '0')}.jpg`;
+// bump ASSET_REV whenever the frame images themselves are re-exported, so
+// browsers holding an older copy re-fetch instead of serving it from cache
+const ASSET_REV = 2;
+const aboutFrame = (i) =>
+  `/about-frames/f${String(i + 1).padStart(3, '0')}.jpg?v=${ASSET_REV}`;
 
 export default function AboutPage() {
   const lineRefs = useRef([]);

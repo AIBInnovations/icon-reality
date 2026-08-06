@@ -4,7 +4,10 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import './Hero.css';
 
 const FRAME_COUNT = 476;
-const frameUrl = (i) => `/frames/f${String(i + 1).padStart(3, '0')}.jpg`;
+// bump ASSET_REV whenever the frame images themselves are re-exported, so
+// browsers holding an older copy re-fetch instead of serving it from cache
+const ASSET_REV = 2;
+const frameUrl = (i) => `/frames/f${String(i + 1).padStart(3, '0')}.jpg?v=${ASSET_REV}`;
 
 export default function Hero({ onReady, onProgress }) {
   const wrapRef = useRef(null);
