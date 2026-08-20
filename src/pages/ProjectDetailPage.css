@@ -38,9 +38,15 @@
 /* the flank box stays click-through; only the link (the bird) is interactive */
 .project-hero__flank-link {
   display: block;
+  /* The control is a <button> (it opens the brochure gate), and a button is
+     shrink-to-fit — without this it sizes to the non-wrapping hint rather than
+     to the artwork, and pushes past the viewport on the narrowest flank. */
+  width: 100%;
+  padding: 0;
   position: relative;
   pointer-events: auto;
   cursor: pointer;
+  text-align: inherit;
 }
 .project-hero__flank-link:hover img,
 .project-hero__flank-link:focus-visible img {
@@ -67,6 +73,16 @@
 .project-hero__flank-link:hover .project-hero__flank-hint {
   color: var(--ink);
 }
+/* "Download Brochure" on one line is ~146px. Oscar Palace's artwork is never
+   narrower than 180px so it fits, but the compact and small flanks are 84–170px
+   — there the nowrap label ran past its own box and gave the whole page a
+   horizontal scrollbar. Those two wrap to two lines instead. (Below 960px the
+   hint is hidden entirely, so this only concerns desktop.) */
+.project-hero__flank--compact .project-hero__flank-hint,
+.project-hero__flank--sm .project-hero__flank-hint {
+  white-space: normal;
+  line-height: 1.35;
+}
 .project-hero__flank--left {
   left: clamp(12px, 2.4vw, 40px);
 }
@@ -85,9 +101,6 @@
 }
 .project-hero__flank--sm.project-hero__flank--left  { left: clamp(10px, 2vw, 28px); }
 .project-hero__flank--sm.project-hero__flank--right { right: clamp(10px, 2vw, 28px); }
-
-/* hidden on desktop — the flank hint already carries the brochure action */
-.project-hero__brochure { display: none; }
 
 .project-hero--flanked .project-hero__eyebrow,
 .project-hero--flanked .project-hero__title,
@@ -165,21 +178,6 @@
 
   .project-hero__flank-hint {
     display: none;
-  }
-
-  /* the hint can't fit under the shrunken cutouts — surface the same
-     download/request action as a real button below the lede instead.
-     Sized down from the full .cta so it reads as a hero accent, not a
-     page-width CTA (the big one still lives in the final CTA block). */
-  .project-hero__brochure {
-    display: inline-flex;
-    order: 5;
-    position: relative;
-    z-index: 2;
-    margin-top: 18px;
-    height: 40px;
-    padding: 0 20px;
-    font-size: 13px;
   }
 }
 
@@ -364,392 +362,6 @@
   .project-video__frame { border-radius: 14px; }
 }
 
-/* ============ FEATURES (combined Amenities + Connectivity) ============ */
-/* Full-bleed --bg-2 against the page's --bg reads as a seam where it meets the
-   banner — two near-identical creams with a hard edge between them. Inset it by
-   the same 14px gutter the banner uses and give it the shell's 18px radius, so
-   the tint reads as its own panel sitting on the page rather than a colour
-   change in the background. Same treatment on .project-gallery below. */
-.project-features {
-  padding: clamp(60px, 8vw, 110px) 0;
-  margin-inline: 14px;
-  border-radius: 18px;
-  background: var(--bg-2);
-}
-
-.project-features__eyebrow {
-  color: var(--peach-deep);
-  margin-bottom: 14px;
-  display: inline-block;
-}
-
-.project-features__heading {
-  font-size: clamp(32px, 4.5vw, 64px);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  text-transform: none;
-  line-height: 1.02;
-  margin-bottom: clamp(28px, 3.4vw, 48px);
-}
-
-.project-features__grid {
-  display: grid;
-  grid-template-columns: repeat(2, 1fr);
-  gap: clamp(16px, 1.8vw, 28px);
-  align-items: stretch;
-}
-
-/* The Reveal wrapper around each card is the grid item — make it stretch
-   so both cards always render the same height regardless of inner content. */
-.project-features__grid > * {
-  display: flex;
-  height: 100%;
-}
-
-.project-features__card {
-  position: relative;
-  display: flex;
-  flex-direction: column;
-  gap: 14px;
-  padding: clamp(28px, 3vw, 44px);
-  background: #FFFFFF;
-  border-radius: 14px;
-  border: 1px solid var(--line);
-  text-align: left;
-  cursor: pointer;
-  color: inherit;
-  width: 100%;
-  min-height: clamp(280px, 30vh, 360px); /* lock a consistent minimum so both cards match */
-  transition: transform .4s ease, border-color .3s ease, box-shadow .3s ease;
-}
-.project-features__card:hover {
-  transform: translateY(-4px);
-  border-color: var(--peach);
-  box-shadow: 0 30px 60px -28px rgba(232, 160, 108, 0.4);
-}
-
-.project-features__card--peach {
-  background: var(--peach);
-  border-color: var(--peach);
-  color: var(--ink);
-}
-.project-features__card--peach:hover {
-  background: var(--peach-deep);
-  border-color: var(--peach-deep);
-  box-shadow: 0 30px 60px -28px rgba(20, 20, 20, 0.25);
-}
-
-.project-features__card-head { display: flex; flex-direction: column; gap: 6px; }
-
-.project-features__card-eyebrow {
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  color: var(--muted);
-  font-weight: 500;
-}
-.project-features__card--peach .project-features__card-eyebrow { color: rgba(20, 20, 20, 0.65); }
-
-.project-features__card-title {
-  font-family: var(--font-display);
-  font-size: clamp(26px, 3vw, 40px);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  color: var(--ink);
-  margin: 0;
-  line-height: 1.04;
-}
-
-.project-features__card-count {
-  font-size: 13px;
-  letter-spacing: 0.04em;
-  color: var(--peach-deep);
-  font-weight: 500;
-}
-.project-features__card--peach .project-features__card-count { color: rgba(20, 20, 20, 0.7); }
-
-.project-features__card-preview {
-  font-size: clamp(14px, 1vw, 16px);
-  color: var(--ink-soft);
-  line-height: 1.5;
-  margin: 0;
-  flex: 1;
-}
-.project-features__card--peach .project-features__card-preview { color: rgba(20, 20, 20, 0.78); }
-
-.project-features__card-cta {
-  display: inline-flex;
-  align-items: center;
-  gap: 8px;
-  font-size: 13px;
-  letter-spacing: 0.06em;
-  font-weight: 600;
-  color: var(--ink);
-  margin-top: 4px;
-  transition: gap .25s ease;
-}
-.project-features__card:hover .project-features__card-cta { gap: 12px; }
-
-/* ============ FEATURES MODAL (side panel from right) ============ */
-.project-features-modal {
-  position: fixed;
-  inset: 0;
-  z-index: 200;
-  background: rgba(20, 20, 20, 0);
-  pointer-events: none;
-  transition: background-color .55s ease;
-  overflow: hidden;
-}
-.project-features-modal.is-open {
-  background: rgba(20, 20, 20, 0.42);
-  pointer-events: auto;
-}
-
-.project-features-modal__panel {
-  position: absolute;
-  top: 14px;
-  right: 14px;
-  bottom: 14px;
-  width: clamp(420px, 52vw, 800px);
-  background: #FFFFFF;
-  color: var(--ink);
-  border-radius: 18px;
-  overflow: hidden;
-  display: flex;
-  flex-direction: column;
-  transform: translateX(calc(100% + 14px));
-  transition: transform .58s cubic-bezier(0.7, 0, 0.2, 1);
-  will-change: transform;
-  box-shadow: -30px 0 80px -20px rgba(0, 0, 0, 0.28);
-}
-.project-features-modal.is-open .project-features-modal__panel {
-  transform: translateX(0);
-}
-
-.project-features-modal__close {
-  position: absolute;
-  top: 22px;
-  right: 22px;
-  z-index: 5;
-  width: 48px;
-  height: 48px;
-  border-radius: 50%;
-  background: #F3EFE9;
-  color: #1A1A1A;
-  display: inline-flex;
-  align-items: center;
-  justify-content: center;
-  transition: transform .3s ease, background .25s ease;
-}
-.project-features-modal__close:hover {
-  background: var(--peach);
-  transform: rotate(90deg);
-}
-
-.project-features-modal__body {
-  padding: clamp(48px, 6vw, 72px) clamp(28px, 4vw, 56px) clamp(28px, 3vw, 40px);
-  overflow-y: auto;
-  flex: 1;
-  min-height: 0; /* allow the flex child to shrink so overflow actually scrolls */
-  -webkit-overflow-scrolling: touch; /* momentum scroll on iOS */
-  overscroll-behavior: contain;
-}
-.project-features-modal__body::-webkit-scrollbar { width: 6px; }
-.project-features-modal__body::-webkit-scrollbar-thumb { background: rgba(20,20,20,0.18); border-radius: 3px; }
-
-.project-features-modal__eyebrow {
-  color: var(--peach-deep);
-  font-size: 11px;
-  letter-spacing: 0.22em;
-  text-transform: uppercase;
-  font-weight: 500;
-}
-
-.project-features-modal__title {
-  font-size: clamp(32px, 3.8vw, 52px);
-  font-weight: 600;
-  letter-spacing: -0.01em;
-  text-transform: uppercase;
-  margin: 10px 0 8px;
-  line-height: 1.04;
-}
-
-.project-features-modal__sub {
-  font-size: clamp(15px, 1.1vw, 18px);
-  color: var(--muted);
-  margin-bottom: clamp(20px, 2.4vw, 32px);
-  line-height: 1.55;
-}
-
-.project-features-modal__list {
-  display: flex;
-  flex-direction: column;
-}
-
-.project-features-modal__item {
-  display: flex;
-  align-items: center;
-  gap: 16px;
-  padding: 18px 0;
-  border-top: 1px solid var(--line);
-  font-size: clamp(15px, 1.1vw, 18px);
-  color: var(--ink-soft);
-}
-.project-features-modal__item:last-child {
-  border-bottom: 1px solid var(--line);
-}
-.project-features-modal__item svg {
-  flex-shrink: 0;
-  color: var(--peach-deep);
-}
-.project-features-modal__dot {
-  width: 10px;
-  height: 10px;
-  border-radius: 50%;
-  background: var(--peach);
-  flex-shrink: 0;
-}
-.project-features-modal__item--media {
-  padding: 12px 0;
-}
-.project-features-modal__thumb {
-  flex-shrink: 0;
-  width: 84px;
-  height: 60px;
-  border-radius: 10px;
-  overflow: hidden;
-  background: var(--line);
-}
-.project-features-modal__thumb img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-}
-@media (max-width: 600px) {
-  .project-features-modal__thumb { width: 64px; height: 48px; }
-}
-
-/* ============ MAP / LOCATION ============ */
-.project-map {
-  padding: clamp(60px, 8vw, 110px) 0;
-  background: var(--bg);
-}
-
-/* Oscar Palace — transparent land illustration behind the map section.
-   The PNG's "black" areas are transparent, so it floats over the normal bg. */
-.project-map--landbg {
-  position: relative;
-  overflow: hidden;
-}
-.project-map__bg {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  aspect-ratio: 3780 / 1890; /* match the source image so cover fits exactly */
-  background: url('/images/oscar/lanfd.png') center / cover no-repeat;
-  /* crop the top 30% of the image */
-  clip-path: inset(30% 0 0 0);
-  /* hard at the bottom, fading out exactly at the 70% crop line so the
-     cropped top edge dissolves instead of cutting hard */
-  -webkit-mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 70%);
-  mask-image: linear-gradient(to top, #000 0%, #000 30%, transparent 70%);
-  z-index: 0;
-  pointer-events: none;
-}
-/* Fade the section bg color in at the top and bottom edges so the image
-   blends seamlessly (transparent through the middle). */
-.project-map--landbg::after {
-  content: '';
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  pointer-events: none;
-  background: linear-gradient(
-    to bottom,
-    #F6F2EC 0%,
-    rgba(246, 242, 236, 0) 22%,
-    rgba(246, 242, 236, 0) 78%,
-    #F6F2EC 100%
-  );
-}
-.project-map--landbg .container { position: relative; z-index: 2; }
-
-/* Stack vertically — heading + address + CTA above, map full-width below.
-   Removes the dead-space-on-the-left issue of the previous 2-col layout. */
-.project-map__inner {
-  display: flex;
-  flex-direction: column;
-  gap: clamp(24px, 3vw, 40px);
-}
-
-.project-map__head {
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 24px;
-  align-items: end;
-  max-width: 100%;
-}
-
-.project-map__eyebrow { color: var(--peach-deep); }
-
-.project-map__heading {
-  font-size: clamp(30px, 4.2vw, 60px);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  text-transform: none;
-  line-height: 1.04;
-  margin: 0;
-}
-
-.project-map__address {
-  font-size: clamp(16px, 1.2vw, 20px);
-  color: var(--muted);
-  line-height: 1.55;
-  max-width: 32ch;
-}
-
-.project-map__cta {
-  margin-top: 4px;
-}
-
-.project-map__frame {
-  position: relative;
-  width: 100%;
-  aspect-ratio: 21 / 9; /* wide cinematic — less vertical real estate */
-  max-height: calc(var(--svh, 1vh) * 60);
-  border-radius: 14px;
-  overflow: hidden;
-  background: var(--bg-2);
-  border: 1px solid var(--line);
-}
-
-/* Retint Google Maps to Icon Realty's warm cream + peach palette.
-   Heavy grayscale + sepia kills the green parks / blue water; a multiply
-   overlay then bathes the tiles in peach. */
-.project-map__frame iframe {
-  display: block;
-  width: 100%;
-  height: 100%;
-  filter:
-    grayscale(0.75)
-    sepia(0.55)
-    hue-rotate(-18deg)
-    saturate(1.3)
-    brightness(0.98)
-    contrast(1.05);
-}
-
-.project-map__frame::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  background: linear-gradient(135deg, rgba(242, 182, 143, 0.30), rgba(217, 189, 150, 0.22));
-  mix-blend-mode: multiply;
-  pointer-events: none;
-}
-
 /* ============ HIGHLIGHTS ============ */
 .project-highlights {
   padding: clamp(60px, 8vw, 110px) 14px;
@@ -805,168 +417,6 @@
   color: rgba(244, 240, 234, 0.86);
 }
 
-/* ============ GALLERY ============ */
-.project-gallery {
-  padding: clamp(60px, 8vw, 110px) 0;
-  margin-inline: 14px;
-  border-radius: 18px;
-  background: var(--bg-2);
-}
-
-.project-gallery__eyebrow {
-  color: var(--peach-deep);
-  margin-bottom: 14px;
-  display: inline-block;
-}
-
-.project-gallery__heading {
-  font-size: clamp(32px, 4.5vw, 64px);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  text-transform: none;
-  line-height: 1.02;
-  margin-bottom: clamp(28px, 3.4vw, 48px);
-}
-
-/* Curated aspect-ratio gallery — every image fills its slot at a defined
-   ratio (4:5 / 4:3 / 1:1 cycling) so the layout reads as deliberate and
-   rhythmic. Works for 5/6/7+ images without orphan gaps. */
-.project-gallery__grid {
-  display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: clamp(14px, 1.4vw, 22px);
-  grid-auto-flow: dense;
-}
-
-.project-gallery__grid > * { display: block; }
-
-.project-gallery__item {
-  position: relative;
-  overflow: hidden;
-  border-radius: 12px;
-  background: var(--bg-2);
-  transition: transform .45s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-
-/* NOTE: the Reveal *is* the grid child (it takes .project-gallery__item as its
-   className), so these have to match the child itself — written as descendant
-   selectors they matched nothing and no ratio was ever applied. */
-.project-gallery__grid > .project-gallery__item:nth-child(3n + 1) { aspect-ratio: 4 / 5; } /* portrait */
-.project-gallery__grid > .project-gallery__item:nth-child(3n + 2) { aspect-ratio: 4 / 3; } /* landscape */
-.project-gallery__grid > .project-gallery__item:nth-child(3n + 3) { aspect-ratio: 1 / 1; } /* square */
-
-.project-gallery__item:hover { transform: translateY(-4px); }
-
-.project-gallery__item img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  display: block;
-  transition: transform 1.4s cubic-bezier(0.2, 0.8, 0.2, 1), filter .35s ease;
-  filter: saturate(0.96);
-}
-.project-gallery__item:hover img {
-  transform: scale(1.05);
-  filter: saturate(1.1);
-}
-
-/* Subtle stagger of one rounded corner per nth — keeps the rhythm playful */
-.project-gallery__grid > .project-gallery__item:nth-child(3n)   { border-radius: 10px 32px 10px 10px; }
-.project-gallery__grid > .project-gallery__item:nth-child(4n+2) { border-radius: 32px 10px 10px 10px; }
-.project-gallery__grid > .project-gallery__item:nth-child(5n)   { border-radius: 10px 10px 32px 10px; }
-
-@media (max-width: 880px) {
-  .project-gallery__grid { grid-template-columns: repeat(2, 1fr); }
-  .project-gallery__grid > .project-gallery__item:nth-child(2n + 1) { aspect-ratio: 4 / 5; }
-  .project-gallery__grid > .project-gallery__item:nth-child(2n + 2) { aspect-ratio: 4 / 3; }
-  /* Odd gallery counts (3, 5, 7, 9 are all common here) end on a single tile —
-     run it across both columns as a banner rather than leaving a blank cell. */
-  .project-gallery__grid > .project-gallery__item:last-child:nth-child(odd) {
-    grid-column: 1 / -1;
-    aspect-ratio: 16 / 10;
-  }
-}
-
-/* ============ BROCHURE / BACK ============ */
-.project-brochure {
-  padding: clamp(56px, 7vw, 90px) 0;
-  background: var(--bg);
-}
-
-.project-brochure__inner {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  max-width: 720px;
-  margin: 0 auto;
-}
-
-.project-brochure__title {
-  font-size: clamp(32px, 4.4vw, 56px);
-  font-weight: 600;
-  letter-spacing: -0.02em;
-  text-transform: none;
-  line-height: 1.04;
-  margin-bottom: 16px;
-}
-
-.project-brochure__lede {
-  font-size: clamp(16px, 1.2vw, 20px);
-  color: var(--muted);
-  margin-bottom: 26px;
-}
-
-.project-brochure__actions {
-  display: flex;
-  gap: 14px;
-  flex-wrap: wrap;
-  justify-content: center;
-}
-
-.project-brochure__cta { height: 52px; padding: 0 28px; font-size: 15px; }
-.project-brochure__back {
-  height: 52px;
-  padding: 0 24px;
-  font-size: 15px;
-  color: var(--ink);
-  border-color: var(--line);
-}
-
-/* ============ 404 ============ */
-.project-notfound {
-  padding: 220px 0 160px;
-  background: var(--bg);
-}
-.project-notfound__inner {
-  text-align: center;
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 18px;
-  max-width: 600px;
-  margin: 0 auto;
-}
-.project-notfound__eyebrow { color: var(--peach-deep); }
-.project-notfound__title {
-  font-size: clamp(40px, 6vw, 80px);
-  font-weight: 600;
-  text-transform: none;
-  letter-spacing: -0.02em;
-  margin: 0;
-}
-.project-notfound__lede {
-  font-size: 17px;
-  color: var(--muted);
-  margin-bottom: 14px;
-}
-.project-notfound__lede code {
-  background: var(--bg-2);
-  padding: 2px 8px;
-  border-radius: 4px;
-  font-size: 14px;
-}
-
 /* ============ TABLET / MOBILE ============ */
 @media (max-width: 980px) {
   .project-highlights__grid { grid-template-columns: repeat(2, 1fr); } /* 4 cards → 2×2 */
@@ -976,8 +426,6 @@
 }
 @media (max-width: 880px) {
   .project-overview__grid { grid-template-columns: 1fr; }
-  .project-map__head { grid-template-columns: 1fr; }
-  .project-features__grid { grid-template-columns: 1fr; }
 }
 @media (max-width: 720px) {
   /* 2×2, not a 4-high stack of 220px cards */
@@ -1041,61 +489,9 @@
   .project-overview__desc { font-size: 15px; padding-inline: 12px; }
   .project-overview__stats { padding: 22px 20px; }
 
-  /* gutter + radius track the banner shell's mobile values, not the desktop ones */
-  .project-features { padding: 50px 0; margin-inline: 8px; border-radius: 14px; }
-  .project-features__heading { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
-  /* Amenities + Connectivity side by side. They were stacked at 880px with a
-     280px floor, so the pair alone ran ~600px before the map. */
-  .project-features__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .project-features__card { padding: 18px 15px; gap: 10px; min-height: 0; }
-  .project-features__card-eyebrow { font-size: 9px; letter-spacing: 0.14em; }
-  .project-features__card-title { font-size: 19px; }
-  .project-features__card-count { font-size: 11px; }
-  .project-features__card-preview { font-size: 12px; line-height: 1.45; }
-  .project-features__card-cta { font-size: 12px; }
-  .project-features-modal__panel {
-    top: 0; right: 0; left: 0; bottom: auto;
-    width: 100%;
-    height: 100vh;         /* fallback for browsers without dvh */
-    height: 100dvh;        /* full mobile viewport, accounts for browser chrome */
-    max-height: 100dvh;
-    border-radius: 0;
-    box-shadow: none;
-    transform: translateX(100%);
-  }
-  .project-features-modal__body { padding: 60px 22px 40px; }
-  .project-features-modal__title { font-size: clamp(28px, 8vw, 42px); }
-
-  .project-map { padding: 50px 0; }
-  /* single column so heading / address / CTA stack and align to the same
-     left edge as the map below */
-  .project-map__head { grid-template-columns: 1fr; padding-inline: 0; gap: 10px; }
-  .project-map__heading { font-size: clamp(28px, 8vw, 42px); }
-  .project-map__address { font-size: 15px; }
-  .project-map__cta { align-self: flex-start; }
-  /* no horizontal margin — the container gutter already insets it equally,
-     so the map stays centered instead of overflowing to the right */
-  .project-map__frame { aspect-ratio: 4 / 3; margin: 0; border-radius: 12px; max-height: none; }
-
   .project-highlights { padding: 50px 8px; }
   .project-highlights__heading { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
   .project-highlights__card { padding: 24px 22px; min-height: 0; }
-
-  .project-gallery { padding: 50px 0; margin-inline: 8px; border-radius: 14px; }
-  .project-gallery__heading { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
-  /* Two even columns, one shared ratio. A single stacked column at 4:5 made
-     every gallery a long scroll, and mixed ratios side by side left ragged
-     gaps under the shorter tile. */
-  .project-gallery__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
-  .project-gallery__grid > .project-gallery__item:nth-child(n) { aspect-ratio: 1 / 1; }
-  .project-gallery__grid > .project-gallery__item:last-child:nth-child(odd) { aspect-ratio: 16 / 10; }
-
-  .project-brochure { padding: 40px 0; }
-  .project-brochure__title { font-size: clamp(26px, 8vw, 38px); padding-inline: 12px; }
-  .project-brochure__lede { font-size: 15px; padding: 0 12px; }
-  .project-brochure__actions { flex-direction: column; width: 100%; padding: 0 12px; }
-  .project-brochure__cta,
-  .project-brochure__back { width: 100%; justify-content: center; }
 }
 
 /* ============ COMBINED PROJECT + FINAL CTA (dark, 2-block) ============ */
@@ -1126,12 +522,6 @@
   text-align: center;
   width: 100%;
   gap: clamp(10px, 1.2vw, 16px);
-}
-.project-finalcta__divider {
-  width: clamp(40px, 6vw, 80px);
-  height: 1px;
-  background: rgba(244, 240, 234, 0.18);
-  margin: clamp(36px, 5vw, 64px) 0;
 }
 .project-finalcta__eyebrow {
   color: var(--peach);
@@ -1174,18 +564,6 @@
   background: rgba(244, 240, 234, 0.12);
   color: #F4F0EA;
 }
-.project-finalcta__foot {
-  display: inline-flex;
-  align-items: center;
-  gap: 10px;
-  margin-top: 10px;
-  padding-top: 14px;
-  border-top: 1px solid rgba(244, 240, 234, 0.12);
-  font-size: 13px;
-}
-.project-finalcta__foot-k { color: rgba(244, 240, 234, 0.55); letter-spacing: 0.06em; }
-.project-finalcta__foot-v { color: var(--peach); font-weight: 500; transition: color .25s ease; }
-.project-finalcta__foot-v:hover { color: var(--peach-deep); }
 
 @media (max-width: 720px) {
   .project-finalcta { padding: 8px; }
@@ -1194,6 +572,197 @@
   .project-finalcta__lede { font-size: 15px; padding: 0 12px; }
   .project-finalcta__actions { flex-direction: column; width: 100%; padding: 0 8px; }
   .project-finalcta__primary, .project-finalcta__ghost { width: 100%; justify-content: center; }
-  .project-finalcta__foot { flex-direction: column; gap: 4px; }
-  .project-finalcta__divider { margin: 28px 0; }
+}
+
+
+/* ============ HERO ACTIONS ============
+   Two contextual CTAs replacing the old single brochure button — site visit
+   first, price second (read.md §13). On a flanked hero they sit under the lede
+   in the same narrowed column as the title, so the cutout artwork on either
+   side is never overlapped. */
+.project-hero__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  justify-content: center;
+  margin-top: clamp(22px, 2.6vw, 34px);
+}
+.project-hero__cta { height: 50px; padding: 0 26px; font-size: 15px; }
+
+.project-hero--flanked .project-hero__actions {
+  max-width: min(620px, 100%);
+  margin-inline: auto;
+}
+
+/* ============ OVERVIEW ACTIONS ============ */
+.project-overview__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: clamp(24px, 2.6vw, 34px);
+}
+
+/* ============ SECTION RHYTHM ============
+   The detail page alternates cream and warm-cream so eighteen sections read as
+   chapters rather than one continuous scroll. The shared components carry no
+   background of their own beyond var(--bg), so the banding is set here. */
+.project-location,
+.project-amenities,
+.project-specs { background: var(--bg-2); }
+.project-location,
+.project-amenities,
+.project-specs,
+.project-plans,
+.project-gallery-section,
+.project-construction { position: relative; }
+
+/* ============ RELATED PROJECTS ============ */
+.project-related {
+  padding: clamp(52px, 7vw, 92px) 0;
+  background: var(--bg-2);
+}
+.project-related__eyebrow { color: var(--peach-deep); display: block; margin-bottom: 14px; }
+.project-related__heading {
+  font-size: clamp(26px, 3.4vw, 46px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0 0 clamp(26px, 3.2vw, 42px);
+}
+
+.project-related__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+}
+.project-related__card {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: inherit;
+  min-width: 0;
+  transition: transform .35s ease;
+}
+.project-related__card:hover { transform: translateY(-4px); }
+.project-related__card .media-figure { margin-bottom: 8px; }
+
+.project-related__name {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.35vw, 20px);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.project-related__meta {
+  font-size: 12.5px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.project-related__action { margin-top: clamp(24px, 3vw, 38px); }
+
+@media (max-width: 860px) {
+  .project-related__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* odd count → the last card spans the row rather than leaving a gap */
+  .project-related__grid > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
+}
+
+@media (max-width: 720px) {
+  /* Stack the two hero CTAs full width — side by side they wrap to two lines
+     of truncated text at 320px. */
+  .project-hero__actions { flex-direction: column; width: 100%; padding-inline: 12px; }
+  .project-hero__cta { width: 100%; }
+  .project-overview__actions { width: 100%; }
+  .project-overview__actions > * { width: 100%; justify-content: center; }
+
+  .project-related { padding: 44px 0; }
+  .project-related__heading { font-size: clamp(24px, 7vw, 32px); }
+  .project-related__grid { gap: 12px; }
+  .project-related__name { font-size: 15.5px; }
+  .project-related__action > * { width: 100%; }
+
+  /* The sticky conversion bar covers the last ~64px of the page. */
+  .project-finalcta { padding-bottom: 20px; }
+}
+
+/* ============ MOBILE VIDEO OPT-IN ============
+   The walkthrough files are 69–89 MB (docs/asset-audit.md). On mobile the film
+   does not autoplay; the poster shows with this control over it and the file is
+   only fetched on tap (read.md §56). */
+.project-video__play {
+  position: absolute;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+  width: 100%;
+  /* the poster shows through; a dark wash keeps the label legible on any frame */
+  background: rgba(15, 15, 15, 0.32);
+  color: #F4F0EA;
+  cursor: pointer;
+  transition: background .25s ease;
+}
+.project-video__play:active { background: rgba(15, 15, 15, 0.5); }
+
+.project-video__play-icon {
+  width: 64px;
+  height: 64px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--peach);
+  color: #1A1A1A;
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.3);
+}
+.project-video__play-icon svg { width: 30px; height: 30px; margin-left: 3px; }
+
+.project-video__play-label {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  text-shadow: 0 1px 10px rgba(0, 0, 0, 0.5);
+}
+
+
+/* Two columns: the pitch on the left, the site-visit form on the right. */
+.project-finalcta__inner--split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 4vw, 64px);
+  /* centre the pitch against the form rather than pinning it to the top and
+     leaving a column of dead charcoal underneath */
+  align-items: center;
+  text-align: left;
+  max-width: none;
+}
+/* the base block centres its own contents; in the split layout it reads left */
+.project-finalcta__inner--split .project-finalcta__block {
+  align-items: flex-start;
+  text-align: left;
+}
+.project-finalcta__inner--split .project-finalcta__title { max-width: 14ch; }
+.project-finalcta__inner--split .project-finalcta__lede { margin-inline: 0; }
+.project-finalcta__inner--split .project-finalcta__actions { justify-content: flex-start; }
+
+.project-finalcta__form {
+  padding: clamp(22px, 2.6vw, 34px);
+  border-radius: 16px;
+  /* a light card inside the charcoal shell — the form fields are designed for
+     the cream page, not for dark ground */
+  background: #FFFFFF;
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .project-finalcta__inner--split { grid-template-columns: 1fr; gap: 26px; }
+}
+
+@media (max-width: 720px) {
+  .project-finalcta__form { padding: 18px 16px; border-radius: 14px; }
+  .project-finalcta__inner--split { text-align: center; }
+  .project-finalcta__inner--split .project-finalcta__form { text-align: left; }
 }

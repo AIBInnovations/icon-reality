@@ -15,13 +15,49 @@ export default async function handler(req, res) {
     return res.status(405).json({ error: 'Method not allowed' });
   }
 
-  const { name, phone, email, message, source, project } = req.body || {};
-  if (!name || !phone || !email) {
+  const {
+    name, phone, email, message, source, project,
+    // intent-specific fields — every lead form on the site funnels through
+    // src/services/leads.js, which sends whichever of these its journey asked
+    // for. All optional; anything absent is simply omitted downstream.
+    intent, city, country, budget, preferredDate, preferredTime, preferredMode,
+    company, reraNumber, experience, businessType, preferredProjects, preferredAreas,
+  } = req.body || {};
+
+  // Email is deliberately NOT required: high-intent forms (site visit, price
+  // request, brochure gate) ask for name + phone only, because every extra
+  // field costs conversions. The CRM stores a null email fine.
+  if (!name || !phone) {
     return res.status(400).json({ error: 'Missing required fields' });
   }
 
+  // Fields the CRM has no column for still have to reach a human, so they are
+  // appended to the remarks/notes rather than dropped.
+  const details = [
+    intent && `Intent: ${intent}`,
+    preferredDate && `Preferred date: ${preferredDate}`,
+    preferredTime && `Preferred time: ${preferredTime}`,
+    preferredMode && `Preferred mode: ${preferredMode}`,
+    country && `Country: ${country}`,
+    company && `Company: ${company}`,
+    reraNumber && `RERA number: ${reraNumber}`,
+    experience && `Experience: ${experience}`,
+    businessType && `Business type: ${businessType}`,
+    preferredProjects && `Preferred projects: ${preferredProjects}`,
+    preferredAreas && `Preferred areas: ${preferredAreas}`,
+  ].filter(Boolean);
+
+  const notes = [message, details.join('\n')].filter(Boolean).join('\n\n');
+
   // ---------- 1. CRM ----------
-  const crm = pushLead({ name, phone, email, message, source, project });
+  const crm = pushLead({
+    name, phone, email, message: notes, source, project,
+    ...(city ? { city } : {}),
+    budget,
+    interestedIn: preferredProjects || project,
+    companyName: company,
+    nextFollowupDate: preferredDate,
+  });
 
   // ---------- 2. email ----------
   const mail = (async () => {
@@ -39,24 +75,26 @@ export default async function handler(req, res) {
       { '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[c]
     ));
 
-    const context = [source && `Form: ${source}`, project && `Project: ${project}`]
-      .filter(Boolean)
-      .join('\n');
+    const context = [
+      source && `Form: ${source}`,
+      project && `Project: ${project}`,
+      ...details,
+    ].filter(Boolean).join('\n');
 
     return transporter.sendMail({
       from: `"Icon Realty Website" <${user}>`,
       to,
-      replyTo: email,
-      subject: `Site visit request — ${name}`,
+      ...(email ? { replyTo: email } : {}),
+      subject: `${source || 'Website enquiry'} — ${name}`,
       text:
-        `Name: ${name}\nPhone: ${phone}\nEmail: ${email}\n` +
+        `Name: ${name}\nPhone: ${phone}\n` +
+        (email ? `Email: ${email}\n` : '') +
         (context ? `${context}\n` : '') +
         `\n${message || '(no message)'}`,
       html: `
         <h2 style="margin:0 0 12px">New enquiry from the website</h2>
         <p><b>Name:</b> ${esc(name)}<br/>
-        <b>Phone:</b> ${esc(phone)}<br/>
-        <b>Email:</b> ${esc(email)}</p>
+        <b>Phone:</b> ${esc(phone)}${email ? `<br/><b>Email:</b> ${esc(email)}` : ''}</p>
         ${context ? `<p style="color:#666;font-size:13px;white-space:pre-wrap">${esc(context)}</p>` : ''}
         <p style="white-space:pre-wrap">${esc(message || '(no message)')}</p>
       `,

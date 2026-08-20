@@ -1,0 +1,65 @@
+.bank-partners {
+  padding: clamp(44px, 6vw, 76px) 0;
+  background: var(--bg);
+}
+
+.bank-partners__inner {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: center;
+}
+/* No logos to show → the copy runs at a comfortable measure instead of leaving
+   half the row empty. Set from JS rather than :has() so it does not depend on
+   selector support. */
+.bank-partners__inner--solo { grid-template-columns: minmax(0, 1fr); }
+
+.bank-partners__copy { display: flex; flex-direction: column; min-width: 0; }
+.bank-partners__eyebrow { color: var(--peach-deep); margin-bottom: 12px; }
+.bank-partners__heading {
+  font-size: clamp(24px, 3vw, 40px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0 0 16px;
+}
+.bank-partners__note {
+  font-size: clamp(15px, 1.1vw, 17.5px);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 62ch;
+}
+.bank-partners__action { margin-top: 22px; display: flex; gap: 12px; flex-wrap: wrap; }
+
+.bank-partners__logos ul {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(130px, 1fr));
+  gap: 14px;
+}
+.bank-partners__logos li {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  min-height: 72px;
+  padding: 14px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: #FFFFFF;
+  font-size: 14px;
+  color: var(--ink-soft);
+  text-align: center;
+}
+.bank-partners__logos img { max-height: 40px; width: auto; object-fit: contain; }
+
+@media (max-width: 860px) {
+  .bank-partners__inner { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .bank-partners { padding: 36px 0; }
+  .bank-partners__heading { font-size: clamp(22px, 6.6vw, 30px); }
+  .bank-partners__note { font-size: 15px; }
+  .bank-partners__action { width: 100%; flex-direction: column; }
+  .bank-partners__action > * { width: 100%; }
+}

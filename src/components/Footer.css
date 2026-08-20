@@ -2,118 +2,164 @@
   position: relative;
   background: #1F1F22;
   color: #F4F0EA;
-  padding: clamp(70px, 9vw, 120px) 0 30px;
+  padding: clamp(56px, 7vw, 96px) 0 28px;
   overflow: hidden;
 }
 
-.footer__grid {
+.footer__inner { position: relative; z-index: 2; }
+
+/* ============================================================
+   BAND 1 — brand + four link columns
+   Fixed columns, not auto-fit: auto-fit reflowed the contact block
+   into a fifth track and left the footer looking like a spreadsheet.
+   ============================================================ */
+.footer__top {
   display: grid;
-  grid-template-columns: 1.4fr 1fr 1fr;
-  gap: clamp(40px, 6vw, 100px);
-  position: relative;
-  z-index: 2;
-  padding-bottom: clamp(40px, 6vw, 80px);
+  grid-template-columns: minmax(240px, 0.95fr) minmax(0, 2.05fr);
+  gap: clamp(36px, 5vw, 90px);
+  padding-bottom: clamp(32px, 4vw, 52px);
+  align-items: start;
 }
 
+/* ---------- brand ---------- */
+.footer__brand { display: flex; flex-direction: column; min-width: 0; }
+
 .footer__logo {
-  width: clamp(140px, 14vw, 180px);
+  width: clamp(130px, 12vw, 160px);
   height: auto;
-  margin-bottom: 22px;
+  margin-bottom: 20px;
   filter: brightness(0) invert(1) opacity(0.92);
 }
 
 .footer__pitch {
-  font-size: clamp(20px, 1.6vw, 26px);
-  line-height: 1.4;
-  margin-bottom: 18px;
-  max-width: 32ch;
+  font-size: clamp(16px, 1.25vw, 19px);
+  line-height: 1.5;
+  color: rgba(244, 240, 234, 0.82);
+  max-width: 34ch;
+  margin-bottom: 22px;
 }
 
-.footer__sub {
-  font-size: 14px;
-  color: rgba(244,240,234,0.55);
-  margin-bottom: 30px;
+.footer__cta { align-self: flex-start; height: 46px; padding: 0 22px; font-size: 14px; }
+
+/* ---------- contact band ---------- */
+.footer__contact {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 36px);
+  padding: clamp(24px, 3vw, 34px) 0;
+  border-top: 1px solid rgba(244, 240, 234, 0.10);
 }
 
-.footer__cols-mobile {
-  display: contents;
+.footer__contact-item {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  min-width: 0;
+}
+
+.footer__contact-k {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: rgba(244, 240, 234, 0.45);
+}
+
+.footer__contact a {
+  display: inline-flex;
+  align-items: center;
+  align-self: flex-start;
+  min-height: 28px;
+  font-size: 14.5px;
+  color: #F4F0EA;
+  /* long email addresses must not force the column wider than its track */
+  overflow-wrap: anywhere;
+  transition: color .25s ease;
+}
+.footer__contact a:hover { color: var(--peach); }
+
+/* the two numbers read as one entry, not two rows */
+.footer__phones { display: flex; flex-wrap: wrap; gap: 0 16px; }
+
+.footer__address {
+  font-size: 13.5px;
+  font-style: normal;
+  line-height: 1.6;
+  color: rgba(244, 240, 234, 0.6);
+}
+
+/* ---------- link columns ---------- */
+.footer__links {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(20px, 2.4vw, 36px);
+  align-items: start;
 }
 
 .footer__col {
   display: flex;
   flex-direction: column;
-  gap: 14px;
+  gap: 2px;
+  min-width: 0;
 }
 
 .footer__col-title {
-  font-size: 13px;
+  font-size: 11px;
   letter-spacing: 0.22em;
   text-transform: uppercase;
-  color: rgba(244,240,234,0.55);
-  margin-bottom: 6px;
+  color: rgba(244, 240, 234, 0.45);
+  margin-bottom: 12px;
 }
 
 .footer__col a {
-  font-size: 15px;
-  color: #F4F0EA;
+  display: flex;
+  align-items: center;
+  /* comfortable target without stretching the column */
+  min-height: 30px;
+  font-size: 14px;
+  line-height: 1.3;
+  color: rgba(244, 240, 234, 0.86);
   transition: color .25s ease, transform .25s ease;
 }
 .footer__col a:hover { color: var(--peach); transform: translateX(3px); }
 
-.footer__address {
-  font-size: 14px;
-  color: rgba(244,240,234,0.6);
-  margin-top: 12px;
-  line-height: 1.6;
-}
-
-.footer__wordmark {
-  position: relative;
+/* ============================================================
+   BAND 2 — base bar
+   ============================================================ */
+.footer__base {
   display: flex;
-  align-items: baseline;
-  gap: clamp(20px, 3vw, 40px);
-  margin: clamp(30px, 5vw, 60px) 0 clamp(20px, 3vw, 36px);
-  font-family: var(--font-display);
-  font-weight: 600;
-  line-height: 0.85;
-  letter-spacing: -0.02em;
-  z-index: 2;
-}
-.footer__wordmark-bars {
-  font-size: clamp(64px, 14vw, 220px);
-  color: #F4F0EA;
-  letter-spacing: -0.05em;
-}
-.footer__wordmark-text {
-  flex: 1;
-  font-size: clamp(64px, 14vw, 220px);
-  white-space: nowrap;
-  color: #F4F0EA;
-}
-
-.footer__bottom {
-  display: flex;
-  justify-content: space-between;
   align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+  padding-top: 22px;
+  /* clear the floating QuickDock button in the bottom-right corner */
+  padding-right: 92px;
+  border-top: 1px solid rgba(244, 240, 234, 0.10);
   font-size: 13px;
-  letter-spacing: 0.06em;
-  color: rgba(244,240,234,0.55);
-  border-top: 1px solid rgba(244,240,234,0.10);
-  padding-top: 24px;
-  position: relative;
-  z-index: 2;
+  letter-spacing: 0.04em;
+  color: rgba(244, 240, 234, 0.5);
 }
 
-/* desktop: hide the mobile-only address; mobile rule below flips this */
-.footer__bottom-mobile { display: none; }
-.footer__bottom-desktop { display: inline; }
+.footer__socials { display: flex; gap: 20px; }
+.footer__socials a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 32px;
+  color: rgba(244, 240, 234, 0.72);
+  transition: color .25s ease;
+}
+.footer__socials a:hover { color: var(--peach); }
 
 .footer__bars {
   position: absolute;
   right: -10px;
-  top: 0;
+  /* was the full height, which put stripes behind the last link column and the
+     tagline; keep it to the lower corner as texture */
+  top: auto;
   bottom: 0;
-  width: clamp(120px, 18vw, 280px);
+  height: 30%;
+  opacity: 0.5;
+  width: clamp(100px, 13vw, 210px);
   background: repeating-linear-gradient(
     to right,
     transparent 0,
@@ -127,69 +173,52 @@
   pointer-events: none;
 }
 
-@media (max-width: 880px) {
-  .footer__grid { grid-template-columns: 1fr; gap: 40px; }
-  .footer__wordmark { flex-direction: column; gap: 0; }
-  .footer__wordmark-bars, .footer__wordmark-text { font-size: clamp(48px, 18vw, 100px); }
+@media (max-width: 1080px) {
+  .footer__top { grid-template-columns: 1fr; gap: 36px; }
+  .footer__brand { max-width: 520px; }
+}
+
+@media (max-width: 860px) {
+  .footer__contact { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 22px 20px; }
 }
 
 @media (max-width: 720px) {
-  .footer { padding: 40px 0 24px; }
-  /* MOBILE layout: lead block centered on top, then menu/contact as a 2-col row below */
-  .footer__grid {
-    grid-template-columns: 1fr;
-    gap: 28px;
-    padding-bottom: 28px;
-    padding-inline: 12px; /* match the 12px text-padding rhythm used site-wide on mobile */
+  /* extra bottom room so the floating QuickDock never lands on the last line
+     of the address */
+  .footer { padding: 44px 0 84px; }
+  .footer__base { padding-right: 0; }
+  .footer__top { gap: 30px; padding-bottom: 28px; padding-inline: 12px; }
+
+  /* brand centred, as before */
+  .footer__brand { align-items: center; text-align: center; max-width: none; }
+  .footer__logo { width: 130px; margin-bottom: 16px; }
+  .footer__pitch { font-size: 15px; max-width: 32ch; margin-bottom: 18px; }
+  .footer__cta { align-self: stretch; justify-content: center; }
+
+  /* two columns of links rather than four squeezed ones */
+  .footer__links { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 24px 16px; }
+  .footer__contact {
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 16px;
+    padding: 22px 12px;
+    text-align: left;
   }
-  .footer__lead {
-    display: flex;
+  .footer__contact-k { font-size: 10px; }
+  .footer__contact a { font-size: 13.5px; min-height: 44px; }
+  .footer__phones { flex-direction: column; gap: 0; }
+  .footer__col-title { font-size: 10px; margin-bottom: 8px; }
+  /* 44px minimum touch target on phones (read.md §10) */
+  .footer__col a { font-size: 13.5px; min-height: 44px; }
+  .footer__socials a { min-height: 44px; }
+
+  .footer__base {
     flex-direction: column;
-    align-items: center;
+    gap: 12px;
     text-align: center;
-  }
-  .footer__logo { width: 140px; margin-bottom: 16px; }
-  .footer__pitch {
-    font-size: 14px;
-    line-height: 1.45;
-    margin: 0 auto 14px;
-    max-width: 30ch;
-  }
-  /* Menu (left) + Contact (right) — 2-col row underneath the centered lead */
-  .footer__cols-mobile {
-    display: grid;
-    grid-template-columns: 1fr 1fr;
-    gap: 18px;
-    padding-top: 22px;
-    border-top: 1px solid rgba(244, 240, 234, 0.10);
-  }
-  .footer__col { gap: 10px; }
-  /* right-side column (Contact) — align all text to the right */
-  .footer__cols-mobile .footer__col:nth-child(2) {
-    align-items: flex-end;
-    text-align: right;
-  }
-  .footer__col-title { font-size: 12px; margin-bottom: 2px; }
-  .footer__col a { font-size: 14px; }
-  /* the verbose address in the contact column belongs to desktop only on mobile;
-     the simplified one-liner address is shown centered in the bottom bar instead */
-  .footer__address { display: none; }
-  /* bottom bar: address + © + tagline, all stacked centered on mobile */
-  .footer__bottom {
-    flex-direction: column;
-    gap: 6px;
-    text-align: center;
-    align-items: center;
-    padding-top: 22px;
+    padding-top: 20px;
     padding-inline: 12px;
   }
-  .footer__bottom-mobile {
-    display: inline;
-    font-size: 13px;
-    letter-spacing: 0.04em;
-    color: rgba(244, 240, 234, 0.75);
-    margin-bottom: 4px;
-  }
-  .footer__bottom-desktop { display: inline; }
+  /* the tagline is decorative and the bar is already three lines tall */
+  .footer__tagline { display: none; }
   .footer__bars { display: none; }
 }

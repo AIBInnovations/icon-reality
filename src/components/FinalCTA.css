@@ -84,6 +84,10 @@
   letter-spacing: 0.06em;
 }
 .final-cta__foot-v {
+  display: inline-flex;
+  align-items: center;
+  /* comfortable target on touch — it is a conversion link, not body text */
+  min-height: 44px;
   color: var(--peach);
   font-weight: 500;
   transition: color .25s ease;

@@ -1,0 +1,8 @@
+/* The gate renders as an ordinary .cta — it should look like every other
+   primary action on the page, not like a paywall. Only the mobile full-width
+   behaviour is added here. */
+.brochure-gate__btn { white-space: nowrap; }
+
+@media (max-width: 720px) {
+  .brochure-gate__btn { width: 100%; justify-content: center; }
+}

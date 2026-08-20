@@ -1,38 +1,79 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useMemo, useRef, useState } from 'react';
 import { useParams, Link } from 'react-router-dom';
 import gsap from 'gsap';
+
 import Reveal from '../components/Reveal';
 import Breadcrumbs from '../components/Breadcrumbs';
+import ProjectQuickFacts from '../components/ProjectQuickFacts';
+import PlanViewer from '../components/PlanViewer';
+import AmenitiesSection from '../components/AmenitiesSection';
+import LocationSection from '../components/LocationSection';
+import ProjectGallery from '../components/ProjectGallery';
+import ConstructionUpdates from '../components/ConstructionUpdates';
+import ProjectSpecifications from '../components/ProjectSpecifications';
+import ProjectCompliance from '../components/ProjectCompliance';
+import BankPartners from '../components/BankPartners';
+import FAQSection from '../components/FAQSection';
+import TrustModule from '../components/TrustModule';
+import BrochureGate from '../components/BrochureGate';
+import SiteVisitForm from '../components/SiteVisitForm';
+import MediaFigure from '../components/MediaFigure';
+import StickyMobileCTA from '../components/StickyMobileCTA';
+import NotFoundPage from './NotFoundPage';
+
 import Seo from '../seo/Seo';
 import {
-  breadcrumbSchema,
-  projectSchema,
-  videoObjectSchema,
-  imageObjectSchema,
+  breadcrumbSchema, projectSchema, videoObjectSchema,
+  imageObjectSchema, faqSchema,
 } from '../seo/schema';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import { useEnquiry } from '../enquiry/enquiryContext';
-import { projectsBySlug } from '../data/projects';
+import { LEAD_INTENTS } from '../services/leads';
+import { waMessage } from '../services/whatsapp';
+import { PRIMARY_PHONE, telHref } from '../data/contact';
+import { trackProjectView, trackVideoPlay } from '../analytics/events';
+import { projectsBySlug, projectPlans, relatedProjects } from '../data/projects';
+import { buildProjectFaqs } from '../data/projectFaqs';
+import { categoriseGallery } from '../utils/gallery';
 import './ProjectDetailPage.css';
 
-/* Showcase film: autoplays (muted) when scrolled into view, pauses when it
-   leaves the viewport. No controls bar, plays at 1.5× speed. */
-function ProjectVideo({ src, poster }) {
+/**
+ * Showcase film.
+ *
+ * Desktop: autoplays muted when scrolled into view, pauses when it leaves. No
+ * controls bar, 1.5× speed — the original behaviour, unchanged.
+ *
+ * Mobile: does NOT autoplay. The walkthrough files are 69–89 MB each (see
+ * docs/asset-audit.md); starting one automatically because a phone scrolled
+ * past it spends the visitor's mobile data on something they did not ask for,
+ * which is exactly what read.md §56 rules out. The poster frame shows with a
+ * play control, and the file is only fetched once they tap it.
+ */
+function ProjectVideo({ src, poster, projectName }) {
   const ref = useRef(null);
+  const isMobile = useMediaQuery('(max-width: 860px)');
+  const [started, setStarted] = useState(false);
 
   useEffect(() => {
     const el = ref.current;
-    if (!el) return;
+    if (!el) return undefined;
     el.muted = true;                 // required for autoplay to be allowed
     const setRate = () => { el.playbackRate = 1.5; };
     setRate();
     el.addEventListener('loadedmetadata', setRate);
 
+    // On mobile nothing plays until the visitor asks for it.
+    if (isMobile && !started) {
+      return () => el.removeEventListener('loadedmetadata', setRate);
+    }
+
+    let counted = false;
     const io = new IntersectionObserver(
       ([entry]) => {
         if (entry.isIntersecting) {
           setRate();
           el.play().catch(() => {});
+          if (!counted) { counted = true; trackVideoPlay(projectName, `${projectName} walkthrough`); }
         } else {
           el.pause();
         }
@@ -44,19 +85,50 @@ function ProjectVideo({ src, poster }) {
       io.disconnect();
       el.removeEventListener('loadedmetadata', setRate);
     };
-  }, []);
+  }, [projectName, isMobile, started]);
+
+  const play = () => {
+    setStarted(true);
+    trackVideoPlay(projectName, `${projectName} walkthrough`);
+    ref.current?.play().catch(() => {});
+  };
+
+  const showPoster = isMobile && !started;
 
   return (
-    <video
-      ref={ref}
-      className="project-video__player"
-      src={src}
-      poster={poster}
-      muted
-      loop
-      playsInline
-      preload="metadata"
-    />
+    <>
+      <video
+        ref={ref}
+        className="project-video__player"
+        /* No src at all until it is wanted on mobile — with a src set, even
+           preload="none" costs a request, and some browsers fetch more. */
+        src={showPoster ? undefined : src}
+        poster={poster}
+        muted
+        loop
+        playsInline
+        controls={isMobile && started}
+        /* metadata only — the film is below the fold and must not compete with
+           the hero image for bandwidth on a phone (read.md §56) */
+        preload={isMobile ? 'none' : 'metadata'}
+      />
+
+      {showPoster && (
+        <button
+          type="button"
+          className="project-video__play"
+          onClick={play}
+          aria-label={`Play the ${projectName} walkthrough`}
+        >
+          <span className="project-video__play-icon" aria-hidden>
+            <svg viewBox="0 0 24 24" fill="none">
+              <path d="M8 5.5l11 6.5-11 6.5V5.5z" fill="currentColor" />
+            </svg>
+          </span>
+          <span className="project-video__play-label">Play the walkthrough</span>
+        </button>
+      )}
+    </>
   );
 }
 
@@ -98,59 +170,37 @@ export default function ProjectDetailPage() {
   const lineRefs = useRef([]);
   // matches the 720px breakpoint where the CSS used to swap title variants
   const isMobile = useMediaQuery('(max-width: 720px)');
+  // Below 960px the CSS hides the flank's "Download Brochure" label and shrinks
+  // the artwork to ~60px. A control that small, with no visible label, is not a
+  // usable target — so on mobile the flanks go back to being pure decoration
+  // and the brochure lives in the hero CTAs and the overview section instead.
+  const flanksDecorative = useMediaQuery('(max-width: 960px)');
   const flankLeftRef = useRef(null);
   const flankRightRef = useRef(null);
-  const [openModal, setOpenModal] = useState(null); // 'amenities' | 'connectivity' | null
-  const [displayedModal, setDisplayedModal] = useState(null);
 
   useEffect(() => {
     if (window.lenis) window.lenis.scrollTo(0, { immediate: true });
     else window.scrollTo(0, 0);
   }, [slug]);
 
-  // Keep modal content mounted during the slide-out animation
   useEffect(() => {
-    if (openModal) {
-      setDisplayedModal(openModal);
-    } else {
-      const t = setTimeout(() => setDisplayedModal(null), 650);
-      return () => clearTimeout(t);
-    }
-  }, [openModal]);
-
-  // Lock body scroll while modal is open, and hide the fixed header behind it
-  useEffect(() => {
-    if (openModal) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
-      document.body.classList.add('has-modal');
-      return () => {
-        document.body.style.overflow = prev;
-        document.body.classList.remove('has-modal');
-      };
-    }
-  }, [openModal]);
-
-  // ESC to close
-  useEffect(() => {
-    if (!openModal) return;
-    const onKey = (e) => { if (e.key === 'Escape') setOpenModal(null); };
-    window.addEventListener('keydown', onKey);
-    return () => window.removeEventListener('keydown', onKey);
-  }, [openModal]);
+    if (project) trackProjectView(project);
+  }, [project]);
 
   useEffect(() => {
     const lines = lineRefs.current.filter(Boolean);
     if (!lines.length) return;
-    gsap.set(lines, { yPercent: 110 });
-    const tween = gsap.to(lines, {
-      yPercent: 0,
-      duration: 1.1,
-      ease: 'power3.out',
-      stagger: 0.14,
-      delay: 0.1,
+    const ctx = gsap.context(() => {
+      gsap.set(lines, { yPercent: 110 });
+      gsap.to(lines, {
+        yPercent: 0,
+        duration: 1.1,
+        ease: 'power3.out',
+        stagger: 0.14,
+        delay: 0.1,
+      });
     });
-    return () => tween.kill();
+    return () => ctx.revert();
   }, [slug]);
 
   // Scroll parallax for the hero flank cutouts — the two images drift
@@ -187,41 +237,30 @@ export default function ProjectDetailPage() {
     return () => ctx.revert();
   }, [slug]);
 
-  if (!project) {
-    return (
-      <section className="project-notfound">
-        {/* an unknown slug is a genuine 404 — must never be indexed */}
-        <Seo
-          title="Project not found"
-          description="This project page does not exist. Browse all Icon Realty projects in Indore."
-          path={`/projects/${slug}`}
-          noindex
-        />
-        <div className="container project-notfound__inner">
-          <span className="eyebrow project-notfound__eyebrow">404</span>
-          <h1 className="display project-notfound__title">Project not found.</h1>
-          <p className="project-notfound__lede">
-            We couldn't find a project with the slug <code>{slug}</code>. Browse the full list instead.
-          </p>
-          <Link to="/projects" className="cta">All projects</Link>
-        </div>
-      </section>
-    );
-  }
+  const gallery = useMemo(
+    () => (project ? categoriseGallery(project.gallery || [], project.name) : []),
+    [project],
+  );
+  const faqs = useMemo(() => buildProjectFaqs(project), [project]);
+  const plans = useMemo(() => projectPlans(project), [project]);
+  const related = useMemo(() => (project ? relatedProjects(slug, 3) : []), [project, slug]);
+
+  // An unknown slug is a genuine 404 — render the real one so the status,
+  // the copy and the noindex all match every other missing URL on the site.
+  if (!project) return <NotFoundPage />;
 
   const {
     name, tagline, location, total_area, plot_sizes, status,
     description, amenities = [], connectivity = [], highlights = [],
-    gallery: rawGallery = [], hero_image, brochure_url, amenityImages = {},
-    video_url, video_poster,
+    hero_image, brochure_url, amenityImages = {},
+    video_url, video_poster, specifications, constructionUpdates = [],
+    rera, developer, marketedBy, documents = [], possession, price, seo,
   } = project;
 
-  // Hide gallery images hosted externally (iconrealty.homes) — they don't load
-  // here. Only show local images; an all-external gallery collapses the section.
-  // TODO: repopulate with local images once the client provides them.
-  const gallery = rawGallery.filter((src) => !/^https?:\/\//i.test(src));
+  const statusLabel = status === 'trending' ? 'Trending now'
+    : status === 'upcoming' ? 'Upcoming'
+    : 'Completed';
 
-  const statusLabel = status === 'trending' ? 'Trending now' : 'Completed';
   const nameWords = name.split(' ');
   const titleBreak = Math.ceil(nameWords.length / 2);
   const desktopTitleLines = [
@@ -229,53 +268,59 @@ export default function ProjectDetailPage() {
     nameWords.slice(titleBreak).join(' '),
   ].filter(Boolean);
 
-  // Every project offers its brochure from the hero flanks. Projects with a
-  // local PDF get a direct download; the rest open the enquiry modal (a brochure
-  // request that lands in the CRM + inbox) so no page is ever left without a
-  // brochure action. NOTE: replace with local PDFs in projects.js as the client
-  // provides them.
-  const hasPdf = Boolean(brochure_url);
-  const brochureLabel = hasPdf ? 'Download Brochure' : 'Request Brochure';
-  const requestBrochure = () => openEnquiry({
-    eyebrow: 'Brochure request',
-    heading: `Request the ${name} brochure.`,
-    source: `Brochure — ${name}`,
+  // ---- lead flows, one per intent ----
+  const bookSiteVisit = () => openEnquiry({
+    intent: LEAD_INTENTS.SITE_VISIT,
     project: name,
+    source: `Site visit — ${name}`,
+    eyebrow: 'Site visit',
+    heading: `Book a site visit at ${name}.`,
+    // The project is already known, so only the appointment needs asking.
+    fields: ['name', 'phone', 'preferredDate', 'preferredTime'],
+    submitLabel: 'Request a site visit',
+    successMessage: `Thank you — we'll confirm your ${name} site visit by phone shortly.`,
   });
 
-  // Same brochure action rendered in two spots (hero flanks + final CTA):
-  // an <a download> when there's a PDF, else a <button> that opens the modal.
-  const brochureAction = ({ className, children, ariaLabel }) =>
-    hasPdf ? (
-      <a className={className} href={brochure_url} download target="_blank" rel="noreferrer" aria-label={ariaLabel}>
-        {children}
-      </a>
-    ) : (
-      <button type="button" className={className} onClick={requestBrochure} aria-label={ariaLabel}>
-        {children}
-      </button>
-    );
+  const requestPrice = () => openEnquiry({
+    intent: LEAD_INTENTS.PRICE,
+    project: name,
+    source: `Price request — ${name}`,
+    eyebrow: 'Pricing',
+    heading: `Get price details for ${name}.`,
+    fields: ['name', 'phone'],
+    submitLabel: 'Get price details',
+    successMessage: `Thank you — we'll send ${name} pricing across shortly.`,
+  });
 
-  const flankSide = (side) => {
-    const img = (
-      <>
-        <img src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
-        <span className="project-hero__flank-hint">{brochureLabel}</span>
-      </>
-    );
-    return (
-      <div
-        className={`project-hero__flank project-hero__flank--${side}${slug !== 'oscar-palace' ? ' project-hero__flank--compact' : ''}${slug === 'siddhayatan' ? ' project-hero__flank--sm' : ''}`}
-        ref={side === 'left' ? flankLeftRef : flankRightRef}
-      >
-        {brochureAction({
-          className: 'project-hero__flank-link',
-          ariaLabel: hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`,
-          children: img,
-        })}
-      </div>
-    );
-  };
+  // The flank cutouts have offered the brochure since the original build; that
+  // action now runs through BrochureGate so the lead is captured once, in one
+  // place, and remembered for the session.
+  const flankSide = (side) => (
+    <div
+      className={`project-hero__flank project-hero__flank--${side}${slug !== 'oscar-palace' ? ' project-hero__flank--compact' : ''}${slug === 'siddhayatan' ? ' project-hero__flank--sm' : ''}`}
+      ref={side === 'left' ? flankLeftRef : flankRightRef}
+    >
+      {flanksDecorative ? (
+        <span className="project-hero__flank-link project-hero__flank-link--static">
+          <img src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
+        </span>
+      ) : (
+        <BrochureGate
+          projectName={name}
+          brochureUrl={brochure_url}
+          className="project-hero__flank-link"
+          label={
+            <>
+              <img src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
+              <span className="project-hero__flank-hint">
+                {brochure_url ? 'Download Brochure' : 'Request Brochure'}
+              </span>
+            </>
+          }
+        />
+      )}
+    </div>
+  );
 
   const trail = [
     { name: 'Home', path: '/' },
@@ -285,16 +330,28 @@ export default function ProjectDetailPage() {
 
   // Trim to a clean meta description: first sentence of the copy, capped so
   // Google doesn't truncate mid-word in the SERP.
-  const metaDescription = (() => {
+  const metaDescription = seo?.description || (() => {
     const base = tagline || description || '';
     const text = `${name}, ${location}. ${base}`.replace(/\s+/g, ' ').trim();
     return text.length > 158 ? `${text.slice(0, 155).trimEnd()}…` : text;
   })();
 
+  // Only facts the project genuinely publishes (read.md §14).
+  const quickFacts = [
+    { label: 'Location', value: location },
+    { label: 'Status', value: statusLabel },
+    { label: 'Plot sizes', value: plot_sizes },
+    { label: 'Development', value: total_area },
+    { label: 'Possession', value: possession },
+    { label: 'Price', value: price?.display },
+    { label: 'RERA', value: rera?.number, href: rera?.url },
+    { label: 'Developer', value: developer },
+  ];
+
   return (
     <>
       <Seo
-        title={`${name} — ${location}`}
+        title={seo?.title || `${name} — ${location}`}
         description={metaDescription}
         path={`/projects/${slug}`}
         image={hero_image}
@@ -304,6 +361,7 @@ export default function ProjectDetailPage() {
           projectSchema(project),
           videoObjectSchema(project),
           imageObjectSchema(hero_image, `${name}, ${location}`),
+          faqSchema(faqs),
         ]}
       />
 
@@ -353,14 +411,16 @@ export default function ProjectDetailPage() {
                 : tagline}
             </Reveal>
           )}
-          {/* Mobile-only brochure CTA. On desktop the action lives in the flank
-              hint under each cutout, but the artwork shrinks too far on phones
-              for that label to fit — so it gets its own button here. */}
-          {brochureAction({
-            className: 'cta project-hero__brochure',
-            ariaLabel: hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`,
-            children: brochureLabel,
-          })}
+
+          {/* Two contextual actions, in intent order (read.md §13, §49). */}
+          <Reveal className="project-hero__actions" delay={0.7}>
+            <button type="button" className="cta project-hero__cta" onClick={bookSiteVisit}>
+              Book a Site Visit
+            </button>
+            <button type="button" className="cta cta--ghost project-hero__cta" onClick={requestPrice}>
+              Get Price Details
+            </button>
+          </Reveal>
         </div>
       </section>
 
@@ -375,92 +435,8 @@ export default function ProjectDetailPage() {
         </section>
       )}
 
-      {/* ====== FEATURES (amenities + connectivity) ====== */}
-      {(amenities.length > 0 || connectivity.length > 0) && (
-        <section className="project-features">
-          <div className="container">
-            <Reveal as="span" className="eyebrow project-features__eyebrow">Inside & around</Reveal>
-            <Reveal as="h2" className="display project-features__heading" delay={0.05}>
-              The lived experience.
-            </Reveal>
-
-            <div className="project-features__grid">
-              {amenities.length > 0 && (
-                <Reveal>
-                  <button
-                    type="button"
-                    onClick={() => setOpenModal('amenities')}
-                    className="project-features__card"
-                    aria-label="View all amenities"
-                  >
-                    <div className="project-features__card-head">
-                      <span className="project-features__card-eyebrow">Inside the project</span>
-                      <h3 className="project-features__card-title">Amenities</h3>
-                    </div>
-                    <span className="project-features__card-count">
-                      {amenities.length} {amenities.length === 1 ? 'amenity' : 'amenities'}
-                    </span>
-                    <p className="project-features__card-preview">
-                      {amenities.slice(0, 3).join(' · ')}{amenities.length > 3 ? '…' : ''}
-                    </p>
-                    <span className="project-features__card-cta">
-                      View all
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-                        <path d="M3 7H11M7 3L11 7L7 11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
-                  </button>
-                </Reveal>
-              )}
-
-              {connectivity.length > 0 && (
-                <Reveal delay={0.08}>
-                  <button
-                    type="button"
-                    onClick={() => setOpenModal('connectivity')}
-                    className="project-features__card project-features__card--peach"
-                    aria-label="View all connectivity points"
-                  >
-                    <div className="project-features__card-head">
-                      <span className="project-features__card-eyebrow">Around it</span>
-                      <h3 className="project-features__card-title">Connectivity</h3>
-                    </div>
-                    <span className="project-features__card-count">
-                      {connectivity.length} {connectivity.length === 1 ? 'landmark' : 'landmarks'}
-                    </span>
-                    <p className="project-features__card-preview">
-                      {connectivity.slice(0, 3).join(' · ')}{connectivity.length > 3 ? '…' : ''}
-                    </p>
-                    <span className="project-features__card-cta">
-                      View all
-                      <svg width="14" height="14" viewBox="0 0 14 14" fill="none" aria-hidden>
-                        <path d="M3 7H11M7 3L11 7L7 11" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    </span>
-                  </button>
-                </Reveal>
-              )}
-            </div>
-          </div>
-        </section>
-      )}
-
-      {/* ====== WALKTHROUGH VIDEO ====== */}
-      {video_url && (
-        <section className="project-video">
-          <div className="container">
-            <Reveal as="span" className="eyebrow project-video__eyebrow">The film</Reveal>
-            <Reveal as="h2" className="display project-video__heading" delay={0.05}>
-              Walk through {name}.
-            </Reveal>
-          </div>
-          <Reveal className="project-video__stage" delay={0.1}>
-            <div className="project-video__frame">
-              <ProjectVideo src={video_url} poster={video_poster || hero_image} />
-            </div>
-          </Reveal>
-        </section>
-      )}
+      {/* ====== QUICK FACTS ====== */}
+      <ProjectQuickFacts facts={quickFacts} id="facts" />
 
       {/* ====== OVERVIEW ====== */}
       <section className="project-overview">
@@ -472,6 +448,9 @@ export default function ProjectDetailPage() {
             </Reveal>
             <Reveal as="p" className="project-overview__desc" delay={0.1}>
               {description}
+            </Reveal>
+            <Reveal className="project-overview__actions" delay={0.15}>
+              <BrochureGate projectName={name} brochureUrl={brochure_url} className="cta cta--ghost" />
             </Reveal>
           </div>
 
@@ -500,113 +479,18 @@ export default function ProjectDetailPage() {
         </div>
       </section>
 
-      {/* ====== MODAL ====== */}
-      <div
-        className={`project-features-modal ${openModal ? 'is-open' : ''}`}
-        onClick={(e) => { if (e.target === e.currentTarget) setOpenModal(null); }}
-        aria-hidden={!openModal}
-      >
-        <div className="project-features-modal__panel" role="dialog" aria-modal="true">
-          <button
-            className="project-features-modal__close"
-            onClick={() => setOpenModal(null)}
-            aria-label="Close"
-          >
-            <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
-              <path d="M3 3L15 15M15 3L3 15" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round"/>
-            </svg>
-          </button>
-
-          {displayedModal && (
-            <div className="project-features-modal__body">
-              <span className="project-features-modal__eyebrow">
-                {displayedModal === 'amenities' ? 'Inside the project' : 'Around it'}
-              </span>
-              <h3 className="project-features-modal__title display">
-                {displayedModal === 'amenities' ? 'Amenities' : 'Connectivity'}
-              </h3>
-              <p className="project-features-modal__sub">
-                {displayedModal === 'amenities'
-                  ? 'What life looks like once you live here.'
-                  : 'Everything within easy reach.'}
-              </p>
-
-              <ul className="project-features-modal__list">
-                {(displayedModal === 'amenities' ? amenities : connectivity).map((item, i) => (
-                  <li
-                    key={item + i}
-                    className={`project-features-modal__item ${displayedModal === 'amenities' && amenityImages[item] ? 'project-features-modal__item--media' : ''}`}
-                  >
-                    {displayedModal === 'amenities' && amenityImages[item] ? (
-                      <span className="project-features-modal__thumb">
-                        <img src={amenityImages[item]} alt={item} loading="lazy" />
-                      </span>
-                    ) : displayedModal === 'amenities' ? (
-                      <svg width="16" height="16" viewBox="0 0 16 16" fill="none" aria-hidden>
-                        <path d="M3 8L6.5 11.5L13 5" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
-                      </svg>
-                    ) : (
-                      <span className="project-features-modal__dot" aria-hidden />
-                    )}
-                    <span>{item}</span>
-                  </li>
-                ))}
-              </ul>
-            </div>
-          )}
-        </div>
-      </div>
-
-      {/* ====== LOCATION / MAP ====== */}
-      <section className="project-map project-map--landbg">
-        <div className="project-map__bg" aria-hidden="true" />
-        <div className="container project-map__inner">
-          <div className="project-map__head">
-            <Reveal as="span" className="eyebrow project-map__eyebrow">Find it</Reveal>
-            <Reveal as="h2" className="display project-map__heading" delay={0.05}>
-              On the map.
-            </Reveal>
-            <Reveal as="p" className="project-map__address" delay={0.1}>
-              {location}
-            </Reveal>
-            <Reveal delay={0.15}>
-              <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(`${name} ${location}`)}`}
-                target="_blank"
-                rel="noreferrer"
-                className="cta cta--ghost project-map__cta"
-              >
-                Open in Google Maps
-              </a>
-            </Reveal>
-          </div>
-          <div className="project-map__frame">
-            <iframe
-              title={`${name} location map`}
-              src={`https://www.google.com/maps?q=${encodeURIComponent(`${name}, ${location}`)}&output=embed`}
-              width="100%"
-              height="100%"
-              style={{ border: 0 }}
-              loading="lazy"
-              referrerPolicy="no-referrer-when-downgrade"
-              allowFullScreen
-            />
-          </div>
-        </div>
-      </section>
-
-      {/* ====== HIGHLIGHTS ====== */}
+      {/* ====== WHY THIS PROJECT ====== */}
       {highlights.length > 0 && (
         <section className="project-highlights">
           <div className="container">
-            <Reveal as="span" className="eyebrow project-highlights__eyebrow">What stands out</Reveal>
+            <Reveal as="span" className="eyebrow project-highlights__eyebrow">Why this project</Reveal>
             <Reveal as="h2" className="display project-highlights__heading" delay={0.05}>
-              Highlights.
+              What stands out.
             </Reveal>
             <div className="project-highlights__grid">
               {highlights.map((h, i) => (
                 <Reveal key={h} className="project-highlights__card" delay={i * 0.06}>
-                  <span className="project-highlights__num">0{i + 1}</span>
+                  <span className="project-highlights__num">{String(i + 1).padStart(2, '0')}</span>
                   <p>{h}</p>
                 </Reveal>
               ))}
@@ -615,58 +499,185 @@ export default function ProjectDetailPage() {
         </section>
       )}
 
+      {/* ====== PLANS ====== */}
+      {plans.length > 0 && (
+        <PlanViewer
+          plans={plans}
+          projectName={name}
+          kind="master"
+          id="plans"
+          eyebrow="Layout"
+          heading="The master plan."
+          lede="Open it full screen and zoom in — plot positions, road widths and orientation are all readable. No form required."
+          className="project-plans"
+        />
+      )}
+
+      {/* ====== LOCATION & CONNECTIVITY ====== */}
+      <LocationSection
+        projectName={name}
+        location={location}
+        connectivity={connectivity}
+        id="location"
+        heading="Where it stands."
+        className="project-location"
+      />
+
+      {/* ====== AMENITIES ====== */}
+      <AmenitiesSection
+        amenities={amenities}
+        amenityImages={amenityImages}
+        projectName={name}
+        id="amenities"
+        className="project-amenities"
+      />
+
       {/* ====== GALLERY ====== */}
-      {gallery.length > 0 && (
-        <section className="project-gallery">
+      <ProjectGallery
+        images={gallery}
+        projectName={name}
+        id="gallery"
+        className="project-gallery-section"
+      />
+
+      {/* ====== FILM ====== */}
+      {video_url && (
+        <section className="project-video" id="film">
           <div className="container">
-            <Reveal as="span" className="eyebrow project-gallery__eyebrow">Gallery</Reveal>
-            <Reveal as="h2" className="display project-gallery__heading" delay={0.05}>
-              See the place.
+            <Reveal as="span" className="eyebrow project-video__eyebrow">The film</Reveal>
+            <Reveal as="h2" className="display project-video__heading" delay={0.05}>
+              Walk through {name}.
             </Reveal>
-            <div className="project-gallery__grid">
-              {gallery.map((src, i) => (
-                <Reveal key={src + i} className="project-gallery__item" delay={i * 0.04}>
-                  <img src={src} alt={`${name} gallery image ${i + 1}`} loading="lazy" />
+          </div>
+          <Reveal className="project-video__stage" delay={0.1}>
+            <div className="project-video__frame">
+              <ProjectVideo src={video_url} poster={video_poster || hero_image} projectName={name} />
+            </div>
+          </Reveal>
+        </section>
+      )}
+
+      {/* ====== CONSTRUCTION ====== */}
+      <ConstructionUpdates
+        updates={constructionUpdates}
+        projectName={name}
+        id="construction"
+        className="project-construction"
+      />
+
+      {/* ====== SPECIFICATIONS ====== */}
+      <ProjectSpecifications
+        specifications={specifications}
+        id="specifications"
+        className="project-specs"
+      />
+
+      {/* ====== RERA & DOCUMENTATION ====== */}
+      <ProjectCompliance
+        rera={rera}
+        developer={developer}
+        marketedBy={marketedBy || 'Icon Realty'}
+        documents={documents}
+        projectName={name}
+        id="rera"
+      />
+
+      {/* ====== BANKING ====== */}
+      <BankPartners
+        id="banking"
+        action={
+          <button type="button" className="cta cta--ghost" onClick={requestPrice}>
+            Talk to us about financing
+          </button>
+        }
+      />
+
+      <TrustModule
+        eyebrow="Who you're buying from"
+        heading="Two decades. One city."
+        variant="compact"
+        action={<Link to="/about" className="cta cta--ghost">About Icon Realty</Link>}
+      />
+
+      {/* ====== FAQ ====== */}
+      <FAQSection
+        items={faqs}
+        id="faq"
+        heading={`${name}, answered.`}
+        lede="If your question isn't here, call us — the number goes to the sales team, not a queue."
+      />
+
+      {/* ====== FINAL CTA ====== */}
+      <section className="project-finalcta">
+        <div className="project-finalcta__shell">
+          <div className="container project-finalcta__inner project-finalcta__inner--split">
+            <div className="project-finalcta__block">
+              <Reveal as="span" className="eyebrow project-finalcta__eyebrow">Next step</Reveal>
+              <Reveal as="h2" className="display project-finalcta__title" delay={0.05}>
+                Come and walk {name}.
+              </Reveal>
+              <Reveal as="p" className="project-finalcta__lede" delay={0.1}>
+                Site visits are by appointment. Our team will take you through the plots, the
+                planning, and the long view — and answer the awkward questions.
+              </Reveal>
+              <Reveal className="project-finalcta__actions" delay={0.15}>
+                <a href={telHref()} className="cta cta--ghost project-finalcta__ghost">
+                  {PRIMARY_PHONE.label}
+                </a>
+                <BrochureGate
+                  projectName={name}
+                  brochureUrl={brochure_url}
+                  className="cta cta--ghost project-finalcta__ghost"
+                />
+              </Reveal>
+            </div>
+
+            {/* The form is on the page rather than behind a button: this is the
+                point of highest intent on the whole site, and a modal is one
+                more tap between wanting a visit and asking for one. */}
+            <Reveal className="project-finalcta__form" delay={0.2}>
+              <SiteVisitForm project={name} source={`Project page — ${name}`} />
+            </Reveal>
+          </div>
+        </div>
+      </section>
+
+      {/* ====== RELATED ====== */}
+      {related.length > 0 && (
+        <section className="project-related">
+          <div className="container">
+            <Reveal as="span" className="eyebrow project-related__eyebrow">Also worth seeing</Reveal>
+            <Reveal as="h2" className="display project-related__heading" delay={0.05}>
+              Other Icon Realty addresses.
+            </Reveal>
+            <div className="project-related__grid">
+              {related.map((p, i) => (
+                <Reveal key={p.slug} delay={i * 0.05}>
+                  <Link to={`/projects/${p.slug}`} className="project-related__card">
+                    <MediaFigure
+                      src={p.thumbnail || p.hero_image}
+                      alt={`${p.name} — ${p.location}`}
+                      ratio="4 / 3"
+                    />
+                    <span className="project-related__name">{p.name}</span>
+                    <span className="project-related__meta">{p.location}</span>
+                  </Link>
                 </Reveal>
               ))}
             </div>
+            <Reveal className="project-related__action" delay={0.2}>
+              <Link to="/projects" className="cta cta--ghost">All projects</Link>
+            </Reveal>
           </div>
         </section>
       )}
 
-      {/* ====== COMBINED PROJECT CTA + FINAL CTA (dark) ====== */}
-      <section className="project-finalcta">
-        <div className="project-finalcta__shell">
-          <div className="container project-finalcta__inner">
-
-            {/* Project-specific block — brochure download or request */}
-            <div className="project-finalcta__block">
-              <Reveal as="span" className="eyebrow project-finalcta__eyebrow">
-                Brochure
-              </Reveal>
-              <Reveal as="h2" className="display project-finalcta__title" delay={0.05}>
-                {hasPdf ? `Take ${name} home.` : `Want the ${name} brochure?`}
-              </Reveal>
-              <Reveal as="p" className="project-finalcta__lede" delay={0.1}>
-                {hasPdf
-                  ? 'Full plot sizes, master plan, and the long view — packaged in a single download.'
-                  : "Tell us where to send it — we'll email over the full brochure with plot sizes, master plan, and pricing."}
-              </Reveal>
-              <Reveal className="project-finalcta__actions" delay={0.15}>
-                {brochureAction({
-                  className: 'cta project-finalcta__primary',
-                  ariaLabel: hasPdf ? `Download the ${name} brochure` : `Request the ${name} brochure`,
-                  children: hasPdf ? 'Download the brochure' : 'Request the brochure',
-                })}
-                <Link to="/projects" className="cta cta--ghost project-finalcta__ghost">
-                  All projects
-                </Link>
-              </Reveal>
-            </div>
-
-          </div>
-        </div>
-      </section>
+      <StickyMobileCTA
+        project={name}
+        intent={LEAD_INTENTS.SITE_VISIT}
+        heading={`Enquire about ${name}.`}
+        message={waMessage.project(name)}
+      />
     </>
   );
 }

@@ -1,0 +1,155 @@
+.inv-section { padding: clamp(52px, 7vw, 96px) 0; background: var(--bg); }
+.inv-section--alt { background: var(--bg-2); }
+
+/* ---------- corridors summary ---------- */
+.inv-corridors {
+  margin-top: clamp(36px, 4.5vw, 66px);
+  padding-top: clamp(28px, 3.4vw, 44px);
+  border-top: 1px solid var(--line);
+}
+.inv-corridors__title {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--peach-deep);
+  font-weight: 600;
+  margin-bottom: 18px;
+}
+.inv-corridors__list {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 0 clamp(24px, 4vw, 64px);
+}
+.inv-corridors__list li {
+  display: grid;
+  grid-template-columns: minmax(140px, 0.42fr) minmax(0, 1fr);
+  gap: 16px;
+  align-items: baseline;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--line);
+}
+.inv-corridors__name {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.1vw, 16.5px);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.inv-corridors__body {
+  font-size: clamp(13px, 0.98vw, 15px);
+  line-height: 1.58;
+  color: var(--muted);
+}
+.inv-corridors__action { margin-top: 26px; }
+
+/* ---------- project cards ---------- */
+.inv-projects {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+}
+.inv-project {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  color: inherit;
+  transition: transform .35s ease;
+}
+.inv-project:hover { transform: translateY(-4px); }
+.inv-project .media-figure { margin-bottom: 8px; }
+
+.inv-project__name {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.35vw, 20px);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.25;
+}
+.inv-project__meta {
+  font-size: 13px;
+  letter-spacing: 0.04em;
+  color: var(--muted);
+}
+.inv-project__plots {
+  font-size: 13px;
+  color: var(--ink-soft);
+  opacity: 0.75;
+}
+.inv-projects__action { margin-top: clamp(24px, 3vw, 40px); }
+
+/* ---------- consultation ---------- */
+.inv-consult {
+  padding: clamp(52px, 7vw, 96px) 0;
+  background: var(--bg);
+}
+.inv-consult__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: start;
+}
+.inv-consult__copy { display: flex; flex-direction: column; min-width: 0; }
+.inv-consult__eyebrow { color: var(--peach-deep); margin-bottom: 14px; }
+.inv-consult__heading {
+  font-size: clamp(28px, 3.6vw, 50px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0 0 18px;
+  max-width: 16ch;
+}
+.inv-consult__lede {
+  font-size: clamp(15px, 1.12vw, 18px);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 52ch;
+}
+.inv-consult__aside { margin-top: clamp(24px, 3vw, 40px); }
+
+.inv-consult__form {
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+
+/* ---------- disclaimer ---------- */
+.inv-disclaimer { padding: 0 0 clamp(40px, 5vw, 64px); background: var(--bg); }
+.inv-disclaimer p {
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+  opacity: 0.85;
+  max-width: 90ch;
+  padding-top: clamp(20px, 2.4vw, 30px);
+  border-top: 1px solid var(--line);
+}
+
+@media (max-width: 1080px) {
+  .inv-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  .inv-corridors__list { grid-template-columns: 1fr; }
+  .inv-consult__grid { grid-template-columns: 1fr; gap: 28px; }
+  .inv-consult__heading { max-width: none; }
+}
+
+@media (max-width: 720px) {
+  .inv-section, .inv-consult { padding: 44px 0; }
+  .inv-corridors { margin-top: 30px; padding-top: 24px; }
+  .inv-corridors__list li {
+    /* two columns at 320px leaves the description four words wide */
+    grid-template-columns: 1fr;
+    gap: 5px;
+    padding: 13px 0;
+  }
+  .inv-projects { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+  .inv-project__name { font-size: 15.5px; }
+  .inv-project__meta, .inv-project__plots { font-size: 12.5px; }
+  .inv-projects__action > * { width: 100%; }
+  .inv-consult__heading { font-size: clamp(25px, 7.5vw, 34px); }
+  .inv-consult__lede { font-size: 15px; }
+  .inv-consult__form { padding: 20px 16px; border-radius: 14px; }
+}

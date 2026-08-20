@@ -1,0 +1,74 @@
+.process-steps {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(24px, 3vw, 44px) clamp(20px, 3vw, 48px);
+  counter-reset: step;
+}
+
+.process-steps__step {
+  position: relative;
+  display: flex;
+  gap: 16px;
+  align-items: flex-start;
+  padding-top: 22px;
+  border-top: 1px solid var(--line);
+  min-width: 0;
+}
+
+.process-steps__num {
+  flex: none;
+  font-family: var(--font-display);
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.03em;
+  color: var(--sand);
+}
+
+.process-steps__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+}
+
+.process-steps__title {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.35vw, 20px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+
+.process-steps__copy {
+  font-size: clamp(13.5px, 1vw, 15.5px);
+  line-height: 1.62;
+  color: var(--muted);
+}
+
+/* dark shell */
+.tone-dark .process-steps__step { border-top-color: rgba(244, 240, 234, 0.14); }
+.tone-dark .process-steps__title { color: #F4F0EA; }
+.tone-dark .process-steps__copy { color: rgba(244, 240, 234, 0.68); }
+.tone-dark .process-steps__num { color: var(--peach); }
+
+@media (max-width: 980px) {
+  .process-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  /* One vertical spine on a phone — a two-up grid of nine steps loses the
+     sense of order, which is the only thing this component exists to convey. */
+  .process-steps { grid-template-columns: 1fr; gap: 0; }
+  .process-steps__step {
+    padding: 18px 0 18px 0;
+    border-top: none;
+    border-bottom: 1px solid var(--line);
+    gap: 14px;
+  }
+  .process-steps__step:last-child { border-bottom: none; }
+  .process-steps__num { font-size: 20px; width: 34px; }
+  .process-steps__title { font-size: 16px; }
+  .process-steps__copy { font-size: 14px; }
+  .tone-dark .process-steps__step { border-bottom-color: rgba(244, 240, 234, 0.14); }
+}

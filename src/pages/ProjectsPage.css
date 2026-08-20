@@ -1,45 +1,3 @@
-.projects-hero {
-  padding: clamp(110px, 12vw, 160px) 0 clamp(50px, 6vw, 90px);
-  background: var(--bg);
-}
-
-.projects-hero__inner {
-  text-align: center;
-  max-width: 1400px;
-  margin: 0 auto;
-}
-
-.projects-hero__title {
-  font-size: clamp(48px, 9vw, 140px);
-  font-weight: 600;
-  line-height: 0.96;
-  letter-spacing: -0.025em;
-  text-transform: uppercase;
-  color: var(--ink);
-  margin: 0 auto clamp(28px, 3vw, 44px);
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  font-family: var(--font-display);
-}
-.projects-hero__line {
-  display: block;
-  overflow: hidden;
-  padding-bottom: 0.08em;
-}
-.projects-hero__line-inner {
-  display: block;
-  will-change: transform;
-}
-
-.projects-hero__lede {
-  font-size: clamp(17px, 1.35vw, 22px);
-  color: var(--muted);
-  max-width: 56ch;
-  line-height: 1.55;
-  margin: 0 auto;
-}
-
 /* TRENDING LIST */
 .projects-list {
   padding: clamp(60px, 8vw, 100px) 0;
@@ -69,7 +27,10 @@
 
 .projects-list__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  /* minmax(0, 1fr), not 1fr: a plain 1fr track floors at the content's
+     min-content width, and the location + area meta line does not wrap — which
+     pushed the 2-up grid past a 320px viewport. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(16px, 1.8vw, 28px);
 }
 
@@ -77,24 +38,15 @@
   display: flex;
   flex-direction: column;
   gap: 14px;
+  min-width: 0;
   transition: transform .35s ease;
   color: inherit;
   text-decoration: none;
 }
 .projects-list__card:hover { transform: translateY(-4px); }
 
-.projects-list__media {
-  position: relative;
-  aspect-ratio: 4 / 5;
-  border-radius: 8px;
-  overflow: hidden;
-  background: var(--bg-2);
-}
-.projects-list__media img {
-  width: 100%; height: 100%; object-fit: cover;
-  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
-}
-.projects-list__card:hover .projects-list__media img { transform: scale(1.06); }
+.projects-list__media { position: relative; }
+.projects-list__media .media-figure__frame { border-radius: 8px; }
 
 .projects-list__badge {
   position: absolute;
@@ -115,6 +67,7 @@
   flex-direction: column;
   gap: 6px;
   padding: 0 4px;
+  min-width: 0;
 }
 
 .projects-list__name {
@@ -126,12 +79,14 @@
 }
 
 .projects-list__meta {
-  display: inline-flex;
+  display: flex;
+  flex-wrap: wrap;
   align-items: center;
-  gap: 6px;
+  gap: 2px 6px;
   font-size: 13px;
   letter-spacing: 0.06em;
   color: var(--muted);
+  min-width: 0;
 }
 .projects-list__dot { opacity: .5; }
 
@@ -143,22 +98,18 @@
 }
 
 @media (max-width: 980px) {
-  .projects-list__grid { grid-template-columns: repeat(2, 1fr); }
+  .projects-list__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
   /* odd project count → last card spans the row, no blank cell at the end */
   .projects-list__grid > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
-  .projects-list__grid > *:last-child:nth-child(odd) .projects-list__media { aspect-ratio: 16 / 10; }
+  /* the media wrapper is now a MediaFigure; the ratio lives on its frame */
+  .projects-list__grid > *:last-child:nth-child(odd) .media-figure__frame { aspect-ratio: 16 / 10; }
 }
 @media (max-width: 720px) {
-  .projects-hero { padding: 110px 0 40px; }
-  .projects-hero__title { font-size: clamp(42px, 12vw, 70px); padding-inline: 12px; }
-  .projects-hero__lede { font-size: 15px; padding: 0 12px; }
-  /* Hidden on phones: the carousel above already shows every trending project
-     as a grid here, so this section only repeated it. Desktop keeps it — there
-     the carousel is an accordion showing one project at a time. */
-  .projects-list { display: none; }
+  /* Kept on phones now: with the status filter this section is the only way
+     to reach completed projects, so hiding it would strand eight pages. */
   .projects-list__head { margin-bottom: 32px; }
   .projects-list__title { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
-  .projects-list__grid { grid-template-columns: repeat(2, 1fr); gap: 14px; }
+  .projects-list__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 14px; }
   .projects-list__name { font-size: 16px; }
 }
 /* Small phones keep the 2-up grid — dropping to one column made a 17-project
@@ -166,4 +117,78 @@
 @media (max-width: 420px) {
   .projects-list__grid { gap: 10px; }
   .projects-list__name { font-size: 15px; }
+}
+
+
+/* ============ STATUS FILTER ============ */
+.projects-filter { margin-bottom: clamp(24px, 3vw, 40px); }
+
+.projects-filter__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  justify-content: center;
+}
+
+.projects-filter__chip {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* comfortable touch target */
+  min-height: 44px;
+  padding: 0 18px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  background: transparent;
+  transition: background .22s ease, border-color .22s ease, color .22s ease;
+}
+.projects-filter__chip:hover { border-color: var(--peach-deep); }
+.projects-filter__chip.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+  font-weight: 500;
+}
+
+.projects-filter__count {
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  opacity: 0.6;
+}
+
+/* status badges */
+.projects-list__badge--trending { background: var(--peach); color: #1A1A1A; }
+.projects-list__badge--upcoming { background: var(--sand); color: #1A1A1A; }
+.projects-list__badge--completed {
+  background: rgba(20, 20, 20, 0.78);
+  color: #F4F0EA;
+  backdrop-filter: blur(6px);
+  -webkit-backdrop-filter: blur(6px);
+}
+
+.projects-list__empty {
+  text-align: center;
+  font-size: 16px;
+  color: var(--muted);
+  padding: 40px 0;
+}
+.projects-list__empty button {
+  color: var(--peach-deep);
+  border-bottom: 1px solid currentColor;
+}
+
+@media (max-width: 720px) {
+  .projects-filter__chips {
+    /* a rail rather than a wrapped block, so the grid stays on screen */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    justify-content: flex-start;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .projects-filter__chips::-webkit-scrollbar { display: none; }
+  .projects-filter__chip { flex: none; padding: 0 15px; font-size: 13.5px; }
 }

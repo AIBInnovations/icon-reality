@@ -1,0 +1,64 @@
+.quick-facts {
+  padding: clamp(28px, 3.6vw, 48px) 0;
+  background: var(--bg);
+}
+
+.quick-facts__grid {
+  display: grid;
+  /* auto-fit, so a project with four facts fills the row and one with seven
+     wraps cleanly — no empty cells either way */
+  grid-template-columns: repeat(auto-fit, minmax(170px, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+  border-top: 1px solid var(--line);
+  border-bottom: 1px solid var(--line);
+  padding: clamp(20px, 2.4vw, 32px) 0;
+}
+
+.quick-facts__item {
+  display: flex;
+  flex-direction: column;
+  gap: 7px;
+  min-width: 0;
+}
+
+.quick-facts__k {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 500;
+}
+
+.quick-facts__v {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.25vw, 19px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  margin: 0;
+  overflow-wrap: break-word;
+}
+
+.quick-facts__link {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  color: var(--ink);
+  border-bottom: 1px solid var(--peach-deep);
+  transition: color .2s ease;
+}
+.quick-facts__link:hover { color: var(--peach-deep); }
+.quick-facts__link svg { flex: none; color: var(--peach-deep); }
+
+@media (max-width: 720px) {
+  .quick-facts { padding: 22px 0; }
+  .quick-facts__grid {
+    /* two per row on a phone — one column pushes decision-critical facts
+       below the fold, which is exactly what read.md §60 warns against */
+    grid-template-columns: repeat(2, minmax(0, 1fr));
+    gap: 18px 16px;
+    padding: 20px 0;
+  }
+  .quick-facts__k { font-size: 10px; letter-spacing: 0.16em; }
+  .quick-facts__v { font-size: 15px; }
+}

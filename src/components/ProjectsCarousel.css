@@ -49,18 +49,34 @@
   display: flex;
   gap: 10px;
   width: 100%;
+  /* Same content column as every other section, so the strip lines up with the
+     header and the grids instead of running to the viewport edge. */
+  /* The dark shell is inset 14px from the viewport (the site's framed-section
+     frame). Pull the strip back out to the viewport edges first, so the
+     container maths below lands on exactly the same left/right margins as
+     every .container on the page rather than 14px inside them. */
+  /* The dark shell is inset 14px from the viewport (the site's framed-section
+     frame), so both the cap and the gutter are reduced by that 14px. The strip
+     then lands on exactly the same left/right margins as every .container on
+     the page — including on wide screens, where the cap starts binding. */
+  max-width: calc(var(--maxw) - 28px);
+  margin-inline: auto;
+  padding-inline: max(0px, calc(var(--gutter) - 14px));
   height: clamp(480px, calc(var(--svh, 1vh) * 75), 760px);
-  padding: 0 clamp(20px, 4vw, 56px);
   margin-bottom: clamp(36px, 4vw, 56px);
-  justify-content: center;
   align-items: stretch;
 }
 
 .carousel__card {
   position: relative;
-  width: clamp(68px, 6.6vw, 105px);
+  /* Flex ratios, not fixed widths. The cards used to be flex-shrink: 0 at a
+     clamped px width, so eight of them plus the open one overflowed the strip
+     and were clipped — the first and last card lost their padding and the row
+     no longer matched the page's left/right margins. Ratios always add up to
+     exactly the available width, whatever it is. */
+  flex: 1 1 0;
+  min-width: 0;
   height: 100%;
-  flex-shrink: 0;
   cursor: pointer;
   overflow: hidden;
   border-radius: 8px;
@@ -68,10 +84,11 @@
   padding: 0;
   border: 0;
   color: inherit;
-  transition: width .85s cubic-bezier(0.65, 0, 0.18, 1);
+  transition: flex-grow .85s cubic-bezier(0.65, 0, 0.18, 1);
 }
 .carousel__card.is-active {
-  width: clamp(300px, 35vw, 500px);
+  /* four collapsed cards wide — matches the previous ~440px at 1440px */
+  flex-grow: 4.2;
   cursor: default;
 }
 
@@ -210,15 +227,22 @@
      one tap opens it (ProjectsCarousel.jsx switches on the same breakpoint). */
   .carousel__accordion {
     display: grid;
-    grid-template-columns: repeat(2, 1fr);
+    grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     height: auto;
-    padding: 0 14px;
+    /* the shell's own 8px frame already equals the mobile --gutter, so the
+       grid needs no padding of its own to line up with every other section */
+    padding: 0;
+    width: 100%;
+    max-width: none;
+    margin-inline: 0;
     margin-bottom: 0;
   }
   .carousel__card,
   .carousel__card.is-active {
     display: block;
+    /* the strip is a grid here — undo the flex ratios */
+    flex: none;
     width: 100%;
     max-width: none;
     height: auto;

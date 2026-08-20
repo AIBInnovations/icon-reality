@@ -2,9 +2,13 @@ import { useEffect } from 'react';
 import Reveal from '../components/Reveal';
 import FinalCTA from '../components/FinalCTA';
 import EnquiryForm from '../components/EnquiryForm';
+import ScheduleCallback from '../components/ScheduleCallback';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Seo from '../seo/Seo';
 import { breadcrumbSchema, webPageSchema, realEstateAgentSchema } from '../seo/schema';
+import { EMAIL, PHONES, PRIMARY_PHONE, ADDRESS, MAPS_URL, SOCIALS, telHref } from '../data/contact';
+import { whatsappUrl, waMessage } from '../services/whatsapp';
+import { LEAD_INTENTS } from '../services/leads';
 import './ContactPage.css';
 
 const TRAIL = [
@@ -12,12 +16,13 @@ const TRAIL = [
   { name: 'Contact', path: '/contact' },
 ];
 
+// Every entry resolves from data/contact.js, so a number changes in one file.
 const channels = [
   {
     key: 'email',
     eyebrow: 'Email',
-    value: 'iconrealty02@gmail.com',
-    href: 'mailto:iconrealty02@gmail.com?subject=Enquiry%20from%20website',
+    value: EMAIL,
+    href: `mailto:${EMAIL}?subject=Enquiry%20from%20website`,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M3 7l9 6 9-6M5 19h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -27,8 +32,8 @@ const channels = [
   {
     key: 'whatsapp',
     eyebrow: 'WhatsApp',
-    value: '+91 9425 9425 10',
-    href: 'https://wa.me/919425942510?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Oscar%20Palace.',
+    value: PRIMARY_PHONE.label,
+    href: whatsappUrl(waMessage.general()),
     icon: (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M4 5h16a1 1 0 011 1v10a1 1 0 01-1 1H9l-4 4V6a1 1 0 011-1z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -38,8 +43,8 @@ const channels = [
   {
     key: 'phone',
     eyebrow: 'Phone',
-    value: '+91 9425 9425 10 / 11',
-    href: 'tel:+919425942510',
+    value: PHONES.map((p) => p.label).join(' / '),
+    href: telHref(),
     icon: (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.8a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.35 1.84.59 2.8.72A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -49,8 +54,8 @@ const channels = [
   {
     key: 'address',
     eyebrow: 'Office',
-    value: 'Indore, Madhya Pradesh – 452001',
-    href: 'https://maps.google.com/?q=Indore+Madhya+Pradesh',
+    value: `${ADDRESS.locality}, ${ADDRESS.region} – ${ADDRESS.postalCode}`,
+    href: MAPS_URL,
     icon: (
       <svg viewBox="0 0 24 24" fill="none" aria-hidden>
         <path d="M12 22s7-7.58 7-13a7 7 0 10-14 0c0 5.42 7 13 7 13z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
@@ -60,11 +65,7 @@ const channels = [
   },
 ];
 
-const socials = [
-  { name: 'Instagram', url: 'https://www.instagram.com/iconrealtyofficial/' },
-  { name: 'YouTube', url: 'https://www.youtube.com/@IconRealtyOfficial' },
-  { name: 'Facebook', url: 'https://www.facebook.com/IconRealtyOfficial' },
-];
+const socials = SOCIALS;
 
 export default function ContactPage() {
   useEffect(() => { window.scrollTo(0, 0); }, []);
@@ -73,7 +74,7 @@ export default function ContactPage() {
     <>
       <Seo
         title="Contact Icon Realty — Indore"
-        description="Get in touch with Icon Realty, Indore. Call +91 9425 9425 10, WhatsApp us, or send an enquiry to book a site visit at Oscar Palace and our other plotted developments."
+        description="Get in touch with Icon Realty, Indore. Call +91 9425 9425 10, WhatsApp us, or send an enquiry to book a site visit at any of our plotted developments."
         path="/contact"
         jsonLd={[
           breadcrumbSchema(TRAIL),
@@ -142,7 +143,37 @@ export default function ContactPage() {
 
           {/* RIGHT — form */}
           <Reveal className="contact-form-wrap" delay={0.15}>
-            <EnquiryForm source="Contact Page" project="Oscar Palace" />
+            {/* The contact form is a general enquiry, not a project-specific
+                one — pre-filling "Oscar Palace" mislabelled every lead from
+                visitors who arrived here about a different project. */}
+            <EnquiryForm
+              source="Contact Page"
+              intent={LEAD_INTENTS.GENERAL}
+              eyebrow="Send a request"
+              heading="Tell us what you're looking for."
+              submitLabel="Send Request"
+            />
+          </Reveal>
+        </div>
+      </section>
+
+      {/* A second, lower-commitment route to the same team: some visitors will
+          not write a message but will happily pick a time to be called. */}
+      <section className="contact-callback">
+        <div className="container contact-callback__inner">
+          <div className="contact-callback__copy">
+            <Reveal as="span" className="eyebrow">Callback</Reveal>
+            <Reveal as="h2" className="display contact-callback__heading" delay={0.05}>
+              Rather we called you?
+            </Reveal>
+            <Reveal as="p" className="contact-callback__lede" delay={0.1}>
+              Pick a day, a time and how you would like us to reach you — phone, WhatsApp or a
+              video call. Useful if you are abroad, or if you would rather not type out a
+              requirement.
+            </Reveal>
+          </div>
+          <Reveal className="contact-callback__form" delay={0.15}>
+            <ScheduleCallback source="Contact page — callback" />
           </Reveal>
         </div>
       </section>

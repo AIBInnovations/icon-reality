@@ -1,0 +1,92 @@
+.editorial-split {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: clamp(28px, 5vw, 90px);
+  align-items: center;
+}
+/* order, not direction:rtl — flipping direction would also mirror the text */
+.editorial-split--flip .editorial-split__media { order: 2; }
+
+.editorial-split__media { min-width: 0; }
+
+.editorial-split__copy {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.editorial-split__eyebrow {
+  color: var(--peach-deep);
+  margin-bottom: 14px;
+}
+
+.editorial-split__title {
+  font-size: clamp(28px, 3.6vw, 50px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0 0 20px;
+  max-width: 18ch;
+}
+
+.editorial-split__body {
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.editorial-split__list { margin-top: 26px; }
+.editorial-split__list ul {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+.editorial-split__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+.editorial-split__list li svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--peach-deep);
+}
+.editorial-split__list strong { color: var(--ink); font-weight: 600; }
+
+.editorial-split__actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 12px;
+  margin-top: 30px;
+}
+
+/* dark shell variant */
+.tone-dark .editorial-split__title { color: #F4F0EA; }
+.tone-dark .editorial-split__body,
+.tone-dark .editorial-split__list li { color: rgba(244, 240, 234, 0.7); }
+.tone-dark .editorial-split__list strong { color: #F4F0EA; }
+.tone-dark .editorial-split__eyebrow { color: var(--peach); }
+
+@media (max-width: 900px) {
+  .editorial-split {
+    grid-template-columns: 1fr;
+    gap: 26px;
+  }
+  /* media always leads on mobile, whichever side it sits on at desktop */
+  .editorial-split--flip .editorial-split__media { order: 0; }
+  .editorial-split__title { max-width: none; }
+}
+
+@media (max-width: 720px) {
+  .editorial-split { gap: 22px; }
+  .editorial-split__title { font-size: clamp(24px, 7.5vw, 34px); margin-bottom: 14px; }
+  .editorial-split__body { font-size: 15px; }
+  .editorial-split__list { margin-top: 20px; }
+  .editorial-split__actions { width: 100%; flex-direction: column; }
+  .editorial-split__actions > * { width: 100%; }
+}

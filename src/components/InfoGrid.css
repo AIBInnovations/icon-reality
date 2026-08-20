@@ -1,0 +1,105 @@
+.info-grid {
+  display: grid;
+  grid-template-columns: repeat(var(--info-cols, 3), minmax(0, 1fr));
+  gap: clamp(16px, 2.2vw, 32px);
+}
+
+.info-grid__card {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  min-width: 0;
+}
+
+.info-grid__body {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+}
+
+/* --- text variant: hairline rule above, like the highlights cards --- */
+.info-grid--text .info-grid__card {
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.info-grid__num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--peach-deep);
+}
+
+.info-grid__status {
+  align-self: flex-start;
+  font-size: 10px;
+  letter-spacing: 0.18em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--ink-soft);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  padding: 5px 10px;
+}
+
+.info-grid__k {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.005em;
+  color: var(--ink);
+}
+
+.info-grid__v {
+  font-size: clamp(14px, 1.02vw, 16px);
+  line-height: 1.62;
+  color: var(--muted);
+}
+
+.info-grid__tag {
+  align-self: flex-start;
+  margin-top: 2px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--peach-deep);
+}
+
+/* --- media variant --- */
+.info-grid--media .info-grid__body { gap: 8px; }
+
+/* dark shell */
+.tone-dark .info-grid--text .info-grid__card { border-top-color: rgba(244, 240, 234, 0.14); }
+.tone-dark .info-grid__k { color: #F4F0EA; }
+.tone-dark .info-grid__v { color: rgba(244, 240, 234, 0.68); }
+.tone-dark .info-grid__num,
+.tone-dark .info-grid__tag { color: var(--peach); }
+.tone-dark .info-grid__status {
+  color: rgba(244, 240, 234, 0.8);
+  background: rgba(244, 240, 234, 0.07);
+  border-color: rgba(244, 240, 234, 0.16);
+}
+
+@media (max-width: 1080px) {
+  .info-grid { grid-template-columns: repeat(min(var(--info-cols, 3), 2), minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .info-grid { gap: 20px; }
+  /* Text cards stay 2-up on phones: a one-column list of short facts turns a
+     six-item grid into an endless scroll. Media cards go full width so the
+     photograph is still legible. */
+  .info-grid--text { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 16px; }
+  .info-grid--media { grid-template-columns: 1fr; }
+  .info-grid--text .info-grid__card { padding-top: 14px; }
+  .info-grid__k { font-size: 15px; }
+  .info-grid__v { font-size: 13.5px; line-height: 1.55; }
+}
+
+@media (max-width: 420px) {
+  .info-grid--text { gap: 14px; }
+}

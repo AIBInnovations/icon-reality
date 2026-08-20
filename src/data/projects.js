@@ -2,6 +2,40 @@
 // Trending projects (8) — full detail content fetched from iconrealty.homes.
 // Completed projects (8) — sparse content (iconrealty.homes has no dedicated
 // detail pages for them); list pages use local thumbnails for visual continuity.
+//
+// ---------------------------------------------------------------------------
+// SHAPE
+//
+// Required on every project:
+//   slug, name, status, location, tagline, description, hero_image, thumbnail
+//
+// Optional — a project carries a field only when the data genuinely exists, and
+// every component hides its section when the field is absent (read.md §11, §71).
+// Do NOT fill these in with estimates:
+//
+//   total_area, plot_sizes        as published by the project
+//   amenities[]                   list of amenity names
+//   amenityImages{}               amenity name -> photograph
+//   connectivity[]                nearby landmarks, as published
+//   highlights[]                  what distinguishes the project
+//   gallery[]                     image paths, or { src, category, alt }
+//   video_url, video_poster       walkthrough film
+//   brochure_url                  local PDF; null means "request the brochure"
+//   masterPlan[]                  [{ src, label, note }] — approved layouts
+//   floorPlans[]                  [{ src, label, note }] — unit plans, if any
+//   documents[]                   [{ label, href }] downloadable documents
+//   developer                     who is building it
+//   marketedBy                    who is selling it
+//   rera                          { number, url, authority } or null
+//   price                         { startingFrom, display, disclaimer } or null
+//   possession                    string or null
+//   specifications{}              group -> [lines]
+//   constructionUpdates[]         [{ date, title, description, images[], video, progress }]
+//   faqs[]                        [{ q, a }] — project-specific overrides
+//   seo                           { title, description }
+//
+// STATUS values: 'trending' (currently selling), 'upcoming', 'completed'.
+// ---------------------------------------------------------------------------
 
 export const projectsList = [
   // ===================== TRENDING =====================
@@ -53,6 +87,27 @@ export const projectsList = [
       'Bank loans available on every plot',
     ],
     brochure_url: '/downloads/oscar-palace-brochure.pdf',
+    developer: 'Ruchi Realty',
+    marketedBy: 'Icon Realty',
+    // Real layout sheets that ship in public/images/oscar/layout — shown large
+    // in the PlanViewer rather than buried in the gallery.
+    masterPlan: [
+      { src: '/images/oscar/layout/layout-1.jpg', label: 'Master layout' },
+      { src: '/images/oscar/layout/layout-2.jpg', label: 'Plot layout' },
+      { src: '/images/oscar/layout/layout-3.jpg', label: 'Site plan' },
+    ],
+    documents: [
+      { label: 'Plot layout (PDF)', href: '/downloads/oscar-palace-plot-layout.pdf' },
+      { label: 'Location plan (PDF)', href: '/downloads/oscar-palace-location-plan.pdf' },
+    ],
+    specifications: {
+      Roads: ['Maximum roads 100 ft and 60 ft wide'],
+      Plots: ['East and west facing', 'Vastu-compliant', '3,000 – 20,000 sq ft'],
+      Landscape: ['2,80,000 sq ft of garden and open spaces'],
+      Community: ['26,000 sq ft clubhouse', 'Heritage temple and marble baradaris'],
+      Security: ['24×7 multi-tier security'],
+      Financing: ['Bank loans available on every plot'],
+    },
     hero_image: '/images/oscar/entrance/entrance-1.jpg',
     video_url: '/video/oscar-palace-walkthrough.mp4',
     video_poster: '/images/oscar/entrance/entrance-1.jpg',
@@ -103,6 +158,13 @@ export const projectsList = [
       'Seamless blend of regal architecture with contemporary lifestyle',
     ],
     brochure_url: '/downloads/oscar-fort-brochure.pdf',
+    marketedBy: 'Icon Realty',
+    specifications: {
+      Plots: ['2,800 – 5,000 sq ft'],
+      Security: ['12-foot high boundary wall'],
+      Landscape: ['Heritage-themed landscape by Savita Punde'],
+      Wellness: ['Infinity swimming pool', 'Fully equipped gymnasium', 'Sauna', 'Yoga and meditation area'],
+    },
     hero_image: '/images/oscar-fort/hero.jpg',
     video_url: '/video/oscar-fort-walkthrough.mp4',
     video_poster: '/images/oscar-fort/hero.jpg',
@@ -241,6 +303,16 @@ export const projectsList = [
       'Balanced accessibility and serenity',
     ],
     brochure_url: '/downloads/siddhayatan-brochure.pdf',
+    marketedBy: 'Icon Realty',
+    masterPlan: [
+      { src: '/images/siddhayatan/layout-1.jpg', label: 'Site layout' },
+    ],
+    specifications: {
+      Plots: ['600 – 1,500 sq ft', '150 thoughtfully planned plots'],
+      Community: ['Temple for spiritual retreat', 'Football / cricket turf and skating rink'],
+      Sustainability: ['Water conservation systems'],
+      Security: ['24×7 security'],
+    },
     hero_image: '/images/siddhayatan/hero.jpg',
     video_url: '/video/siddhayatan-walkthrough.mp4',
     video_poster: '/images/siddhayatan/hero.jpg',
@@ -253,7 +325,6 @@ export const projectsList = [
       '/images/siddhayatan/gallery-6.jpg',
       '/images/siddhayatan/gallery-7.jpg',
       '/images/siddhayatan/gallery-8.jpg',
-      '/images/siddhayatan/layout-1.jpg',
     ],
     thumbnail: '/images/siddhayatan/hero.jpg',
   },
@@ -384,6 +455,14 @@ export const projectsList = [
       'Comprehensive wellness infrastructure',
     ],
     brochure_url: '/downloads/iit-greens-brochure.pdf',
+    developer: 'Icon Realty',
+    marketedBy: 'Icon Realty',
+    specifications: {
+      Location: ['Opposite IIT Indore', 'Highway frontage with main gate access'],
+      Landscape: ['Dense plantation oxygen zone', 'Acupressure walking track', 'Meditation deck'],
+      Wellness: ['Open-to-sky gym', 'Walking tracks', 'Fitness zones'],
+      Children: ['Sand pit for kids'],
+    },
     hero_image: '/images/projects/iit-greens.jpg',
     video_url: '/video/iit-greens-walkthrough.mp4',
     video_poster: '/images/projects/iit-greens.jpg',
@@ -624,3 +703,39 @@ export const projectsBySlug = projectsList.reduce((acc, p) => {
   acc[p.slug] = p;
   return acc;
 }, {});
+
+/**
+ * Status vocabulary for the projects index filter and the navigation.
+ * `trending` is the site's existing word for "currently selling"; the UI shows
+ * it as "Ongoing" because that is what a buyer filtering a list expects.
+ */
+export const PROJECT_STATUSES = [
+  { key: 'trending', label: 'Ongoing', plural: 'Ongoing projects' },
+  { key: 'upcoming', label: 'Upcoming', plural: 'Upcoming projects' },
+  { key: 'completed', label: 'Completed', plural: 'Completed projects' },
+];
+
+export const projectsByStatus = (status) => projectsList.filter((p) => p.status === status);
+
+/**
+ * Only the statuses that actually have projects, so the filter never offers an
+ * "Upcoming" tab that resolves to an empty list. Add a project with
+ * status: 'upcoming' and the tab appears on its own.
+ */
+export const availableStatuses = () =>
+  PROJECT_STATUSES.filter((s) => projectsList.some((p) => p.status === s.key));
+
+/** Every plan sheet a project publishes, master layouts first. */
+export const projectPlans = (project) => [
+  ...(project?.masterPlan || []),
+  ...(project?.floorPlans || []),
+].filter((p) => p?.src);
+
+/** Related projects — same status first, then anything else, excluding self. */
+export function relatedProjects(slug, limit = 3) {
+  const current = projectsBySlug[slug];
+  if (!current) return projectsList.slice(0, limit);
+  const sameStatus = projectsList.filter((p) => p.slug !== slug && p.status === current.status);
+  const others = projectsList.filter((p) => p.slug !== slug && p.status !== current.status);
+  return [...sameStatus, ...others].slice(0, limit);
+}

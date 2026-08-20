@@ -1,0 +1,161 @@
+.trust-module {
+  padding: clamp(56px, 7vw, 96px) 0;
+  background: var(--bg);
+}
+.trust-module.tone-dark { background: transparent; }
+
+.trust-module__head {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(32px, 4vw, 54px);
+  max-width: 62ch;
+}
+
+.trust-module__eyebrow { color: var(--peach-deep); margin-bottom: 14px; }
+
+.trust-module__heading {
+  font-size: clamp(28px, 4vw, 56px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  color: var(--ink);
+  margin: 0;
+}
+
+.trust-module__lede {
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.62;
+  color: var(--muted);
+  margin-top: 16px;
+}
+
+.trust-module__grid { display: block; }
+.trust-module__grid.has-media {
+  display: grid;
+  grid-template-columns: minmax(0, 0.85fr) minmax(0, 1.15fr);
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: start;
+}
+
+.trust-module__content {
+  display: flex;
+  flex-direction: column;
+  gap: clamp(28px, 3.4vw, 48px);
+  min-width: 0;
+}
+
+/* ---------- stats ---------- */
+.trust-module__stats {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+}
+.trust-module--strip .trust-module__stats { gap: clamp(16px, 2.4vw, 40px); }
+
+.trust-module__stat {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  min-width: 0;
+}
+
+.trust-module__stat-v {
+  font-family: var(--font-display);
+  font-size: clamp(30px, 3.6vw, 52px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.035em;
+  color: var(--ink);
+  /* tabular figures stop the counter jittering the layout as digits change */
+  font-variant-numeric: tabular-nums;
+}
+
+.trust-module__stat-k {
+  font-size: clamp(13px, 1vw, 15px);
+  font-weight: 500;
+  color: var(--ink-soft);
+  line-height: 1.35;
+}
+
+.trust-module__stat-sub {
+  font-size: 12px;
+  line-height: 1.45;
+  color: var(--muted);
+  opacity: 0.85;
+}
+
+/* ---------- pillars ---------- */
+.trust-module__pillars {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 28px);
+}
+
+.trust-module__pillar {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+}
+.trust-module__pillar svg {
+  flex: none;
+  margin-top: 3px;
+  color: var(--peach-deep);
+}
+.trust-module__pillar > span {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+  min-width: 0;
+}
+.trust-module__pillar strong {
+  font-size: clamp(14px, 1.05vw, 16px);
+  font-weight: 600;
+  color: var(--ink);
+  line-height: 1.35;
+}
+.trust-module__pillar-v {
+  font-size: clamp(13px, 0.98vw, 15px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.trust-module__media { min-width: 0; }
+
+/* ---------- dark shell ---------- */
+.tone-dark .trust-module__heading,
+.tone-dark .trust-module__stat-v,
+.tone-dark .trust-module__pillar strong { color: #F4F0EA; }
+.tone-dark .trust-module__stat-k { color: rgba(244, 240, 234, 0.88); }
+.tone-dark .trust-module__lede,
+.tone-dark .trust-module__stat-sub,
+.tone-dark .trust-module__pillar-v { color: rgba(244, 240, 234, 0.65); }
+.tone-dark .trust-module__eyebrow { color: var(--peach); }
+.tone-dark .trust-module__stat { border-top-color: rgba(244, 240, 234, 0.16); }
+
+@media (max-width: 1000px) {
+  .trust-module__grid.has-media { grid-template-columns: 1fr; }
+  .trust-module__media { max-width: 460px; }
+}
+
+@media (max-width: 860px) {
+  .trust-module__stats { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .trust-module__pillars { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .trust-module { padding: 48px 0; }
+  .trust-module__head { margin-bottom: 26px; }
+  .trust-module__heading { font-size: clamp(25px, 7.5vw, 34px); }
+  .trust-module__lede { font-size: 15px; }
+  .trust-module__stats { gap: 16px; }
+  .trust-module__stat { padding-top: 14px; }
+  .trust-module__stat-v { font-size: clamp(28px, 9vw, 38px); }
+  .trust-module__stat-k { font-size: 13px; }
+  .trust-module__stat-sub { font-size: 11.5px; }
+  .trust-module__media { max-width: none; }
+  .trust-module__content { gap: 26px; }
+}

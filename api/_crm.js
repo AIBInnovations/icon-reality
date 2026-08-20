@@ -50,6 +50,13 @@ export async function pushLead({
   source = 'Website',
   project,
   city = 'Indore',
+  // Optional fields the CRM already has columns for. The website only started
+  // collecting these with the investor / NRI / channel-partner journeys, so
+  // every one is optional and normalises to null when absent.
+  budget,
+  interestedIn,
+  companyName,
+  nextFollowupDate,
 } = {}) {
   const { account, endpoint, timeoutMs } = config();
 
@@ -71,15 +78,15 @@ export async function pushLead({
     lead_description: orNull(message),
     broker: null,
     broker_phone: null,
-    budget_upto: null,
-    interested_in: null,
+    budget_upto: orNull(budget),
+    interested_in: orNull(interestedIn),
     remark_1: null,
     remark_2: null,
     inquiry_status: 'New',
     followup_remark: null,
-    next_followup_date: null,
+    next_followup_date: orNull(nextFollowupDate),
     city_name: orNull(city),
-    company_name: null,
+    company_name: orNull(companyName),
     size_info: null,
     resident_category_text: null,
     ref1_name: null,

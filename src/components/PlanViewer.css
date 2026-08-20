@@ -1,0 +1,142 @@
+.plan-viewer {
+  padding: clamp(52px, 7vw, 92px) 0;
+  background: var(--bg);
+}
+
+.plan-viewer__head {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(22px, 2.6vw, 34px);
+  max-width: 62ch;
+}
+.plan-viewer__eyebrow { color: var(--peach-deep); margin-bottom: 14px; }
+.plan-viewer__heading {
+  font-size: clamp(28px, 4vw, 54px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0;
+}
+.plan-viewer__lede {
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 14px;
+}
+
+/* ---------- configuration selector ---------- */
+.plan-viewer__selector { margin-bottom: 20px; }
+.plan-viewer__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+.plan-viewer__chip {
+  min-height: 44px;
+  padding: 0 18px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  transition: background .22s ease, border-color .22s ease, color .22s ease;
+}
+.plan-viewer__chip:hover { border-color: var(--peach-deep); }
+.plan-viewer__chip.is-active {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+  font-weight: 500;
+}
+
+/* ---------- stage ---------- */
+.plan-viewer__stage { display: block; }
+
+.plan-viewer__open {
+  position: relative;
+  display: block;
+  width: 100%;
+  padding: clamp(14px, 2vw, 28px);
+  border-radius: 16px;
+  /* Plans are line drawings on white — a cream card behind them reads as a
+     sheet of paper rather than a cropped photograph. */
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  cursor: zoom-in;
+  overflow: hidden;
+}
+.plan-viewer__open img {
+  width: 100%;
+  height: auto;
+  /* Reserve height before the (lazy) plan loads. Without it the card collapses
+     to its padding and the section jumps when the image arrives. */
+  min-height: clamp(240px, 42vh, 480px);
+  object-position: center;
+  /* generous, never a thumbnail — the whole point of this component */
+  max-height: min(78vh, 860px);
+  object-fit: contain;
+  margin: 0 auto;
+  transition: transform .8s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.plan-viewer__open:hover img { transform: scale(1.015); }
+
+.plan-viewer__zoom-hint {
+  position: absolute;
+  right: clamp(14px, 2vw, 24px);
+  bottom: clamp(14px, 2vw, 24px);
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 9px 14px;
+  border-radius: 999px;
+  background: rgba(20, 20, 20, 0.82);
+  color: #F4F0EA;
+  font-size: 12px;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  pointer-events: none;
+}
+.plan-viewer__zoom-hint svg { width: 16px; height: 16px; }
+
+.plan-viewer__note {
+  margin-top: 16px;
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.plan-viewer__disclaimer {
+  margin-top: 14px;
+  font-size: 12.5px;
+  line-height: 1.55;
+  color: var(--muted);
+  opacity: 0.8;
+  max-width: 70ch;
+}
+
+@media (max-width: 720px) {
+  .plan-viewer { padding: 44px 0; }
+  .plan-viewer__heading { font-size: clamp(25px, 7.5vw, 34px); }
+  .plan-viewer__lede { font-size: 15px; }
+  .plan-viewer__chips {
+    /* horizontal rail rather than a wrapped block, so the plan stays on screen */
+    flex-wrap: nowrap;
+    overflow-x: auto;
+    padding-bottom: 4px;
+    scrollbar-width: none;
+    -webkit-overflow-scrolling: touch;
+  }
+  .plan-viewer__chips::-webkit-scrollbar { display: none; }
+  .plan-viewer__chip { flex: none; padding: 0 16px; font-size: 13.5px; }
+  .plan-viewer__open { padding: 10px; border-radius: 12px; }
+  .plan-viewer__open img { max-height: 62vh; min-height: clamp(200px, 34vh, 320px); }
+  .plan-viewer__zoom-hint {
+    right: 10px;
+    bottom: 10px;
+    padding: 8px 12px;
+    font-size: 11px;
+    letter-spacing: 0.08em;
+  }
+}

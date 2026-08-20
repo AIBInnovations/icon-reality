@@ -1,0 +1,184 @@
+.image-viewer {
+  position: fixed;
+  inset: 0;
+  z-index: 300;
+  display: flex;
+  background: rgba(12, 12, 12, 0.92);
+  backdrop-filter: blur(10px);
+  -webkit-backdrop-filter: blur(10px);
+  animation: ivFade .28s ease both;
+}
+@keyframes ivFade { from { opacity: 0; } to { opacity: 1; } }
+@media (prefers-reduced-motion: reduce) { .image-viewer { animation: none; } }
+
+.image-viewer__panel {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  height: 100%;
+  /* svh, not vh: on mobile Safari a vh panel sits under the browser chrome and
+     the close button ends up unreachable. */
+  height: 100svh;
+  color: #F4F0EA;
+  outline: none;
+}
+
+/* ---------- top bar ---------- */
+.image-viewer__bar {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 14px clamp(14px, 2.4vw, 28px);
+  border-bottom: 1px solid rgba(244, 240, 234, 0.12);
+}
+
+.image-viewer__meta {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  min-width: 0;
+}
+.image-viewer__title {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.2vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.image-viewer__counter {
+  font-size: 12px;
+  letter-spacing: 0.14em;
+  color: rgba(244, 240, 234, 0.6);
+  font-variant-numeric: tabular-nums;
+  white-space: nowrap;
+}
+
+.image-viewer__tools {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  flex: none;
+}
+.image-viewer__tools button {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 10px;
+  color: #F4F0EA;
+  background: rgba(244, 240, 234, 0.08);
+  transition: background .2s ease, opacity .2s ease;
+}
+.image-viewer__tools button:hover { background: rgba(244, 240, 234, 0.2); }
+.image-viewer__tools button:disabled { opacity: 0.32; cursor: not-allowed; }
+.image-viewer__tools button svg { width: 20px; height: 20px; }
+.image-viewer__close { background: rgba(244, 240, 234, 0.16) !important; }
+
+.image-viewer__zoom {
+  min-width: 52px;
+  text-align: center;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: rgba(244, 240, 234, 0.75);
+  font-variant-numeric: tabular-nums;
+}
+
+/* ---------- stage ---------- */
+.image-viewer__stage {
+  position: relative;
+  flex: 1;
+  min-height: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  overflow: hidden;
+  /* the component handles pan/pinch itself; browser gestures would fight it */
+  touch-action: none;
+  cursor: zoom-in;
+  user-select: none;
+}
+.image-viewer__stage.is-zoomed { cursor: grab; }
+.image-viewer__stage.is-zoomed:active { cursor: grabbing; }
+
+.image-viewer__stage img {
+  max-width: 100%;
+  max-height: 100%;
+  width: auto;
+  height: auto;
+  object-fit: contain;
+  transform-origin: center center;
+  will-change: transform;
+  -webkit-user-drag: none;
+}
+
+.image-viewer__error {
+  font-size: 15px;
+  color: rgba(244, 240, 234, 0.7);
+}
+
+/* ---------- prev / next ---------- */
+.image-viewer__nav {
+  position: absolute;
+  top: 50%;
+  transform: translateY(-50%);
+  width: 52px;
+  height: 52px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  color: #F4F0EA;
+  background: rgba(20, 20, 20, 0.55);
+  backdrop-filter: blur(8px);
+  -webkit-backdrop-filter: blur(8px);
+  transition: background .2s ease;
+}
+.image-viewer__nav:hover { background: rgba(20, 20, 20, 0.85); }
+.image-viewer__nav svg { width: 24px; height: 24px; }
+.image-viewer__nav--prev { left: clamp(10px, 2vw, 24px); }
+.image-viewer__nav--next { right: clamp(10px, 2vw, 24px); }
+
+/* ---------- foot ---------- */
+.image-viewer__foot {
+  flex: none;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  padding: 12px clamp(14px, 2.4vw, 28px);
+  border-top: 1px solid rgba(244, 240, 234, 0.12);
+  min-height: 48px;
+}
+.image-viewer__caption {
+  font-size: 13px;
+  line-height: 1.5;
+  color: rgba(244, 240, 234, 0.82);
+}
+.image-viewer__hint {
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(244, 240, 234, 0.42);
+  white-space: nowrap;
+}
+
+@media (max-width: 720px) {
+  .image-viewer__bar { padding: 10px 12px; gap: 10px; }
+  .image-viewer__title { font-size: 13px; }
+  .image-viewer__tools { gap: 2px; }
+  .image-viewer__tools button { width: 44px; height: 44px; border-radius: 8px; }
+  /* Reset is redundant on touch — double-tap does it — and four buttons plus a
+     percentage overflow a 320px bar. */
+  .image-viewer__zoom { display: none; }
+  /* Arrows overlap the image on a phone; swipe is the primary gesture there. */
+  .image-viewer__nav { display: none; }
+  .image-viewer__hint { display: none; }
+  .image-viewer__foot { padding: 10px 12px; min-height: 44px; }
+  .image-viewer__caption { font-size: 12.5px; }
+}

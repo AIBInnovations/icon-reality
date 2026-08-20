@@ -1,0 +1,165 @@
+.amenities {
+  padding: clamp(52px, 7vw, 92px) 0;
+  background: var(--bg);
+}
+
+.amenities__head {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start;
+  margin-bottom: clamp(26px, 3.2vw, 44px);
+  max-width: 62ch;
+}
+.amenities__eyebrow { color: var(--peach-deep); margin-bottom: 14px; }
+.amenities__heading {
+  font-size: clamp(28px, 4vw, 54px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0;
+}
+.amenities__lede {
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 14px;
+}
+.amenities__count {
+  margin-top: 16px;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  padding: 7px 12px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+/* ---------- feature tiles ---------- */
+.amenities__features {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(10px, 1.4vw, 18px);
+  margin-bottom: clamp(28px, 3.4vw, 48px);
+}
+/* the first tile runs two-wide, so the grid reads as an edited spread */
+.amenities__feature:first-child { grid-column: span 2; }
+
+.amenities__feature { min-width: 0; }
+
+.amenities__feature-tile {
+  position: relative;
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  border-radius: 12px;
+  overflow: hidden;
+  background: var(--bg-2);
+  cursor: zoom-in;
+  text-align: left;
+}
+.amenities__feature:first-child .amenities__feature-tile { aspect-ratio: 16 / 9; }
+
+.amenities__feature-tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.amenities__feature-tile:hover img { transform: scale(1.06); }
+
+.amenities__feature-veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(15,15,15,0.78) 0%, rgba(15,15,15,0.28) 42%, transparent 68%);
+}
+
+.amenities__feature-body {
+  position: absolute;
+  left: clamp(14px, 1.6vw, 22px);
+  right: clamp(14px, 1.6vw, 22px);
+  bottom: clamp(14px, 1.6vw, 20px);
+  display: flex;
+  flex-direction: column;
+  gap: 5px;
+  color: #F4F0EA;
+}
+.amenities__feature-group {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--peach);
+  font-weight: 600;
+}
+.amenities__feature-name {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.35vw, 20px);
+  font-weight: 600;
+  line-height: 1.25;
+}
+
+/* ---------- typographic list ---------- */
+.amenities__list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(20px, 2.6vw, 40px);
+  padding-top: clamp(20px, 2.4vw, 32px);
+  border-top: 1px solid var(--line);
+}
+.amenities__list:not(.amenities__list--grouped) { grid-template-columns: minmax(0, 1fr); }
+
+.amenities__group { min-width: 0; }
+
+.amenities__group-title {
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--peach-deep);
+  font-weight: 600;
+  margin-bottom: 14px;
+}
+
+.amenities__group ul {
+  display: grid;
+  gap: 10px;
+}
+/* An ungrouped list would run as one very long column, so it wraps instead. */
+.amenities__list:not(.amenities__list--grouped) .amenities__group ul {
+  grid-template-columns: repeat(auto-fill, minmax(230px, 1fr));
+  gap: 12px 24px;
+}
+
+.amenities__group li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  font-size: clamp(14px, 1.02vw, 16px);
+  line-height: 1.55;
+  color: var(--ink-soft);
+}
+.amenities__group li svg { flex: none; margin-top: 3px; color: var(--peach-deep); }
+
+@media (max-width: 900px) {
+  .amenities__features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .amenities__feature:first-child { grid-column: span 2; }
+  .amenities__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .amenities { padding: 44px 0; }
+  .amenities__head { margin-bottom: 24px; }
+  .amenities__heading { font-size: clamp(25px, 7.5vw, 34px); }
+  .amenities__lede { font-size: 15px; }
+  .amenities__features { grid-template-columns: 1fr; gap: 8px; margin-bottom: 26px; }
+  .amenities__feature:first-child { grid-column: auto; }
+  .amenities__feature-tile,
+  .amenities__feature:first-child .amenities__feature-tile { aspect-ratio: 4 / 3; }
+  .amenities__feature-name { font-size: 16px; }
+  .amenities__list { grid-template-columns: 1fr; gap: 22px; padding-top: 20px; }
+  .amenities__list:not(.amenities__list--grouped) .amenities__group ul {
+    grid-template-columns: 1fr;
+    gap: 10px;
+  }
+  .amenities__group li { font-size: 14.5px; }
+}

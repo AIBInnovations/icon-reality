@@ -1,6 +1,7 @@
 import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import EnquiryForm from './EnquiryForm';
+import { FOCUSABLE } from '../utils/focus';
 
 /**
  * The one enquiry-form modal, shared by the Header and the QuickDock so both
@@ -16,10 +17,38 @@ export default function EnquiryModal({ open, onClose, headingId = 'enquiry-modal
   const cardRef = useRef(null);
 
   // Esc closes; freeze the page behind the modal (Lenis drives scrolling, so
-  // stop it too) and move focus into the card.
+  // stop it too); trap Tab inside the card and hand focus back to whatever
+  // opened it on close — without the trap, tabbing walks out of the dialog and
+  // into the page behind it, which a screen reader still announces.
   useEffect(() => {
     if (!open) return;
-    const onKey = (e) => { if (e.key === 'Escape') onClose(); };
+
+    const opener = document.activeElement;
+
+    const onKey = (e) => {
+      if (e.key === 'Escape') { onClose(); return; }
+      if (e.key !== 'Tab') return;
+
+      const card = cardRef.current;
+      if (!card) return;
+      const focusable = card.querySelectorAll(FOCUSABLE);
+      if (!focusable.length) return;
+      const first = focusable[0];
+      const last = focusable[focusable.length - 1];
+
+      // The card itself is tabIndex=-1 and holds focus on open, so the first
+      // Tab has to be routed manually into the field list.
+      if (!card.contains(document.activeElement)) {
+        e.preventDefault();
+        first.focus();
+      } else if (e.shiftKey && document.activeElement === first) {
+        e.preventDefault();
+        last.focus();
+      } else if (!e.shiftKey && document.activeElement === last) {
+        e.preventDefault();
+        first.focus();
+      }
+    };
     window.addEventListener('keydown', onKey);
 
     const prevOverflow = document.body.style.overflow;
@@ -35,6 +64,7 @@ export default function EnquiryModal({ open, onClose, headingId = 'enquiry-modal
       document.body.style.overflow = prevOverflow;
       document.body.classList.remove('has-modal');
       window.lenis?.start();
+      if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
     };
   }, [open, onClose]);
 

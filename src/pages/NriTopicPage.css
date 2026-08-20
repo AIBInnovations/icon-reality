@@ -1,0 +1,142 @@
+.nri-topic-section { padding: clamp(52px, 7vw, 92px) 0; background: var(--bg); }
+.nri-topic-section--alt { background: var(--bg-2); }
+
+.nri-topic-section__heading {
+  font-size: clamp(26px, 3.4vw, 46px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0 0 clamp(26px, 3.2vw, 44px);
+  max-width: 20ch;
+}
+
+/* ---------- section blocks ---------- */
+.nri-topic-body {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(28px, 4vw, 64px);
+}
+
+.nri-topic-block { min-width: 0; }
+.nri-topic-block__title {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 1.9vw, 26px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+  margin-bottom: 18px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+
+.nri-topic-block__list { display: flex; flex-direction: column; gap: 14px; }
+.nri-topic-block__list li {
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.65;
+  color: var(--muted);
+}
+.nri-topic-block__list li svg { flex: none; margin-top: 4px; color: var(--peach-deep); }
+
+/* ---------- note / disclaimer ---------- */
+.nri-topic-note { padding: clamp(30px, 4vw, 52px) 0; background: var(--bg); }
+.nri-topic-note__body {
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.68;
+  color: var(--ink-soft);
+  max-width: 72ch;
+  padding-left: 20px;
+  border-left: 2px solid var(--peach);
+}
+.nri-topic-note__disclaimer {
+  margin-top: 22px;
+  font-size: 13px;
+  line-height: 1.62;
+  color: var(--muted);
+  opacity: 0.9;
+  max-width: 84ch;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+/* ---------- CTA ---------- */
+.nri-topic-cta { padding: clamp(52px, 7vw, 96px) 0; background: var(--bg-2); }
+.nri-topic-cta__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(28px, 5vw, 80px);
+  align-items: start;
+}
+.nri-topic-cta__copy { display: flex; flex-direction: column; min-width: 0; }
+.nri-topic-cta__eyebrow { color: var(--peach-deep); margin-bottom: 14px; }
+.nri-topic-cta__heading {
+  font-size: clamp(26px, 3.4vw, 46px);
+  font-weight: 600;
+  line-height: 1.04;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0 0 16px;
+  max-width: 17ch;
+}
+.nri-topic-cta__lede {
+  font-size: clamp(15px, 1.12vw, 18px);
+  line-height: 1.65;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+.nri-topic-cta__links { margin-top: clamp(24px, 3vw, 36px); }
+.nri-topic-cta__links-k {
+  display: block;
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  color: var(--muted);
+  font-weight: 600;
+  margin-bottom: 12px;
+}
+.nri-topic-cta__links ul { display: flex; flex-wrap: wrap; gap: 8px; }
+.nri-topic-cta__links a {
+  display: inline-flex;
+  align-items: center;
+  min-height: 40px;
+  padding: 0 14px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  background: var(--bg);
+  font-size: 13px;
+  color: var(--ink-soft);
+  transition: border-color .2s ease, color .2s ease;
+}
+.nri-topic-cta__links a:hover { border-color: var(--peach-deep); color: var(--peach-deep); }
+
+.nri-topic-cta__media { margin-top: clamp(24px, 3vw, 36px); }
+
+.nri-topic-cta__form {
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  min-width: 0;
+}
+
+@media (max-width: 900px) {
+  .nri-topic-body { grid-template-columns: 1fr; }
+  .nri-topic-cta__grid { grid-template-columns: 1fr; gap: 28px; }
+  .nri-topic-cta__heading { max-width: none; }
+}
+
+@media (max-width: 720px) {
+  .nri-topic-section, .nri-topic-cta { padding: 44px 0; }
+  .nri-topic-section__heading { font-size: clamp(24px, 7vw, 32px); max-width: none; }
+  .nri-topic-block__title { font-size: 19px; }
+  .nri-topic-block__list li { font-size: 14.5px; }
+  .nri-topic-note__body { font-size: 15px; padding-left: 14px; }
+  .nri-topic-cta__heading { font-size: clamp(24px, 7vw, 32px); }
+  .nri-topic-cta__lede { font-size: 15px; }
+  .nri-topic-cta__form { padding: 20px 16px; border-radius: 14px; }
+}

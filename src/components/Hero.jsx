@@ -9,6 +9,37 @@ const FRAME_COUNT = 476;
 const ASSET_REV = 2;
 const frameUrl = (i) => `/frames/f${String(i + 1).padStart(3, '0')}.jpg?v=${ASSET_REV}`;
 
+// ---------------------------------------------------------------------------
+// Progressive frame loading (read.md §57).
+//
+// The sequence used to block the reveal on all 476 frames (~62 MB) — on a slow
+// connection that is a minute of loading screen for an effect the visitor
+// hasn't seen yet. Now:
+//
+//   1. the first BOOTSTRAP_FRAMES load, in order          → loader progress
+//   2. the hero reveals as soon as they are in memory     → ~1/5 the wait
+//   3. the remaining frames stream in behind it, in order, a few at a time
+//
+// The visual is unchanged: the hero is pinned for roughly three viewport
+// heights, so the bootstrap batch covers the opening of the scrub while the
+// rest arrives, and draw() falls back to the nearest earlier frame it has if
+// the user out-scrolls the download — the sequence slows, it never blanks.
+//
+// The bootstrap batch is sized from the visitor's ACTUAL measured throughput,
+// not guessed: a fixed batch that reveals in half a second on office wi-fi is
+// half a minute on a phone on 4G. We download a small probe, time it, and then
+// take as many further frames as fit inside REVEAL_BUDGET_MS.
+const PROBE_FRAMES = 16;
+const REVEAL_BUDGET_MS = 2500;
+// Floor: enough to cover the first beat of the scrub even on a slow link.
+// Ceiling: past this the reveal is being delayed for frames the visitor will
+// not reach before the background queue has fetched them anyway.
+const MIN_BOOTSTRAP = 24;
+const MAX_BOOTSTRAP = 120;
+// Kept low on purpose: the browser caps parallel connections anyway, and
+// flooding the queue delays the frames the visitor is about to look at.
+const BACKGROUND_CONCURRENCY = 6;
+
 export default function Hero({ onReady, onProgress }) {
   const wrapRef = useRef(null);
   const innerRef = useRef(null);
@@ -63,9 +94,16 @@ export default function Hero({ onReady, onProgress }) {
       const i1 = Math.max(0, Math.min(FRAME_COUNT - 1, i0 + 1));
       const t = fIdx - i0;
 
-      const img0 = stateRef.current.images[i0];
-      const img1 = stateRef.current.images[i1];
-      if (!img0 || !img0.complete || !img0.naturalWidth) return;
+      // Frames stream in behind the reveal, so the exact frame may not have
+      // arrived yet. Fall back to the nearest earlier one that has — the
+      // sequence holds rather than blanking, and catches up as it downloads.
+      const ready = (img) => img && img.complete && img.naturalWidth > 0;
+      let base = i0;
+      while (base > 0 && !ready(stateRef.current.images[base])) base--;
+
+      const img0 = stateRef.current.images[base];
+      const img1 = base === i0 ? stateRef.current.images[i1] : null;
+      if (!ready(img0)) return;
       stateRef.current.lastF = fIdx;
 
       const p0 = placeImage(img0);
@@ -74,53 +112,124 @@ export default function Hero({ onReady, onProgress }) {
       ctx.globalAlpha = 1;
       ctx.drawImage(img0, p0.x, p0.y, p0.w, p0.h);
 
-      if (img1 && img1.complete && img1.naturalWidth && i1 !== i0 && t > 0) {
+      if (ready(img1) && i1 !== i0 && t > 0) {
         ctx.globalAlpha = t;
         ctx.drawImage(img1, p0.x, p0.y, p0.w, p0.h);
         ctx.globalAlpha = 1;
       }
     };
 
-    // ---- preload ALL frames in parallel, and only reveal the hero once every
-    // frame is in memory. The PageLoader stays up for the whole load, so the
-    // hero never paints a partial / "preview" state to the user.
-    const images = [];
-    let loaded = 0;
+    // ---- progressive preload (see the note by BOOTSTRAP_FRAMES) ----
+    const images = new Array(FRAME_COUNT);
+    stateRef.current.images = images;
+
+    /**
+     * Kick off one frame; resolves on load OR error, never rejects.
+     *
+     * The priority hint matters more than it looks: every section below the
+     * hero has lazily-loaded photography, and on a slow link the browser was
+     * fetching ~6 MB of it in parallel with the frames the visitor is actually
+     * staring at a loading bar for. Bootstrap frames are marked high so they
+     * win that race; background frames are marked low so they lose it to
+     * anything the visitor has scrolled to.
+     */
+    const loadFrame = (i, priority = 'auto') => new Promise((res) => {
+      const img = new Image();
+      img.decoding = 'async';
+      img.fetchPriority = priority;
+      images[i] = img;
+      img.onload = res;
+      // a missing frame must not stall the queue behind it
+      img.onerror = res;
+      img.src = frameUrl(i);
+    });
+
+    let bootstrapped = 0;
+    let target = MIN_BOOTSTRAP;
+    let lastFrac = 0;
     let lastPct = -1;
-    let resolveAll;
-    const allLoaded = new Promise((res) => { resolveAll = res; });
-    const bump = () => {
-      loaded++;
-      const frac = loaded / FRAME_COUNT;
+    const bumpBootstrap = () => {
+      bootstrapped++;
+      // The target grows once the probe has measured the connection, so clamp
+      // the reported fraction to be monotonic — a percentage that counts
+      // backwards reads as a stuck loader.
+      const frac = Math.max(lastFrac, Math.min(1, bootstrapped / target));
+      lastFrac = frac;
       const pct = Math.floor(frac * 100);
       if (pct !== lastPct) { // throttle progress reports to ~1 per percent
         lastPct = pct;
         onProgress && onProgress(frac);
       }
-      if (loaded >= FRAME_COUNT) resolveAll();
     };
-    for (let i = 0; i < FRAME_COUNT; i++) {
-      const img = new Image();
-      img.decoding = 'async';
-      img.onload = bump;
-      img.onerror = bump;
-      img.src = frameUrl(i);
-      images.push(img);
-    }
-    stateRef.current.images = images;
+
+    let cancelBackground = false;
+    let bootstrapCount = MIN_BOOTSTRAP;
+
+    // Phase 1 — probe, size the batch to the connection, then load it.
+    const bootstrap = (async () => {
+      const probeCount = Math.min(PROBE_FRAMES, FRAME_COUNT);
+      const t0 = performance.now();
+      await Promise.all(
+        Array.from({ length: probeCount }, (_, i) => loadFrame(i, 'high').then(bumpBootstrap))
+      );
+      const elapsed = Math.max(1, performance.now() - t0);
+
+      // Data Saver is an explicit request not to pull 60 MB of imagery; honour
+      // it by revealing on the floor batch and streaming the rest quietly.
+      const saveData = navigator.connection?.saveData === true;
+      const framesPerMs = probeCount / elapsed;
+      const affordable = Math.round(framesPerMs * REVEAL_BUDGET_MS);
+
+      bootstrapCount = saveData
+        ? MIN_BOOTSTRAP
+        : Math.min(FRAME_COUNT, Math.max(MIN_BOOTSTRAP, Math.min(MAX_BOOTSTRAP, probeCount + affordable)));
+      target = bootstrapCount;
+
+      if (bootstrapCount > probeCount) {
+        await Promise.all(
+          Array.from({ length: bootstrapCount - probeCount }, (_, k) =>
+            loadFrame(probeCount + k, 'high').then(bumpBootstrap))
+        );
+      }
+      onProgress && onProgress(1);
+    })();
+
+    // Phase 2 — everything else, in order, a few at a time, behind the reveal.
+    const loadRest = async () => {
+      let next = bootstrapCount;
+      const worker = async () => {
+        while (!cancelBackground && next < FRAME_COUNT) {
+          const i = next++;
+          await loadFrame(i, 'low');
+          // Repaint if the newly-arrived frame is the one the current scroll
+          // position actually wants — otherwise the canvas would keep showing
+          // the fallback until the next scroll event.
+          if (!cancelBackground) {
+            const wanted = Math.round(stateRef.current.progress * (FRAME_COUNT - 1));
+            if (i === wanted) draw(stateRef.current.progress);
+          }
+        }
+      };
+      await Promise.all(
+        Array.from({ length: BACKGROUND_CONCURRENCY }, worker)
+      );
+    };
 
     resize();
     window.addEventListener('resize', resize);
 
     let gsapCtx = null;
 
-    allLoaded.then(() => {
+    bootstrap.then(() => {
       if (!mounted) return;
-      // Paint the first frame BEFORE signalling ready, so when the PageLoader
-      // lifts the hero is already showing — fully loaded, no preview/flash.
+      // Paint the first frame BEFORE signalling ready, so when the loader lifts
+      // the hero is already showing — never a blank canvas.
       resize();
       draw(stateRef.current.progress);
       onReady && onReady();
+
+      // The rest of the sequence downloads from here, behind the visible hero.
+      loadRest();
 
       // gsap.context() scopes the pin + ScrollTriggers, so a single ctx.revert()
       // cleanly unwinds the pinSpacer wrapper GSAP injects. Required for React
@@ -158,6 +267,9 @@ export default function Hero({ onReady, onProgress }) {
 
     return () => {
       mounted = false;
+      // Stop queueing frames the moment the page unmounts — otherwise a visitor
+      // who navigates away during the load keeps ~380 requests in flight.
+      cancelBackground = true;
       window.removeEventListener('resize', resize);
       if (gsapCtx) gsapCtx.revert();
     };

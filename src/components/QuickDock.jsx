@@ -3,8 +3,12 @@ import { Link, useLocation } from 'react-router-dom';
 import { useEnquiry } from '../enquiry/enquiryContext';
 import './QuickDock.css';
 
-const WHATSAPP = 'https://wa.me/919425942510?text=Hi%2C%20I%27d%20like%20to%20know%20more%20about%20Icon%20Realty.';
-const MAPS = 'https://maps.google.com/?q=Icon+Realty+Indore+Madhya+Pradesh';
+import { whatsappUrl, waMessage } from '../services/whatsapp';
+import { EMAIL, PRIMARY_PHONE, ADDRESS, MAPS_URL, telHref } from '../data/contact';
+import { LEAD_INTENTS } from '../services/leads';
+
+const WHATSAPP = whatsappUrl(waMessage.general());
+const MAPS = MAPS_URL;
 
 const icon = (paths) => (
   <svg viewBox="0 0 24 24" fill="none" aria-hidden>
@@ -28,11 +32,12 @@ const ITEMS = [
     ),
   },
   {
+    // Was a hard-coded Oscar Palace PDF. The dock is site-wide, so it now points
+    // at the projects index where each project offers its own brochure.
     key: 'brochure',
-    title: 'Brochure',
-    sub: 'Oscar Palace PDF',
-    href: '/downloads/oscar-palace-brochure.pdf',
-    download: true,
+    title: 'Brochures',
+    sub: 'One per project',
+    to: '/projects',
     icon: icon(
       <>
         <path d="M14 3H7a2 2 0 00-2 2v14a2 2 0 002 2h10a2 2 0 002-2V8l-5-5z" stroke="currentColor" strokeWidth="1.6" strokeLinejoin="round"/>
@@ -69,8 +74,8 @@ const ITEMS = [
   {
     key: 'call',
     title: 'Call Us',
-    sub: '+91 9425 9425 10',
-    href: 'tel:+919425942510',
+    sub: PRIMARY_PHONE.label,
+    href: telHref(),
     icon: icon(
       <path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07 19.5 19.5 0 01-6-6A19.79 19.79 0 012.12 4.18 2 2 0 014.11 2h3a2 2 0 012 1.72c.13.96.37 1.9.72 2.8a2 2 0 01-.45 2.11L8.09 9.91a16 16 0 006 6l1.27-1.27a2 2 0 012.11-.45c.9.35 1.84.59 2.8.72A2 2 0 0122 16.92z" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
     ),
@@ -78,8 +83,8 @@ const ITEMS = [
   {
     key: 'email',
     title: 'Email Us',
-    sub: 'iconrealty02@gmail.com',
-    href: 'mailto:iconrealty02@gmail.com?subject=Enquiry%20from%20website',
+    sub: EMAIL,
+    href: `mailto:${EMAIL}?subject=Enquiry%20from%20website`,
     icon: icon(
       <>
         <path d="M3 7l9 6 9-6" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
@@ -90,7 +95,7 @@ const ITEMS = [
   {
     key: 'locate',
     title: 'Visit Office',
-    sub: 'Indore, Madhya Pradesh',
+    sub: `${ADDRESS.locality}, ${ADDRESS.region}`,
     href: MAPS,
     external: true,
     icon: icon(
@@ -144,8 +149,12 @@ export default function QuickDock() {
     setOpen(false);
     openEnquiry({
       eyebrow: 'Quick enquiry',
+      heading: 'Send an enquiry.',
       source: 'Quick Links',
-      project: 'Oscar Palace',
+      intent: LEAD_INTENTS.GENERAL,
+      // Two fields — the dock is a shortcut, not a form to fill in.
+      fields: ['name', 'phone'],
+      submitLabel: 'Send enquiry',
     });
   };
 

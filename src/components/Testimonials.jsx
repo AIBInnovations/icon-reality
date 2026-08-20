@@ -48,7 +48,12 @@ export default function Testimonials() {
     els.forEach((el, i) => {
       const offset = i - active;
       gsap.to(el, {
-        x: `${offset * 110}%`,
+        // xPercent, not x: '110%'. GSAP resolves a percentage `x` to pixels at
+        // tween time, so after a viewport resize (or a phone rotating) every
+        // card sat at an offset computed for the old card width — which pushed
+        // the off-screen cards further out than the clip and left the document
+        // reporting a wider scroll width than the viewport.
+        xPercent: offset * 110,
         scale: i === active ? 1 : 0.92,
         opacity: i === active ? 1 : 0.35,
         duration: 0.9,

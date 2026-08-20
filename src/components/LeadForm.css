@@ -1,0 +1,203 @@
+/* Additions on top of EnquiryForm.css (.contact-form), which LeadForm reuses so
+   every form on the site looks like the one the Contact page already had.
+   Only the field types the original form didn't have are styled here. */
+
+.lead-form__hint {
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--muted);
+  margin: -4px 0 4px;
+}
+
+/* ---------- select ---------- */
+.lead-form__select {
+  position: relative;
+  display: flex;
+  align-items: center;
+}
+.lead-form__select select {
+  appearance: none;
+  -webkit-appearance: none;
+  background: transparent;
+  border: 0;
+  border-bottom: 1px solid var(--line);
+  border-radius: 0;
+  padding: 10px 28px 12px 0;
+  /* 16px keeps iOS Safari from zooming the viewport on focus */
+  font-size: 16px;
+  font-family: inherit;
+  color: var(--ink);
+  width: 100%;
+  cursor: pointer;
+  transition: border-color .25s ease;
+}
+.lead-form__select select:focus {
+  outline: none;
+  border-bottom-color: var(--peach-deep);
+}
+.lead-form__select svg {
+  position: absolute;
+  right: 4px;
+  width: 12px;
+  height: 8px;
+  color: var(--muted);
+  pointer-events: none;
+}
+
+/* Native date input: match the underline treatment of every other field. */
+.contact-form__field input[type='date'] {
+  appearance: none;
+  -webkit-appearance: none;
+  min-height: 44px;
+}
+
+/* ---------- chip radio group ---------- */
+.lead-form__chips {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding-top: 4px;
+}
+.lead-form__chip {
+  min-height: 44px;
+  padding: 0 16px;
+  display: inline-flex;
+  align-items: center;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+  font-size: 14px;
+  color: var(--ink-soft);
+  background: transparent;
+  transition: background .22s ease, border-color .22s ease, color .22s ease;
+}
+.lead-form__chip:hover { border-color: var(--peach-deep); }
+.lead-form__chip.is-active {
+  background: var(--peach);
+  border-color: var(--peach);
+  color: #1A1A1A;
+  font-weight: 500;
+}
+
+/* ---------- validation ---------- */
+.contact-form__field.is-invalid input,
+.contact-form__field.is-invalid textarea,
+.contact-form__field.is-invalid select {
+  border-bottom-color: #b3402e;
+}
+.lead-form__error {
+  font-size: 12.5px;
+  line-height: 1.45;
+  color: #b3402e;
+  letter-spacing: 0;
+  text-transform: none;
+}
+.contact-form__consent.is-invalid span { color: #b3402e; }
+
+/* ---------- step indicator ---------- */
+.lead-form__steps {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  margin-bottom: 4px;
+  padding-bottom: 16px;
+  border-bottom: 1px solid var(--line);
+}
+.lead-form__step {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-size: 12px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--muted);
+  opacity: 0.55;
+  transition: opacity .25s ease, color .25s ease;
+}
+.lead-form__step.is-active { opacity: 1; color: var(--ink); }
+.lead-form__step.is-done { opacity: 0.9; }
+.lead-form__step-num {
+  width: 24px;
+  height: 24px;
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0;
+}
+.lead-form__step.is-active .lead-form__step-num {
+  background: var(--peach);
+  border-color: var(--peach);
+  color: #1A1A1A;
+}
+.lead-form__step.is-done .lead-form__step-num {
+  background: var(--ink);
+  border-color: var(--ink);
+  color: var(--bg);
+}
+
+/* ---------- actions ---------- */
+.lead-form__actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+.lead-form__actions .contact-form__submit { margin-top: 12px; }
+.lead-form__back {
+  height: 52px;
+  padding: 0 22px;
+  margin-top: 12px;
+  border-color: var(--line);
+  color: var(--muted);
+}
+.lead-form__back:hover { background: var(--ink); color: var(--bg); border-color: var(--ink); }
+
+/* ---------- success state ---------- */
+.lead-form--done {
+  align-items: flex-start;
+  gap: 12px;
+  animation: leadFormDone .45s ease both;
+}
+@keyframes leadFormDone {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: none; }
+}
+@media (prefers-reduced-motion: reduce) {
+  .lead-form--done { animation: none; }
+}
+.lead-form__tick {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 50%;
+  background: var(--peach);
+  color: #1A1A1A;
+}
+.lead-form__tick svg { width: 22px; height: 22px; }
+.lead-form__done-copy {
+  font-size: 16px;
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 46ch;
+}
+
+@media (max-width: 720px) {
+  /* read.md §61 — one column, no side-by-side fields on a phone. */
+  .lead-form .contact-form__row { grid-template-columns: 1fr; }
+  .lead-form__actions { flex-direction: column-reverse; align-items: stretch; }
+  .lead-form__back { width: 100%; justify-content: center; }
+  .lead-form__steps { gap: 8px; }
+  .lead-form__step-label { display: none; }
+  .lead-form__step {
+    /* labels are hidden, so show the numbers as a compact progress track */
+    flex: 1;
+  }
+  .lead-form__step-num { width: 28px; height: 28px; }
+}

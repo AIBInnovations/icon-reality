@@ -1,0 +1,94 @@
+.sticky-cta {
+  /* Mobile only — desktop has the header CTA and the QuickDock. */
+  display: none;
+}
+
+@media (max-width: 860px) {
+  .sticky-cta {
+    position: fixed;
+    left: 8px;
+    right: 8px;
+    /* clear of the iOS home indicator */
+    bottom: calc(8px + env(safe-area-inset-bottom, 0px));
+    z-index: 90;
+    display: grid;
+    grid-template-columns: 1fr 1fr 1.25fr;
+    gap: 6px;
+    padding: 6px;
+    border-radius: 14px;
+    background: rgba(28, 28, 28, 0.92);
+    backdrop-filter: saturate(160%) blur(14px);
+    -webkit-backdrop-filter: saturate(160%) blur(14px);
+    box-shadow: 0 12px 32px rgba(0, 0, 0, 0.22);
+
+    transform: translateY(calc(100% + 20px));
+    opacity: 0;
+    pointer-events: none;
+    transition: transform .38s cubic-bezier(0.16, 1, 0.3, 1), opacity .28s ease;
+  }
+  .sticky-cta.is-visible {
+    transform: none;
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .sticky-cta__action {
+    /* 44px minimum touch target (read.md §10) */
+    min-height: 48px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    gap: 7px;
+    border-radius: 10px;
+    background: rgba(244, 240, 234, 0.10);
+    color: #F4F0EA;
+    font-size: 13px;
+    font-weight: 500;
+    letter-spacing: 0.01em;
+    transition: background .2s ease;
+  }
+  .sticky-cta__action:active { background: rgba(244, 240, 234, 0.2); }
+  .sticky-cta__action svg { width: 18px; height: 18px; flex: none; }
+
+  .sticky-cta__action--primary {
+    background: var(--peach);
+    color: #1A1A1A;
+    font-weight: 600;
+  }
+  .sticky-cta__action--primary:active { background: var(--peach-deep); }
+
+  /* A modal owns the screen — the bar must not float over its scrim. */
+  body.has-modal .sticky-cta {
+    opacity: 0;
+    pointer-events: none;
+    transform: translateY(calc(100% + 20px));
+  }
+}
+
+/* Very narrow phones: labels on the two icon buttons would wrap. */
+@media (max-width: 360px) {
+  .sticky-cta { grid-template-columns: 1fr 1fr 1.4fr; }
+  .sticky-cta__action { font-size: 12px; gap: 5px; }
+  .sticky-cta__action svg { width: 16px; height: 16px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .sticky-cta { transition: opacity .2s ease; transform: none; }
+  .sticky-cta:not(.is-visible) { transform: none; }
+}
+
+/* The QuickDock toggle floats bottom-right at the same height as this bar.
+   On pages that mount a sticky CTA, lift the dock clear of it. */
+@media (max-width: 860px) {
+  body.has-sticky-cta .quick-dock {
+    bottom: calc(74px + env(safe-area-inset-bottom, 0px));
+  }
+}
+
+/* Pages with a sticky bar need trailing room so the last section — usually the
+   final CTA — is not permanently half-covered by it. */
+@media (max-width: 860px) {
+  body.has-sticky-cta footer.footer {
+    padding-bottom: calc(72px + env(safe-area-inset-bottom, 0px));
+  }
+}

@@ -30,6 +30,11 @@
 }
 
 .breadcrumbs__link {
+  display: inline-flex;
+  align-items: center;
+  /* the trail sits on its own row, so vertical padding here costs nothing
+     visually and lifts a 16px-tall link to a usable target */
+  min-height: 40px;
   color: var(--muted);
   position: relative;
   transition: color .2s ease;
@@ -37,7 +42,7 @@
 .breadcrumbs__link::after {
   content: '';
   position: absolute;
-  left: 0; right: 0; bottom: -3px;
+  left: 0; right: 0; bottom: 9px;
   height: 1px;
   background: currentColor;
   transform: scaleX(0);

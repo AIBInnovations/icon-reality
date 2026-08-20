@@ -1,13 +1,21 @@
 import { useEffect, useRef, useState } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { Link } from 'react-router-dom';
 import Reveal from '../components/Reveal';
-import Stats from '../components/Stats';
+import TrustModule from '../components/TrustModule';
+import MediaFigure from '../components/MediaFigure';
+import SectionHeading from '../components/SectionHeading';
 import Testimonials from '../components/Testimonials';
-import FinalCTA from '../components/FinalCTA';
+import CtaBand from '../components/CtaBand';
 import Breadcrumbs from '../components/Breadcrumbs';
 import Seo from '../seo/Seo';
 import { breadcrumbSchema, webPageSchema } from '../seo/schema';
+import { LEAD_INTENTS } from '../services/leads';
+import {
+  STORY, VALUES, VISION, MISSION, LEADERSHIP,
+  MILESTONES, AWARDS, PRESS, FOUNDER_MESSAGE,
+} from '../data/company';
 import './AboutPage.css';
 
 const TRAIL = [
@@ -225,7 +233,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* STORY */}
+      {/* STORY — short editorial beats, not one long paragraph (read.md §23) */}
       <section className="about-story">
         <div className="container about-story__grid">
           <div className="about-story__col">
@@ -235,18 +243,21 @@ export default function AboutPage() {
             <Reveal as="h2" className="display about-story__heading" delay={0.05}>
               Two decades<br/>of building trust.
             </Reveal>
+            <Reveal className="about-story__media" delay={0.1}>
+              <MediaFigure
+                src="/images/ruchi-enclave/gallery-2.jpg"
+                credit="Ruchi Enclave, Jhalaria — delivered"
+                ratio="4 / 5"
+              />
+            </Reveal>
           </div>
           <div className="about-story__col">
-            <Reveal as="p" className="about-story__copy" delay={0.05}>
-              Icon Realty evolved from a promising vision into one of Indore's most trusted names in premium real estate.
-              Under the direction of <strong>Mr. Siddharth Porwal</strong>, the company has built more than fifteen landmark
-              developments — each one a quiet, considered statement of what plotted living can be.
-            </Reveal>
-            <Reveal as="p" className="about-story__copy" delay={0.1}>
-              Our work is shaped by ethical practice, customer-first thinking, and a refusal to cut corners on the things
-              residents will live with for decades. Wide planned roads. Real green cover. Boundaries that mean something.
-              Landmarks that age into the city, not against it.
-            </Reveal>
+            {STORY.map((beat, i) => (
+              <Reveal key={beat.title} className="about-story__beat" delay={0.05 + i * 0.05}>
+                <h3 className="about-story__beat-title">{beat.title}</h3>
+                <p className="about-story__copy">{beat.body}</p>
+              </Reveal>
+            ))}
           </div>
         </div>
       </section>
@@ -256,30 +267,18 @@ export default function AboutPage() {
         <div className="container about-vm__grid">
           <Reveal className="about-vm__card about-vm__card--vision">
             <span className="about-vm__tag">Vision</span>
-            <p>
-              To be a trusted leader in luxury real estate by creating community-centric spaces — defined by dense tree
-              plantations and vibrant greenery — delivering timeless landmarks with enduring quality and a healthier
-              lifestyle.
-            </p>
+            <p>{VISION}</p>
           </Reveal>
           <Reveal className="about-vm__card about-vm__card--mission" delay={0.08}>
             <span className="about-vm__tag">Mission</span>
-            <p>
-              To create developments that rise beyond architecture — shaped with precision, purpose, and refined
-              elegance — through ethical practices and a customer-first approach.
-            </p>
+            <p>{MISSION}</p>
           </Reveal>
         </div>
 
         <div className="container about-vm__values">
           <Reveal as="h3" className="about-vm__values-title">Our core values</Reveal>
           <div className="about-vm__values-grid">
-            {[
-              { k: 'Integrity', v: 'Honesty, transparency, and ethical responsibility in every decision.' },
-              { k: 'Craftsmanship', v: 'Superior design, meticulous planning, and an obsession with quality.' },
-              { k: 'Customer-First', v: 'Long-term commitment with post-sales support and quick responsiveness.' },
-              { k: 'Innovation', v: 'New ideas, technologies, and design philosophies — applied with purpose.' },
-            ].map((x, i) => (
+            {VALUES.map((x, i) => (
               <Reveal key={x.k} className="about-vm__value" delay={i * 0.06}>
                 <span className="about-vm__value-k">{x.k}</span>
                 <span className="about-vm__value-v">{x.v}</span>
@@ -304,20 +303,7 @@ export default function AboutPage() {
           </div>
 
           <div className="about-team__cards">
-          {[
-            {
-              name: 'Mr. Nilesh Porwal',
-              role: 'Director, Icon Realty',
-              photo: '/images/team/director-nilesh.png',
-              bio: 'Over two decades shaping Central India\'s premium townships. He leads on craftsmanship, planning, and the unglamorous details — wide roads, real green cover, boundaries that age into landmarks.',
-            },
-            {
-              name: 'Mr. Siddharth Porwal',
-              role: 'Director, Icon Realty',
-              photo: '/images/team/director-siddharth.png',
-              bio: 'Under his direction, Icon Realty has evolved from a promising vision into one of Indore\'s most trusted names. Champion of transparency, ethical practice, and a long view that puts families ahead of quarters.',
-            },
-          ].map((d, i) => (
+          {LEADERSHIP.map((d, i) => (
             <Reveal
               key={d.name}
               className={`team-card ${openBio === i ? 'is-open' : ''}`}
@@ -361,9 +347,103 @@ export default function AboutPage() {
         </div>
       </section>
 
-      <Stats />
+      {/* MILESTONES */}
+      {MILESTONES.length > 0 && (
+        <section className="about-milestones">
+          <div className="container">
+            <SectionHeading
+              eyebrow="Milestones"
+              title="How the portfolio grew."
+              lede="Only entries Icon Realty has published. Where a year has not been stated publicly, it is left blank rather than estimated."
+            />
+            <ol className="about-milestones__list">
+              {MILESTONES.map((m, i) => (
+                <Reveal as="li" key={m.title} className="about-milestones__item" delay={Math.min(i, 5) * 0.05} y={20}>
+                  <span className="about-milestones__year">{m.year ?? '—'}</span>
+                  <div className="about-milestones__body">
+                    <h3 className="about-milestones__title">{m.title}</h3>
+                    <p className="about-milestones__copy">{m.body}</p>
+                  </div>
+                </Reveal>
+              ))}
+            </ol>
+          </div>
+        </section>
+      )}
+
+      {/* AWARDS & PRESS — hidden until data/company.js carries verifiable
+          entries, rather than showing placeholder logos (read.md §71). */}
+      {(AWARDS.length > 0 || PRESS.length > 0) && (
+        <section className="about-awards">
+          <div className="container">
+            <SectionHeading eyebrow="Recognition" title="Awards & press." />
+            <ul className="about-awards__list">
+              {[...AWARDS, ...PRESS].map((a) => (
+                <li key={a.title}>
+                  {a.url
+                    ? <a href={a.url} target="_blank" rel="noreferrer">{a.title}</a>
+                    : <span>{a.title}</span>}
+                  <span className="about-awards__meta">
+                    {[a.issuer, a.year].filter(Boolean).join(' · ')}
+                  </span>
+                </li>
+              ))}
+            </ul>
+          </div>
+        </section>
+      )}
+
+      {/* FOUNDER MESSAGE — null until the client provides the film. */}
+      {FOUNDER_MESSAGE && (
+        <section className="about-founder">
+          <div className="container about-founder__grid">
+            <div className="about-founder__media">
+              <video
+                src={FOUNDER_MESSAGE.src}
+                poster={FOUNDER_MESSAGE.poster}
+                controls
+                preload="none"
+                playsInline
+              />
+            </div>
+            <div className="about-founder__copy">
+              <Reveal as="span" className="eyebrow">Founder message</Reveal>
+              <Reveal as="blockquote" className="about-founder__quote" delay={0.05}>
+                {FOUNDER_MESSAGE.quote}
+              </Reveal>
+              <Reveal as="cite" className="about-founder__cite" delay={0.1}>
+                {FOUNDER_MESSAGE.attribution}
+              </Reveal>
+            </div>
+          </div>
+        </section>
+      )}
+
+      <TrustModule
+        eyebrow="By the numbers"
+        heading="Two decades. One standard."
+        lede="From the first plot to the latest landmark — every figure below is one Icon Realty has published."
+        media={{ src: '/images/oscar/park/park-1.jpg', credit: 'Oscar Palace, Indore–Nagpur Highway' }}
+        action={<Link to="/projects" className="cta cta--ghost">See the projects</Link>}
+      />
+
       <Testimonials />
-      <FinalCTA />
+
+      <CtaBand
+        eyebrow="Next step"
+        heading="Come and see one we finished."
+        body="The most useful thing you can do before buying from any developer is walk a project they delivered five years ago. Ours are open to visit."
+        primaryLabel="Book a Site Visit"
+        image="/images/oscar/entrance/entrance-2.jpg"
+        enquiry={{
+          intent: LEAD_INTENTS.SITE_VISIT,
+          source: 'About — site visit',
+          eyebrow: 'Site visit',
+          heading: 'Book a site visit.',
+          fields: ['name', 'phone', 'preferredDate', 'preferredTime'],
+          submitLabel: 'Request a site visit',
+        }}
+      />
     </>
   );
 }

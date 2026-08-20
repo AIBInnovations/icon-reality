@@ -485,3 +485,122 @@
   .about-vm__card p { font-size: 15px; }
   .about-vm__values-title { font-size: 22px; margin-bottom: 22px; }
 }
+
+/* ============ STORY BEATS ============
+   The story is now four short editorial beats from data/company.js rather than
+   two long paragraphs (read.md §23). */
+.about-story__beat { display: flex; flex-direction: column; gap: 8px; }
+.about-story__beat + .about-story__beat {
+  margin-top: clamp(22px, 2.4vw, 32px);
+  padding-top: clamp(22px, 2.4vw, 32px);
+  border-top: 1px solid var(--line);
+}
+.about-story__beat-title {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  color: var(--peach-deep);
+  font-weight: 600;
+}
+.about-story__media { margin-top: clamp(24px, 3vw, 40px); max-width: 380px; }
+
+/* ============ MILESTONES ============ */
+.about-milestones {
+  padding: clamp(52px, 7vw, 96px) 0;
+  background: var(--bg-2);
+}
+.about-milestones__list { display: flex; flex-direction: column; }
+.about-milestones__item {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: clamp(16px, 2.4vw, 40px);
+  padding: clamp(18px, 2.2vw, 28px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.about-milestones__item:first-child { border-top: 1px solid var(--line); }
+
+.about-milestones__year {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--sand);
+  font-variant-numeric: tabular-nums;
+}
+.about-milestones__body { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.about-milestones__title {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.about-milestones__copy {
+  font-size: clamp(14px, 1.02vw, 16px);
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+/* ============ AWARDS & PRESS ============ */
+.about-awards { padding: clamp(52px, 7vw, 96px) 0; background: var(--bg); }
+.about-awards__list {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+  gap: 14px;
+}
+.about-awards__list li {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  padding: 18px 20px;
+  border: 1px solid var(--line);
+  border-radius: 10px;
+  background: var(--bg-2);
+}
+.about-awards__list a { color: var(--ink); border-bottom: 1px solid var(--peach-deep); align-self: flex-start; }
+.about-awards__meta { font-size: 12px; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+
+/* ============ FOUNDER MESSAGE ============ */
+.about-founder { padding: clamp(52px, 7vw, 96px) 0; background: var(--bg-2); }
+.about-founder__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.1fr) minmax(0, 0.9fr);
+  gap: clamp(26px, 4vw, 64px);
+  align-items: center;
+}
+.about-founder__media video {
+  width: 100%;
+  border-radius: 14px;
+  background: #000;
+}
+.about-founder__copy { display: flex; flex-direction: column; gap: 14px; min-width: 0; }
+.about-founder__quote {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 500;
+  line-height: 1.35;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+.about-founder__cite { font-size: 14px; color: var(--muted); font-style: normal; }
+
+@media (max-width: 900px) {
+  .about-founder__grid { grid-template-columns: 1fr; }
+}
+
+@media (max-width: 720px) {
+  .about-story__media { max-width: none; }
+  .about-milestones, .about-awards, .about-founder { padding: 44px 0; }
+  .about-milestones__item {
+    /* the year sits above the entry rather than stealing a third of a 320px row */
+    grid-template-columns: 1fr;
+    gap: 6px;
+    padding: 16px 0;
+  }
+  .about-milestones__year { font-size: 18px; }
+  .about-milestones__title { font-size: 17px; }
+  .about-milestones__copy { font-size: 14.5px; }
+  .about-founder__quote { font-size: 20px; }
+}

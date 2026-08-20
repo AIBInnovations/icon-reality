@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react';
+import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/Hero';
 import TrustSection from '../components/TrustSection';
 import DisplayHeading from '../components/DisplayHeading';
@@ -9,12 +10,29 @@ import PillarsCards from '../components/PillarsCards';
 import ProjectsCarousel from '../components/ProjectsCarousel';
 import Testimonials from '../components/Testimonials';
 import CompletedProjects from '../components/CompletedProjects';
+import AudiencePaths from '../components/AudiencePaths';
 import FinalCTA from '../components/FinalCTA';
 import Seo from '../seo/Seo';
 import { realEstateAgentSchema } from '../seo/schema';
 
+// The rest of the home page carries ~6 MB of section photography. While the
+// loading screen is up, every byte of it competes with the hero frames the
+// visitor is actually waiting on — on a 4 Mbps connection that roughly doubled
+// the time to reveal. So the sections below the hero mount once the hero is
+// ready (read.md §86, "no unnecessary asset preloading").
+//
+// The cap is the safety valve: content must not be gated on a 62 MB image
+// sequence for a crawler, or for a visitor whose frames are failing to load.
+// Whichever comes first wins. It is set above the measured reveal time on a
+// 4 Mbps connection, so in practice only a broken load ever trips it.
+const DEFER_SECTIONS_CAP_MS = 12000;
+
 export default function HomePage() {
   const [heroReady, setHeroReady] = useState(false);
+  // The cap fires on its own timer; the hero being ready is the normal path.
+  // Derived rather than stored, so there is no state to keep in sync.
+  const [capReached, setCapReached] = useState(false);
+  const showRest = heroReady || capReached;
   // The static #initial-loader (index.html) covers the very first load and is the
   // ONLY loader shown during the hero-frame preload — no React loader on top, so
   // it never looks like it loads twice. On client-side nav, RouteTransition's
@@ -39,6 +57,20 @@ export default function HomePage() {
     const t = setTimeout(() => setHeroReady(true), 45000);
     return () => clearTimeout(t);
   }, []);
+
+  // Safety valve only — the hero normally reveals long before this fires.
+  useEffect(() => {
+    const t = setTimeout(() => setCapReached(true), DEFER_SECTIONS_CAP_MS);
+    return () => clearTimeout(t);
+  }, []);
+
+  // The page grew by a dozen sections; the hero's pin and every section's
+  // reveal trigger were measured against the shorter document.
+  useEffect(() => {
+    if (!showRest) return undefined;
+    const t = setTimeout(() => ScrollTrigger.refresh(), 120);
+    return () => clearTimeout(t);
+  }, [showRest]);
 
   // When the hero is ready, slide the static loader up to reveal it, then remove.
   useEffect(() => {
@@ -66,16 +98,24 @@ export default function HomePage() {
           setHeroReady(true);
         }}
       />
-      <DisplayHeading />
-      <ServicesGrid />
-      <AboutPostcard />
-      <PillarsCards />
-      <TrustSection />
-      <ProjectsCarousel />
-      <CompletedProjects />
-      <Testimonials />
-      <ForBuyers />
-      <FinalCTA />
+      {showRest && (
+        <>
+          <DisplayHeading />
+          <ServicesGrid />
+          <AboutPostcard />
+          <PillarsCards />
+          <TrustSection />
+          <ProjectsCarousel />
+          <CompletedProjects />
+          {/* Door into the expanded architecture — Why Indore, Investors, NRI,
+              Channel Partners. Placed after the portfolio so a first-time
+              visitor has seen the work before being asked which they are. */}
+          <AudiencePaths />
+          <Testimonials />
+          <ForBuyers />
+          <FinalCTA />
+        </>
+      )}
     </>
   );
 }
