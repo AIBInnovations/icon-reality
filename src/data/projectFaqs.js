@@ -34,7 +34,7 @@ export function buildProjectFaqs(project) {
   if (plot_sizes) {
     faqs.push({
       q: `What plot sizes are available at ${name}?`,
-      a: `${name} offers ${plot_sizes}${total_area && total_area !== plot_sizes ? ` across a ${total_area.toLowerCase()} development` : ''}. Availability changes as plots are booked — our team confirms what is currently open when you enquire.`,
+      a: `${name} offers ${plot_sizes}${total_area && total_area !== plot_sizes ? ` across a ${total_area.toLowerCase()} development` : ''}. Availability changes as plots are booked. Our team confirms what is currently open when you enquire.`,
     });
   }
 
@@ -42,7 +42,7 @@ export function buildProjectFaqs(project) {
     q: `Is ${name} ready, or still under development?`,
     a: status === 'completed'
       ? `${name} is complete and delivered. The community is occupied, and you are welcome to visit it before deciding on any of our current projects.`
-      : `${name} is one of our currently selling projects. The best way to judge progress is to visit the site — we arrange visits by appointment.`,
+      : `${name} is one of our currently selling projects. The best way to judge progress is to visit the site. We arrange visits by appointment.`,
   });
 
   if (amenities.length) {
@@ -55,7 +55,7 @@ export function buildProjectFaqs(project) {
   if (masterPlan.length) {
     faqs.push({
       q: `Can I see the layout plan for ${name}?`,
-      a: 'Yes — the approved layout is published on this page and can be opened full screen and zoomed. You do not need to submit a form to view it.',
+      a: 'Yes, the approved layout is published on this page and can be opened full screen and zoomed. You do not need to submit a form to view it.',
     });
   }
 
@@ -78,19 +78,19 @@ export function buildProjectFaqs(project) {
 
   faqs.push({
     q: 'Are home loans available?',
-    a: 'Home-loan assistance is available on our plotted developments — our team coordinates directly with lenders on your behalf. Eligibility, rate and terms are determined by the bank, not by us.',
+    a: 'Home-loan assistance is available on our plotted developments, our team coordinates directly with lenders on your behalf. Eligibility, rate and terms are determined by the bank, not by us.',
   });
 
   faqs.push({
     q: brochure_url ? 'How do I get the brochure?' : 'How do I get pricing and the brochure?',
     a: brochure_url
-      ? `The ${name} brochure is available on this page — we ask for a name and phone number so we can answer questions about it afterwards.`
+      ? `The ${name} brochure is available on this page. We ask for a name and phone number so we can answer questions about it afterwards.`
       : `Request the ${name} brochure on this page, or call us on ${PRIMARY_PHONE.label}. Pricing is shared directly because it changes with plot position, size and phase.`,
   });
 
   faqs.push({
     q: 'Can I book a site visit?',
-    a: `Yes. Site visits are by appointment — pick a date and time on this page, or call ${PRIMARY_PHONE.label} and our team will meet you at the site and walk the layout with you.`,
+    a: `Yes. Site visits are by appointment. Pick a date and time on this page, or call ${PRIMARY_PHONE.label} and our team will meet you at the site and walk the layout with you.`,
   });
 
   return faqs;

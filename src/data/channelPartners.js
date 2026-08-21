@@ -21,7 +21,7 @@ export const WHY_PARTNER = [
     k: 'A portfolio your client can walk',
     v: 'Nine delivered communities and eight currently selling. When a client asks what you have actually handed over, there is an answer with an address.',
     image: '/images/ruchi-enclave/gallery-3.jpg',
-    credit: 'Ruchi Enclave — delivered',
+    credit: 'Ruchi Enclave: delivered',
   },
   {
     k: 'A local brand with two decades behind it',
@@ -31,7 +31,7 @@ export const WHY_PARTNER = [
   },
   {
     k: 'Range across price and format',
-    v: 'From 600 sq ft plots at Saatvik Vihar to 20,000 sq ft royal-estate plots at Oscar Palace — you can place most clients somewhere in the portfolio.',
+    v: 'From 600 sq ft plots at Saatvik Vihar to 20,000 sq ft royal-estate plots at Oscar Palace. You can place most clients somewhere in the portfolio.',
     image: '/images/saatvik-vihar/saatvik-4.jpg',
     credit: 'Saatvik Vihar, Manglia',
   },
@@ -86,7 +86,7 @@ export const COMMISSION_STATEMENT =
 
 export const COMMISSION_NOTES = [
   'Terms differ by project, plot size and phase, so a single site-wide percentage would be misleading.',
-  'Terms are confirmed in writing before you begin selling a project — not after a booking.',
+  'Terms are confirmed in writing before you begin selling a project, not after a booking.',
   'Client attribution is recorded at registration, which is what prevents disputes at the commission stage.',
 ];
 
@@ -104,7 +104,7 @@ export const REGISTRATION_STEPS = [
   },
   {
     title: 'Focus',
-    hint: 'Optional — helps us brief you on the right part of the portfolio first.',
+    hint: 'Optional. Helps us brief you on the right part of the portfolio first.',
     fields: ['preferredProjects', 'preferredAreas', 'message'],
   },
 ];

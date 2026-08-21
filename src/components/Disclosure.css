@@ -1,0 +1,56 @@
+/* Phone-only collapsible group — see Disclosure.jsx. Above 720px the component
+   renders the plain heading and list, so none of this is reachable. */
+
+/* The heading keeps whatever type treatment its section gave it; this only
+   removes the spacing the closed state does not need. */
+.disclosure__heading { margin-bottom: 0; padding-bottom: 0; border-bottom: 0; }
+
+.disclosure__trigger {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 14px;
+  width: 100%;
+  /* 44px is the floor for a touch target (CLAUDE.md §7) */
+  min-height: 50px;
+  padding: 0;
+  text-align: left;
+  font: inherit;
+  color: inherit;
+  letter-spacing: inherit;
+}
+.disclosure__label { min-width: 0; }
+
+.disclosure__mark {
+  flex: none;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 26px;
+  height: 26px;
+  border-radius: 50%;
+  border: 1px solid currentColor;
+  opacity: 0.4;
+  transition: opacity .2s ease;
+}
+.disclosure__mark svg { width: 14px; height: 14px; }
+
+/* the vertical bar retracts, so + reads as − when the panel is open */
+.disclosure__mark-bar {
+  transform-origin: center;
+  transition: transform .3s ease, opacity .25s ease;
+}
+.disclosure__trigger[aria-expanded='true'] .disclosure__mark { opacity: 0.85; }
+.disclosure__trigger[aria-expanded='true'] .disclosure__mark-bar {
+  transform: scaleY(0);
+  opacity: 0;
+}
+
+/* `hidden` alone is not enough: any `display` declaration on the panel or on a
+   selector that matches it beats the user agent's [hidden] rule. */
+.disclosure__panel[hidden] { display: none; }
+.disclosure__panel { display: block; padding-top: 2px; padding-bottom: 4px; }
+
+@media (prefers-reduced-motion: reduce) {
+  .disclosure__mark, .disclosure__mark-bar { transition: none; }
+}

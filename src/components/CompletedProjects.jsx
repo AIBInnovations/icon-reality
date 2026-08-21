@@ -62,7 +62,7 @@ export default function CompletedProjects() {
             <div key={p.slug}>
               <Link to={`/projects/${p.slug}`} className="completed__card">
                 <div className="completed__media">
-                  <img src={p.thumbnail || p.hero_image} alt={`${p.name} — ${p.location}`} loading="lazy" />
+                  <img src={p.thumbnail || p.hero_image} alt={`${p.name}, ${p.location}`} loading="lazy" />
                   <span className="completed__badge">Completed</span>
                   {p.category && (
                     <span className="completed__cat">{CATEGORY_LABEL[p.category]}</span>

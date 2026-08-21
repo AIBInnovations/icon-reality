@@ -5,17 +5,17 @@ const pillars = [
   {
     name: 'Status',
     variant: 'dark',
-    body: 'Not every address reflects your standard. Icon Realty designs for those who recognise quality without needing it announced — a place that carries quiet weight in every detail, from the gate to the garden.',
+    body: 'Not every address reflects your standard. Icon Realty designs for those who recognise quality without needing it announced: a place that carries quiet weight in every detail, from the gate to the garden.',
   },
   {
     name: 'Investment',
     variant: 'sand',
-    body: 'Land is limited, opportunities are not. We build on the corridors Indore is actually growing along — the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau — with structured planning and the long view in mind. Buy early, hold long-term, and let the location do the rest. Bank loans are available on our plots.',
+    body: 'Land is limited, opportunities are not. We build on the corridors Indore is actually growing along, the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau, with structured planning and the long view in mind. Buy early, hold long-term, and let the location do the rest. Bank loans are available on our plots.',
   },
   {
     name: 'Lifestyle',
     variant: 'peach',
-    body: 'Upgrade from living to breathing. Open spaces, green surroundings, and a peaceful environment crafted for everyday life — where mornings feel slower and weekends feel longer.',
+    body: 'Upgrade from living to breathing. Open spaces, green surroundings, and a peaceful environment crafted for everyday life, where mornings feel slower and weekends feel longer.',
   },
 ];
 

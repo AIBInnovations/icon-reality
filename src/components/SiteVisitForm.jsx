@@ -29,15 +29,15 @@ export default function SiteVisitForm({
     <LeadForm
       intent={LEAD_INTENTS.SITE_VISIT}
       project={project}
-      source={source || `Site visit${project ? ` — ${project}` : ''}`}
+      source={source || `Site visit${project ? `: ${project}` : ''}`}
       eyebrow={eyebrow}
       heading={heading || (project ? `Visit ${project}.` : 'Book a site visit.')}
       fields={fields}
       submitLabel="Request a site visit"
       successMessage={
         project
-          ? `Thank you — we'll call to confirm your ${project} visit shortly.`
-          : "Thank you — we'll call to confirm your visit shortly."
+          ? `Thank you. We'll call to confirm your ${project} visit shortly.`
+          : "Thank you. We'll call to confirm your visit shortly."
       }
       className={className}
       {...rest}

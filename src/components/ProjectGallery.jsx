@@ -105,7 +105,7 @@ export default function ProjectGallery({
               >
                 <img
                   src={img.src}
-                  alt={img.alt || `${projectName || 'Project'} — image ${i + 1}`}
+                  alt={img.alt || `${projectName || 'Project'}: image ${i + 1}`}
                   /* first row is above the fold on most viewports */
                   loading={i < 3 ? 'eager' : 'lazy'}
                   decoding="async"
@@ -124,13 +124,13 @@ export default function ProjectGallery({
         <ImageViewer
           images={visible.map((img, i) => ({
             src: img.src,
-            alt: img.alt || `${projectName || 'Project'} — image ${i + 1}`,
+            alt: img.alt || `${projectName || 'Project'}: image ${i + 1}`,
             label: img.category,
           }))}
           index={openAt}
           onIndexChange={setOpenAt}
           onClose={() => setOpenAt(null)}
-          title={projectName ? `${projectName} — gallery` : 'Gallery'}
+          title={projectName ? `${projectName}: gallery` : 'Gallery'}
         />
       )}
     </section>

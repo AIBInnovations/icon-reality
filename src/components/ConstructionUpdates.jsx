@@ -76,7 +76,7 @@ export default function ConstructionUpdates({
                         >
                           <img
                             src={src}
-                            alt={`${projectName || 'Project'} construction — ${u.date || u.title || `photo ${j + 1}`}`}
+                            alt={`${projectName || 'Project'} construction, ${u.date || u.title || `photo ${j + 1}`}`}
                             loading="lazy"
                             decoding="async"
                           />
@@ -108,7 +108,7 @@ export default function ConstructionUpdates({
           index={viewer.index}
           onIndexChange={(i) => setViewer((v) => ({ ...v, index: i }))}
           onClose={() => setViewer(null)}
-          title={projectName ? `${projectName} — construction` : 'Construction'}
+          title={projectName ? `${projectName}: construction` : 'Construction'}
         />
       )}
     </section>

@@ -1,6 +1,5 @@
 import { Link } from 'react-router-dom';
 import PageHero from '../components/PageHero';
-import SectionRail from '../components/SectionRail';
 import MediaFigure from '../components/MediaFigure';
 import LeadForm from '../components/LeadForm';
 import CtaBand from '../components/CtaBand';
@@ -40,15 +39,6 @@ const TRAIL = [
  * terms a sand plate plus a ruled table, and registration a two-column desk.
  */
 
-const SECTIONS = [
-  { id: 'why-icon', label: 'Why Partner With Icon' },
-  { id: 'benefits', label: 'Partner Benefits' },
-  { id: 'portfolio', label: 'Portfolio' },
-  { id: 'journey', label: 'The Journey' },
-  { id: 'commission-support', label: 'Commission & Support' },
-  { id: 'register', label: 'Register' },
-];
-
 const jumpToRegister = (e) => {
   e.preventDefault();
   scrollToSection('register');
@@ -74,8 +64,8 @@ export default function ChannelPartnersPage() {
   return (
     <>
       <Seo
-        title="Channel Partners — sell Icon Realty projects in Indore"
-        description="Partner with Icon Realty: seventeen plotted developments across Indore, a named relationship manager, current inventory, creatives, site-visit support, clear lead attribution and registration — all on one page."
+        title="Channel Partners: sell Icon Realty projects in Indore"
+        description="Partner with Icon Realty: seventeen plotted developments across Indore, a named relationship manager, current inventory, creatives, site-visit support, clear lead attribution and registration, all on one page."
         path="/channel-partners"
         image={CP_MEDIA.hero.src}
         jsonLd={[
@@ -103,8 +93,6 @@ export default function ChannelPartnersPage() {
 
       <Breadcrumbs trail={TRAIL} />
 
-      <SectionRail items={SECTIONS} label="Partner programme" />
-
       {/* ================= 01 · WHY ICON — editorial ladder ================= */}
       <section className="cpx-case" id="why-icon">
         <div className="container">
@@ -112,7 +100,7 @@ export default function ChannelPartnersPage() {
             index={1}
             eyebrow="Why partner with Icon"
             title="Four reasons, all of them checkable."
-            intro="Nothing on this list depends on you taking our word for it — every claim points at a project you or your client can go and stand in."
+            intro="Nothing on this list depends on you taking our word for it, every claim points at a project you or your client can go and stand in."
           />
         </div>
 
@@ -169,7 +157,7 @@ export default function ChannelPartnersPage() {
             index={3}
             eyebrow="Project portfolio"
             title={`${projectsList.length} developments to place a client in.`}
-            intro="From 600 sq ft plots to 20,000 sq ft royal-estate plots — across the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Simrol and Jhalaria."
+            intro="From 600 sq ft plots to 20,000 sq ft royal-estate plots, across the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Simrol and Jhalaria."
           />
         </div>
 
@@ -182,7 +170,7 @@ export default function ChannelPartnersPage() {
                 <Link to={`/projects/${p.slug}`} className="cpx-card">
                   <MediaFigure
                     src={p.thumbnail || p.hero_image}
-                    alt={`${p.name} — ${p.location}`}
+                    alt={`${p.name}, ${p.location}`}
                     ratio="4 / 5"
                   />
                   {p.status && (
@@ -214,7 +202,7 @@ export default function ChannelPartnersPage() {
             index={4}
             eyebrow="The partner journey"
             title="Eight steps, in order."
-            intro="Attribution is recorded at step five, before the first site visit — which is what stops the conversation at step eight from being an argument."
+            intro="Attribution is recorded at step five, before the first site visit, which is what stops the conversation at step eight from being an argument."
           />
 
           <ol className="cpx-stages">
@@ -286,7 +274,7 @@ export default function ChannelPartnersPage() {
             index={6}
             eyebrow="Registration"
             title="Register as a partner."
-            intro="Three short steps. Only the first is required to reach us — the rest exists so we can brief you on the right part of the portfolio when we call."
+            intro="Three short steps. Only the first is required to reach us, the rest exists so we can brief you on the right part of the portfolio when we call."
           />
 
           <div className="cpx-register__grid">
@@ -298,7 +286,7 @@ export default function ChannelPartnersPage() {
                 heading="Tell us about your business."
                 steps={REGISTRATION_STEPS}
                 submitLabel="Submit registration"
-                successMessage="Thank you — your registration has been received. Our partner team will verify your details and be in touch to complete onboarding."
+                successMessage="Thank you, your registration has been received. Our partner team will verify your details and be in touch to complete onboarding."
               />
               <p className="cpx-register__note">{REGISTRATION_NOTE}</p>
             </Reveal>
@@ -337,12 +325,12 @@ export default function ChannelPartnersPage() {
         image={CP_MEDIA.portfolio.src}
         enquiry={{
           intent: LEAD_INTENTS.CHANNEL_PARTNER,
-          source: 'Channel Partners — desk',
+          source: 'Channel Partners: desk',
           eyebrow: 'Partner desk',
           heading: 'Talk to the partner desk.',
           fields: ['name', 'phone', 'email', 'city', 'company', 'message'],
           submitLabel: 'Request a call',
-          successMessage: 'Thank you — our partner team will be in touch.',
+          successMessage: 'Thank you, our partner team will be in touch.',
         }}
       />
 

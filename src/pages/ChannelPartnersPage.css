@@ -17,6 +17,7 @@
   min-width: 0;
 }
 .cpx-head__index {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
@@ -58,7 +59,8 @@
 .cpx-head--dark .cpx-head__title { color: #F7F4EF; }
 .cpx-head--dark .cpx-head__intro { color: rgba(255, 255, 255, 0.66); }
 .cpx-head--dark .cpx-head__eyebrow { color: rgba(255, 255, 255, 0.5); }
-.cpx-head--dark .cpx-head__index { color: var(--peach); }
+.cpx-head--dark .cpx-head__index {
+  font-variant-numeric: tabular-nums; color: var(--peach); }
 .cpx-head--dark .cpx-head__rule { background: var(--peach); }
 
 /* ============================================ 01 · WHY ICON — ladder ===== */
@@ -84,6 +86,7 @@
 .cpx-rung__copy { min-width: 0; }
 
 .cpx-rung__num {
+  font-variant-numeric: tabular-nums;
   display: block;
   font-family: var(--font-display);
   font-size: clamp(34px, 5vw, 68px);
@@ -125,11 +128,15 @@
 .cpx-index__row {
   min-width: 0;
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
+  /* A FIXED numeral column, not `auto`. Each row is its own grid, so an auto
+     track is measured against that row's own number — and Outfit's
+     proportional figures make "01" narrower than "08", which rippled every
+     title in the column a pixel or two out of line. */
+  grid-template-columns: clamp(30px, 2.6vw, 40px) minmax(0, 1fr);
   grid-template-areas:
     'num k'
     '.   v';
-  column-gap: clamp(12px, 1.4vw, 20px);
+  column-gap: clamp(8px, 1vw, 14px);
   row-gap: 5px;
   padding: clamp(16px, 1.9vw, 24px) 0;
   border-bottom: 1px solid rgba(255, 255, 255, 0.09);
@@ -142,7 +149,7 @@
   letter-spacing: 0.16em;
   line-height: 1.9;
   color: var(--peach);
-  flex: none;
+  font-variant-numeric: tabular-nums;
 }
 .cpx-index__k {
   grid-area: k;
@@ -165,6 +172,10 @@
 .cpx-track {
   margin-top: clamp(4px, 1vw, 12px);
   overflow-x: auto;
+  /* `overflow-x: auto` alone computes overflow-y to `auto` as well, so the
+     track grew a second, vertical scrollbar of its own whenever the cards were
+     a pixel taller than the box. It scrolls sideways only. */
+  overflow-y: hidden;
   overscroll-behavior-x: contain;
   scroll-snap-type: x proximity;
   scrollbar-width: none;
@@ -175,7 +186,9 @@
      edge — i.e. it scrolls the gutter away and clips the first card's caption
      the moment the page loads. Snapping must respect the gutter. */
   scroll-padding-inline: var(--gutter);
-  padding-bottom: 6px;
+  /* the box now clips, so it has to be tall enough for the caption + the
+     4px hover lift */
+  padding-block: 6px 10px;
 }
 .cpx-track::-webkit-scrollbar { display: none; }
 
@@ -301,6 +314,7 @@
 .cpx-stage.is-marked .cpx-stage__title { color: var(--ink); }
 
 .cpx-stage__num {
+  font-variant-numeric: tabular-nums;
   display: block;
   font-size: 11px;
   font-weight: 600;
@@ -415,6 +429,7 @@
   min-width: 0;
 }
 .cpx-table__num {
+  font-variant-numeric: tabular-nums;
   font-size: 11px;
   font-weight: 700;
   letter-spacing: 0.14em;
@@ -475,8 +490,9 @@
 .cpx-next__list { display: flex; flex-direction: column; }
 .cpx-next__list li {
   display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: 14px;
+  /* fixed numeral column — see .cpx-index__row */
+  grid-template-columns: clamp(30px, 2.6vw, 40px) minmax(0, 1fr);
+  gap: 10px;
   padding: 15px 0;
   border-bottom: 1px solid var(--line);
 }
@@ -488,7 +504,7 @@
   letter-spacing: 0.14em;
   line-height: 1.9;
   color: var(--peach-deep);
-  flex: none;
+  font-variant-numeric: tabular-nums;
 }
 .cpx-next__list strong {
   display: block;
@@ -524,7 +540,8 @@
   /* Reset the alternation — on one column it only shuffles the reading order. */
   .cpx-rung:nth-child(even) .cpx-rung__media,
   .cpx-rung:nth-child(even) .cpx-rung__copy { order: 0; }
-  .cpx-rung__num { font-size: clamp(30px, 8vw, 44px); margin-bottom: 10px; }
+  .cpx-rung__num {
+  font-variant-numeric: tabular-nums; font-size: clamp(30px, 8vw, 44px); margin-bottom: 10px; }
 
   .cpx-index { grid-template-columns: 1fr; }
 
@@ -572,7 +589,8 @@
   }
   .cpx-stage:last-child::before { bottom: auto; height: 22px; }
   .cpx-stage__node { top: 18px; left: -33px; transform: none; }
-  .cpx-stage__num { margin-bottom: 6px; }
+  .cpx-stage__num {
+  font-variant-numeric: tabular-nums; margin-bottom: 6px; }
   .cpx-stage__title { font-size: 16.5px; }
   .cpx-stage__body { font-size: 14px; }
 

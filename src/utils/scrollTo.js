@@ -5,8 +5,8 @@
  * routes; they are now one long page each, so "go to Taxation" is a scroll
  * rather than a navigation. Two callers need it and they must agree:
  *
- *   • <SectionRail>   — the on-page jump rail
  *   • <RouteTransition> — a /nri#taxation link arriving from the header
+ *   • the in-page CTAs that point at a section further down the document
  *
  * Everything goes through Lenis when it is running (CLAUDE.md §2 — never a
  * competing window.scrollTo while it owns the scroll), and falls back to the
@@ -14,30 +14,17 @@
  */
 
 /**
- * How far down the viewport a section has to land so nothing fixed is sitting
- * on top of it.
- *
- * Normally that is the header: the bar sits at top:28px with a ~78px pill on
- * desktop, top:14px with a taller logo on phones. But on the NRI and Channel
- * Partner pages a <SectionRail> sticks underneath it (desktop only), and it —
- * not the header — is the real floor. Measured rather than hard-coded, so
- * changing the rail's height or its `top` cannot silently break the landing
- * position.
+ * How far down the viewport a section has to land so the fixed header is not
+ * sitting on top of its heading. The bar sits at top:28px with a ~78px pill on
+ * desktop, and top:14px with a taller logo on phones.
  */
 export function headerOffset() {
-  const rail = document.querySelector('.section-rail');
-  if (rail) {
-    const cs = getComputedStyle(rail);
-    if (cs.position === 'sticky') {
-      return (parseFloat(cs.top) || 0) + rail.offsetHeight + 8;
-    }
-  }
   return window.innerWidth <= 860 ? 128 : 122;
 }
 
 /**
  * @returns {boolean} false when the element isn't in the DOM yet — the caller
- * decides whether to retry (a cross-route hash link) or give up (a rail click).
+ * decides whether to retry (a cross-route hash link) or give up.
  */
 export function scrollToSection(id, { immediate = false } = {}) {
   if (!id) return false;

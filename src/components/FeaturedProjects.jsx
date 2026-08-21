@@ -31,7 +31,7 @@ export default function FeaturedProjects() {
           Three to see<br/>first.
         </Reveal>
         <Reveal as="p" className="featured__lede" delay={0.1}>
-          Fifteen-plus landmarks is a lot to walk. If you are starting somewhere, start with these —
+          Fifteen-plus landmarks is a lot to walk. If you are starting somewhere, start with these:
           an estate-scale flagship, a garden community, and a plotted address with a straight run
           through to Ujjain.
         </Reveal>
@@ -45,7 +45,7 @@ export default function FeaturedProjects() {
                 <Link to={`/projects/${p.slug}`} className="featured__media">
                   <img
                     src={p.thumbnail || p.hero_image}
-                    alt={`${p.name} — ${p.location}`}
+                    alt={`${p.name}, ${p.location}`}
                     loading="lazy"
                     decoding="async"
                   />
@@ -96,7 +96,7 @@ export default function FeaturedProjects() {
                       className="featured__visit"
                       onClick={() => openEnquiry({
                         project: p.name,
-                        source: `Home — highlighted: ${p.name}`,
+                        source: `Home highlighted: ${p.name}`,
                       })}
                     >
                       Book a site visit

@@ -48,7 +48,7 @@ export default function EditorialSplit({
                   ) : (
                     <span>
                       <strong>{item.k}</strong>
-                      {item.v ? <> — {item.v}</> : null}
+                      {item.v ? <>: {item.v}</> : null}
                     </span>
                   )}
                 </li>

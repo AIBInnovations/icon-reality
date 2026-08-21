@@ -38,12 +38,12 @@ export const STORY = [
   {
     title: 'Who we are',
     body:
-      "Icon Realty evolved from a promising vision into one of Indore's most trusted names in premium real estate. Under the direction of Mr. Siddharth Porwal and Mr. Nilesh Porwal, the company has built more than fifteen landmark developments — each a quiet, considered statement of what plotted living can be.",
+      "Icon Realty evolved from a promising vision into one of Indore's most trusted names in premium real estate. Under the direction of Mr. Siddharth Porwal and Mr. Nilesh Porwal, the company has built more than fifteen landmark developments. Each a quiet, considered statement of what plotted living can be.",
   },
   {
     title: 'Our relationship with Indore',
     body:
-      "Every project we have built stands in and around Indore — from the Super Corridor to the Indore–Nagpur Highway, from Rau to Simrol. We are not visitors to this market. We know which corridors are being built, which ones are being talked about, and the difference between the two.",
+      "Every project we have built stands in and around Indore, from the Super Corridor to the Indore–Nagpur Highway, from Rau to Simrol. We are not visitors to this market. We know which corridors are being built, which ones are being talked about, and the difference between the two.",
   },
   {
     title: 'How we work',
@@ -53,7 +53,7 @@ export const STORY = [
   {
     title: 'What we do',
     body:
-      'Icon Realty develops and markets plotted residential communities. On some projects we are the developer; on others — Oscar Palace among them — we are the marketing and sales partner to the developer. Which role we hold on which project is stated on the project page itself.',
+      'Icon Realty develops and markets plotted residential communities. On some projects we are the developer; on others, Oscar Palace among them, we are the marketing and sales partner to the developer. Which role we hold on which project is stated on the project page itself.',
   },
 ];
 
@@ -62,21 +62,21 @@ export const VALUES = [
   { k: 'Integrity',     v: 'Honesty, transparency, and ethical responsibility in every decision.' },
   { k: 'Craftsmanship', v: 'Superior design, meticulous planning, and an obsession with quality.' },
   { k: 'Customer-First',v: 'Long-term commitment with post-sales support and quick responsiveness.' },
-  { k: 'Innovation',    v: 'New ideas, technologies, and design philosophies — applied with purpose.' },
+  { k: 'Innovation',    v: 'New ideas, technologies, and design philosophies, applied with purpose.' },
 ];
 
 export const VISION =
-  'To be a trusted leader in luxury real estate by creating community-centric spaces — defined by dense tree plantations and vibrant greenery — delivering timeless landmarks with enduring quality and a healthier lifestyle.';
+  'To be a trusted leader in luxury real estate by creating community-centric spaces, defined by dense tree plantations and vibrant greenery, delivering timeless landmarks with enduring quality and a healthier lifestyle.';
 
 export const MISSION =
-  'To create developments that rise beyond architecture — shaped with precision, purpose, and refined elegance — through ethical practices and a customer-first approach.';
+  'To create developments that rise beyond architecture: shaped with precision, purpose and refined elegance, through ethical practices and a customer-first approach.';
 
 export const LEADERSHIP = [
   {
     name: 'Mr. Nilesh Porwal',
     role: 'Director, Icon Realty',
     photo: '/images/team/director-nilesh.png',
-    bio: "Over two decades shaping Central India's premium townships. He leads on craftsmanship, planning, and the unglamorous details — wide roads, real green cover, boundaries that age into landmarks.",
+    bio: "Over two decades shaping Central India's premium townships. He leads on craftsmanship, planning, and the unglamorous details: wide roads, real green cover, boundaries that age into landmarks.",
   },
   {
     name: 'Mr. Siddharth Porwal',
@@ -136,7 +136,7 @@ export const TRUST_PILLARS = [
   },
   {
     k: 'Planning you can walk',
-    v: 'Wide planned roads, real green cover, secured boundaries — visible on site, not only in the brochure.',
+    v: 'Wide planned roads, real green cover, secured boundaries: visible on site, not only in the brochure.',
   },
   {
     k: 'Documentation support',

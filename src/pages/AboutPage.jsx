@@ -179,7 +179,7 @@ export default function AboutPage() {
   return (
     <>
       <Seo
-        title="About Icon Realty — 20+ years of plotted development in Indore"
+        title="About Icon Realty: 20+ years of plotted development in Indore"
         description="Two decades of trust, 15+ landmark projects and 4,500+ happy families. Meet the team behind Icon Realty's plotted developments in Indore, Madhya Pradesh."
         path="/about"
         jsonLd={[
@@ -208,7 +208,7 @@ export default function AboutPage() {
             </span>
           </h1>
           <Reveal as="p" className="about-hero__lede" delay={0.6}>
-            Our motivation? More character and quality in every plotted development — without sacrificing budget,
+            Our motivation? More character and quality in every plotted development, without sacrificing budget,
             timelines, or the long view that protects our families' investments.
           </Reveal>
         </div>
@@ -216,7 +216,7 @@ export default function AboutPage() {
 
       <Breadcrumbs trail={TRAIL} />
 
-      {/* VIDEO BAND — scroll-scrubbed canvas (sticky child) */}
+      {/* VIDEO BAND, scroll-scrubbed canvas (sticky child) */}
       <section ref={wrapRef} className="about-video">
         <div className="about-video__sticky">
           <div ref={innerRef} className="about-video__shell">
@@ -233,7 +233,7 @@ export default function AboutPage() {
         </div>
       </section>
 
-      {/* STORY — short editorial beats, not one long paragraph (read.md §23) */}
+      {/* STORY, short editorial beats, not one long paragraph (read.md §23) */}
       <section className="about-story">
         <div className="container about-story__grid">
           <div className="about-story__col">
@@ -246,7 +246,7 @@ export default function AboutPage() {
             <Reveal className="about-story__media" delay={0.1}>
               <MediaFigure
                 src="/images/ruchi-enclave/gallery-2.jpg"
-                credit="Ruchi Enclave, Jhalaria — delivered"
+                credit="Ruchi Enclave, Jhalaria, delivered"
                 ratio="4 / 5"
               />
             </Reveal>
@@ -297,8 +297,7 @@ export default function AboutPage() {
               Other thinking,<br/>smarter realize.
             </Reveal>
             <Reveal as="p" className="about-team__lede" delay={0.05}>
-              A compact leadership team, with direct lines and fast decisions —
-              so we stay involved in every project, every step.
+              A compact leadership team, with direct lines and fast decisions, so we stay involved in every project, every step.
             </Reveal>
           </div>
 
@@ -311,7 +310,7 @@ export default function AboutPage() {
               role="button"
               tabIndex={0}
               aria-expanded={openBio === i}
-              aria-label={`${d.name} — read bio`}
+              aria-label={`${d.name}. Read bio`}
               onClick={() => setOpenBio((o) => (o === i ? null : i))}
               onKeyDown={(e) => {
                 if (e.key === 'Enter' || e.key === ' ') {
@@ -330,7 +329,7 @@ export default function AboutPage() {
                 <p className="team-card__bio">{d.bio}</p>
               </div>
 
-              {/* Standing affordance — the card looked inert, so nobody knew the
+              {/* Standing affordance, the card looked inert, so nobody knew the
                   bio was behind a hover/tap. Sits outside __body and absolutely
                   positioned: the hidden bio still reserves its height, so an
                   in-flow cue would be pushed away from the name. */}
@@ -359,7 +358,7 @@ export default function AboutPage() {
             <ol className="about-milestones__list">
               {MILESTONES.map((m, i) => (
                 <Reveal as="li" key={m.title} className="about-milestones__item" delay={Math.min(i, 5) * 0.05} y={20}>
-                  <span className="about-milestones__year">{m.year ?? '—'}</span>
+                  <span className="about-milestones__year">{m.year ?? '·'}</span>
                   <div className="about-milestones__body">
                     <h3 className="about-milestones__title">{m.title}</h3>
                     <p className="about-milestones__copy">{m.body}</p>
@@ -371,7 +370,7 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* AWARDS & PRESS — hidden until data/company.js carries verifiable
+      {/* AWARDS & PRESS, hidden until data/company.js carries verifiable
           entries, rather than showing placeholder logos (read.md §71). */}
       {(AWARDS.length > 0 || PRESS.length > 0) && (
         <section className="about-awards">
@@ -393,7 +392,7 @@ export default function AboutPage() {
         </section>
       )}
 
-      {/* FOUNDER MESSAGE — null until the client provides the film. */}
+      {/* FOUNDER MESSAGE, null until the client provides the film. */}
       {FOUNDER_MESSAGE && (
         <section className="about-founder">
           <div className="container about-founder__grid">
@@ -422,7 +421,7 @@ export default function AboutPage() {
       <TrustModule
         eyebrow="By the numbers"
         heading="Two decades. One standard."
-        lede="From the first plot to the latest landmark — every figure below is one Icon Realty has published."
+        lede="From the first plot to the latest landmark, every figure below is one Icon Realty has published."
         media={{ src: '/images/oscar/park/park-1.jpg', credit: 'Oscar Palace, Indore–Nagpur Highway' }}
         action={<Link to="/projects" className="cta cta--ghost">See the projects</Link>}
       />
@@ -437,7 +436,7 @@ export default function AboutPage() {
         image="/images/oscar/entrance/entrance-2.jpg"
         enquiry={{
           intent: LEAD_INTENTS.SITE_VISIT,
-          source: 'About — site visit',
+          source: 'About: site visit',
           eyebrow: 'Site visit',
           heading: 'Book a site visit.',
           fields: ['name', 'phone', 'preferredDate', 'preferredTime'],

@@ -11,12 +11,12 @@ const services = [
   {
     title: 'PLOT LAYOUTS',
     image: '/images/services/plot-layouts.jpg',
-    body: 'Residential plotted developments, planned on the same principles for twenty years — wide avenues, east and west facing plots, and Vastu-compliant orientations across every block.',
-    body2: 'Plots run from 600 sq ft at Saatvik Vihar and Siddhayatan to 20,000 sq ft estate parcels at Oscar Palace, so there is a first plot and a landmark plot inside the same portfolio. Road widths are planned generously — up to 100 ft and 60 ft on the estate projects — and corner frontages are reserved rather than sold off first.',
+    body: 'Residential plotted developments, planned on the same principles for twenty years: wide avenues, east and west facing plots, and Vastu-compliant orientations across every block.',
+    body2: 'Plots run from 600 sq ft at Saatvik Vihar and Siddhayatan to 20,000 sq ft estate parcels at Oscar Palace, so there is a first plot and a landmark plot inside the same portfolio. Road widths are planned generously, up to 100 ft and 60 ft on the estate projects, and corner frontages are reserved rather than sold off first.',
     highlights: [
       'Plot sizes from 600 to 20,000 sq ft across the portfolio',
       'East & west facing, Vastu-compliant plotting',
-      'Wide planned roads — up to 100 ft & 60 ft',
+      'Wide planned roads: up to 100 ft & 60 ft',
       'Three positioning bands: high end, lower high end, mid range',
     ],
     stats: [
@@ -34,8 +34,8 @@ const services = [
   {
     title: 'AMENITIES',
     image: '/images/services/amenities.jpg',
-    body: 'Gardens, temples, turfs, courts and clubhouses — sized to the project, and designed for the hours you actually live in rather than for the brochure.',
-    body2: 'Oscar Palace carries 2,80,000 sq ft of garden and open space, a heritage temple and marble baradaris, tennis and pickleball courts and a multipurpose cricket and football turf. Eden Garden has its football garden and skating rink; IIT Greens its oxygen zone and acupressure track; Saatvik Vihar its yoga and senior-citizen gardens. The scale changes with the project — the intent does not.',
+    body: 'Gardens, temples, turfs, courts and clubhouses, all sized to the project and designed for the hours you actually live in rather than for the brochure.',
+    body2: 'Oscar Palace carries 2,80,000 sq ft of garden and open space, a heritage temple and marble baradaris, tennis and pickleball courts and a multipurpose cricket and football turf. Eden Garden has its football garden and skating rink; IIT Greens its oxygen zone and acupressure track; Saatvik Vihar its yoga and senior-citizen gardens. The scale changes with the project, the intent does not.',
     highlights: [
       'Landscaped gardens & open space on every project',
       'Sport: turfs, tennis, pickleball, skating, open gyms',
@@ -59,7 +59,7 @@ const services = [
   {
     title: 'LOCATION',
     image: '/images/services/location.jpg',
-    body: 'Every project we have built stands in and around Indore — the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau, Simrol and Pithampur.',
+    body: 'Every project we have built stands in and around Indore: the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau, Simrol and Pithampur.',
     body2: 'We are not visitors to this market. We know which corridors are being built and which ones are only being talked about, and the difference between the two is the whole of our job. Oscar Palace sits a minute from the expressway; IIT Greens is opposite the IIT Indore campus; Siddhayatan runs straight through to Ujjain; the Singapore townships line the corporate axis of the Super Corridor.',
     highlights: [
       'Every project in and around Indore',
@@ -82,10 +82,10 @@ const services = [
   {
     title: 'INVESTMENT',
     image: '/images/services/investment.jpg',
-    body: 'Buy early, hold long-term, watch appreciation — land you own, on corridors with structural reasons to grow. Bank loans are available on our plots.',
+    body: 'Buy early, hold long-term, watch appreciation: land you own, on corridors with structural reasons to grow. Bank loans are available on our plots.',
     body2: 'Plotted developments in growth corridors have historically outperformed apartments on both appreciation and liquidity. Ten of our communities are already delivered and lived in, which means you can go and see what an Icon Realty address looks like a decade after handover before you buy into the next one.',
     highlights: [
-      'Land you own outright — no depreciation',
+      'Land you own outright: no depreciation',
       'Home-loan assistance on our plotted developments',
       'Ten delivered communities you can visit today',
       'Resale or self-build, your call',
@@ -279,7 +279,7 @@ export default function ServicesGrid() {
           <div className="services__head">
             <Reveal as="h2" className="display services__title">What we<br/>offer.</Reveal>
             <Reveal as="p" className="services__lede" delay={0.05}>
-              Icon Realty designs and markets residential plotted developments — and has done, in this
+              Icon Realty designs and markets residential plotted developments, and has done, in this
               one city, for twenty years. This is what that covers.
             </Reveal>
           </div>
@@ -360,7 +360,7 @@ export default function ServicesGrid() {
                   <button
                     type="button"
                     className="cta cta--ghost service-modal__cta"
-                    onClick={() => { setOpenIdx(-1); openEnquiry({ source: `Services — ${open.title || ''}`.trim() }); }}
+                    onClick={() => { setOpenIdx(-1); openEnquiry({ source: `Services: ${open.title || ''}`.trim() }); }}
                   >
                     Book a Site Visit
                   </button>

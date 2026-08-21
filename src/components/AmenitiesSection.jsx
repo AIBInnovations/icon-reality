@@ -95,7 +95,7 @@ export default function AmenitiesSection({
                 >
                   <img
                     src={f.src}
-                    alt={`${projectName ? `${projectName} — ` : ''}${f.name}`}
+                    alt={`${projectName ? `${projectName}: ` : ''}${f.name}`}
                     loading={i < 2 ? 'eager' : 'lazy'}
                     decoding="async"
                     onError={() => setFailed((s) => ({ ...s, [f.name]: true }))}
@@ -152,12 +152,12 @@ export default function AmenitiesSection({
           images={featured.map((f) => ({
             src: f.src,
             label: f.name,
-            alt: `${projectName ? `${projectName} — ` : ''}${f.name}`,
+            alt: `${projectName ? `${projectName}: ` : ''}${f.name}`,
           }))}
           index={viewerAt}
           onIndexChange={setViewerAt}
           onClose={() => setViewerAt(null)}
-          title={projectName ? `${projectName} — amenities` : 'Amenities'}
+          title={projectName ? `${projectName}: amenities` : 'Amenities'}
         />
       )}
     </section>

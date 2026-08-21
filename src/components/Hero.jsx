@@ -289,7 +289,7 @@ export default function Hero({ onReady, onProgress }) {
                 Twenty years of<br/>addresses that last.
               </h1>
               <p className="hero__sub">
-                Icon Realty — designing and marketing residential plotted developments in Indore since 2004.
+                Icon Realty. Designing and marketing residential plotted developments in Indore since 2004.
               </p>
             </div>
           </div>

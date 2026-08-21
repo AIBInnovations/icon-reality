@@ -87,7 +87,7 @@ export default function HomePage() {
     <>
       <Seo
         title={null}
-        description="Icon Realty has designed and marketed residential plotted developments in Indore since 2004 — 20+ years, 15+ landmark projects, 4,500+ happy families and plots from 600 to 20,000 sq ft."
+        description="Icon Realty has designed and marketed residential plotted developments in Indore since 2004, 20+ years, 15+ landmark projects, 4,500+ happy families and plots from 600 to 20,000 sq ft."
         path="/"
         jsonLd={realEstateAgentSchema()}
       />

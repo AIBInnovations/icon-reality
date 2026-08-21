@@ -26,7 +26,7 @@ const PATHS = [
   {
     eyebrow: 'For investors',
     title: 'Investor Corner',
-    body: 'How to evaluate plotted land here — and what to verify before you buy it.',
+    body: 'How to evaluate plotted land here, and what to verify before you buy it.',
     to: '/investors',
     image: '/images/oscar-billionaire/gallery-1.jpg',
     credit: 'Oscar Billionaire, Bicholi Hapsi',
@@ -60,7 +60,7 @@ export default function AudiencePaths() {
           </Reveal>
           <Reveal as="p" className="audience-paths__lede" delay={0.1}>
             Whether you are buying a home, placing capital, buying from abroad or selling
-            for us — there is a section written for you.
+            for us, there is a section written for you.
           </Reveal>
         </div>
 

@@ -89,7 +89,7 @@ export default function PlanViewer({
           >
             <img
               src={plan.src}
-              alt={`${projectName ? `${projectName} — ` : ''}${plan.label || heading}`}
+              alt={`${projectName ? `${projectName}: ` : ''}${plan.label || heading}`}
               loading="lazy"
               decoding="async"
               onError={() => setFailed((f) => ({ ...f, [activeIndex]: true }))}
@@ -117,7 +117,7 @@ export default function PlanViewer({
           images={plans.filter((_, i) => !failed[i]).map((p) => ({
             src: p.src,
             label: p.label,
-            alt: `${projectName ? `${projectName} — ` : ''}${p.label || heading}`,
+            alt: `${projectName ? `${projectName}: ` : ''}${p.label || heading}`,
           }))}
           index={Math.max(0, available.indexOf(plan))}
           onIndexChange={(i) => setActive(plans.indexOf(available[i]))}

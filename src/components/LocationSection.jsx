@@ -118,8 +118,8 @@ export default function LocationSection({
                 ))}
               </ul>
               <p className="location__note">
-                Distances and travel times are as published for this project and are indicative —
-                actual travel time varies with route and traffic.
+                Distances and travel times are as published for this project and are indicative.
+                Actual travel time varies with route and traffic.
               </p>
             </div>
           )}

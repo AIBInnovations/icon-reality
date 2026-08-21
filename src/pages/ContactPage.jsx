@@ -73,7 +73,7 @@ export default function ContactPage() {
   return (
     <>
       <Seo
-        title="Contact Icon Realty — Indore"
+        title="Contact Icon Realty: Indore"
         description="Get in touch with Icon Realty, Indore. Call +91 9425 9425 10, WhatsApp us, or send an enquiry to book a site visit at any of our plotted developments."
         path="/contact"
         jsonLd={[
@@ -167,13 +167,13 @@ export default function ContactPage() {
               Rather we called you?
             </Reveal>
             <Reveal as="p" className="contact-callback__lede" delay={0.1}>
-              Pick a day, a time and how you would like us to reach you — phone, WhatsApp or a
+              Pick a day, a time and how you would like us to reach you: phone, WhatsApp or a
               video call. Useful if you are abroad, or if you would rather not type out a
               requirement.
             </Reveal>
           </div>
           <Reveal className="contact-callback__form" delay={0.15}>
-            <ScheduleCallback source="Contact page — callback" />
+            <ScheduleCallback source="Contact page: callback" />
           </Reveal>
         </div>
       </section>

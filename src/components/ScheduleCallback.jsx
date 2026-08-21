@@ -26,7 +26,7 @@ export default function ScheduleCallback({
     <LeadForm
       intent={LEAD_INTENTS.CALLBACK}
       project={project}
-      source={source || `Callback${project ? ` — ${project}` : ''}`}
+      source={source || `Callback${project ? `: ${project}` : ''}`}
       eyebrow={eyebrow}
       heading={heading}
       steps={[{
@@ -34,7 +34,7 @@ export default function ScheduleCallback({
         fields: ['name', 'phone', 'preferredDate', 'preferredTime', 'preferredMode'],
       }]}
       submitLabel="Schedule the call"
-      successMessage="Thank you — we'll call at the time you selected."
+      successMessage="Thank you. We'll call at the time you selected."
       className={className}
       {...rest}
     />

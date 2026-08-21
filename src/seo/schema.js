@@ -111,7 +111,7 @@ export function videoObjectSchema(project) {
   return {
     '@context': 'https://schema.org',
     '@type': 'VideoObject',
-    name: `${project.name} — walkthrough`,
+    name: `${project.name}, walkthrough`,
     description: project.tagline || project.description || `${project.name} video walkthrough.`,
     thumbnailUrl: [absoluteUrl(project.video_poster || project.hero_image)],
     contentUrl: absoluteUrl(project.video_url),

@@ -75,8 +75,8 @@ export default function ProjectsPage() {
   return (
     <>
       <Seo
-        title="Projects in Indore — plotted developments by Icon Realty"
-        description="Explore Icon Realty's plotted developments in Indore — Oscar Palace, Oscar Fort, IIT Greens, Labham City and more. Currently building and already lived in."
+        title="Projects in Indore: plotted developments by Icon Realty"
+        description="Explore Icon Realty's plotted developments in Indore, Oscar Palace, Oscar Fort, IIT Greens, Labham City and more. Currently building and already lived in."
         path="/projects"
         jsonLd={[breadcrumbSchema(TRAIL), projectListSchema(projectsList)]}
       />
@@ -84,7 +84,7 @@ export default function ProjectsPage() {
       <PageHero
         eyebrow="The portfolio"
         title={['Currently building.', 'Already lived in.']}
-        lede="A portfolio shaped by patience — landmarks that age into the city, not against it. Browse the projects taking shape now and the ones already lived in."
+        lede="A portfolio shaped by patience, landmarks that age into the city, not against it. Browse the projects taking shape now and the ones already lived in."
       />
 
       <Breadcrumbs trail={TRAIL} />
@@ -176,7 +176,7 @@ export default function ProjectsPage() {
                     <div className="projects-list__media">
                       <MediaFigure
                         src={p.thumbnail || p.hero_image}
-                        alt={`${p.name} — ${p.location}`}
+                        alt={`${p.name}, ${p.location}`}
                         ratio="4 / 5"
                       />
                       <span className={`projects-list__badge projects-list__badge--${p.status}`}>

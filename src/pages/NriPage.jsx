@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import PageHero from '../components/PageHero';
-import SectionRail from '../components/SectionRail';
 import MediaFigure from '../components/MediaFigure';
+import Disclosure from '../components/Disclosure';
 import TrustModule from '../components/TrustModule';
 import CtaBand from '../components/CtaBand';
 import Reveal from '../components/Reveal';
@@ -39,24 +39,23 @@ const TRAIL = [
  * ruled paper. Shared rhythm (the numbered section heads), different form.
  */
 
-const SECTIONS = [
-  { id: 'buying-process', label: 'Buying Process' },
-  { id: 'legal-rera', label: 'Legal & RERA' },
-  { id: 'taxation', label: 'Taxation' },
-  { id: 'home-loans', label: 'Home Loans' },
-  { id: 'virtual-tours', label: 'Virtual Tours' },
-  { id: 'power-of-attorney', label: 'Power of Attorney' },
-];
-
 const T = NRI_TOPICS_BY_SLUG;
 
 /** Roman numerals for the taxation ledger — four columns, nothing more. */
 const ROMAN = ['I', 'II', 'III', 'IV'];
 
 /** The shared section opener: index, rule, title, intro. Tone flips on dark. */
-function SectionHead({ index, eyebrow, title, intro, tone = 'light', align = 'left' }) {
+/**
+ * The shared section opener.
+ *
+ * `split` sets the title and the intro side by side instead of stacked. On a
+ * page this long the stacked version cost roughly a screen of height per
+ * section before a reader reached any actual content; side by side it reads as
+ * one editorial spread and the sections stop feeling padded out.
+ */
+function SectionHead({ index, eyebrow, title, intro, tone = 'light', split = false }) {
   return (
-    <div className={`nrix-head nrix-head--${tone} nrix-head--${align}`}>
+    <div className={`nrix-head nrix-head--${tone} ${split ? 'nrix-head--split' : ''}`}>
       <Reveal className="nrix-head__meta">
         <span className="nrix-head__index" aria-hidden>{String(index).padStart(2, '0')}</span>
         <span className="nrix-head__rule" aria-hidden />
@@ -93,7 +92,7 @@ export default function NriPage() {
   return (
     <>
       <Seo
-        title="NRI Corner — buying property in Indore from abroad"
+        title="NRI Corner: buying property in Indore from abroad"
         description="One page for NRI buyers: the buying process, legal & RERA support, taxation, home loans, virtual tours and power of attorney guidance, from Icon Realty in Indore."
         path="/nri"
         image={NRI_MEDIA.hero.src}
@@ -125,7 +124,7 @@ export default function NriPage() {
               One person, your time zone, the whole way through.
             </Reveal>
             <Reveal as="p" className="nrix-desk__body" delay={0.1}>
-              The distance problem in an overseas purchase is not the property — it is
+              The distance problem in an overseas purchase is not the property. It is
               that every question needs someone standing on the site or at the
               sub-registrar. That is the job this desk does.
             </Reveal>
@@ -153,8 +152,6 @@ export default function NriPage() {
         </div>
       </section>
 
-      <SectionRail items={SECTIONS} label="NRI corner" />
-
       {/* ============ 01 — BUYING PROCESS · dark staircase ============ */}
       <section className="nrix-process" id="buying-process">
         <div className="container">
@@ -164,23 +161,23 @@ export default function NriPage() {
             title={process.title}
             intro={process.intro}
             tone="dark"
+            split
           />
 
-          <ol className="nrix-stair">
+          {/* Nine steps, three across: the sequence reads in rows and the
+              section is a third of the height a nine-row list would be. */}
+          <ol className="nrix-steps">
             {process.steps.map((step, i) => (
               <Reveal
                 as="li"
                 key={step.title}
-                className="nrix-stair__step"
-                /* the indent is the design — each step sits one notch further
-                   in than the last, up to a cap so step nine is still readable */
-                style={{ '--stair-i': Math.min(i, 5) }}
+                className="nrix-step"
                 delay={Math.min(i, 5) * 0.04}
               >
-                <span className="nrix-stair__num" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
-                <div className="nrix-stair__body">
-                  <h3 className="nrix-stair__title">{step.title}</h3>
-                  <p className="nrix-stair__copy">{step.body}</p>
+                <span className="nrix-step__num" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
+                <div className="nrix-step__body">
+                  <h3 className="nrix-step__title">{step.title}</h3>
+                  <p className="nrix-step__copy">{step.body}</p>
                 </div>
               </Reveal>
             ))}
@@ -196,45 +193,52 @@ export default function NriPage() {
       </section>
 
       {/* ============ 02 — LEGAL & RERA · dossier ============ */}
+      {/* A wide plate across the top, then the two checklists side by side.
+          The plate used to be a tall column beside them, which left most of a
+          screen of empty cream under it whenever the lists ran longer than the
+          photograph — and they always do. */}
       <section className="nrix-legal" id="legal-rera">
-        <div className="container nrix-legal__grid">
-          <div className="nrix-legal__plate">
-            <Reveal className="nrix-legal__plate-inner">
-              <MediaFigure
-                src={legal.hero.src}
-                credit={legal.hero.credit}
-                alt={legal.title}
-                ratio="3 / 4"
-              />
-              <span className="nrix-legal__stamp" aria-hidden>MP&nbsp;RERA</span>
-            </Reveal>
-          </div>
+        <div className="container">
+          <SectionHead index={2} eyebrow="Legal & RERA" title={legal.title} intro={legal.intro} split />
 
-          <div className="nrix-legal__copy">
-            <SectionHead index={2} eyebrow="Legal & RERA" title={legal.title} intro={legal.intro} />
+          <Reveal className="nrix-legal__plate">
+            <MediaFigure
+              src={legal.hero.src}
+              credit={legal.hero.credit}
+              alt={legal.title}
+              ratio="16 / 6"
+            />
+            <span className="nrix-legal__stamp" aria-hidden>MP&nbsp;RERA</span>
+          </Reveal>
 
+          <div className="nrix-legal__cols">
             {legal.sections.map((section, si) => (
-              <Reveal key={section.title} className="nrix-legal__block" delay={0.05}>
-                <h3 className="nrix-legal__block-title">{section.title}</h3>
-                <ol className="nrix-legal__list">
-                  {section.items.map((item, i) => (
-                    <li key={item}>
-                      <span className="nrix-legal__marker" aria-hidden>
-                        {String.fromCharCode(97 + i)}
-                      </span>
-                      <span>{item}</span>
-                    </li>
-                  ))}
-                </ol>
-                {si === legal.sections.length - 1 && legal.note && (
-                  <p className="nrix-legal__note">
-                    <span className="nrix-legal__note-tag">Note</span>
-                    {legal.note}
-                  </p>
-                )}
+              <Reveal key={section.title} className="nrix-legal__block" delay={si * 0.06}>
+                <Disclosure
+                  title={section.title}
+                  titleClassName="nrix-legal__block-title"
+                >
+                  <ol className="nrix-legal__list">
+                    {section.items.map((item, i) => (
+                      <li key={item}>
+                        <span className="nrix-legal__marker" aria-hidden>
+                          {String.fromCharCode(97 + i)}
+                        </span>
+                        <span>{item}</span>
+                      </li>
+                    ))}
+                  </ol>
+                </Disclosure>
               </Reveal>
             ))}
           </div>
+
+          {legal.note && (
+            <Reveal as="p" className="nrix-legal__note" delay={0.1}>
+              <span className="nrix-legal__note-tag">Note</span>
+              {legal.note}
+            </Reveal>
+          )}
         </div>
       </section>
 
@@ -246,11 +250,15 @@ export default function NriPage() {
           <div className="nrix-ledger">
             {tax.sections.map((section, i) => (
               <Reveal key={section.title} className="nrix-ledger__col" delay={Math.min(i, 4) * 0.06}>
-                <span className="nrix-ledger__roman" aria-hidden>{ROMAN[i] || i + 1}</span>
-                <h3 className="nrix-ledger__title">{section.title}</h3>
-                <ul className="nrix-ledger__list">
-                  {section.items.map((item) => <li key={item}>{item}</li>)}
-                </ul>
+                <Disclosure
+                  title={section.title}
+                  titleClassName="nrix-ledger__title"
+                  prefix={<span className="nrix-ledger__roman" aria-hidden>{ROMAN[i] || i + 1}</span>}
+                >
+                  <ul className="nrix-ledger__list">
+                    {section.items.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </Disclosure>
               </Reveal>
             ))}
           </div>
@@ -285,13 +293,17 @@ export default function NriPage() {
           <div className="nrix-loans__cards">
             {loans.sections.map((section, i) => (
               <Reveal key={section.title} className="nrix-loans__card" delay={Math.min(i, 3) * 0.06}>
-                <span className="nrix-loans__card-index" aria-hidden>{String(i + 1).padStart(2, '0')}</span>
-                <h3 className="nrix-loans__card-title">{section.title}</h3>
-                <ul className="nrix-loans__card-list">
-                  {section.items.map((item) => (
-                    <li key={item}><Tick /><span>{item}</span></li>
-                  ))}
-                </ul>
+                <Disclosure
+                  title={section.title}
+                  titleClassName="nrix-loans__card-title"
+                  prefix={<span className="nrix-loans__card-index" aria-hidden>{String(i + 1).padStart(2, '0')}</span>}
+                >
+                  <ul className="nrix-loans__card-list">
+                    {section.items.map((item) => (
+                      <li key={item}><Tick /><span>{item}</span></li>
+                    ))}
+                  </ul>
+                </Disclosure>
               </Reveal>
             ))}
           </div>
@@ -327,13 +339,15 @@ export default function NriPage() {
           <div className="nrix-tours__cols">
             {tours.sections.map((section, i) => (
               <Reveal key={section.title} className="nrix-tours__col" delay={Math.min(i, 2) * 0.06}>
-                <h3 className="nrix-tours__title">
-                  <span aria-hidden>{String(i + 1).padStart(2, '0')}</span>
-                  {section.title}
-                </h3>
-                <ul className="nrix-tours__list">
-                  {section.items.map((item) => <li key={item}>{item}</li>)}
-                </ul>
+                <Disclosure
+                  title={section.title}
+                  titleClassName="nrix-tours__title"
+                  prefix={<span className="nrix-tours__num" aria-hidden>{String(i + 1).padStart(2, '0')}</span>}
+                >
+                  <ul className="nrix-tours__list">
+                    {section.items.map((item) => <li key={item}>{item}</li>)}
+                  </ul>
+                </Disclosure>
               </Reveal>
             ))}
           </div>
@@ -353,13 +367,15 @@ export default function NriPage() {
             <div className="nrix-sheet__body">
               {poa.sections.map((section, i) => (
                 <Reveal key={section.title} className="nrix-sheet__block" delay={Math.min(i, 3) * 0.05}>
-                  <h3 className="nrix-sheet__title">
-                    <span className="nrix-sheet__clause" aria-hidden>{`§ ${i + 1}`}</span>
-                    {section.title}
-                  </h3>
-                  <ul className="nrix-sheet__list">
-                    {section.items.map((item) => <li key={item}>{item}</li>)}
-                  </ul>
+                  <Disclosure
+                    title={section.title}
+                    titleClassName="nrix-sheet__title"
+                    prefix={<span className="nrix-sheet__clause" aria-hidden>{`§ ${i + 1}`}</span>}
+                  >
+                    <ul className="nrix-sheet__list">
+                      {section.items.map((item) => <li key={item}>{item}</li>)}
+                    </ul>
+                  </Disclosure>
                 </Reveal>
               ))}
 
@@ -396,12 +412,12 @@ export default function NriPage() {
           image={NRI_MEDIA.hero.src}
           enquiry={{
             intent: LEAD_INTENTS.NRI,
-            source: 'NRI Corner — desk',
+            source: 'NRI Corner: desk',
             eyebrow: 'NRI desk',
             heading: 'Speak with NRI assistance.',
             fields: ['name', 'phone', 'email', 'country', 'preferredDate', 'preferredTime', 'message'],
             submitLabel: 'Request a call',
-            successMessage: 'Thank you — our NRI desk will be in touch at the time you selected.',
+            successMessage: 'Thank you, our NRI desk will be in touch at the time you selected.',
           }}
         />
       </div>

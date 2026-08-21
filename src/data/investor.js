@@ -5,16 +5,16 @@
 // required to make a claim, the claim is made without one.
 
 export const INVESTOR_INTRO =
-  'Plotted land is a different asset from a built apartment: there is no depreciating structure, no maintenance corpus, and the value sits almost entirely in the location and the quality of the layout. That makes the decision simpler to analyse — and makes who you buy it from matter more.';
+  'Plotted land is a different asset from a built apartment: there is no depreciating structure, no maintenance corpus, and the value sits almost entirely in the location and the quality of the layout. That makes the decision simpler to analyse, and makes who you buy it from matter more.';
 
 export const WHY_ICON = [
   {
     k: 'A delivered track record you can walk',
-    v: 'Nine of our communities are completed and lived in. Before you invest in one that is still being built, visit one that is finished — the layout discipline, the road widths and the green cover are all visible on site.',
+    v: 'Nine of our communities are completed and lived in. Before you invest in one that is still being built, visit one that is finished: the layout discipline, the road widths and the green cover are all visible on site.',
   },
   {
     k: 'One city, two decades',
-    v: 'Every project Icon Realty has built stands in and around Indore. We are not allocating capital across ten cities and hoping — we know which corridors are actually being built.',
+    v: 'Every project Icon Realty has built stands in and around Indore. We are not allocating capital across ten cities and hoping. We know which corridors are actually being built.',
   },
   {
     k: 'Plot-level clarity',
@@ -61,24 +61,24 @@ export const OPPORTUNITY_TYPES = [
 /** Section imagery — Icon Realty's own project photography throughout. */
 export const INVESTOR_MEDIA = {
   hero: { src: '/images/oscar-billionaire/gallery-1.jpg', credit: 'Oscar Billionaire, Bicholi Hapsi' },
-  track: { src: '/images/ruchi-enclave/gallery-2.jpg', credit: 'Ruchi Enclave, Jhalaria — delivered' },
-  diligence: { src: '/images/oscar/layout/layout-1.jpg', credit: 'Oscar Palace — approved plot layout' },
+  track: { src: '/images/ruchi-enclave/gallery-2.jpg', credit: 'Ruchi Enclave, Jhalaria: delivered' },
+  diligence: { src: '/images/oscar/layout/layout-1.jpg', credit: 'Oscar Palace: approved plot layout' },
 };
 
 /** What an investor should actually check — ours included. */
 export const DUE_DILIGENCE = [
   'Who the developer is, and which projects they have completed rather than launched.',
   'The approved layout and the plot dimensions in writing, matched against what is on site.',
-  'Road widths, drainage and electrical provision inside the layout — the things that are expensive to retrofit.',
+  'Road widths, drainage and electrical provision inside the layout, the things that are expensive to retrofit.',
   'Registration status, title documentation and any applicable RERA registration for the project.',
-  'Real distance to employment, schools and hospitals — measured in kilometres, not in promised minutes.',
+  'Real distance to employment, schools and hospitals, measured in kilometres, not in promised minutes.',
   'What the corridor already has, separately from what has been announced for it.',
 ];
 
 export const MARKET_NOTES = [
   {
     title: 'Demand is local',
-    body: "Indore's residential demand is driven mainly by people who live and work in the city — the IT campuses on the Super Corridor, the Pithampur industrial belt, the trading economy, and the education institutions. End-user demand behaves differently from investor-led demand.",
+    body: "Indore's residential demand is driven mainly by people who live and work in the city: the IT campuses on the Super Corridor, the Pithampur industrial belt, the trading economy, and the education institutions. End-user demand behaves differently from investor-led demand.",
   },
   {
     title: 'Infrastructure is the variable',
@@ -94,11 +94,11 @@ export const MARKET_NOTES = [
 export const CONSULTATION = {
   eyebrow: 'Investor desk',
   heading: 'Schedule an investment consultation.',
-  hint: 'A 20-minute call with our team — corridor by corridor, project by project, with the documentation you should ask any developer for. Name and phone are enough to start.',
+  hint: 'A 20-minute call with our team, corridor by corridor, project by project, with the documentation you should ask any developer for. Name and phone are enough to start.',
   submitLabel: 'Schedule the consultation',
   success:
-    "Thank you — our investor desk will call you at the time you selected to confirm. If you'd like to speak sooner, call +91 9425 9425 10.",
+    "Thank you. Our investor desk will call you at the time you selected to confirm. If you'd like to speak sooner, call +91 9425 9425 10.",
 };
 
 export const DISCLAIMER =
-  'Information on this page is general and for evaluation purposes. It is not investment, tax or legal advice. Property values move with the market — past performance does not guarantee future appreciation, and no return, yield or resale value is promised.';
+  'Information on this page is general and for evaluation purposes. It is not investment, tax or legal advice. Property values move with the market. Past performance does not guarantee future appreciation, and no return, yield or resale value is promised.';

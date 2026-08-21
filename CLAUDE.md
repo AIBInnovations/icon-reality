@@ -92,6 +92,12 @@ Global tokens live in `src/index.css`:
 
 Fonts: Outfit (display and body), Cinzel, Caveat, Special Elite.
 
+**No em dashes in copy.** The site's voice uses a colon where the second half
+expands the first, a comma for an aside, and a full stop where the clause can
+stand alone. `grep -R "—" src/data` should stay empty of content strings;
+en dashes in place names (Indore–Nagpur Highway, Rau–Pithampur) are correct and
+stay.
+
 New pages must look like they were always part of this site: editorial,
 architectural, warm, image-led. Not dashboard cards, not blue corporate UI, not
 a real-estate portal grid, not a SaaS landing page. Reuse the shared components
@@ -99,7 +105,7 @@ before writing new ones:
 
 ```
 PageHero · SectionHeading · EditorialSplit · InfoGrid · MediaFigure
-ProcessSteps · CtaBand · TrustModule · LeadForm · ImageViewer · SectionRail
+ProcessSteps · CtaBand · TrustModule · LeadForm · ImageViewer
 ```
 
 Two routes are deliberately the exception to "reuse before you write":
@@ -107,8 +113,14 @@ Two routes are deliberately the exception to "reuse before you write":
 each, and **every section has its own layout on purpose** — a dark staircase, a
 dossier, a ledger, a scroller, and so on. Do not "tidy" them back into repeated
 `InfoGrid` blocks; the variety is the design. What they do share is the numbered
-section head (`.nrix-head` / `.cpx-head`) and `<SectionRail>`, which is what
-keeps them reading as one document.
+section head (`.nrix-head` / `.cpx-head`), which is the rhythm that keeps them
+reading as one document.
+
+Where either page rules columns apart with a hairline (`.nrix-ribbon`,
+`.nrix-ledger`), the rule gets **equal air on both sides** and the outermost
+column stays flush with the `.container` edge — see the note at the top of
+`NriPage.css`. Text touching a divider is the fastest way to make an editorial
+grid look broken.
 
 Each section's `id` is a public anchor — `nav.js` links to `/nri#taxation`,
 `RouteTransition` scrolls to it, and the old `/nri/<topic>` and

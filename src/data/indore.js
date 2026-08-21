@@ -7,7 +7,7 @@
 // is written without one (read.md §26, §29, §73).
 
 export const INDORE_INTRO =
-  "Indore is Madhya Pradesh's largest city and its commercial capital — an education and healthcare hub for central India, the state's busiest airport, and the address of both an IIT and an IIM. That combination is unusual for a tier-two Indian city, and it is the reason the residential market here is driven by people who live and work in Indore rather than by buyers from elsewhere.";
+  "Indore is Madhya Pradesh's largest city and its commercial capital, an education and healthcare hub for central India, the state's busiest airport, and the address of both an IIT and an IIM. That combination is unusual for a tier-two Indian city, and it is the reason the residential market here is driven by people who live and work in Indore rather than by buyers from elsewhere.";
 
 /**
  * At-a-glance facts. `value` is null wherever a precise published figure isn't
@@ -21,7 +21,7 @@ export const AT_A_GLANCE = [
   },
   {
     k: 'IIT and IIM in the same city',
-    v: 'IIT Indore at Simrol and IIM Indore on the Rau–Pithampur road — a pairing only a handful of Indian cities have.',
+    v: 'IIT Indore at Simrol and IIM Indore on the Rau–Pithampur road, a pairing only a handful of Indian cities have.',
   },
   {
     k: "India's cleanest city, repeatedly",
@@ -55,7 +55,7 @@ export const INFRASTRUCTURE = [
   },
   {
     title: 'Devi Ahilya Bai Holkar International Airport',
-    body: "The busiest airport in central India. Proximity to it — measured honestly, in kilometres rather than promised minutes — is one of the few location factors that holds its value through a market cycle.",
+    body: "The busiest airport in central India. Proximity to it, measured honestly in kilometres rather than promised minutes, is one of the few location factors that holds its value through a market cycle.",
     status: 'Operational',
   },
   {
@@ -91,7 +91,7 @@ export const EMPLOYMENT = [
   },
   {
     title: 'Education economy',
-    body: 'IIT Indore, IIM Indore, NMIMS, Symbiosis, DAVV and a dense network of professional colleges bring students, faculty and staff into the city every year — and keep a share of them here after graduation.',
+    body: 'IIT Indore, IIM Indore, NMIMS, Symbiosis, DAVV and a dense network of professional colleges bring students, faculty and staff into the city every year, and keep a share of them here after graduation.',
   },
   {
     title: 'Startup & SME base',
@@ -100,12 +100,12 @@ export const EMPLOYMENT = [
 ];
 
 export const EMPLOYMENT_NOTE =
-  'Employment concentration is what separates a residential corridor with genuine end-user demand from one that depends on resale to the next investor. It is the first thing worth checking about any location — including ours.';
+  'Employment concentration is what separates a residential corridor with genuine end-user demand from one that depends on resale to the next investor. It is the first thing worth checking about any location, including ours.';
 
 export const EDUCATION = [
   { name: 'IIT Indore', note: 'Indian Institute of Technology, at Simrol on the Indore–Khandwa Highway.' },
   { name: 'IIM Indore', note: 'Indian Institute of Management, on the Rau–Pithampur road.' },
-  { name: 'DAVV', note: 'Devi Ahilya Vishwavidyalaya — the state university, with campuses across the city.' },
+  { name: 'DAVV', note: 'Devi Ahilya Vishwavidyalaya, the state university, with campuses across the city.' },
   { name: 'NMIMS Indore', note: 'Narsee Monjee Institute of Management Studies, on the Super Corridor.' },
   { name: 'Symbiosis University', note: 'Symbiosis, also on the Super Corridor.' },
   { name: 'MGM Medical College', note: 'One of central India\'s established government medical colleges.' },
@@ -125,7 +125,7 @@ export const HEALTHCARE = [
 export const CORRIDORS = [
   {
     name: 'Super Corridor',
-    body: 'The corporate axis between the city and the airport — IT campuses, universities, planned road width and the metro alignment.',
+    body: 'The corporate axis between the city and the airport: IT campuses, universities, planned road width and the metro alignment.',
     projects: ['labham-city', 'singapore-corridor', 'singapore-lifestyle-2', 'dream-victoria', 'victoria-park'],
     // Photography is always of the Icon Realty project named in `credit`, never
     // a stock image standing in for the corridor itself.
@@ -141,7 +141,7 @@ export const CORRIDORS = [
   },
   {
     name: 'Bicholi Mardana & Bicholi Hapsi',
-    body: "The eastern residential belt beyond Vijay Nagar — established schools, retail and hospitals already in place.",
+    body: "The eastern residential belt beyond Vijay Nagar: established schools, retail and hospitals already in place.",
     projects: ['oscar-fort', 'oscar-billionaire'],
     image: '/images/oscar-fort/hero.jpg',
     credit: 'Oscar Fort, Bicholi Mardana',

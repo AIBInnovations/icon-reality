@@ -17,11 +17,11 @@ export const SITE_URL = envSiteUrl.replace(/\/+$/, '');
 
 export const SITE_NAME = 'Icon Realty';
 
-export const DEFAULT_TITLE = 'Icon Realty — Premium plotted developments in Indore';
+export const DEFAULT_TITLE = 'Icon Realty: Premium plotted developments in Indore';
 export const TITLE_TEMPLATE = (t) => (t ? `${t} | ${SITE_NAME}` : DEFAULT_TITLE);
 
 export const DEFAULT_DESCRIPTION =
-  'Icon Realty builds premium plotted developments in Indore — 20+ years, 15+ landmark projects and 4,500+ happy families. Explore Oscar Palace and our other addresses.';
+  'Icon Realty builds premium plotted developments in Indore, 20+ years, 15+ landmark projects and 4,500+ happy families. Explore Oscar Palace and our other addresses.';
 
 export const DEFAULT_OG_IMAGE = '/images/oscar/entrance/entrance-1.jpg';
 

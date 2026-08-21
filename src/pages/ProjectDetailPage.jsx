@@ -249,7 +249,7 @@ export default function ProjectDetailPage() {
   // carries a walkthrough film.
   const bannerImages = useMemo(() => {
     if (!project) return [];
-    const hero = project.hero_image ? [{ src: project.hero_image, alt: `${project.name} — hero` }] : [];
+    const hero = project.hero_image ? [{ src: project.hero_image, alt: `${project.name}, hero` }] : [];
     return [...hero, ...gallery].slice(0, 8);
   }, [project, gallery]);
   const faqs = useMemo(() => buildProjectFaqs(project), [project]);
@@ -284,24 +284,24 @@ export default function ProjectDetailPage() {
   const bookSiteVisit = () => openEnquiry({
     intent: LEAD_INTENTS.SITE_VISIT,
     project: name,
-    source: `Site visit — ${name}`,
+    source: `Site visit: ${name}`,
     eyebrow: 'Site visit',
     heading: `Book a site visit at ${name}.`,
     // The project is already known, so only the appointment needs asking.
     fields: ['name', 'phone', 'preferredDate', 'preferredTime'],
     submitLabel: 'Request a site visit',
-    successMessage: `Thank you — we'll confirm your ${name} site visit by phone shortly.`,
+    successMessage: `Thank you, we'll confirm your ${name} site visit by phone shortly.`,
   });
 
   const requestPrice = () => openEnquiry({
     intent: LEAD_INTENTS.PRICE,
     project: name,
-    source: `Price request — ${name}`,
+    source: `Price request: ${name}`,
     eyebrow: 'Pricing',
     heading: `Get price details for ${name}.`,
     fields: ['name', 'phone'],
     submitLabel: 'Get price details',
-    successMessage: `Thank you — we'll send ${name} pricing across shortly.`,
+    successMessage: `Thank you, we'll send ${name} pricing across shortly.`,
   });
 
   // The flank cutouts have offered the brochure since the original build; that
@@ -363,7 +363,7 @@ export default function ProjectDetailPage() {
   return (
     <>
       <Seo
-        title={seo?.title || `${name} — ${location}`}
+        title={seo?.title || `${name}: ${location}`}
         description={metaDescription}
         path={`/projects/${slug}`}
         image={hero_image}
@@ -517,7 +517,7 @@ export default function ProjectDetailPage() {
           id="plans"
           eyebrow="Layout"
           heading="The master plan."
-          lede="Open it full screen and zoom in — plot positions, road widths and orientation are all readable. No form required."
+          lede="Open it full screen and zoom in, plot positions, road widths and orientation are all readable. No form required."
           className="project-plans"
         />
       )}
@@ -615,7 +615,7 @@ export default function ProjectDetailPage() {
         items={faqs}
         id="faq"
         heading={`${name}, answered.`}
-        lede="If your question isn't here, call us — the number goes to the sales team, not a queue."
+        lede="If your question isn't here, call us, the number goes to the sales team, not a queue."
       />
 
       {/* ====== FINAL CTA ====== */}
@@ -629,7 +629,7 @@ export default function ProjectDetailPage() {
               </Reveal>
               <Reveal as="p" className="project-finalcta__lede" delay={0.1}>
                 Site visits are by appointment. Our team will take you through the plots, the
-                planning, and the long view — and answer the awkward questions.
+                planning, and the long view, and answer the awkward questions.
               </Reveal>
               <Reveal className="project-finalcta__actions" delay={0.15}>
                 <a href={telHref()} className="cta cta--ghost project-finalcta__ghost">
@@ -647,7 +647,7 @@ export default function ProjectDetailPage() {
                 point of highest intent on the whole site, and a modal is one
                 more tap between wanting a visit and asking for one. */}
             <Reveal className="project-finalcta__form" delay={0.2}>
-              <SiteVisitForm project={name} source={`Project page — ${name}`} />
+              <SiteVisitForm project={name} source={`Project page: ${name}`} />
             </Reveal>
           </div>
         </div>
@@ -667,7 +667,7 @@ export default function ProjectDetailPage() {
                   <Link to={`/projects/${p.slug}`} className="project-related__card">
                     <MediaFigure
                       src={p.thumbnail || p.hero_image}
-                      alt={`${p.name} — ${p.location}`}
+                      alt={`${p.name}, ${p.location}`}
                       ratio="4 / 3"
                     />
                     <span className="project-related__name">{p.name}</span>

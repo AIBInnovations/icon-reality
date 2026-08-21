@@ -90,7 +90,7 @@ export default function LeadForm({
   /** [{ title, hint, fields: [] }] — progressive disclosure. */
   steps,
   submitLabel = 'Send Request',
-  successMessage = "Thank you — your request has been sent. We'll get back to you shortly.",
+  successMessage = "Thank you. Your request has been sent. We'll get back to you shortly.",
   /** Fired after a successful submit (e.g. to unlock a brochure download). */
   onSuccess,
   /** Prefilled values, e.g. { preferredProjects: 'Oscar Palace' }. */
@@ -170,7 +170,7 @@ export default function LeadForm({
         message: values.message,
         intent,
         project,
-        source: source || `${INTENT_LABELS[intent] || 'Website'}${project ? ` — ${project}` : ''}`,
+        source: source || `${INTENT_LABELS[intent] || 'Website'}${project ? `: ${project}` : ''}`,
         extra,
       });
 

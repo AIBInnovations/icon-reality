@@ -5,7 +5,7 @@ import './Testimonials.css';
 
 const testimonials = [
   {
-    quote: "What I liked most about Icon Realty was the transparency. Every promise made during booking was fulfilled exactly as explained — from plot sizes to timelines. It's rare to find such professionalism in today's real estate market.",
+    quote: "What I liked most about Icon Realty was the transparency. Every promise made during booking was fulfilled exactly as explained, from plot sizes to timelines. It's rare to find such professionalism in today's real estate market.",
     name: 'Amit Sharma',
     role: 'Oscar Fort Homebuyer',
   },
@@ -20,7 +20,7 @@ const testimonials = [
     role: 'Oscar Palace Investor',
   },
   {
-    quote: 'Saatvik Vihar stood out because it delivered exactly what it promised — affordable, quality homes without cutting corners. The entire process, from site visit to handover, was smooth and transparent.',
+    quote: 'Saatvik Vihar stood out because it delivered exactly what it promised: affordable, quality homes without cutting corners. The entire process, from site visit to handover, was smooth and transparent.',
     name: 'Priya Jain',
     role: 'Saatvik Vihar Homeowner',
   },

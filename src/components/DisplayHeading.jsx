@@ -160,7 +160,7 @@ export default function DisplayHeading() {
         </h2>
         <Reveal as="p" className="display-section__lede" delay={0.05}>
           Icon Realty has been designing and marketing residential plotted developments in and
-          around Indore since 2004 — fifteen-plus landmarks, from 600 sq ft first plots to
+          around Indore since 2004: fifteen-plus landmarks, from 600 sq ft first plots to
           20,000 sq ft estate parcels. On some we are the developer; on others we are the design
           and marketing partner. Either way the same thing is true: every project we have built
           stands in this city, and you can go and walk it.

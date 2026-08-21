@@ -41,7 +41,7 @@ export default function AboutPostcard() {
 
           {/* revealed photo — slides out from the right */}
           <figure className="pc2-photo">
-            <img src="/images/oscar/oscar-stamp.png" alt="Oscar Palace — the royal gate" loading="lazy" decoding="async" />
+            <img src="/images/oscar/oscar-stamp.png" alt="Oscar Palace: the royal gate" loading="lazy" decoding="async" />
           </figure>
 
           {/* the postcard */}
@@ -55,9 +55,9 @@ export default function AboutPostcard() {
                   Fifteen landmarks. Four<br/>
                   thousand families home.
                 </p>
-                <p className="pc2-sign">From Indore, with care —</p>
+                <p className="pc2-sign">From Indore, with care.</p>
                 <p className="pc2-credit">
-                  <b>Icon Realty</b> — designing &amp; marketing residential plotted
+                  <b>Icon Realty</b>, designing &amp; marketing residential plotted
                   developments since <b>2004</b>. Plots from 600 to 20,000 sq ft.
                 </p>
               </div>
@@ -105,7 +105,7 @@ export default function AboutPostcard() {
                   <path d="M3 7.5h8M7.5 4l3.5 3.5L7.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-              <button type="button" className="pc2-link" onClick={() => openEnquiry({ source: 'About — Icon Realty' })}>Book a Site Visit</button>
+              <button type="button" className="pc2-link" onClick={() => openEnquiry({ source: 'About: Icon Realty' })}>Book a Site Visit</button>
             </div>
           </div>
         </div>

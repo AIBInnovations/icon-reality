@@ -45,7 +45,7 @@ export default function Stats() {
           Two decades.<br/>One standard.
         </Reveal>
         <Reveal as="p" className="stats__lede" delay={0.1}>
-          From the first plot to the latest landmark — Icon Realty has built a quiet reputation on transparency, craft, and a long view that puts families and investors first.
+          From the first plot to the latest landmark, Icon Realty has built a quiet reputation on transparency, craft, and a long view that puts families and investors first.
         </Reveal>
 
         <div className="stats__grid">

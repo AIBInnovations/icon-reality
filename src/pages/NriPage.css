@@ -14,12 +14,47 @@
 
 .nrix-section-pad { padding: clamp(56px, 7vw, 104px) 0; }
 
+/* ---------------------------------------------------------- column rules ---
+   Two blocks on this page (the assurances ribbon, the taxation ledger) divide
+   columns with a hairline instead of boxing them into cards. Both obey the same
+   two rules, because breaking either is what makes a ruled grid look wrong:
+
+     1. Equal air BOTH sides of every rule. A rule drawn with padding on one
+        side only leaves the next column's text sitting on the line.
+     2. The first and last column in a row stay FLUSH with the .container edge,
+        so the grid lines up with every other section on the page.
+
+   Implemented as border-left on every column except the first in its row —
+   never border-right — so the count of rules is always (columns - 1) and no
+   :last-child exception is needed when the grid re-flows at a breakpoint.
+
+   Both set --rule-gap for themselves; the value is the air on ONE side of a
+   rule, so a rule always sits in 2 x --rule-gap of space.
+   ------------------------------------------------------------------------ */
+
 /* ---------------------------------------------------------------- head ---
    The one thing all six sections share: an index, a rule and a title. It is
    the rhythm that keeps them reading as one document.
    ------------------------------------------------------------------------ */
 .nrix-head { max-width: 62ch; margin-bottom: clamp(30px, 4vw, 56px); }
-.nrix-head--center { margin-inline: auto; text-align: center; }
+
+/* Title and intro side by side. Saves roughly a screen of height per section
+   on a page with six of them, and reads as a spread rather than a stack. */
+.nrix-head--split {
+  max-width: none;
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  column-gap: clamp(28px, 5vw, 90px);
+  row-gap: 0;
+  /* Top-aligned, not bottom: the two columns are wildly different heights
+     (a two-line display title against four lines of body copy), and aligning
+     their bottoms dropped a one-line title halfway down the section. */
+  align-items: start;
+}
+.nrix-head--split .nrix-head__meta { grid-column: 1 / -1; }
+.nrix-head--split .nrix-head__title { max-width: 15ch; }
+/* optical: sits the intro's first baseline near the title's, not above it */
+.nrix-head--split .nrix-head__intro { margin-top: 0; padding-top: 9px; }
 
 .nrix-head__meta {
   display: flex;
@@ -29,6 +64,7 @@
   min-width: 0;
 }
 .nrix-head__index {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-display);
   font-size: 12px;
   font-weight: 700;
@@ -74,7 +110,8 @@
 .nrix-head--dark .nrix-head__eyebrow { color: rgba(255, 255, 255, 0.5); }
 .nrix-head--dark .nrix-head__index,
 .nrix-head--dark .nrix-head__rule { color: var(--peach); background-color: var(--peach); }
-.nrix-head--dark .nrix-head__index { background: none; color: var(--peach); }
+.nrix-head--dark .nrix-head__index {
+  font-variant-numeric: tabular-nums; background: none; color: var(--peach); }
 
 /* ======================================================== THE DESK ======= */
 .nrix-desk {
@@ -116,6 +153,7 @@
 /* The four assurances as one continuous ribbon divided by hairlines, rather
    than four boxed cards. */
 .nrix-ribbon {
+  --rule-gap: clamp(16px, 2vw, 34px);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   margin-top: clamp(34px, 4.5vw, 66px);
@@ -123,13 +161,15 @@
 }
 .nrix-ribbon__item {
   min-width: 0;
-  padding: clamp(20px, 2.4vw, 30px) clamp(14px, 1.8vw, 26px) 4px 0;
-  border-right: 1px solid var(--line);
+  padding: clamp(20px, 2.4vw, 30px) var(--rule-gap) clamp(20px, 2.4vw, 30px);
+  border-left: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   gap: 8px;
 }
-.nrix-ribbon__item:last-child { border-right: none; padding-right: 0; }
+/* first / last in the row: flush with the container column */
+.nrix-ribbon__item:nth-child(4n + 1) { border-left: none; padding-left: 0; }
+.nrix-ribbon__item:nth-child(4n) { padding-right: 0; }
 .nrix-ribbon__k {
   font-family: var(--font-display);
   font-size: clamp(14.5px, 1.2vw, 17px);
@@ -151,48 +191,56 @@
   border-top: 1px solid rgba(255, 255, 255, 0.08);
 }
 
-.nrix-stair {
-  --stair-step: clamp(0px, 2.2vw, 42px);
-  display: flex;
-  flex-direction: column;
-}
-.nrix-stair__step {
-  display: grid;
-  grid-template-columns: auto minmax(0, 1fr);
-  gap: clamp(14px, 2vw, 28px);
-  align-items: start;
-  /* each step one notch further right than the last — the staircase */
-  margin-left: calc(var(--stair-i, 0) * var(--stair-step));
-  padding: clamp(16px, 1.9vw, 26px) 0;
-  border-top: 1px solid rgba(255, 255, 255, 0.11);
-  min-width: 0;
-}
-.nrix-stair__step:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.11); }
+/* Nine steps, three across. As a nine-row list this section was the longest on
+   the page by a wide margin and read as a document dump; in rows of three it is
+   a third of the height and the sequence is still obvious, because it reads
+   left to right the way any numbered grid does.
 
-.nrix-stair__num {
+   Column rules follow the convention at the top of this file: border-left on
+   every cell except the first in its row, equal air both sides. */
+.nrix-steps {
+  --rule-gap: clamp(16px, 2vw, 32px);
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.nrix-step {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: clamp(34px, 3vw, 48px) minmax(0, 1fr);
+  column-gap: clamp(8px, 1vw, 14px);
+  align-items: start;
+  padding: clamp(20px, 2.3vw, 30px) var(--rule-gap);
+  border-left: 1px solid rgba(255, 255, 255, 0.10);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.10);
+}
+.nrix-step:nth-child(3n + 1) { border-left: none; padding-left: 0; }
+.nrix-step:nth-child(3n) { padding-right: 0; }
+
+.nrix-step__num {
   font-family: var(--font-display);
-  font-size: clamp(22px, 2.6vw, 38px);
+  font-size: clamp(17px, 1.5vw, 22px);
   font-weight: 300;
-  line-height: 1;
+  line-height: 1.15;
   color: transparent;
-  -webkit-text-stroke: 1px rgba(242, 182, 143, 0.8);
-  flex: none;
-  min-width: 1.9em;
+  -webkit-text-stroke: 1px rgba(242, 182, 143, 0.85);
+  /* tabular figures: 01 and 09 must occupy the same width or the title column
+     ripples across the grid */
+  font-variant-numeric: tabular-nums;
 }
-.nrix-stair__body { min-width: 0; }
-.nrix-stair__title {
+.nrix-step__body { min-width: 0; }
+.nrix-step__title {
   font-family: var(--font-display);
-  font-size: clamp(16.5px, 1.5vw, 21px);
+  font-size: clamp(16px, 1.4vw, 19.5px);
   font-weight: 600;
-  line-height: 1.25;
+  line-height: 1.24;
   color: #F7F4EF;
-  margin-bottom: 6px;
+  margin-bottom: 7px;
 }
-.nrix-stair__copy {
-  font-size: clamp(13.5px, 1.02vw, 15.5px);
-  line-height: 1.66;
-  color: rgba(255, 255, 255, 0.6);
-  max-width: 62ch;
+.nrix-step__copy {
+  font-size: clamp(13px, 1vw, 14.8px);
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.58);
 }
 
 .nrix-process__foot {
@@ -214,20 +262,17 @@
 
 /* =================================================== 02 · LEGAL & RERA === */
 .nrix-legal { padding: clamp(56px, 7vw, 104px) 0; background: var(--bg); }
-.nrix-legal__grid {
-  display: grid;
-  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
-  gap: clamp(28px, 4.5vw, 76px);
-  align-items: start;
-}
 
-/* The plate rides along beside a long checklist — sticky on desktop only, so
-   a phone never gets a tall image pinned over the text it belongs to. */
-.nrix-legal__plate { min-width: 0; }
-.nrix-legal__plate-inner { position: relative; min-width: 0; }
+/* A wide plate the full width of the column, not a tall one beside the text.
+   The stamp hangs off its bottom-right corner. */
+.nrix-legal__plate {
+  position: relative;
+  min-width: 0;
+  margin-bottom: clamp(30px, 4vw, 56px);
+}
 .nrix-legal__stamp {
   position: absolute;
-  right: -10px;
+  right: clamp(16px, 3vw, 44px);
   bottom: 46px;
   transform: rotate(-6deg);
   font-family: 'Special Elite', var(--font-display), monospace;
@@ -241,10 +286,15 @@
   pointer-events: none;
 }
 
-.nrix-legal__copy { min-width: 0; }
-.nrix-legal__copy .nrix-head { margin-bottom: clamp(26px, 3vw, 40px); }
-
-.nrix-legal__block + .nrix-legal__block { margin-top: clamp(28px, 3.4vw, 46px); }
+/* The two checklists side by side. Five items and four items balance almost
+   exactly, so neither column strands a block of empty space. */
+.nrix-legal__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(26px, 4vw, 72px);
+  align-items: start;
+}
+.nrix-legal__block { min-width: 0; }
 .nrix-legal__block-title {
   font-family: var(--font-display);
   font-size: clamp(17px, 1.7vw, 23px);
@@ -277,7 +327,7 @@
 }
 
 .nrix-legal__note {
-  margin-top: clamp(22px, 2.6vw, 32px);
+  margin-top: clamp(28px, 3.4vw, 46px);
   padding: clamp(16px, 2vw, 24px);
   background: var(--bg-2);
   border-left: 3px solid var(--peach);
@@ -304,6 +354,7 @@
 
 /* A ledger: four columns divided by vertical rules, no card chrome at all. */
 .nrix-ledger {
+  --rule-gap: clamp(16px, 2vw, 34px);
   display: grid;
   grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: 0;
@@ -311,12 +362,14 @@
 }
 .nrix-ledger__col {
   min-width: 0;
-  padding: clamp(20px, 2.4vw, 32px) clamp(16px, 1.8vw, 28px) clamp(20px, 2.4vw, 30px) 0;
-  border-right: 1px solid var(--line);
+  padding: clamp(20px, 2.4vw, 32px) var(--rule-gap) clamp(20px, 2.4vw, 30px);
+  border-left: 1px solid var(--line);
 }
-.nrix-ledger__col:last-child { border-right: none; padding-right: 0; }
+.nrix-ledger__col:nth-child(4n + 1) { border-left: none; padding-left: 0; }
+.nrix-ledger__col:nth-child(4n) { padding-right: 0; }
 
 .nrix-ledger__roman {
+  font-variant-numeric: tabular-nums;
   display: block;
   font-family: 'Cinzel', var(--font-display), serif;
   font-size: clamp(15px, 1.5vw, 20px);
@@ -421,6 +474,7 @@
   box-shadow: 0 18px 44px rgba(20, 20, 20, 0.09);
 }
 .nrix-loans__card-index {
+  font-variant-numeric: tabular-nums;
   font-family: var(--font-display);
   font-size: 11.5px;
   font-weight: 700;
@@ -543,10 +597,17 @@
   gap: clamp(24px, 4vw, 64px);
 }
 .nrix-tours__col { min-width: 0; }
+.nrix-tours__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--peach);
+  margin-bottom: 9px;
+  font-variant-numeric: tabular-nums;
+}
 .nrix-tours__title {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
   font-family: var(--font-display);
   font-size: clamp(17px, 1.6vw, 22px);
   font-weight: 600;
@@ -554,13 +615,6 @@
   color: #F7F4EF;
   padding-bottom: 14px;
   border-bottom: 1px solid rgba(255, 255, 255, 0.14);
-}
-.nrix-tours__title span {
-  font-size: 11.5px;
-  font-weight: 700;
-  letter-spacing: 0.16em;
-  color: var(--peach);
-  flex: none;
 }
 .nrix-tours__list { display: flex; flex-direction: column; }
 .nrix-tours__list li {
@@ -593,11 +647,15 @@
 }
 
 .nrix-sheet__block + .nrix-sheet__block { margin-top: clamp(26px, 3.2vw, 44px); }
+.nrix-sheet__clause {
+  display: block;
+  font-family: 'Special Elite', var(--font-display), monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--peach-deep);
+  margin-bottom: 7px;
+}
 .nrix-sheet__title {
-  display: flex;
-  align-items: baseline;
-  gap: 12px;
-  flex-wrap: wrap;
   font-family: 'Cinzel', var(--font-display), serif;
   font-size: clamp(16px, 1.5vw, 21px);
   font-weight: 600;
@@ -605,13 +663,6 @@
   letter-spacing: 0.01em;
   color: var(--ink);
   margin-bottom: 14px;
-}
-.nrix-sheet__clause {
-  font-family: 'Special Elite', var(--font-display), monospace;
-  font-size: 12px;
-  letter-spacing: 0.08em;
-  color: var(--peach-deep);
-  flex: none;
 }
 .nrix-sheet__list { display: flex; flex-direction: column; gap: 12px; }
 .nrix-sheet__list li {
@@ -657,31 +708,56 @@
    ============================================================================ */
 
 @media (min-width: 1025px) {
-  /* Sticky only where there is room for it and the rail is sticky too. */
-  .nrix-legal__plate-inner { position: sticky; top: 186px; }
-  .nrix-sheet__margin { position: sticky; top: 186px; }
+  /* The POA sheet is the only block left with a short column beside a long
+     one, so it is the only one that sticks. */
+  .nrix-sheet__margin { position: sticky; top: 130px; }
 }
 
 @media (max-width: 1080px) {
+  /* Two up: the row boundary changes, so the flush-edge exceptions have to be
+     re-stated for the new column count — 4n+1/4n no longer describe a row. */
   .nrix-ledger { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .nrix-ledger__col { padding-right: clamp(14px, 2vw, 24px); }
-  /* second column of each row loses its rule, rows get one instead */
-  .nrix-ledger__col:nth-child(2n) { border-right: none; padding-right: 0; }
+  .nrix-ledger__col {
+    border-left: 1px solid var(--line);
+    padding-left: var(--rule-gap);
+    padding-right: var(--rule-gap);
+  }
+  .nrix-ledger__col:nth-child(2n + 1) { border-left: none; padding-left: 0; }
+  .nrix-ledger__col:nth-child(2n) { padding-right: 0; }
   .nrix-ledger__col:nth-child(n + 3) { border-top: 1px solid var(--line); }
   .nrix-ledger__title { min-height: 0; }
 }
 
 @media (max-width: 1000px) {
+  /* The split head is a desktop device; below this the intro goes back under
+     the title, where it has the width to be readable. */
+  .nrix-head--split { grid-template-columns: 1fr; row-gap: 16px; align-items: start; }
+  .nrix-head--split .nrix-head__title { max-width: none; }
+  .nrix-head--split .nrix-head__intro { padding-top: 0; }
+
+  /* Nine steps three-across needs the width; two-across below this. */
+  .nrix-steps { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nrix-step {
+    border-left: 1px solid rgba(255, 255, 255, 0.10);
+    padding-left: var(--rule-gap);
+    padding-right: var(--rule-gap);
+  }
+  .nrix-step:nth-child(2n + 1) { border-left: none; padding-left: 0; }
+  .nrix-step:nth-child(2n) { padding-right: 0; }
+
   .nrix-desk__grid { grid-template-columns: 1fr; gap: 28px; }
   .nrix-desk__plate { max-width: 520px; }
   .nrix-ribbon { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .nrix-ribbon__item:nth-child(2n) { border-right: none; padding-right: 0; }
+  .nrix-ribbon__item {
+    border-left: 1px solid var(--line);
+    padding-left: var(--rule-gap);
+    padding-right: var(--rule-gap);
+  }
+  .nrix-ribbon__item:nth-child(2n + 1) { border-left: none; padding-left: 0; }
+  .nrix-ribbon__item:nth-child(2n) { padding-right: 0; }
   .nrix-ribbon__item:nth-child(n + 3) { border-top: 1px solid var(--line); }
 
-  .nrix-legal__grid { grid-template-columns: 1fr; gap: 30px; }
-  .nrix-legal__plate { max-width: 420px; order: 2; }
-  .nrix-legal__copy { order: 1; }
-  .nrix-legal__stamp { right: auto; left: 14px; bottom: 44px; }
+  .nrix-legal__cols { grid-template-columns: 1fr; gap: 30px; }
 
   .nrix-loans__cards { grid-template-columns: 1fr; margin-top: clamp(-56px, -5vw, -32px); }
   .nrix-tours__cols { grid-template-columns: 1fr; gap: 30px; }
@@ -692,10 +768,6 @@
 }
 
 @media (max-width: 900px) {
-  /* The staircase becomes a plain spine — an indent on a narrow column just
-     squeezes the copy into a gutter. */
-  .nrix-stair { --stair-step: 0px; }
-  .nrix-stair__step { margin-left: 0; }
   .nrix-viewport__frame { aspect-ratio: 16 / 10; }
 }
 
@@ -710,8 +782,10 @@
   .nrix-desk__plate { max-width: none; }
 
   .nrix-ribbon { grid-template-columns: 1fr; margin-top: 26px; }
-  .nrix-ribbon__item {
-    border-right: none;
+  .nrix-ribbon__item,
+  .nrix-ribbon__item:nth-child(2n + 1),
+  .nrix-ribbon__item:nth-child(2n) {
+    border-left: none;
     padding: 16px 0;
     border-top: 1px solid var(--line);
   }
@@ -720,22 +794,40 @@
   .nrix-process, .nrix-legal, .nrix-tax, .nrix-tours, .nrix-poa { padding: 44px 0; }
   .nrix-loans { padding: 44px 0 40px; }
 
-  .nrix-stair__step { grid-template-columns: 1fr; gap: 6px; padding: 15px 0; }
-  .nrix-stair__num { font-size: 20px; min-width: 0; }
-  .nrix-stair__title { font-size: 16.5px; }
-  .nrix-stair__copy { font-size: 14px; }
+  .nrix-steps { grid-template-columns: 1fr; }
+  .nrix-step,
+  .nrix-step:nth-child(2n + 1),
+  .nrix-step:nth-child(2n) {
+    border-left: none;
+    padding: 15px 0;
+    grid-template-columns: 30px minmax(0, 1fr);
+    column-gap: 10px;
+  }
+  .nrix-step__num { font-size: 16px; }
+  .nrix-step__title { font-size: 16px; }
+  .nrix-step__copy { font-size: 13.8px; }
   .nrix-process__foot { flex-direction: column; align-items: stretch; }
   .nrix-process__foot p { max-width: none; }
   .nrix-process__cta { width: 100%; }
 
-  .nrix-legal__plate { max-width: none; }
+  .nrix-legal__stamp { right: 12px; bottom: 30px; }
   .nrix-legal__list li { grid-template-columns: auto minmax(0, 1fr); gap: 11px; padding: 13px 0; font-size: 14.5px; }
   .nrix-legal__note { border-radius: 0 8px 8px 0; }
 
+  /* Collapsed groups: the decorative numeral sits directly on its heading
+     rather than floating a line above it, or the closed rows read as a list of
+     orphaned numbers. */
+  .nrix-ledger__roman,
+  .nrix-loans__card-index,
+  .nrix-tours__num,
+  .nrix-sheet__clause { margin-bottom: 0; line-height: 1.6; }
+
   .nrix-ledger { grid-template-columns: 1fr; border-top-width: 1.5px; }
-  .nrix-ledger__col {
+  .nrix-ledger__col,
+  .nrix-ledger__col:nth-child(2n + 1),
+  .nrix-ledger__col:nth-child(2n) {
     padding: 18px 0;
-    border-right: none;
+    border-left: none;
     border-top: 1px solid var(--line);
   }
   .nrix-ledger__col:first-child { border-top: none; }

@@ -23,7 +23,7 @@ export default function TrustSection() {
             The alt text therefore does NOT repeat the figure, so it cannot
             contradict whichever version of the picture is in place. */}
         <Reveal className="trust__image-wrap">
-          <img src="/images/trusted.png" alt="Mr. Nilesh Porwal, Director of Icon Realty — a summary of projects delivered, families welcomed home, and two decades of trust" loading="lazy" decoding="async" />
+          <img src="/images/trusted.png" alt="Mr. Nilesh Porwal, Director of Icon Realty: a summary of projects delivered, families welcomed home, and two decades of trust" loading="lazy" decoding="async" />
         </Reveal>
 
         <div className="trust__copy">
@@ -32,7 +32,7 @@ export default function TrustSection() {
           </Reveal>
           <Reveal as="p" className="trust__lede" delay={0.05}>
             Since 2004, Icon Realty has designed and marketed residential plotted developments
-            across Indore — fifteen-plus landmarks and more than four thousand families. Under
+            across Indore: fifteen-plus landmarks and more than four thousand families. Under
             the direction of Mr. Siddharth Porwal and Mr. Nilesh Porwal, the company plans for
             the decade after handover, not the quarter after launch.
           </Reveal>
@@ -40,7 +40,7 @@ export default function TrustSection() {
           <Reveal as="p" className="trust__architect" delay={0.08}>
             <span className="trust__architect-k">What we do</span>
             We <strong>design and market residential plotted communities</strong>. On some projects
-            we are the developer; on others — Oscar Palace among them — we are the design, marketing
+            we are the developer; on others, Oscar Palace among them, we are the design, marketing
             and sales partner. Which role we hold on which project is stated on the project page
             itself, never blurred.
           </Reveal>

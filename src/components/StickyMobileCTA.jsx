@@ -78,7 +78,7 @@ export default function StickyMobileCTA({
         onClick={() => openEnquiry({
           intent,
           project,
-          source: `Sticky CTA${project ? ` — ${project}` : ''}`,
+          source: `Sticky CTA${project ? `: ${project}` : ''}`,
           eyebrow: 'Quick enquiry',
           heading: heading || (project ? `Enquire about ${project}.` : 'Send an enquiry.'),
           // Name + phone only: this is the highest-intent, lowest-patience

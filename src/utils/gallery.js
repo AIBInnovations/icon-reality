@@ -33,7 +33,7 @@ export function categoriseGallery(gallery = [], projectName) {
       return {
         ...img,
         ...(category ? { category } : {}),
-        alt: img.alt || `${projectName || 'Project'}${category ? ` — ${category.toLowerCase()}` : ''} image ${i + 1}`,
+        alt: img.alt || `${projectName || 'Project'}${category ? `: ${category.toLowerCase()}` : ''} image ${i + 1}`,
       };
     });
 }

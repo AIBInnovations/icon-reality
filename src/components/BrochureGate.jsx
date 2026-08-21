@@ -73,15 +73,15 @@ export default function BrochureGate({
     openEnquiry({
       intent: LEAD_INTENTS.BROCHURE,
       project: projectName,
-      source: `Brochure — ${projectName}`,
+      source: `Brochure: ${projectName}`,
       eyebrow: 'Brochure',
       heading: hasPdf ? `Get the ${projectName} brochure.` : `Request the ${projectName} brochure.`,
       // Two fields. Anything more and the download is not worth the friction.
       fields: ['name', 'phone'],
       submitLabel: hasPdf ? 'Get the brochure' : 'Request the brochure',
       successMessage: hasPdf
-        ? 'Thank you — your brochure is opening now. If it does not, use the download button on the page.'
-        : "Thank you — we'll send the brochure across shortly.",
+        ? 'Thank you. Your brochure is opening now. If it does not, use the download button on the page.'
+        : "Thank you. We'll send the brochure across shortly.",
       onSuccess: () => {
         writeUnlocked();
         setUnlocked(true);

@@ -32,7 +32,7 @@ export default function InvestorPage() {
   return (
     <>
       <Seo
-        title="Investor Corner — plotted land investment in Indore"
+        title="Investor Corner: plotted land investment in Indore"
         description="Evaluate plotted land in Indore with Icon Realty: growth corridors, what to verify before you buy, and an investment consultation with a developer who has delivered here for two decades."
         path="/investors"
         image={INVESTOR_MEDIA.hero.src}
@@ -76,7 +76,7 @@ export default function InvestorPage() {
           <SectionHeading
             eyebrow="Approaches"
             title="Four ways people hold plotted land."
-            lede="Descriptive, not prescriptive — which of these fits depends on your horizon and your reasons, and it is worth deciding before you look at a single plot."
+            lede="Descriptive, not prescriptive, which of these fits depends on your horizon and your reasons, and it is worth deciding before you look at a single plot."
           />
           <InfoGrid items={OPPORTUNITY_TYPES} variant="media" columns={4} ratio="4 / 3" />
         </div>
@@ -113,7 +113,7 @@ export default function InvestorPage() {
         <div className="container">
           <EditorialSplit
             eyebrow="Due diligence"
-            title="What to check — including on us."
+            title="What to check, including on us."
             body="If a developer is uncomfortable with any item on this list, that is the finding. We publish our layouts openly for the same reason."
             items={DUE_DILIGENCE}
             media={{ src: INVESTOR_MEDIA.diligence.src, credit: INVESTOR_MEDIA.diligence.credit }}
@@ -136,7 +136,7 @@ export default function InvestorPage() {
               {ongoing.map((p, i) => (
                 <Reveal key={p.slug} delay={Math.min(i, 4) * 0.05}>
                   <Link to={`/projects/${p.slug}`} className="inv-project">
-                    <MediaFigure src={p.thumbnail || p.hero_image} alt={`${p.name} — ${p.location}`} ratio="4 / 5" />
+                    <MediaFigure src={p.thumbnail || p.hero_image} alt={`${p.name}, ${p.location}`} ratio="4 / 5" />
                     <span className="inv-project__name">{p.name}</span>
                     <span className="inv-project__meta">{p.location}</span>
                     {p.plot_sizes && <span className="inv-project__plots">{p.plot_sizes}</span>}
@@ -155,7 +155,7 @@ export default function InvestorPage() {
         eyebrow="Track record"
         heading="Two decades. One city. One standard."
         lede="Every figure below is one Icon Realty has published. Nothing here is modelled or projected."
-        media={{ src: '/images/ruchi-lifescapes/gallery-4.jpg', credit: 'Ruchi Lifescapes, Jhalaria — delivered' }}
+        media={{ src: '/images/ruchi-lifescapes/gallery-4.jpg', credit: 'Ruchi Lifescapes, Jhalaria: delivered' }}
         className="inv-section--alt"
       />
 
@@ -180,7 +180,7 @@ export default function InvestorPage() {
           <Reveal className="inv-consult__form" delay={0.15}>
             <LeadForm
               intent={LEAD_INTENTS.INVESTOR}
-              source="Investor Corner — consultation"
+              source="Investor Corner: consultation"
               eyebrow="Book a slot"
               heading="Schedule an investment consultation."
               /* Name and phone are the only required fields; date, time and

@@ -91,6 +91,10 @@ header mega-menu, the mobile drawer and the footer columns all read it, so they
 cannot drift apart. Adding a route means adding it there and to
 `src/seo/routes.js` (which generates `sitemap.xml` at build time).
 
+Long section pages (`/nri`, `/channel-partners`) collapse their checklist
+groups on phones through `<Disclosure>`, which renders a fragment above 720px
+and a heading-button plus panel below it. Nothing is removed, only deferred.
+
 Nav entries whose target is a section rather than a page carry a `#anchor` in
 their `to`. `RouteTransition` does the scrolling, so those links work from any
 other route as well as from the page itself; `allNavPaths()` and the sitemap

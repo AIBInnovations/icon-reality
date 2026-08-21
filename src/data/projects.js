@@ -64,7 +64,7 @@ export const projectsList = [
     plot_sizes: '3,000 – 20,000 sq ft',
     tagline: "Central India's most beautiful and well-equipped royal estate colony.",
     description:
-      'Oscar Palace is a luxury residential plotting project by Ruchi Realty — mindfully designed and marketed by Icon Realty — on the new Indore–Nagpur Highway. Designed by renowned Jaipur architect Ravi Gupta Ji, it brings royal Indian architecture to plotted living: palace-style gates, marble baradaris, a heritage temple, and 2,80,000 sq ft of garden and open spaces. Sport and everyday life are planned in too — a tennis court, a pickleball court, a skating rink and a multipurpose cricket and football turf, with EV car charging at the plots. The estate\'s own overhead water tank and watch tower stand over the layout: independent water supply and a clear line of sight across every block.',
+      'Oscar Palace is a luxury residential plotting project by Ruchi Realty, mindfully designed and marketed by Icon Realty, on the new Indore–Nagpur Highway. Designed by renowned Jaipur architect Ravi Gupta Ji, it brings royal Indian architecture to plotted living: palace-style gates, marble baradaris, a heritage temple, and 2,80,000 sq ft of garden and open spaces. Sport and everyday life are planned in too, a tennis court, a pickleball court, a skating rink and a multipurpose cricket and football turf, with EV car charging at the plots. The estate\'s own overhead water tank and watch tower stand over the layout: independent water supply and a clear line of sight across every block.',
     amenities: [
       '2,80,000 sq ft of garden & open spaces',
       'Heritage temple & marble baradaris',
@@ -103,7 +103,7 @@ export const projectsList = [
       '4+ rated schools nearby',
     ],
     highlights: [
-      'Designed by Ravi Gupta Ji of Jaipur — architect behind several Oberoi hotels',
+      'Designed by Ravi Gupta Ji of Jaipur: architect behind several Oberoi hotels',
       'A Ruchi Realty project, mindfully designed & marketed by Icon Realty',
       'East & west facing, Vastu-compliant plots from 3,000 to 20,000 sq ft',
       'Bank loans available on every plot',
@@ -128,7 +128,7 @@ export const projectsList = [
       Landscape: ['2,80,000 sq ft of garden and open spaces'],
       Community: ['Heritage temple and marble baradaris', 'Multi-purpose hall'],
       Sport: ['Tennis court', 'Pickleball court', 'Skating rink', 'Multipurpose cricket and football turf'],
-      Utilities: ['Overhead water tank — independent estate water supply', 'EV car charging'],
+      Utilities: ['Overhead water tank: independent estate water supply', 'EV car charging'],
       Security: ['24×7 multi-tier security', 'Watch tower overlooking the layout'],
       Financing: ['Bank loans available on every plot'],
     },
@@ -163,7 +163,7 @@ export const projectsList = [
     plot_sizes: '2,800 – 5,000 sq ft',
     tagline: 'A tribute to the majestic mahals of the past, designed to feel like your own private fortress.',
     description:
-      'Oscar Fort blends regal architecture with modern luxury, secured by a 12-foot boundary wall. The development features landscaped heritage-themed gardens, an infinity pool, gymnasium, and grand entrance. It sits very close to Scheme 140 and Bicholi — so the city is not somewhere you drive to, it is already around you: schools, hospitals, malls and the Ring Road are all a short run from the gate, while the fort wall keeps the noise of it outside. Designed and marketed by Icon Realty.',
+      'Oscar Fort blends regal architecture with modern luxury, secured by a 12-foot boundary wall. The development features landscaped heritage-themed gardens, an infinity pool, gymnasium, and grand entrance. It sits very close to Scheme 140 and Bicholi, so the city is not somewhere you drive to, it is already around you: schools, hospitals, malls and the Ring Road are all a short run from the gate, while the fort wall keeps the noise of it outside. Designed and marketed by Icon Realty.',
     amenities: [
       "Kids' play area",
       'Gymnasium',
@@ -184,7 +184,7 @@ export const projectsList = [
       '18–20 km from Indore Airport',
     ],
     highlights: [
-      'Very close to Scheme 140 and Bicholi — city convenience already around you',
+      'Very close to Scheme 140 and Bicholi: city convenience already around you',
       '12-foot high boundary wall ensuring absolute privacy and safety',
       'Heritage-themed landscape by renowned landscaper Savita Punde',
       'Infinity swimming pool and fully equipped gymnasium',
@@ -227,9 +227,9 @@ export const projectsList = [
     location: 'Bicholi Hapsi, Indore',
     total_area: '24 acres',
     plot_sizes: '85 plots',
-    tagline: 'An ode to grandeur — a unique presentation of empirical lifestyle.',
+    tagline: 'An ode to grandeur, a unique presentation of empirical lifestyle.',
     description:
-      'A completed Icon Realty luxury plotted development blending traditional royal living with contemporary sophistication. Delivered across 24 acres with a majestic grand entrance, gold-leaf gazebos, cascading fountains and landscaped vistas — built, handed over, and lived in.',
+      'A completed Icon Realty luxury plotted development blending traditional royal living with contemporary sophistication. Delivered across 24 acres with a majestic grand entrance, gold-leaf gazebos, cascading fountains and landscaped vistas, built, handed over, and lived in.',
     amenities: [
       'State-of-the-art gymnasium',
       '400 ft frontage',
@@ -248,7 +248,7 @@ export const projectsList = [
       'Near the upcoming metro corridor',
     ],
     highlights: [
-      'Completed and delivered — walk it before you decide',
+      'Completed and delivered: walk it before you decide',
       'Rooted in illustrious heritage yet attuned to modern aspirations',
       'Exemplifies professionalism, integrity, and architectural finesse',
       'A timeless splendour where legacy and luxury coexist',
@@ -277,7 +277,7 @@ export const projectsList = [
     plot_sizes: '600 – 1,800 sq ft',
     tagline: 'A symbol of trust, integrity, and accessible living.',
     description:
-      'Saatvik Vihar emphasizes practical design, serene ambience, and quality construction. The development reflects Icon Realty\'s commitment to combining affordability with comfort and quality — rooted in honest practices and customer satisfaction.',
+      'Saatvik Vihar emphasizes practical design, serene ambience, and quality construction. The development reflects Icon Realty\'s commitment to combining affordability with comfort and quality, rooted in honest practices and customer satisfaction.',
     amenities: [
       'Gymnasium',
       'Gazebo',
@@ -324,7 +324,7 @@ export const projectsList = [
     plot_sizes: '600 – 1,500 sq ft',
     tagline: 'Premium plotted development for crafting your own way of living.',
     description:
-      'A premium residential plotted community offering well-designed spaces with open landscapes. The development emphasizes individual expression within a connected community framework, combining accessibility with serene surroundings. Connectivity is the quiet advantage here — Manglia sits on the Indore–Ujjain route, so the run from the gate to Ujjain is an easy, uninterrupted one, with Indore itself just as close in the other direction.',
+      'A premium residential plotted community offering well-designed spaces with open landscapes. The development emphasizes individual expression within a connected community framework, combining accessibility with serene surroundings. Connectivity is the quiet advantage here, Manglia sits on the Indore–Ujjain route, so the run from the gate to Ujjain is an easy, uninterrupted one, with Indore itself just as close in the other direction.',
     amenities: [
       'Football / Cricket Turf',
       '24×7 Security',
@@ -354,7 +354,7 @@ export const projectsList = [
     ],
     specifications: {
       Plots: ['600 – 1,500 sq ft', '150 thoughtfully planned plots'],
-      Location: ['Manglia — on the Indore–Ujjain route', 'Excellent connectivity from Manglia to Ujjain'],
+      Location: ['Manglia: on the Indore–Ujjain route', 'Excellent connectivity from Manglia to Ujjain'],
       Community: ['Temple for spiritual retreat', 'Football / cricket turf'],
       Sustainability: ['Water conservation systems'],
       Security: ['24×7 security'],
@@ -483,7 +483,7 @@ export const projectsList = [
     plot_sizes: 'Education corridor',
     tagline: 'Strategically planned residential development redefining modern living.',
     description:
-      'A premium residential project by Icon Realty located opposite IIT Indore — built on a commitment to a 6-month completion timeline. Features wellness-focused design with green spaces and modern infrastructure throughout.',
+      'A premium residential project by Icon Realty located opposite IIT Indore, built on a commitment to a 6-month completion timeline. Features wellness-focused design with green spaces and modern infrastructure throughout.',
     amenities: [
       'Open-to-sky gym',
       'Dense plantation oxygen zone',
@@ -547,7 +547,7 @@ export const projectsList = [
     plot_sizes: 'Plotted development',
     tagline: 'A delivered township along the Pithampur highway.',
     description:
-      'One of Icon Realty\'s completed plotted developments — Glamour Highway City sits on the Pithampur corridor and is fully delivered and lived in. Wide planned roads, green pockets, and quiet community living define the project.',
+      'One of Icon Realty\'s completed plotted developments, Glamour Highway City sits on the Pithampur corridor and is fully delivered and lived in. Wide planned roads, green pockets, and quiet community living define the project.',
     amenities: ['Wide planned roads', 'Landscaped greens', 'Community plot layout', 'Secure boundary'],
     connectivity: [
       'Pithampur industrial corridor',
@@ -596,7 +596,7 @@ export const projectsList = [
     plot_sizes: 'Premium plotted',
     tagline: 'A premium enclave delivered in the heart of Jhalaria.',
     description:
-      'Ruchi Enclave is an Icon Realty completed plotted community in Jhalaria — a quiet residential pocket with planned infrastructure, green spaces, and family-first layouts.',
+      'Ruchi Enclave is an Icon Realty completed plotted community in Jhalaria, a quiet residential pocket with planned infrastructure, green spaces, and family-first layouts.',
     amenities: ['Planned roads', 'Garden and open spaces', 'Family-oriented layout', 'Secure boundary'],
     connectivity: ['Jhalaria residential corridor', 'Schools and markets within easy reach'],
     highlights: ['Established family community', 'Premium plotted enclave', 'Fully delivered'],
@@ -623,7 +623,7 @@ export const projectsList = [
     plot_sizes: 'Family plots',
     tagline: 'An elevated lifestyle community already in residence.',
     description:
-      'Ruchi Lifescapes is Icon Realty\'s premium plotted offering in Jhalaria — delivered, occupied, and known for its layout discipline and community quality.',
+      'Ruchi Lifescapes is Icon Realty\'s premium plotted offering in Jhalaria, delivered, occupied, and known for its layout discipline and community quality.',
     amenities: ['Premium plot sizing', 'Planned community design', 'Greenery throughout', 'Resident-led upkeep'],
     connectivity: ['Jhalaria residential corridor', 'Quick city access'],
     highlights: ['Premium positioning', 'Delivered with all utilities', 'Strong resale value'],
@@ -651,9 +651,9 @@ export const projectsList = [
     plot_sizes: 'Plotted development',
     tagline: "An Icon Realty delivery along Indore's Super Corridor.",
     description:
-      'Singapore Corridor is a completed Icon Realty township along the Super Corridor — Indore\'s fastest-growing corporate and infrastructural axis. The development is fully delivered and lived in.',
+      'Singapore Corridor is a completed Icon Realty township along the Super Corridor, Indore\'s fastest-growing corporate and infrastructural axis. The development is fully delivered and lived in.',
     amenities: ['Wide corridor frontage', 'Planned plots', 'Community open space', 'Secure boundary'],
-    connectivity: ['Super Corridor — fastest-growing corporate axis', 'Quick airport access', 'Schools and hospitals nearby'],
+    connectivity: ['Super Corridor: fastest-growing corporate axis', 'Quick airport access', 'Schools and hospitals nearby'],
     highlights: ['Strategic corporate corridor location', 'Fully completed', 'High appreciation potential'],
     brochure_url: null,
     hero_image: '/images/singapore-corridor/hero.jpg',
@@ -701,7 +701,7 @@ export const projectsList = [
     plot_sizes: 'Plotted development',
     tagline: 'A Super Corridor address that already feels like home.',
     description:
-      'Dream Victoria is an Icon Realty completed community along the Super Corridor — known for its planned layouts, ample greenery, and the quiet quality of life its residents have come to enjoy.',
+      'Dream Victoria is an Icon Realty completed community along the Super Corridor, known for its planned layouts, ample greenery, and the quiet quality of life its residents have come to enjoy.',
     amenities: ['Wide planned roads', 'Family-first plot layout', 'Green pockets', 'Established community'],
     connectivity: ['Super Corridor', 'Educational institutes nearby', 'Quick airport access'],
     highlights: ['Lived-in community', 'Premium positioning along Super Corridor', 'Completed and delivered'],
@@ -751,9 +751,9 @@ export const projectsList = [
     plot_sizes: 'Plotted & commercial',
     tagline: 'A business-and-living address at the heart of Indore.',
     description:
-      'Singapore Business Park is an Icon Realty development at LIG Square — a central, high-visibility address that pairs plotted living with commercial frontage in one of Indore\'s most connected pockets.',
+      'Singapore Business Park is an Icon Realty development at LIG Square, a central, high-visibility address that pairs plotted living with commercial frontage in one of Indore\'s most connected pockets.',
     amenities: ['Commercial frontage', 'Planned roads', 'Green common areas', 'Secure boundary'],
-    connectivity: ['LIG Square — central Indore', 'Schools, hospitals & markets within easy reach', 'Quick city-wide connectivity'],
+    connectivity: ['LIG Square: central Indore', 'Schools, hospitals & markets within easy reach', 'Quick city-wide connectivity'],
     highlights: ['Central LIG Square location', 'Live-work flexibility', 'High footfall & visibility'],
     brochure_url: '/downloads/singapore-business-park-brochure.pdf',
     hero_image: '/images/singapore-business-park/hero.jpg',

@@ -21,7 +21,7 @@ export const NRI_MEDIA = {
 };
 
 export const NRI_ASSURANCES = [
-  { k: 'One point of contact', v: 'The same person from first call to registration — across time zones.' },
+  { k: 'One point of contact', v: 'The same person from first call to registration, across time zones.' },
   { k: 'Remote inspection', v: 'Live video walkthroughs of the actual plot, not a marketing film.' },
   { k: 'Documentation support', v: 'Agreement, registration and coordination with your representative in India.' },
   { k: 'Nothing gated', v: 'Layouts, plot sizes and galleries are viewable without submitting a form.' },
@@ -40,17 +40,17 @@ export const NRI_TOPICS = [
     summary: 'Nine steps from first enquiry to handover, written for someone who is not in India.',
     hero: { src: '/images/oscar/entrance/entrance-2.jpg', credit: 'Oscar Palace' },
     intro:
-      "Nothing below is unique to Icon Realty — this is broadly how a plotted purchase in India works for a non-resident. We have written it out so you can see the whole path before you start, and know which steps need you physically present (very few) and which do not.",
+      "Nothing below is unique to Icon Realty. This is broadly how a plotted purchase in India works for a non-resident. We have written it out so you can see the whole path before you start, and know which steps need you physically present (very few) and which do not.",
     steps: [
       { title: 'Discover projects', body: 'Browse layouts, plot sizes, locations and galleries on this site. None of it is behind a form.' },
       { title: 'Virtual consultation', body: 'A call at a time that works in your zone. We go through corridors, plot availability and honest distances.' },
       { title: 'Select the property', body: 'Shortlist plots by size, orientation and position in the layout. We send the master layout marked with what is available.' },
       { title: 'KYC & documentation', body: 'Passport, OCI/PIO card where applicable, PAN, overseas address proof and photographs. We tell you exactly what is needed before you gather anything.' },
-      { title: 'Legal & RERA verification', body: 'Title documents, approved layout and any applicable RERA registration — reviewed by you or your legal representative before you commit.' },
+      { title: 'Legal & RERA verification', body: 'Title documents, approved layout and any applicable RERA registration, reviewed by you or your legal representative before you commit.' },
       { title: 'Financing (if required)', body: 'If you intend to use an NRI home loan, we coordinate the project-side documentation the lender asks for.' },
       { title: 'Booking', body: 'Booking amount paid through your NRE / NRO account or normal banking channels, followed by the agreement.' },
       { title: 'Power of attorney & registration', body: 'Registration happens at the sub-registrar in Indore. If you cannot travel, a power of attorney lets a trusted representative sign on your behalf.' },
-      { title: 'Handover', body: 'Registered documents, plot demarcation on site, and a walkthrough — recorded on video if you are not able to attend.' },
+      { title: 'Handover', body: 'Registered documents, plot demarcation on site, and a walkthrough, recorded on video if you are not able to attend.' },
     ],
     ctaHeading: 'Start with a call, not a form.',
     ctaBody: 'Tell us your time zone and we will call you at a reasonable hour.',
@@ -60,9 +60,9 @@ export const NRI_TOPICS = [
     nav: 'Legal & RERA',
     title: 'Legal & RERA support',
     summary: 'What RERA is, what to verify before you commit, and where we help.',
-    hero: { src: '/images/oscar/layout/layout-2.jpg', credit: 'Oscar Palace — plot layout' },
+    hero: { src: '/images/oscar/layout/layout-2.jpg', credit: 'Oscar Palace: plot layout' },
     intro:
-      'RERA — the Real Estate (Regulation and Development) Act — established a state-level regulator that registered real-estate projects report to. In Madhya Pradesh that is MP RERA. Where a project is registered, its registration number and details are publicly searchable on the regulator\'s website.',
+      'RERA, the Real Estate (Regulation and Development) Act, established a state-level regulator that registered real-estate projects report to. In Madhya Pradesh that is MP RERA. Where a project is registered, its registration number and details are publicly searchable on the regulator\'s website.',
     sections: [
       {
         title: 'What to verify before you commit',
@@ -78,32 +78,32 @@ export const NRI_TOPICS = [
         title: 'Where we help',
         items: [
           'Providing the project documentation set for your review, or your lawyer\'s.',
-          'Sharing RERA registration details for projects that carry them — displayed on the project page itself, not buried in a footer.',
+          'Sharing RERA registration details for projects that carry them, displayed on the project page itself, not buried in a footer.',
           'Coordinating the agreement and the registration appointment at the sub-registrar in Indore.',
           'Working with your legal representative or power of attorney holder in India.',
         ],
       },
     ],
     note:
-      'We provide documentation and coordination. We do not provide legal advice, and we would encourage you to have an independent advocate review any purchase — including one from us.',
+      'We provide documentation and coordination. We do not provide legal advice, and we would encourage you to have an independent advocate review any purchase, including one from us.',
     ctaHeading: 'Ask us for the document set.',
     ctaBody: 'Tell us which project you are considering and we will send what we hold on it.',
   },
   {
     slug: 'taxation',
     nav: 'Taxation',
-    title: 'Taxation — a general guide for NRI buyers',
+    title: 'Taxation: a general guide for NRI buyers',
     summary: 'The categories of tax that come up when a non-resident buys, holds, rents or sells Indian property.',
     hero: { src: '/images/ruchi-lifescapes/gallery-5.jpg', credit: 'Ruchi Lifescapes, Jhalaria' },
     intro:
-      'This page sets out the categories you will encounter, so that you know what to ask your tax advisor about. Rates, thresholds and treaty treatment change, and they depend on your residency status and personal circumstances — so no rates are quoted here.',
+      'This page sets out the categories you will encounter, so that you know what to ask your tax advisor about. Rates, thresholds and treaty treatment change, and they depend on your residency status and personal circumstances, so no rates are quoted here.',
     sections: [
       {
         title: 'At the time of purchase',
         items: [
           'Stamp duty and registration charges, levied by the state government of Madhya Pradesh on the registered value.',
           'GST, where applicable to the transaction type. Treatment differs between land, under-construction property and completed property.',
-          'TDS on the purchase consideration, where the transaction crosses the applicable threshold — the buyer is responsible for deducting and depositing it.',
+          'TDS on the purchase consideration, where the transaction crosses the applicable threshold. The buyer is responsible for deducting and depositing it.',
         ],
       },
       {
@@ -143,7 +143,7 @@ export const NRI_TOPICS = [
     summary: 'How NRI home loans typically work, what lenders ask for, and what we coordinate.',
     hero: { src: '/images/oscar-fort/gallery-3.jpg', credit: 'Oscar Fort, Bicholi Mardana' },
     intro:
-      'Indian banks and housing finance companies lend to non-residents for property purchase, on terms that differ from resident lending. Eligibility, loan-to-value and tenure are set by the lender — not by us — so the honest summary below stops where the bank\'s underwriting begins.',
+      'Indian banks and housing finance companies lend to non-residents for property purchase, on terms that differ from resident lending. Eligibility, loan-to-value and tenure are set by the lender, not by us, so the honest summary below stops where the bank\'s underwriting begins.',
     sections: [
       {
         title: 'How it typically works',
@@ -168,7 +168,7 @@ export const NRI_TOPICS = [
       {
         title: 'What we coordinate',
         items: [
-          'The project-side documentation the lender asks for — approved layout, title set, and the agreement.',
+          'The project-side documentation the lender asks for: approved layout, title set and the agreement.',
           'Scheduling valuation or technical inspection visits at the site.',
           'Acting as the point of contact in Indore while you are abroad.',
         ],
@@ -183,15 +183,15 @@ export const NRI_TOPICS = [
     slug: 'virtual-tours',
     nav: 'Virtual Tours',
     title: 'Virtual tours & remote booking',
-    summary: 'Inspect the plot, the layout and the site from wherever you are — then book remotely.',
-    hero: { src: '/images/oscar/park/park-1.jpg', credit: 'Oscar Palace — plotted layout from the air' },
+    summary: 'Inspect the plot, the layout and the site from wherever you are, then book remotely.',
+    hero: { src: '/images/oscar/park/park-1.jpg', credit: 'Oscar Palace: plotted layout from the air' },
     intro:
       "A marketing film shows a project at its best. A live video call shows it as it is on the day you ask. We do both, and we would rather you saw the second one before you commit anything.",
     sections: [
       {
         title: 'What a remote inspection includes',
         items: [
-          'A live video call from the site, walking the actual plot you are considering — not a showcase corner.',
+          'A live video call from the site, walking the actual plot you are considering, not a showcase corner.',
           'The master layout on screen, with available plots marked.',
           'Road widths, boundary, entry and the position of your plot relative to open space.',
           'Recorded walkthroughs you can re-watch, or send to family, afterwards.',
@@ -234,16 +234,16 @@ export const NRI_TOPICS = [
         title: 'How it is typically executed from abroad',
         items: [
           'The document is drafted in India, in the format the transaction and any lender require.',
-          'It is signed by you abroad, and attested or notarised — commonly at an Indian consulate or embassy, or before a notary in your country of residence.',
+          'It is signed by you abroad, and attested or notarised, commonly at an Indian consulate or embassy, or before a notary in your country of residence.',
           'It is then sent to India, where it is adjudicated and stamped as applicable before use.',
-          'Procedure and stamping requirements differ by country and by state — confirm the exact route for your case before you sign anything.',
+          'Procedure and stamping requirements differ by country and by state. Confirm the exact route for your case before you sign anything.',
         ],
       },
       {
         title: 'Choosing a POA holder',
         items: [
           'A POA carries real authority. It should be given to someone you would trust with the asset itself.',
-          'It can be drafted narrowly — limited to a specific transaction and a specific property — rather than as a general authority.',
+          'It can be drafted narrowly, limited to a specific transaction and a specific property, rather than as a general authority.',
           'It can be revoked, following the applicable procedure.',
         ],
       },
@@ -263,5 +263,5 @@ export const NRI_TOPICS_BY_SLUG = NRI_TOPICS.reduce((acc, t) => {
 
 export const NRI_DESK = {
   email: EMAIL,
-  note: 'Our NRI desk works around your time zone — tell us where you are and when suits, and we will call then.',
+  note: 'Our NRI desk works around your time zone. Tell us where you are and when suits, and we will call then.',
 };

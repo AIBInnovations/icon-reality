@@ -27,8 +27,8 @@ export default function WhyIndorePage() {
   return (
     <>
       <Seo
-        title="Why Indore — infrastructure, employment and growth corridors"
-        description="Indore's commercial economy, IIT and IIM campuses, metro construction, the Super Corridor and the Pithampur industrial belt — and the corridors Icon Realty builds on."
+        title="Why Indore: infrastructure, employment and growth corridors"
+        description="Indore's commercial economy, IIT and IIM campuses, metro construction, the Super Corridor and the Pithampur industrial belt, and the corridors Icon Realty builds on."
         path="/why-indore"
         image={INDORE_MEDIA.hero.src}
         jsonLd={[
@@ -108,7 +108,7 @@ export default function WhyIndorePage() {
         <div className="container">
           <SectionHeading
             eyebrow="Institutions"
-            title="Education and healthcare, for the region — not just the city."
+            title="Education and healthcare, for the region, not just the city."
           />
 
           <div className="wi-institutions__layout">
@@ -212,8 +212,8 @@ export default function WhyIndorePage() {
                     <tr key={`${row.area}-${row.year}-${i}`}>
                       <td>{row.area}</td>
                       <td>{row.year}</td>
-                      <td>{row.averagePrice ? `${row.averagePrice} ${row.unit || ''}`.trim() : '—'}</td>
-                      <td>{row.source || '—'}</td>
+                      <td>{row.averagePrice ? `${row.averagePrice} ${row.unit || ''}`.trim() : ': '}</td>
+                      <td>{row.source || ': '}</td>
                     </tr>
                   ))}
                 </tbody>
@@ -232,12 +232,12 @@ export default function WhyIndorePage() {
       <CtaBand
         eyebrow="Investor desk"
         heading="Talk it through with someone who builds here."
-        body="A 20-minute call, corridor by corridor — including the ones we don't build on."
+        body="A 20-minute call, corridor by corridor :  including the ones we don't build on."
         primaryLabel="Talk to an Investment Advisor"
         image={INDORE_MEDIA.hero.src}
         enquiry={{
           intent: LEAD_INTENTS.INVESTOR,
-          source: 'Why Indore — advisor',
+          source: 'Why Indore :  advisor',
           eyebrow: 'Investor desk',
           heading: 'Schedule an investment consultation.',
           fields: ['name', 'phone', 'preferredDate', 'preferredTime', 'budget'],

@@ -84,7 +84,7 @@ export default function ProjectBannerCarousel({ images = [], projectName = 'Proj
         <div className="project-banner__shell">
           <img
             src={slides[0].src}
-            alt={slides[0].alt || `${projectName} — hero`}
+            alt={slides[0].alt || `${projectName}: hero`}
             loading="eager"
             fetchPriority="high"
             decoding="async"
@@ -119,7 +119,7 @@ export default function ProjectBannerCarousel({ images = [], projectName = 'Proj
             >
               <img
                 src={img.src}
-                alt={img.alt || `${projectName} — image ${i + 1} of ${count}`}
+                alt={img.alt || `${projectName}: image ${i + 1} of ${count}`}
                 /* only the first frame competes with the page's first paint */
                 loading={i === 0 ? 'eager' : 'lazy'}
                 fetchPriority={i === 0 ? 'high' : 'low'}
@@ -188,13 +188,13 @@ export default function ProjectBannerCarousel({ images = [], projectName = 'Proj
         <ImageViewer
           images={slides.map((img, i) => ({
             src: img.src,
-            alt: img.alt || `${projectName} — image ${i + 1}`,
+            alt: img.alt || `${projectName}: image ${i + 1}`,
             label: img.category,
           }))}
           index={viewerAt}
           onIndexChange={(i) => { setViewerAt(i); setIndex(i); setTaken(true); }}
           onClose={() => setViewerAt(null)}
-          title={`${projectName} — photographs`}
+          title={`${projectName}: photographs`}
         />
       )}
     </section>

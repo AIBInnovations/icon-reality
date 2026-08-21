@@ -42,7 +42,7 @@ export default function ProjectsCarousel() {
             Projects shaping<br/>the skyline.
           </Reveal>
           <Reveal as="p" className="carousel__lede" delay={0.1}>
-            {projects.length} developments open across Indore right now — each one a quiet, considered
+            {projects.length} developments open across Indore right now, each one a quiet, considered
             statement. Pick a project to take a closer look.
           </Reveal>
         </div>

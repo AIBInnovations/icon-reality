@@ -17,8 +17,8 @@ export default function FinalCTA() {
           </Reveal>
 
           <Reveal as="p" className="final-cta__lede" delay={0.1}>
-            Come walk the land before it walks away. Site visits are by appointment —
-            our team will take you through the plots, the planning, and the long view.
+            Come walk the land before it walks away. Site visits are by appointment.
+            Our team will take you through the plots, the planning, and the long view.
           </Reveal>
 
           <Reveal className="final-cta__actions" delay={0.15}>
