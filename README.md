@@ -70,15 +70,18 @@ Routes live in `src/App.jsx`. All are lazily loaded behind one `<Suspense>`.
 /why-indore                     the city: infrastructure, employment, corridors
 /investors                      investor corner + consultation booking
 
-/nri                            NRI hub
-/nri/:topic                     six topics, one component, driven by data/nri.js
-                                  buying-process · legal-rera · taxation
-                                  home-loans · virtual-tours · power-of-attorney
+/nri                            NRI corner — ONE page, six sections, each with
+                                its own layout and an id you can link to:
+                                  #buying-process · #legal-rera · #taxation
+                                  #home-loans · #virtual-tours · #power-of-attorney
+/nri/:topic                     → redirects to /nri#<topic> (unknown topic 404s)
 
-/channel-partners               partner hub
-/channel-partners/why-icon
-/channel-partners/commission-support
-/channel-partners/register      three-step registration
+/channel-partners               partner programme — ONE page, six sections:
+                                  #why-icon · #benefits · #portfolio
+                                  #journey · #commission-support · #register
+/channel-partners/why-icon              ┐
+/channel-partners/commission-support    ├ → redirect to the matching anchor
+/channel-partners/register              ┘
 
 *                               real 404 (NotFoundPage), never a home-page fallback
 ```
@@ -87,6 +90,11 @@ Routes live in `src/App.jsx`. All are lazily loaded behind one `<Suspense>`.
 header mega-menu, the mobile drawer and the footer columns all read it, so they
 cannot drift apart. Adding a route means adding it there and to
 `src/seo/routes.js` (which generates `sitemap.xml` at build time).
+
+Nav entries whose target is a section rather than a page carry a `#anchor` in
+their `to`. `RouteTransition` does the scrolling, so those links work from any
+other route as well as from the page itself; `allNavPaths()` and the sitemap
+skip them, because an anchor is not a separate URL.
 
 ## Content architecture
 
@@ -99,7 +107,7 @@ src/data/
   company.js          trust stats, story, values, leadership, milestones
   indore.js           Why Indore
   investor.js         Investor Corner
-  nri.js              NRI hub + all six topics
+  nri.js              NRI corner — intro + all six sections
   channelPartners.js  partner programme, journey, registration steps
   contact.js          every phone number, email and address on the site
   nav.js              the information architecture

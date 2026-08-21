@@ -1,104 +1,105 @@
 import { useEffect, useRef, useState } from 'react';
+import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 import { useEnquiry } from '../enquiry/enquiryContext';
 import './ServicesGrid.css';
 
+// What Icon Realty offers ACROSS the portfolio — not what one project has.
+// Every figure here is either published company data (company.js) or is the
+// true min/max across projects.js; nothing is estimated (CLAUDE.md §5).
 const services = [
   {
     title: 'PLOT LAYOUTS',
     image: '/images/services/plot-layouts.jpg',
-    downloadUrl: '/downloads/oscar-palace-brochure.pdf',
-    downloadLabel: 'Download Plot Layout',
-    body: 'A residential plotted project laid out on royal principles — wide avenues, east and west facing plots, and Vastu-compliant orientations across every block.',
-    body2: 'Maximum roads run 100 ft and 60 ft wide, so every approach feels generous. Plots range from 3,000 to 20,000 sq ft, with reserved-frontage corners kept for landmark homes and orientations chosen so morning light reaches the right rooms.',
+    body: 'Residential plotted developments, planned on the same principles for twenty years — wide avenues, east and west facing plots, and Vastu-compliant orientations across every block.',
+    body2: 'Plots run from 600 sq ft at Saatvik Vihar and Siddhayatan to 20,000 sq ft estate parcels at Oscar Palace, so there is a first plot and a landmark plot inside the same portfolio. Road widths are planned generously — up to 100 ft and 60 ft on the estate projects — and corner frontages are reserved rather than sold off first.',
     highlights: [
-      'Plot sizes from 3,000 to 20,000 sq ft',
-      'East & west facing plots',
-      'Maximum roads 100 ft & 60 ft wide',
-      'Vastu-compliant residential plotting',
+      'Plot sizes from 600 to 20,000 sq ft across the portfolio',
+      'East & west facing, Vastu-compliant plotting',
+      'Wide planned roads — up to 100 ft & 60 ft',
+      'Three positioning bands: high end, lower high end, mid range',
     ],
     stats: [
-      { k: 'Plot range', v: '3,000 – 20,000 sq ft' },
-      { k: 'Road width', v: '100 ft & 60 ft' },
+      { k: 'Plot range', v: '600 – 20,000 sq ft' },
+      { k: 'Projects', v: '15+ landmarks' },
       { k: 'Facing', v: 'East & West' },
     ],
     gallery: [
       '/images/oscar/layout/layout-1.jpg',
       '/images/oscar/layout/layout-2.jpg',
+      '/images/siddhayatan/layout-1.jpg',
       '/images/oscar/layout/layout-3.jpg',
     ],
   },
   {
     title: 'AMENITIES',
     image: '/images/services/amenities.jpg',
-    body: 'A 26,000 sq ft grand clubhouse, a temple, baradaris, and 2,80,000 sq ft of garden and open spaces — designed for daily life, not the brochure.',
-    body2: 'We design for the hours you actually live in. Morning walks through landscaped gardens, evenings at the clubhouse, children at the play zone, and quiet corners for yoga and meditation — all held inside a secure, heritage-styled estate.',
+    body: 'Gardens, temples, turfs, courts and clubhouses — sized to the project, and designed for the hours you actually live in rather than for the brochure.',
+    body2: 'Oscar Palace carries 2,80,000 sq ft of garden and open space, a heritage temple and marble baradaris, tennis and pickleball courts and a multipurpose cricket and football turf. Eden Garden has its football garden and skating rink; IIT Greens its oxygen zone and acupressure track; Saatvik Vihar its yoga and senior-citizen gardens. The scale changes with the project — the intent does not.',
     highlights: [
-      '2,80,000 sq ft of garden & open spaces',
-      '26,000 sq ft grand clubhouse',
-      'Swimming pool, gymnasium & yoga deck',
-      'Temple, baradari & children\'s play zone',
+      'Landscaped gardens & open space on every project',
+      'Sport: turfs, tennis, pickleball, skating, open gyms',
+      'Temples, baradaris & community halls',
+      '24×7 security and planned utilities',
     ],
     stats: [
-      { k: 'Garden & open space', v: '2,80,000 sq ft' },
-      { k: 'Clubhouse', v: '26,000 sq ft' },
+      { k: 'Largest green', v: '2,80,000 sq ft' },
       { k: 'Security', v: '24×7 multi-tier' },
+      { k: 'Delivered', v: '10 communities' },
     ],
     gallery: [
       '/images/oscar/park/park-1.jpg',
       '/images/oscar/temple/temple-1.jpg',
-      '/images/oscar/park/park-2.jpg',
+      '/images/eden-garden/eden-3.jpg',
       '/images/oscar/amenities/amenity-1.jpg',
-      '/images/oscar/park/park-5.jpg',
-      '/images/oscar/amenities/amenity-3.jpg',
+      '/images/iit-greens/render-3.jpg',
+      '/images/saatvik-vihar/saatvik-3.jpg',
     ],
   },
   {
     title: 'LOCATION',
     image: '/images/services/location.jpg',
-    downloadUrl: '/downloads/oscar-palace-brochure.pdf',
-    downloadLabel: 'Download Location Plan',
-    body: 'On the new Indore–Nagpur Highway — a corridor set to reshape the infrastructure and road connectivity of Indore, with the city close and the calm intact.',
-    body2: 'Top-rated schools sit within 4 km, hospitals and retail are two minutes away, and the expressway is a minute from the gate. The airport is a clear 27 km run. Close enough for the city to be useful, far enough for the calm to be real.',
+    body: 'Every project we have built stands in and around Indore — the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau, Simrol and Pithampur.',
+    body2: 'We are not visitors to this market. We know which corridors are being built and which ones are only being talked about, and the difference between the two is the whole of our job. Oscar Palace sits a minute from the expressway; IIT Greens is opposite the IIT Indore campus; Siddhayatan runs straight through to Ujjain; the Singapore townships line the corporate axis of the Super Corridor.',
     highlights: [
-      'On the new Indore–Nagpur Highway',
-      'Top-rated schools within 4 km',
-      'Hospital & retail 2 minutes away',
-      '1 minute to the expressway',
+      'Every project in and around Indore',
+      'Super Corridor, Indore–Nagpur Highway, Bicholi & Manglia',
+      'Airport, expressway and campus adjacencies',
+      'Twenty years of reading this one city',
     ],
     stats: [
-      { k: 'To expressway', v: '1 min' },
-      { k: 'To airport', v: '27 km' },
-      { k: 'Schools nearby', v: '4+ rated' },
+      { k: 'City', v: 'Indore' },
+      { k: 'Since', v: '2004' },
+      { k: 'Corridors', v: '6+' },
     ],
     gallery: [
       '/images/oscar/entrance/entrance-1.jpg',
-      '/images/oscar/entrance/entrance-3.jpg',
-      '/images/oscar/entrance/entrance-2.jpg',
-      '/images/oscar/entrance/entrance-4.jpg',
+      '/images/singapore-corridor/hero.jpg',
+      '/images/iit-greens/render-2.jpg',
+      '/images/oscar-fort/hero.jpg',
     ],
   },
   {
     title: 'INVESTMENT',
     image: '/images/services/investment.jpg',
-    body: 'Buy early, hold long-term, watch appreciation — land you own, on a highway corridor with structural reasons to grow. Bank loans are available on every plot.',
-    body2: 'Plotted developments in growth corridors have historically outperformed apartments on both appreciation and liquidity. Oscar Palace, on the Indore–Nagpur Highway, is positioned to be one of them.',
+    body: 'Buy early, hold long-term, watch appreciation — land you own, on corridors with structural reasons to grow. Bank loans are available on our plots.',
+    body2: 'Plotted developments in growth corridors have historically outperformed apartments on both appreciation and liquidity. Ten of our communities are already delivered and lived in, which means you can go and see what an Icon Realty address looks like a decade after handover before you buy into the next one.',
     highlights: [
       'Land you own outright — no depreciation',
-      'Bank loans available on every plot',
-      'Title-clear, RERA-registered project',
+      'Home-loan assistance on our plotted developments',
+      'Ten delivered communities you can visit today',
       'Resale or self-build, your call',
     ],
     stats: [
-      { k: 'Corridor', v: 'Indore–Nagpur Hwy' },
+      { k: 'Delivered', v: '10 communities' },
       { k: 'Bank loans', v: 'Available' },
       { k: 'Flexibility', v: 'Hold · build · resell' },
     ],
     gallery: [
-      '/images/oscar/photos/photo-1.jpg',
-      '/images/oscar/photos/photo-8.jpg',
-      '/images/oscar/photos/photo-4.jpg',
-      '/images/oscar/photos/photo-11.jpg',
+      '/images/ruchi-lifescapes/hero.jpg',
+      '/images/singapore-lifestyle-2/hero.jpg',
+      '/images/dream-victoria/victoria-1.jpg',
+      '/images/oscar-billionaire/hero.jpg',
     ],
   },
 ];
@@ -278,7 +279,8 @@ export default function ServicesGrid() {
           <div className="services__head">
             <Reveal as="h2" className="display services__title">What we<br/>offer.</Reveal>
             <Reveal as="p" className="services__lede" delay={0.05}>
-              Give your investment more meaning — without compromising on quality, location, or the way the place actually feels.
+              Icon Realty designs and markets residential plotted developments — and has done, in this
+              one city, for twenty years. This is what that covers.
             </Reveal>
           </div>
 
@@ -352,21 +354,13 @@ export default function ServicesGrid() {
                 </div>
 
                 <div className="service-modal__actions">
-                  {open.downloadUrl && (
-                    <a
-                      href={open.downloadUrl}
-                      download
-                      target="_blank"
-                      rel="noreferrer"
-                      className="cta service-modal__cta"
-                    >
-                      {open.downloadLabel || 'Download PDF'}
-                    </a>
-                  )}
+                  <Link to="/projects" className="cta service-modal__cta" onClick={() => setOpenIdx(-1)}>
+                    See all projects
+                  </Link>
                   <button
                     type="button"
-                    className={`cta service-modal__cta ${open.downloadUrl ? 'cta--ghost' : ''}`}
-                    onClick={() => { setOpenIdx(-1); openEnquiry({ source: `Services — ${open.title || ''}`.trim(), project: 'Oscar Palace' }); }}
+                    className="cta cta--ghost service-modal__cta"
+                    onClick={() => { setOpenIdx(-1); openEnquiry({ source: `Services — ${open.title || ''}`.trim() }); }}
                   >
                     Book a Site Visit
                   </button>

@@ -49,11 +49,14 @@ export const NAV = [
       image: '/images/oscar/photos/photo-4.jpg',
       title: 'Buying from abroad',
       note: 'Remote inspection, documentation and registration support',
-      to: '/nri/buying-process',
+      to: '/nri#buying-process',
     },
     children: () => [
       { label: 'NRI Corner', to: '/nri' },
-      ...NRI_TOPICS.map((t) => ({ label: t.nav, to: `/nri/${t.slug}`, note: t.summary })),
+      // The six topics are sections of the one /nri page, not routes of their
+      // own — so these are anchors. RouteTransition does the scrolling, which
+      // is what makes them work from any other page too.
+      ...NRI_TOPICS.map((t) => ({ label: t.nav, to: `/nri#${t.slug}`, note: t.summary })),
     ],
   },
   {
@@ -64,13 +67,14 @@ export const NAV = [
       image: '/images/oscar-fort/gallery-6.jpg',
       title: 'Become a channel partner',
       note: 'Portfolio, support structure and registration',
-      to: '/channel-partners/register',
+      to: '/channel-partners#register',
     },
     children: () => [
       { label: 'Channel Partners', to: '/channel-partners' },
-      { label: 'Why Partner With Icon', to: '/channel-partners/why-icon' },
-      { label: 'Commission & Support', to: '/channel-partners/commission-support' },
-      { label: 'Register', to: '/channel-partners/register' },
+      // Sections of the one /channel-partners page — see the NRI note above.
+      { label: 'Why Partner With Icon', to: '/channel-partners#why-icon', note: 'A delivered portfolio, and range across price' },
+      { label: 'Commission & Support', to: '/channel-partners#commission-support', note: 'How terms are set, and what support comes with them' },
+      { label: 'Register', to: '/channel-partners#register', note: 'Three short steps, one of them required' },
     ],
   },
 ];
@@ -88,8 +92,9 @@ export function allNavPaths() {
   for (const item of NAV) {
     out.push(item.to);
     for (const child of childrenOf(item)) {
-      // query-string variants are the same document as /projects
-      if (!child.to.includes('?')) out.push(child.to);
+      // query-string variants and #section anchors are the same document as
+      // their parent — /projects?status=…, /nri#taxation
+      if (!child.to.includes('?') && !child.to.includes('#')) out.push(child.to);
     }
   }
   return [...new Set(out)];

@@ -6,9 +6,12 @@ import './AboutPostcard.css';
 
 gsap.registerPlugin(ScrollTrigger);
 
-// Vintage "POST CARD" about-band. Click the button → the postcard shrinks & slides
-// left while the stamp-edged royal-gate photo emerges from the right. Flanking
-// bird+postcard cutouts (same as the Oscar hero) drift on scroll.
+// Vintage "POST CARD" about-band — Icon Realty's note to the city it has built
+// in since 2004. Click the button → the postcard shrinks & slides left while the
+// stamp-edged photo emerges from the right. Flanking cutouts drift on scroll.
+//
+// The copy is the company's, not one project's (change.md #2); the stamp still
+// carries Oscar Palace because that is the photograph behind it.
 export default function AboutPostcard() {
   const stageRef = useRef(null);
   const birdLRef = useRef(null);
@@ -29,7 +32,7 @@ export default function AboutPostcard() {
   }, []);
 
   return (
-    <section className="postcard-scene" id="about-oscar">
+    <section className="postcard-scene" id="about-icon">
       <div className="container">
         <div className="ps-flank ps-flank--l"><img ref={birdLRef} src="/images/oscar/3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" /></div>
         <div className="ps-flank ps-flank--r"><img ref={birdRRef} src="/images/oscar/4.png" alt="" aria-hidden="true" loading="lazy" decoding="async" /></div>
@@ -48,14 +51,14 @@ export default function AboutPostcard() {
             <div className="pc2-body">
               <div className="pc2-left">
                 <p className="pc2-poem">
-                  Once, India built palaces<br/>
-                  for royalty. Now, one rises<br/>
-                  for the chosen few.
+                  Twenty years in one city.<br/>
+                  Fifteen landmarks. Four<br/>
+                  thousand families home.
                 </p>
-                <p className="pc2-sign">Royally yours,</p>
+                <p className="pc2-sign">From Indore, with care —</p>
                 <p className="pc2-credit">
-                  A <b>Ruchi Realty</b> project — designed &amp; marketed by <b>Icon Realty</b>,
-                  on the Indore–Nagpur Highway.
+                  <b>Icon Realty</b> — designing &amp; marketing residential plotted
+                  developments since <b>2004</b>. Plots from 600 to 20,000 sq ft.
                 </p>
               </div>
 
@@ -97,12 +100,12 @@ export default function AboutPostcard() {
 
             <div className="pc2-actions">
               <button className="pc2-btn" type="button" onClick={() => setOpen((o) => !o)} aria-expanded={open}>
-                {open ? 'Hide the gate' : 'See the royal gate'}
+                {open ? 'Hide the picture' : 'See our flagship'}
                 <svg width="15" height="15" viewBox="0 0 15 15" fill="none">
                   <path d="M3 7.5h8M7.5 4l3.5 3.5L7.5 11" stroke="currentColor" strokeWidth="1.5" strokeLinecap="round" strokeLinejoin="round"/>
                 </svg>
               </button>
-              <button type="button" className="pc2-link" onClick={() => openEnquiry({ source: 'About', project: 'Oscar Palace' })}>Book a Site Visit</button>
+              <button type="button" className="pc2-link" onClick={() => openEnquiry({ source: 'About — Icon Realty' })}>Book a Site Visit</button>
             </div>
           </div>
         </div>

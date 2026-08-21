@@ -1,13 +1,19 @@
 // Source: https://iconrealty.homes/project/<slug>/
-// Trending projects (8) — full detail content fetched from iconrealty.homes.
-// Completed projects (8) — sparse content (iconrealty.homes has no dedicated
-// detail pages for them); list pages use local thumbnails for visual continuity.
+// Trending projects (7) — full detail content fetched from iconrealty.homes.
+// Completed projects (10) — mostly sparse content (iconrealty.homes has no
+// dedicated detail pages for them); list pages use local thumbnails for visual
+// continuity. Oscar Billionaire is delivered but keeps its full content and
+// still sits in the trending block of this file — `status` is what the UI reads.
 //
 // ---------------------------------------------------------------------------
 // SHAPE
 //
 // Required on every project:
-//   slug, name, status, location, tagline, description, hero_image, thumbnail
+//   slug, name, status, category, location, tagline, description,
+//   hero_image, thumbnail
+//
+//   featured: true            opts the project into the home page's three
+//                             highlighted projects. Exactly three carry it.
 //
 // Optional — a project carries a field only when the data genuinely exists, and
 // every component hides its section when the field is absent (read.md §11, §71).
@@ -17,6 +23,12 @@
 //   amenities[]                   list of amenity names
 //   amenityImages{}               amenity name -> photograph
 //   connectivity[]                nearby landmarks, as published
+//   mapQuery                      exact string to search Google Maps with,
+//                                 when the project name alone mislands the pin
+//   coordinates                   { lat, lng, zoom? } — verified site
+//                                 coordinates. Preferred over mapQuery: the pin
+//                                 is exact rather than geocoded. Only add
+//                                 coordinates the client has confirmed (§5).
 //   highlights[]                  what distinguishes the project
 //   gallery[]                     image paths, or { src, category, alt }
 //   video_url, video_poster       walkthrough film
@@ -34,7 +46,9 @@
 //   faqs[]                        [{ q, a }] — project-specific overrides
 //   seo                           { title, description }
 //
-// STATUS values: 'trending' (currently selling), 'upcoming', 'completed'.
+// STATUS values:   'trending' (currently selling), 'upcoming', 'completed'.
+// CATEGORY values: 'high-end', 'lower-high-end', 'mid-range' — the positioning
+//                  band, see PROJECT_CATEGORIES at the foot of this file.
 // ---------------------------------------------------------------------------
 
 export const projectsList = [
@@ -43,32 +57,41 @@ export const projectsList = [
     slug: 'oscar-palace',
     name: 'Oscar Palace',
     status: 'trending',
+    category: 'high-end',
+    featured: true,
     location: 'Indore–Nagpur Highway, Indore',
     total_area: 'Royal estate',
     plot_sizes: '3,000 – 20,000 sq ft',
     tagline: "Central India's most beautiful and well-equipped royal estate colony.",
     description:
-      'Oscar Palace is a luxury residential plotting project by Ruchi Realty — mindfully designed and marketed by Icon Realty — on the new Indore–Nagpur Highway. Designed by renowned Jaipur architect Ravi Gupta Ji (the architect behind several Oberoi hotels and Suryagarh Palace), it brings royal Indian architecture to plotted living: palace-style gates, marble baradaris, a heritage temple, and 2,80,000 sq ft of garden and open spaces wrapped around a 26,000 sq ft clubhouse.',
+      'Oscar Palace is a luxury residential plotting project by Ruchi Realty — mindfully designed and marketed by Icon Realty — on the new Indore–Nagpur Highway. Designed by renowned Jaipur architect Ravi Gupta Ji, it brings royal Indian architecture to plotted living: palace-style gates, marble baradaris, a heritage temple, and 2,80,000 sq ft of garden and open spaces. Sport and everyday life are planned in too — a tennis court, a pickleball court, a skating rink and a multipurpose cricket and football turf, with EV car charging at the plots. The estate\'s own overhead water tank and watch tower stand over the layout: independent water supply and a clear line of sight across every block.',
     amenities: [
-      '26,000 sq ft grand clubhouse',
       '2,80,000 sq ft of garden & open spaces',
       'Heritage temple & marble baradaris',
-      'Swimming pool',
+      'Tennis court',
+      'Pickleball court',
+      'Skating rink',
+      'Multipurpose cricket & football turf',
+      'EV car charging',
+      'Overhead water tank & watch tower',
       'Gymnasium & yoga deck',
       "Children's play zone & open gym",
       'Multi-purpose hall',
-      'Badminton & tennis courts',
       '24×7 multi-tier security',
     ],
+    // Only amenities with a photograph that ACTUALLY SHOWS THEM are listed here.
+    // The new sport and utility amenities (pickleball, skating, the turf, EV
+    // charging, the water tank and watch tower) have no supplied imagery yet, so
+    // they are deliberately absent — AmenitiesSection renders an un-imaged
+    // amenity as a named list item rather than borrowing a photo of something
+    // else. Add each entry as the photography arrives (change.md #9).
     amenityImages: {
-      '26,000 sq ft grand clubhouse': '/images/oscar/photos/photo-8.jpg',
       '2,80,000 sq ft of garden & open spaces': '/images/oscar/park/park-1.jpg',
       'Heritage temple & marble baradaris': '/images/oscar/temple/temple-1.jpg',
-      'Swimming pool': '/images/oscar/amenities/amenity-5.jpg',
+      'Tennis court': '/images/oscar/amenities/amenity-1.jpg',
       'Gymnasium & yoga deck': '/images/oscar/amenities/amenity-2.jpg',
-      "Children's play zone & open gym": '/images/oscar/park/park-6.jpg',
+      "Children's play zone & open gym": '/images/oscar/amenities/amenity-3.jpg',
       'Multi-purpose hall': '/images/oscar/photos/photo-1.jpg',
-      'Badminton & tennis courts': '/images/oscar/amenities/amenity-1.jpg',
       '24×7 multi-tier security': '/images/oscar/entrance/entrance-1.jpg',
     },
     connectivity: [
@@ -80,10 +103,9 @@ export const projectsList = [
       '4+ rated schools nearby',
     ],
     highlights: [
-      'Designed by Ravi Gupta Ji of Jaipur — architect behind several Oberoi hotels & Suryagarh Palace',
+      'Designed by Ravi Gupta Ji of Jaipur — architect behind several Oberoi hotels',
       'A Ruchi Realty project, mindfully designed & marketed by Icon Realty',
       'East & west facing, Vastu-compliant plots from 3,000 to 20,000 sq ft',
-      'Maximum roads 100 ft & 60 ft wide',
       'Bank loans available on every plot',
     ],
     brochure_url: '/downloads/oscar-palace-brochure.pdf',
@@ -104,11 +126,18 @@ export const projectsList = [
       Roads: ['Maximum roads 100 ft and 60 ft wide'],
       Plots: ['East and west facing', 'Vastu-compliant', '3,000 – 20,000 sq ft'],
       Landscape: ['2,80,000 sq ft of garden and open spaces'],
-      Community: ['26,000 sq ft clubhouse', 'Heritage temple and marble baradaris'],
-      Security: ['24×7 multi-tier security'],
+      Community: ['Heritage temple and marble baradaris', 'Multi-purpose hall'],
+      Sport: ['Tennis court', 'Pickleball court', 'Skating rink', 'Multipurpose cricket and football turf'],
+      Utilities: ['Overhead water tank — independent estate water supply', 'EV car charging'],
+      Security: ['24×7 multi-tier security', 'Watch tower overlooking the layout'],
       Financing: ['Bank loans available on every plot'],
     },
     hero_image: '/images/oscar/entrance/entrance-1.jpg',
+    // PENDING FILM (change.md #9): the client is supplying the long-form film
+    // shot by the TITA team. Drop it in public/video and point video_url at it
+    // — the player, the poster, the mobile tap-to-play gate and the VideoObject
+    // schema all read this one field. Until then this is the existing
+    // walkthrough. Confirm whether the TITA film replaces it or sits alongside.
     video_url: '/video/oscar-palace-walkthrough.mp4',
     video_poster: '/images/oscar/entrance/entrance-1.jpg',
     gallery: [
@@ -128,12 +157,13 @@ export const projectsList = [
     slug: 'oscar-fort',
     name: 'Oscar Fort',
     status: 'trending',
+    category: 'high-end',
     location: 'Bicholi Mardana, Indore',
     total_area: 'Royal estate',
     plot_sizes: '2,800 – 5,000 sq ft',
     tagline: 'A tribute to the majestic mahals of the past, designed to feel like your own private fortress.',
     description:
-      'Oscar Fort blends regal architecture with modern luxury, secured by a 12-foot boundary wall. The development features landscaped heritage-themed gardens, an infinity pool, gymnasium, and grand entrance.',
+      'Oscar Fort blends regal architecture with modern luxury, secured by a 12-foot boundary wall. The development features landscaped heritage-themed gardens, an infinity pool, gymnasium, and grand entrance. It sits very close to Scheme 140 and Bicholi — so the city is not somewhere you drive to, it is already around you: schools, hospitals, malls and the Ring Road are all a short run from the gate, while the fort wall keeps the noise of it outside. Designed and marketed by Icon Realty.',
     amenities: [
       "Kids' play area",
       'Gymnasium',
@@ -144,23 +174,28 @@ export const projectsList = [
       'Yoga & Meditation Area',
     ],
     connectivity: [
-      '6–7 km from Phoenix Citadel Mall',
+      'Very close to Scheme 140',
+      'Minutes from Bicholi Mardana & Bicholi Hapsi',
       '3–4 km from Scheme 140',
       '2–3 km from Agrawal Public School',
+      '6–7 km from Phoenix Citadel Mall',
       '8–9 km from Marriott Hotel',
       '10–11 km from Indore Railway Station',
       '18–20 km from Indore Airport',
     ],
     highlights: [
+      'Very close to Scheme 140 and Bicholi — city convenience already around you',
       '12-foot high boundary wall ensuring absolute privacy and safety',
       'Heritage-themed landscape by renowned landscaper Savita Punde',
       'Infinity swimming pool and fully equipped gymnasium',
-      'Seamless blend of regal architecture with contemporary lifestyle',
+      'Designed and marketed by Icon Realty',
     ],
     brochure_url: '/downloads/oscar-fort-brochure.pdf',
+    developer: 'Icon Realty',
     marketedBy: 'Icon Realty',
     specifications: {
       Plots: ['2,800 – 5,000 sq ft'],
+      Location: ['Very close to Scheme 140', 'Minutes from Bicholi Mardana and Bicholi Hapsi'],
       Security: ['12-foot high boundary wall'],
       Landscape: ['Heritage-themed landscape by Savita Punde'],
       Wellness: ['Infinity swimming pool', 'Fully equipped gymnasium', 'Sauna', 'Yoga and meditation area'],
@@ -185,13 +220,16 @@ export const projectsList = [
   {
     slug: 'oscar-billionaire',
     name: 'Oscar Billionaire',
-    status: 'trending',
+    // Delivered. It sits in the trending block only because it was written
+    // here first; the status field is what every list and badge reads.
+    status: 'completed',
+    category: 'high-end',
     location: 'Bicholi Hapsi, Indore',
     total_area: '24 acres',
     plot_sizes: '85 plots',
     tagline: 'An ode to grandeur — a unique presentation of empirical lifestyle.',
     description:
-      'Luxury plotted development blending traditional royal living with contemporary sophistication. Features a majestic grand entrance, gold-leaf gazebos, cascading fountains, and landscaped vistas across 24 acres.',
+      'A completed Icon Realty luxury plotted development blending traditional royal living with contemporary sophistication. Delivered across 24 acres with a majestic grand entrance, gold-leaf gazebos, cascading fountains and landscaped vistas — built, handed over, and lived in.',
     amenities: [
       'State-of-the-art gymnasium',
       '400 ft frontage',
@@ -210,6 +248,7 @@ export const projectsList = [
       'Near the upcoming metro corridor',
     ],
     highlights: [
+      'Completed and delivered — walk it before you decide',
       'Rooted in illustrious heritage yet attuned to modern aspirations',
       'Exemplifies professionalism, integrity, and architectural finesse',
       'A timeless splendour where legacy and luxury coexist',
@@ -232,6 +271,7 @@ export const projectsList = [
     slug: 'saatvik-vihar',
     name: 'Saatvik Vihar',
     status: 'trending',
+    category: 'mid-range',
     location: 'Manglia, Indore',
     total_area: 'Township',
     plot_sizes: '600 – 1,800 sq ft',
@@ -277,26 +317,31 @@ export const projectsList = [
     slug: 'siddhayatan',
     name: 'Siddhayatan',
     status: 'trending',
+    category: 'mid-range',
+    featured: true,
     location: 'Manglia, Indore',
     total_area: 'Community',
     plot_sizes: '600 – 1,500 sq ft',
     tagline: 'Premium plotted development for crafting your own way of living.',
     description:
-      'A premium residential plotted community offering well-designed spaces with open landscapes. The development emphasizes individual expression within a connected community framework, combining accessibility with serene surroundings.',
+      'A premium residential plotted community offering well-designed spaces with open landscapes. The development emphasizes individual expression within a connected community framework, combining accessibility with serene surroundings. Connectivity is the quiet advantage here — Manglia sits on the Indore–Ujjain route, so the run from the gate to Ujjain is an easy, uninterrupted one, with Indore itself just as close in the other direction.',
     amenities: [
-      'Football / Cricket Turf & Skating Rink',
+      'Football / Cricket Turf',
       '24×7 Security',
       'Temple for spiritual retreat',
       'Water conservation systems',
       '150 thoughtfully planned plots',
     ],
     connectivity: [
+      'Excellent connectivity from Manglia to Ujjain',
+      'On the Indore–Ujjain route',
       'Located at AB Road Extension near upcoming metro corridor',
       '15 minutes from Indore International Airport',
       '10 minutes from Vijay Nagar commercial hub',
       '5 minutes from top-tier schools',
     ],
     highlights: [
+      'Excellent connectivity from Manglia to Ujjain',
       'Well-laid roads and open landscapes',
       'Design philosophy encouraging individuality',
       'Community-focused planning',
@@ -309,10 +354,16 @@ export const projectsList = [
     ],
     specifications: {
       Plots: ['600 – 1,500 sq ft', '150 thoughtfully planned plots'],
-      Community: ['Temple for spiritual retreat', 'Football / cricket turf and skating rink'],
+      Location: ['Manglia — on the Indore–Ujjain route', 'Excellent connectivity from Manglia to Ujjain'],
+      Community: ['Temple for spiritual retreat', 'Football / cricket turf'],
       Sustainability: ['Water conservation systems'],
       Security: ['24×7 security'],
     },
+    // PENDING PHOTOGRAPHY (change.md #12): the gallery and hero below are the
+    // original supplied set. The TITA team's shoot replaces them — drop the
+    // files into public/images/siddhayatan and update hero_image, thumbnail and
+    // gallery here. Nothing else needs touching; every component reads this
+    // record (CLAUDE.md §4).
     hero_image: '/images/siddhayatan/hero.jpg',
     video_url: '/video/siddhayatan-walkthrough.mp4',
     video_poster: '/images/siddhayatan/hero.jpg',
@@ -332,6 +383,8 @@ export const projectsList = [
     slug: 'eden-garden',
     name: 'Eden Garden',
     status: 'trending',
+    category: 'lower-high-end',
+    featured: true,
     location: 'Ambamoliya, Indore',
     total_area: 'Plotted',
     plot_sizes: '800 – 2,000 sq ft',
@@ -375,6 +428,7 @@ export const projectsList = [
     slug: 'labham-city',
     name: 'Labham City',
     status: 'trending',
+    category: 'high-end',
     location: 'Super Corridor, Indore',
     total_area: '34 acres',
     plot_sizes: 'Township',
@@ -423,6 +477,7 @@ export const projectsList = [
     slug: 'iit-greens',
     name: 'IIT Greens',
     status: 'trending',
+    category: 'lower-high-end',
     location: 'Simrol, Indore-Khandwa Highway',
     total_area: '28 acres',
     plot_sizes: 'Education corridor',
@@ -486,6 +541,7 @@ export const projectsList = [
     slug: 'glamour-highway-city',
     name: 'Glamour Highway City',
     status: 'completed',
+    category: 'mid-range',
     location: 'Pithampur',
     total_area: 'Township',
     plot_sizes: 'Plotted development',
@@ -512,6 +568,7 @@ export const projectsList = [
     slug: 'glamour-hill-city',
     name: 'Glamour Hill City',
     status: 'completed',
+    category: 'mid-range',
     location: 'Rau',
     total_area: 'Township',
     plot_sizes: 'Plotted development',
@@ -533,6 +590,7 @@ export const projectsList = [
     slug: 'ruchi-enclave',
     name: 'Ruchi Enclave',
     status: 'completed',
+    category: 'lower-high-end',
     location: 'Jhalaria',
     total_area: 'Enclave',
     plot_sizes: 'Premium plotted',
@@ -559,6 +617,7 @@ export const projectsList = [
     slug: 'ruchi-lifescapes',
     name: 'Ruchi Lifescapes',
     status: 'completed',
+    category: 'lower-high-end',
     location: 'Jhalaria',
     total_area: 'Premium plotted',
     plot_sizes: 'Family plots',
@@ -586,6 +645,7 @@ export const projectsList = [
     slug: 'singapore-corridor',
     name: 'Singapore Corridor',
     status: 'completed',
+    category: 'mid-range',
     location: 'Super Corridor, Indore',
     total_area: 'Township',
     plot_sizes: 'Plotted development',
@@ -608,6 +668,7 @@ export const projectsList = [
     slug: 'singapore-lifestyle-2',
     name: 'Singapore Lifestyle 2',
     status: 'completed',
+    category: 'mid-range',
     location: 'Super Corridor, Indore',
     total_area: 'Township phase II',
     plot_sizes: 'Plotted development',
@@ -634,6 +695,7 @@ export const projectsList = [
     slug: 'dream-victoria',
     name: 'Dream Victoria',
     status: 'completed',
+    category: 'mid-range',
     location: 'Super Corridor, Indore',
     total_area: 'Township',
     plot_sizes: 'Plotted development',
@@ -659,6 +721,7 @@ export const projectsList = [
     slug: 'victoria-park',
     name: 'Victoria Park',
     status: 'completed',
+    category: 'mid-range',
     location: 'Super Corridor, Indore',
     total_area: 'Plotted park-side',
     plot_sizes: 'Park-facing plots',
@@ -669,6 +732,11 @@ export const projectsList = [
     connectivity: ['Super Corridor', 'Schools and markets within easy reach'],
     highlights: ['Park-front positioning', 'Fully completed and inhabited', 'Strong family neighborhood'],
     brochure_url: null,
+    // NO PROJECT PHOTOGRAPHY SUPPLIED. These three are unattributed numbered
+    // frames from /images/projects, not pictures of Victoria Park — every
+    // other project on this list shows its own site. Replace all three the
+    // moment the client sends photographs (change.md #1).
+    // /images/projects/victoria-park.jpg is the wordmark, not a photo.
     hero_image: '/images/projects/08.jpg',
     gallery: ['/images/projects/08.jpg', '/images/projects/04.jpg', '/images/projects/05.jpg'],
     thumbnail: '/images/projects/08.jpg',
@@ -677,6 +745,7 @@ export const projectsList = [
     slug: 'singapore-business-park',
     name: 'Singapore Business Park',
     status: 'completed',
+    category: 'mid-range',
     location: 'LIG Square, Indore',
     total_area: 'Mixed-use',
     plot_sizes: 'Plotted & commercial',
@@ -714,6 +783,35 @@ export const PROJECT_STATUSES = [
   { key: 'upcoming', label: 'Upcoming', plural: 'Upcoming projects' },
   { key: 'completed', label: 'Completed', plural: 'Completed projects' },
 ];
+
+/**
+ * Price/positioning bands, ordered high to low. Every project carries a
+ * `category` key from this list; the projects index offers them as a second
+ * filter alongside status, and the card badge names the band.
+ */
+export const PROJECT_CATEGORIES = [
+  { key: 'high-end',       label: 'High end',       blurb: 'Estate-scale plots, signature architecture, the full amenity programme.' },
+  { key: 'lower-high-end', label: 'Lower high end', blurb: 'Premium planning and landscape at a more reachable plot size.' },
+  { key: 'mid-range',      label: 'Mid range',      blurb: 'Honest, well-planned plotted living for first-home and growing families.' },
+];
+
+export const CATEGORY_LABEL = PROJECT_CATEGORIES.reduce((acc, c) => {
+  acc[c.key] = c.label;
+  return acc;
+}, {});
+
+export const projectsByCategory = (category) =>
+  projectsList.filter((p) => p.category === category);
+
+/** Only the bands that actually have projects, so no filter chip dead-ends. */
+export const availableCategories = () =>
+  PROJECT_CATEGORIES.filter((c) => projectsList.some((p) => p.category === c.key));
+
+/**
+ * The three projects the client asks the home page to lead with. Ordered as
+ * they appear in projectsList so the flagship stays first.
+ */
+export const featuredProjects = () => projectsList.filter((p) => p.featured);
 
 export const projectsByStatus = (status) => projectsList.filter((p) => p.status === status);
 

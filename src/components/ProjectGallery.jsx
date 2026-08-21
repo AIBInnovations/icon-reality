@@ -46,8 +46,14 @@ export default function ProjectGallery({
 
   const visible = useMemo(() => {
     const list = filter === 'All' ? normalised : normalised.filter((i) => i.category === filter);
-    return list.filter((_, i) => !failed[`${filter}-${i}`]);
+    return list.filter((img) => !failed[img.src]);
   }, [normalised, filter, failed]);
+
+  // A feature tile is 2 columns x 2 rows of the three-column grid, so the two
+  // tiles that follow it fill the third column beside it and the block closes
+  // flush. Promote index i only when both of those tiles actually exist —
+  // otherwise the feature hangs down past its neighbour and leaves a hole.
+  const isFeature = (i) => visible.length >= 6 && i % 6 === 0 && visible.length - i >= 3;
 
   if (!visible.length) return null;
 
@@ -88,7 +94,7 @@ export default function ProjectGallery({
           {visible.map((img, i) => (
             <Reveal
               key={img.src}
-              className="project-gallery-v2__item"
+              className={`project-gallery-v2__item${isFeature(i) ? ' project-gallery-v2__item--feature' : ''}`}
               delay={Math.min(i, 8) * 0.04}
             >
               <button
@@ -103,7 +109,7 @@ export default function ProjectGallery({
                   /* first row is above the fold on most viewports */
                   loading={i < 3 ? 'eager' : 'lazy'}
                   decoding="async"
-                  onError={() => setFailed((f) => ({ ...f, [`${filter}-${i}`]: true }))}
+                  onError={() => setFailed((f) => ({ ...f, [img.src]: true }))}
                 />
                 {img.category && (
                   <span className="project-gallery-v2__tag">{img.category}</span>

@@ -5,6 +5,7 @@ import gsap from 'gsap';
 import Reveal from '../components/Reveal';
 import Breadcrumbs from '../components/Breadcrumbs';
 import ProjectQuickFacts from '../components/ProjectQuickFacts';
+import ProjectBannerCarousel from '../components/ProjectBannerCarousel';
 import PlanViewer from '../components/PlanViewer';
 import AmenitiesSection from '../components/AmenitiesSection';
 import LocationSection from '../components/LocationSection';
@@ -241,6 +242,16 @@ export default function ProjectDetailPage() {
     () => (project ? categoriseGallery(project.gallery || [], project.name) : []),
     [project],
   );
+
+  // The banner rotates the hero frame plus the project's own gallery. Capped:
+  // past a handful of frames the visitor is scrolling to the gallery anyway,
+  // and every extra slide is another lazy request on a page that already
+  // carries a walkthrough film.
+  const bannerImages = useMemo(() => {
+    if (!project) return [];
+    const hero = project.hero_image ? [{ src: project.hero_image, alt: `${project.name} — hero` }] : [];
+    return [...hero, ...gallery].slice(0, 8);
+  }, [project, gallery]);
   const faqs = useMemo(() => buildProjectFaqs(project), [project]);
   const plans = useMemo(() => projectPlans(project), [project]);
   const related = useMemo(() => (project ? relatedProjects(slug, 3) : []), [project, slug]);
@@ -255,6 +266,7 @@ export default function ProjectDetailPage() {
     hero_image, brochure_url, amenityImages = {},
     video_url, video_poster, specifications, constructionUpdates = [],
     rera, developer, marketedBy, documents = [], possession, price, seo,
+    mapQuery, coordinates,
   } = project;
 
   const statusLabel = status === 'trending' ? 'Trending now'
@@ -426,19 +438,13 @@ export default function ProjectDetailPage() {
 
       <Breadcrumbs trail={trail} />
 
-      {/* ====== HERO IMAGE ====== */}
-      {hero_image && (
-        <section className="project-banner">
-          <div className="project-banner__shell">
-            <img src={hero_image} alt={`${name} — hero`} loading="eager" fetchPriority="high" decoding="async" />
-          </div>
-        </section>
-      )}
+      {/* ====== BANNER ====== */}
+      <ProjectBannerCarousel images={bannerImages} projectName={name} />
 
-      {/* ====== QUICK FACTS ====== */}
-      <ProjectQuickFacts facts={quickFacts} id="facts" />
-
-      {/* ====== OVERVIEW ====== */}
+      {/* ====== OVERVIEW ======
+          First thing under the banner. A visitor who has just looked at the
+          photographs wants to know what the place IS; the fact strip and the
+          highlights both read better once they have. */}
       <section className="project-overview">
         <div className="container project-overview__grid">
           <div className="project-overview__copy">
@@ -479,6 +485,9 @@ export default function ProjectDetailPage() {
         </div>
       </section>
 
+      {/* ====== QUICK FACTS ====== */}
+      <ProjectQuickFacts facts={quickFacts} id="facts" />
+
       {/* ====== WHY THIS PROJECT ====== */}
       {highlights.length > 0 && (
         <section className="project-highlights">
@@ -517,6 +526,8 @@ export default function ProjectDetailPage() {
       <LocationSection
         projectName={name}
         location={location}
+        mapQuery={mapQuery}
+        coordinates={coordinates}
         connectivity={connectivity}
         id="location"
         heading="Where it stands."

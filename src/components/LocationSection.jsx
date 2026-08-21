@@ -44,6 +44,7 @@ export default function LocationSection({
   location,
   connectivity = [],
   mapQuery,
+  coordinates,
   eyebrow = 'Location',
   heading = 'Where it stands.',
   lede,
@@ -55,8 +56,19 @@ export default function LocationSection({
     [connectivity],
   );
 
+  // A text search drops the pin wherever Google's geocoder lands, which for a
+  // project on a new highway is often the wrong side of it. When projects.js
+  // publishes verified coordinates we address the map by lat/lng instead, and
+  // the pin is exact (change.md #9).
   const query = mapQuery || `${projectName || ''} ${location || ''}`.trim();
-  if (!query && !points.length) return null;
+  const hasCoords = Number.isFinite(coordinates?.lat) && Number.isFinite(coordinates?.lng);
+  const pin = hasCoords ? `${coordinates.lat},${coordinates.lng}` : query;
+  const embedSrc = hasCoords
+    ? `https://www.google.com/maps?q=${pin}&z=${coordinates.zoom || 15}&output=embed`
+    : `https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`;
+  const openSrc = `https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(pin)}`;
+
+  if (!query && !hasCoords && !points.length) return null;
 
   return (
     <section className={`location ${className}`} id={id}>
@@ -69,12 +81,12 @@ export default function LocationSection({
         </div>
 
         <div className="location__grid">
-          {query && (
+          {(query || hasCoords) && (
             <Reveal className="location__map">
               <div className="location__map-frame">
                 <iframe
                   title={`${projectName || 'Project'} location map`}
-                  src={`https://www.google.com/maps?q=${encodeURIComponent(query)}&output=embed`}
+                  src={embedSrc}
                   width="100%"
                   height="100%"
                   style={{ border: 0 }}
@@ -84,7 +96,7 @@ export default function LocationSection({
                 />
               </div>
               <a
-                href={`https://www.google.com/maps/search/?api=1&query=${encodeURIComponent(query)}`}
+                href={openSrc}
                 target="_blank"
                 rel="noreferrer"
                 className="cta cta--ghost location__map-cta"

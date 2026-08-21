@@ -99,8 +99,21 @@ before writing new ones:
 
 ```
 PageHero · SectionHeading · EditorialSplit · InfoGrid · MediaFigure
-ProcessSteps · CtaBand · TrustModule · LeadForm · ImageViewer
+ProcessSteps · CtaBand · TrustModule · LeadForm · ImageViewer · SectionRail
 ```
+
+Two routes are deliberately the exception to "reuse before you write":
+`/nri` and `/channel-partners` are single long pages built from six sections
+each, and **every section has its own layout on purpose** — a dark staircase, a
+dossier, a ledger, a scroller, and so on. Do not "tidy" them back into repeated
+`InfoGrid` blocks; the variety is the design. What they do share is the numbered
+section head (`.nrix-head` / `.cpx-head`) and `<SectionRail>`, which is what
+keeps them reading as one document.
+
+Each section's `id` is a public anchor — `nav.js` links to `/nri#taxation`,
+`RouteTransition` scrolls to it, and the old `/nri/<topic>` and
+`/channel-partners/<page>` URLs redirect onto it. Renaming an id breaks the
+navigation, the redirects and any inbound link, so treat ids as URLs.
 
 `--gutter` collapses to 8px on mobile so every section edge lines up. Do not add
 one-off 16px/24px outer margins to individual components — if the spacing system

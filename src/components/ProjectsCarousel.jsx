@@ -10,7 +10,7 @@ const projects = projectsList
   .map((project) => ({
     name: project.name.toUpperCase(),
     slug: project.slug,
-    meta: `${project.location.replace(/, Indore$/, '')} · ${project.total_area}`,
+    meta: `${project.location.replace(/, Indore$/, '')} · ${project.plot_sizes || project.total_area}`,
     src: project.thumbnail || project.hero_image,
   }));
 
@@ -37,12 +37,13 @@ export default function ProjectsCarousel() {
     <section className="carousel" id="views">
       <div className="carousel__shell">
         <div className="container carousel__head">
-          <Reveal as="span" className="eyebrow carousel__eyebrow">Trending Now</Reveal>
+          <Reveal as="span" className="eyebrow carousel__eyebrow">Currently selling</Reveal>
           <Reveal as="h2" className="display carousel__title" delay={0.05}>
             Projects shaping<br/>the skyline.
           </Reveal>
           <Reveal as="p" className="carousel__lede" delay={0.1}>
-            Eight flagship developments across Indore — each one a quiet, considered statement. Pick a project to take a closer look.
+            {projects.length} developments open across Indore right now — each one a quiet, considered
+            statement. Pick a project to take a closer look.
           </Reveal>
         </div>
 

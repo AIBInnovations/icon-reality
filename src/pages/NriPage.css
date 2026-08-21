@@ -1,60 +1,649 @@
-.nri-section { padding: clamp(52px, 7vw, 96px) 0; background: var(--bg); }
-.nri-section--alt { background: var(--bg-2); }
+/* ============================================================================
+   NRI Corner — one page, six sections, six different layouts.
 
-.nri-topics {
-  display: grid;
-  grid-template-columns: repeat(3, minmax(0, 1fr));
-  gap: clamp(20px, 2.6vw, 40px);
+   Naming: `nrix-` (x = the merged page) so nothing collides with the old
+   `nri-topic-*` rules while both existed. Every section owns its own block;
+   there is no shared card class on purpose — sameness is what the merge was
+   meant to avoid.
+
+   Responsive contract (CLAUDE.md §7): every grid track is minmax(0, 1fr),
+   every horizontal scroller is opt-in with data-lenis-prevent, and every
+   negative margin / overlap is unwound below 900px so nothing lands on top of
+   anything else on a phone.
+   ============================================================================ */
+
+.nrix-section-pad { padding: clamp(56px, 7vw, 104px) 0; }
+
+/* ---------------------------------------------------------------- head ---
+   The one thing all six sections share: an index, a rule and a title. It is
+   the rhythm that keeps them reading as one document.
+   ------------------------------------------------------------------------ */
+.nrix-head { max-width: 62ch; margin-bottom: clamp(30px, 4vw, 56px); }
+.nrix-head--center { margin-inline: auto; text-align: center; }
+
+.nrix-head__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  min-width: 0;
+}
+.nrix-head__index {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--peach-deep);
+  flex: none;
+}
+.nrix-head__rule {
+  height: 1px;
+  width: clamp(22px, 4vw, 54px);
+  background: var(--peach-deep);
+  opacity: 0.5;
+  flex: none;
+}
+.nrix-head__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 0;
 }
 
-.nri-topic {
+.nrix-head__title {
+  font-family: var(--font-display);
+  font-size: clamp(27px, 3.6vw, 50px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  max-width: 18ch;
+}
+.nrix-head__intro {
+  margin-top: 18px;
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.68;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+.nrix-head--dark .nrix-head__title { color: #F7F4EF; }
+.nrix-head--dark .nrix-head__intro { color: rgba(255, 255, 255, 0.66); }
+.nrix-head--dark .nrix-head__eyebrow { color: rgba(255, 255, 255, 0.5); }
+.nrix-head--dark .nrix-head__index,
+.nrix-head--dark .nrix-head__rule { color: var(--peach); background-color: var(--peach); }
+.nrix-head--dark .nrix-head__index { background: none; color: var(--peach); }
+
+/* ======================================================== THE DESK ======= */
+.nrix-desk {
+  padding: clamp(48px, 6vw, 92px) 0 clamp(34px, 4vw, 58px);
+  background: var(--bg);
+}
+.nrix-desk__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 0.85fr);
+  gap: clamp(26px, 4.5vw, 72px);
+  align-items: center;
+}
+.nrix-desk__copy { min-width: 0; }
+.nrix-desk__eyebrow { display: block; color: var(--peach-deep); margin-bottom: 16px; }
+
+/* A pull-quote, not a heading — the section heads carry the h2s. */
+.nrix-desk__quote {
+  font-family: var(--font-display);
+  font-size: clamp(24px, 3.2vw, 44px);
+  font-weight: 500;
+  line-height: 1.12;
+  letter-spacing: -0.02em;
+  color: var(--ink);
+  max-width: 17ch;
+  position: relative;
+  padding-left: clamp(16px, 2vw, 26px);
+  border-left: 2px solid var(--peach);
+}
+.nrix-desk__body {
+  margin-top: 22px;
+  padding-left: clamp(16px, 2vw, 26px);
+  font-size: clamp(14.5px, 1.1vw, 17px);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 54ch;
+}
+.nrix-desk__plate { min-width: 0; }
+
+/* The four assurances as one continuous ribbon divided by hairlines, rather
+   than four boxed cards. */
+.nrix-ribbon {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  margin-top: clamp(34px, 4.5vw, 66px);
+  border-top: 1px solid var(--line);
+}
+.nrix-ribbon__item {
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 30px) clamp(14px, 1.8vw, 26px) 4px 0;
+  border-right: 1px solid var(--line);
   display: flex;
   flex-direction: column;
   gap: 8px;
-  color: inherit;
-  min-width: 0;
-  transition: transform .35s ease;
 }
-.nri-topic:hover { transform: translateY(-4px); }
-.nri-topic .media-figure { margin-bottom: 6px; }
-
-.nri-topic__num {
+.nrix-ribbon__item:last-child { border-right: none; padding-right: 0; }
+.nrix-ribbon__k {
   font-family: var(--font-display);
-  font-size: 12px;
+  font-size: clamp(14.5px, 1.2vw, 17px);
   font-weight: 600;
-  letter-spacing: 0.16em;
-  color: var(--peach-deep);
-}
-
-.nri-topic__title {
-  font-family: var(--font-display);
-  font-size: clamp(17px, 1.5vw, 22px);
-  font-weight: 600;
-  line-height: 1.22;
+  line-height: 1.25;
   color: var(--ink);
 }
-
-.nri-topic__summary {
-  font-size: clamp(13.5px, 1vw, 15.5px);
+.nrix-ribbon__v {
+  font-size: clamp(13px, 1vw, 14.5px);
   line-height: 1.6;
   color: var(--muted);
 }
 
-.nri-topic__cta {
+/* ================================================ 01 · BUYING PROCESS ==== */
+.nrix-process {
+  padding: clamp(56px, 7vw, 108px) 0;
+  background: var(--charcoal);
+  /* The band is full-bleed dark; a hairline top keeps it from butting the rail. */
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.nrix-stair {
+  --stair-step: clamp(0px, 2.2vw, 42px);
+  display: flex;
+  flex-direction: column;
+}
+.nrix-stair__step {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: clamp(14px, 2vw, 28px);
+  align-items: start;
+  /* each step one notch further right than the last — the staircase */
+  margin-left: calc(var(--stair-i, 0) * var(--stair-step));
+  padding: clamp(16px, 1.9vw, 26px) 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.11);
+  min-width: 0;
+}
+.nrix-stair__step:last-child { border-bottom: 1px solid rgba(255, 255, 255, 0.11); }
+
+.nrix-stair__num {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.6vw, 38px);
+  font-weight: 300;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(242, 182, 143, 0.8);
+  flex: none;
+  min-width: 1.9em;
+}
+.nrix-stair__body { min-width: 0; }
+.nrix-stair__title {
+  font-family: var(--font-display);
+  font-size: clamp(16.5px, 1.5vw, 21px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #F7F4EF;
+  margin-bottom: 6px;
+}
+.nrix-stair__copy {
+  font-size: clamp(13.5px, 1.02vw, 15.5px);
+  line-height: 1.66;
+  color: rgba(255, 255, 255, 0.6);
+  max-width: 62ch;
+}
+
+.nrix-process__foot {
+  margin-top: clamp(30px, 3.6vw, 48px);
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 20px;
+  flex-wrap: wrap;
+}
+.nrix-process__foot p {
+  font-size: clamp(14.5px, 1.12vw, 17px);
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.7);
+  max-width: 46ch;
+}
+.nrix-process__cta { color: var(--peach); border-color: rgba(242, 182, 143, 0.55); }
+.nrix-process__cta:hover { background: var(--peach); color: var(--charcoal); border-color: var(--peach); }
+
+/* =================================================== 02 · LEGAL & RERA === */
+.nrix-legal { padding: clamp(56px, 7vw, 104px) 0; background: var(--bg); }
+.nrix-legal__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.72fr) minmax(0, 1.28fr);
+  gap: clamp(28px, 4.5vw, 76px);
+  align-items: start;
+}
+
+/* The plate rides along beside a long checklist — sticky on desktop only, so
+   a phone never gets a tall image pinned over the text it belongs to. */
+.nrix-legal__plate { min-width: 0; }
+.nrix-legal__plate-inner { position: relative; min-width: 0; }
+.nrix-legal__stamp {
+  position: absolute;
+  right: -10px;
+  bottom: 46px;
+  transform: rotate(-6deg);
+  font-family: 'Special Elite', var(--font-display), monospace;
+  font-size: clamp(11px, 1.1vw, 14px);
+  letter-spacing: 0.12em;
+  color: #9A6C4A;
+  background: rgba(246, 242, 236, 0.94);
+  border: 1.5px solid rgba(154, 108, 74, 0.55);
+  border-radius: 3px;
+  padding: 7px 12px;
+  pointer-events: none;
+}
+
+.nrix-legal__copy { min-width: 0; }
+.nrix-legal__copy .nrix-head { margin-bottom: clamp(26px, 3vw, 40px); }
+
+.nrix-legal__block + .nrix-legal__block { margin-top: clamp(28px, 3.4vw, 46px); }
+.nrix-legal__block-title {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.7vw, 23px);
+  font-weight: 600;
+  line-height: 1.24;
+  color: var(--ink);
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.nrix-legal__list { display: flex; flex-direction: column; }
+.nrix-legal__list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  align-items: baseline;
+  padding: 15px 0;
+  border-bottom: 1px dashed var(--line);
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.65;
+  color: var(--muted);
+}
+.nrix-legal__list li:last-child { border-bottom: none; }
+.nrix-legal__marker {
+  font-family: 'Special Elite', var(--font-display), monospace;
+  font-size: 12px;
+  color: var(--peach-deep);
+  flex: none;
+  min-width: 1.4em;
+}
+
+.nrix-legal__note {
+  margin-top: clamp(22px, 2.6vw, 32px);
+  padding: clamp(16px, 2vw, 24px);
+  background: var(--bg-2);
+  border-left: 3px solid var(--peach);
+  border-radius: 0 10px 10px 0;
+  font-size: clamp(13.5px, 1.02vw, 15.5px);
+  line-height: 1.68;
+  color: var(--ink-soft);
+}
+.nrix-legal__note-tag {
+  display: block;
+  font-family: 'Special Elite', var(--font-display), monospace;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--peach-deep);
+  margin-bottom: 8px;
+}
+
+/* ====================================================== 03 · TAXATION ==== */
+.nrix-tax {
+  padding: clamp(56px, 7vw, 104px) 0;
+  background: var(--bg-2);
+}
+
+/* A ledger: four columns divided by vertical rules, no card chrome at all. */
+.nrix-ledger {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+  border-top: 2px solid var(--ink);
+}
+.nrix-ledger__col {
+  min-width: 0;
+  padding: clamp(20px, 2.4vw, 32px) clamp(16px, 1.8vw, 28px) clamp(20px, 2.4vw, 30px) 0;
+  border-right: 1px solid var(--line);
+}
+.nrix-ledger__col:last-child { border-right: none; padding-right: 0; }
+
+.nrix-ledger__roman {
+  display: block;
+  font-family: 'Cinzel', var(--font-display), serif;
+  font-size: clamp(15px, 1.5vw, 20px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--peach-deep);
+  margin-bottom: 12px;
+}
+.nrix-ledger__title {
+  font-family: var(--font-display);
+  font-size: clamp(15.5px, 1.35vw, 19px);
+  font-weight: 600;
+  line-height: 1.24;
+  color: var(--ink);
+  margin-bottom: 16px;
+  min-height: 2.5em;
+}
+.nrix-ledger__list { display: flex; flex-direction: column; }
+.nrix-ledger__list li {
+  padding: 13px 0;
+  border-top: 1px solid var(--line);
+  font-size: clamp(13px, 1vw, 14.8px);
+  line-height: 1.62;
+  color: var(--muted);
+}
+
+.nrix-tax__disclaimer {
+  margin-top: clamp(30px, 3.6vw, 48px);
+  padding-top: clamp(20px, 2.4vw, 28px);
+  border-top: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: minmax(0, 0.9fr) minmax(0, 2fr);
+  gap: clamp(14px, 2.4vw, 40px);
+  align-items: start;
+}
+.nrix-tax__disclaimer-tag {
+  font-family: 'Special Elite', var(--font-display), monospace;
+  font-size: clamp(11.5px, 1.05vw, 14px);
+  line-height: 1.5;
+  letter-spacing: 0.04em;
+  color: var(--ink);
+}
+.nrix-tax__disclaimer p {
+  font-size: clamp(13px, 1.02vw, 15.5px);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 78ch;
+}
+
+/* ==================================================== 04 · HOME LOANS ==== */
+.nrix-loans { padding: clamp(56px, 7vw, 104px) 0 clamp(52px, 6.5vw, 92px); background: var(--bg); }
+
+/* A wide, short image band the cards then ride over. Full-bleed on purpose —
+   it is the only edge-to-edge photograph on the page. */
+.nrix-loans__band {
+  position: relative;
+  height: clamp(180px, 26vw, 340px);
+  overflow: hidden;
+  background: var(--charcoal);
+}
+.nrix-loans__bg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: center 58%;
+}
+.nrix-loans__credit {
+  position: absolute;
+  /* top-right, not bottom-left: the cards ride up over the bottom of the band
+     and would bury a credit sitting there. */
+  right: var(--gutter);
+  top: 12px;
+  max-width: calc(100% - var(--gutter) * 2);
+  padding: 5px 11px;
+  border-radius: 999px;
+  /* The band crops to whatever part of the photograph is widest — sky, grass,
+     stone. A pill is the only thing that keeps the credit legible over all of
+     them; a text-shadow alone disappears over the pale ones. */
+  background: rgba(12, 12, 12, 0.5);
+  backdrop-filter: blur(6px);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.92);
+}
+
+.nrix-loans__cards {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.8vw, 26px);
+  /* pull the cards up over the band */
+  margin-top: clamp(-88px, -7vw, -44px);
+  position: relative;
+  z-index: 2;
+}
+.nrix-loans__card {
+  min-width: 0;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+  border-radius: 14px;
+  padding: clamp(20px, 2.2vw, 30px);
+  box-shadow: 0 18px 44px rgba(20, 20, 20, 0.09);
+}
+.nrix-loans__card-index {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--peach-deep);
+}
+.nrix-loans__card-title {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 8px 0 16px;
+  padding-bottom: 14px;
+  border-bottom: 1px solid var(--line);
+}
+.nrix-loans__card-list { display: flex; flex-direction: column; gap: 12px; }
+.nrix-loans__card-list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 10px;
+  align-items: start;
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.62;
+  color: var(--muted);
+}
+.nrix-loans__card-list li svg { margin-top: 3px; color: var(--peach-deep); flex: none; }
+
+.nrix-loans__note {
+  margin-top: clamp(24px, 3vw, 38px);
+  padding-top: clamp(18px, 2.2vw, 26px);
+  border-top: 1px solid var(--line);
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.68;
+  color: var(--muted);
+  max-width: 84ch;
+}
+
+/* ================================================= 05 · VIRTUAL TOURS ==== */
+.nrix-tours {
+  padding: clamp(56px, 7vw, 104px) 0;
+  background: #17171A;
+}
+
+/* The photograph framed as a video-call viewport, not as an editorial plate. */
+.nrix-viewport { margin-bottom: clamp(30px, 4vw, 56px); }
+.nrix-viewport__frame {
+  display: block;
+  position: relative;
+  border-radius: 16px;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.14);
+  background: #000;
+  aspect-ratio: 16 / 8;
+}
+.nrix-viewport__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+.nrix-viewport__badge {
+  position: absolute;
+  top: clamp(12px, 1.6vw, 20px);
+  left: clamp(12px, 1.6vw, 20px);
   display: inline-flex;
   align-items: center;
-  gap: 7px;
-  margin-top: 6px;
-  font-size: 13px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  color: var(--peach-deep);
-  transition: gap .25s ease;
+  gap: 8px;
+  padding: 7px 13px;
+  border-radius: 999px;
+  background: rgba(12, 12, 12, 0.62);
+  backdrop-filter: blur(8px);
+  border: 1px solid rgba(255, 255, 255, 0.18);
+  font-size: 11.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: #fff;
 }
-.nri-topic:hover .nri-topic__cta { gap: 12px; }
+.nrix-viewport__dot {
+  width: 7px; height: 7px;
+  border-radius: 50%;
+  background: #FF5C5C;
+  box-shadow: 0 0 0 0 rgba(255, 92, 92, 0.6);
+  animation: nrixPulse 2s ease-out infinite;
+}
+@keyframes nrixPulse {
+  0%   { box-shadow: 0 0 0 0 rgba(255, 92, 92, 0.55); }
+  70%  { box-shadow: 0 0 0 9px rgba(255, 92, 92, 0); }
+  100% { box-shadow: 0 0 0 0 rgba(255, 92, 92, 0); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .nrix-viewport__dot { animation: none; }
+}
+/* A scrim along the bottom edge, so the caption stays readable whether the
+   frame crops to sky or to sunlit grass. */
+.nrix-viewport__frame::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0 0;
+  height: 38%;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.62), rgba(0, 0, 0, 0));
+  pointer-events: none;
+}
+.nrix-viewport__caption {
+  position: absolute;
+  z-index: 1;
+  right: clamp(12px, 1.6vw, 20px);
+  bottom: clamp(12px, 1.6vw, 20px);
+  font-size: 11px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 60%;
+  text-align: right;
+}
 
-.nri-desk { padding: 0 0 clamp(30px, 4vw, 50px); background: var(--bg); }
-.nri-desk__note {
+.nrix-tours__cols {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: clamp(24px, 4vw, 64px);
+}
+.nrix-tours__col { min-width: 0; }
+.nrix-tours__title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.6vw, 22px);
+  font-weight: 600;
+  line-height: 1.24;
+  color: #F7F4EF;
+  padding-bottom: 14px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.nrix-tours__title span {
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  color: var(--peach);
+  flex: none;
+}
+.nrix-tours__list { display: flex; flex-direction: column; }
+.nrix-tours__list li {
+  padding: 14px 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+  font-size: clamp(13.5px, 1.02vw, 15.5px);
+  line-height: 1.66;
+  color: rgba(255, 255, 255, 0.62);
+}
+.nrix-tours__list li:last-child { border-bottom: none; }
+
+/* ============================================== 06 · POWER OF ATTORNEY === */
+.nrix-poa { padding: clamp(56px, 7vw, 104px) 0; background: var(--bg); }
+
+/* A sheet of paper: a wide left margin holding the photograph, a red-ish
+   margin rule, and the clauses set in the body column. */
+.nrix-sheet {
+  display: grid;
+  grid-template-columns: minmax(0, 0.62fr) minmax(0, 1.38fr);
+  gap: clamp(26px, 4vw, 66px);
+  align-items: start;
+  padding-top: clamp(24px, 3vw, 40px);
+  border-top: 1px solid var(--line);
+}
+.nrix-sheet__margin { min-width: 0; }
+.nrix-sheet__body {
+  min-width: 0;
+  padding-left: clamp(18px, 2.4vw, 36px);
+  border-left: 1px solid var(--peach);
+}
+
+.nrix-sheet__block + .nrix-sheet__block { margin-top: clamp(26px, 3.2vw, 44px); }
+.nrix-sheet__title {
+  display: flex;
+  align-items: baseline;
+  gap: 12px;
+  flex-wrap: wrap;
+  font-family: 'Cinzel', var(--font-display), serif;
+  font-size: clamp(16px, 1.5vw, 21px);
+  font-weight: 600;
+  line-height: 1.3;
+  letter-spacing: 0.01em;
+  color: var(--ink);
+  margin-bottom: 14px;
+}
+.nrix-sheet__clause {
+  font-family: 'Special Elite', var(--font-display), monospace;
+  font-size: 12px;
+  letter-spacing: 0.08em;
+  color: var(--peach-deep);
+  flex: none;
+}
+.nrix-sheet__list { display: flex; flex-direction: column; gap: 12px; }
+.nrix-sheet__list li {
+  position: relative;
+  padding-left: 20px;
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 72ch;
+}
+.nrix-sheet__list li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 9px;
+  height: 1px;
+  background: var(--peach-deep);
+}
+.nrix-sheet__note {
+  margin-top: clamp(24px, 3vw, 38px);
+  padding-top: clamp(18px, 2.2vw, 24px);
+  border-top: 1px dashed var(--line);
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 80ch;
+}
+
+/* ====================================================== desk footnote ==== */
+.nrix-desknote { padding: 0 0 clamp(30px, 4vw, 50px); background: var(--bg); }
+.nrix-desknote__body {
   font-size: clamp(14px, 1.05vw, 16.5px);
   line-height: 1.65;
   color: var(--muted);
@@ -63,13 +652,110 @@
   border-top: 1px solid var(--line);
 }
 
+/* ============================================================================
+   RESPONSIVE — unwind every overlap and multi-column before it can collide.
+   ============================================================================ */
+
+@media (min-width: 1025px) {
+  /* Sticky only where there is room for it and the rail is sticky too. */
+  .nrix-legal__plate-inner { position: sticky; top: 186px; }
+  .nrix-sheet__margin { position: sticky; top: 186px; }
+}
+
+@media (max-width: 1080px) {
+  .nrix-ledger { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nrix-ledger__col { padding-right: clamp(14px, 2vw, 24px); }
+  /* second column of each row loses its rule, rows get one instead */
+  .nrix-ledger__col:nth-child(2n) { border-right: none; padding-right: 0; }
+  .nrix-ledger__col:nth-child(n + 3) { border-top: 1px solid var(--line); }
+  .nrix-ledger__title { min-height: 0; }
+}
+
 @media (max-width: 1000px) {
-  .nri-topics { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nrix-desk__grid { grid-template-columns: 1fr; gap: 28px; }
+  .nrix-desk__plate { max-width: 520px; }
+  .nrix-ribbon { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .nrix-ribbon__item:nth-child(2n) { border-right: none; padding-right: 0; }
+  .nrix-ribbon__item:nth-child(n + 3) { border-top: 1px solid var(--line); }
+
+  .nrix-legal__grid { grid-template-columns: 1fr; gap: 30px; }
+  .nrix-legal__plate { max-width: 420px; order: 2; }
+  .nrix-legal__copy { order: 1; }
+  .nrix-legal__stamp { right: auto; left: 14px; bottom: 44px; }
+
+  .nrix-loans__cards { grid-template-columns: 1fr; margin-top: clamp(-56px, -5vw, -32px); }
+  .nrix-tours__cols { grid-template-columns: 1fr; gap: 30px; }
+
+  .nrix-sheet { grid-template-columns: 1fr; gap: 28px; }
+  .nrix-sheet__margin { max-width: 400px; order: 2; }
+  .nrix-sheet__body { order: 1; padding-left: clamp(14px, 3vw, 22px); }
+}
+
+@media (max-width: 900px) {
+  /* The staircase becomes a plain spine — an indent on a narrow column just
+     squeezes the copy into a gutter. */
+  .nrix-stair { --stair-step: 0px; }
+  .nrix-stair__step { margin-left: 0; }
+  .nrix-viewport__frame { aspect-ratio: 16 / 10; }
 }
 
 @media (max-width: 720px) {
-  .nri-section { padding: 44px 0; }
-  .nri-topics { grid-template-columns: 1fr; gap: 26px; }
-  .nri-topic__title { font-size: 17.5px; }
-  .nri-topic__summary { font-size: 14px; }
+  .nrix-head { margin-bottom: 26px; }
+  .nrix-head__title { font-size: clamp(25px, 7.4vw, 34px); max-width: none; }
+  .nrix-head__intro { font-size: 15px; margin-top: 14px; }
+
+  .nrix-desk { padding: 36px 0 26px; }
+  .nrix-desk__quote { font-size: clamp(23px, 7vw, 30px); max-width: none; padding-left: 14px; }
+  .nrix-desk__body { padding-left: 14px; font-size: 15px; }
+  .nrix-desk__plate { max-width: none; }
+
+  .nrix-ribbon { grid-template-columns: 1fr; margin-top: 26px; }
+  .nrix-ribbon__item {
+    border-right: none;
+    padding: 16px 0;
+    border-top: 1px solid var(--line);
+  }
+  .nrix-ribbon__item:first-child { border-top: none; padding-top: 18px; }
+
+  .nrix-process, .nrix-legal, .nrix-tax, .nrix-tours, .nrix-poa { padding: 44px 0; }
+  .nrix-loans { padding: 44px 0 40px; }
+
+  .nrix-stair__step { grid-template-columns: 1fr; gap: 6px; padding: 15px 0; }
+  .nrix-stair__num { font-size: 20px; min-width: 0; }
+  .nrix-stair__title { font-size: 16.5px; }
+  .nrix-stair__copy { font-size: 14px; }
+  .nrix-process__foot { flex-direction: column; align-items: stretch; }
+  .nrix-process__foot p { max-width: none; }
+  .nrix-process__cta { width: 100%; }
+
+  .nrix-legal__plate { max-width: none; }
+  .nrix-legal__list li { grid-template-columns: auto minmax(0, 1fr); gap: 11px; padding: 13px 0; font-size: 14.5px; }
+  .nrix-legal__note { border-radius: 0 8px 8px 0; }
+
+  .nrix-ledger { grid-template-columns: 1fr; border-top-width: 1.5px; }
+  .nrix-ledger__col {
+    padding: 18px 0;
+    border-right: none;
+    border-top: 1px solid var(--line);
+  }
+  .nrix-ledger__col:first-child { border-top: none; }
+  .nrix-tax__disclaimer { grid-template-columns: 1fr; gap: 10px; border-top-width: 1.5px; }
+
+  .nrix-loans__band { height: 190px; }
+  .nrix-loans__cards { margin-top: -30px; gap: 14px; }
+  .nrix-loans__card { padding: 20px 16px; border-radius: 12px; }
+
+  .nrix-viewport { margin-bottom: 26px; }
+  .nrix-viewport__frame { aspect-ratio: 3 / 2; border-radius: 12px; }
+  .nrix-viewport__badge { font-size: 10.5px; padding: 6px 10px; letter-spacing: 0.1em; }
+  /* The caption and the badge share the frame — on a phone the caption drops
+     to its own line under the badge rather than crowding it. */
+  .nrix-viewport__caption { max-width: 78%; font-size: 10px; }
+  .nrix-tours__title { font-size: 17px; }
+  .nrix-tours__list li { font-size: 14px; }
+
+  .nrix-sheet { padding-top: 20px; }
+  .nrix-sheet__margin { max-width: none; }
+  .nrix-sheet__title { font-size: 17px; }
+  .nrix-sheet__list li { font-size: 14.5px; }
 }

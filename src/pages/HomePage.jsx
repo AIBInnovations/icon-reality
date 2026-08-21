@@ -7,6 +7,7 @@ import ServicesGrid from '../components/ServicesGrid';
 import AboutPostcard from '../components/AboutPostcard';
 import ForBuyers from '../components/ForBuyers';
 import PillarsCards from '../components/PillarsCards';
+import FeaturedProjects from '../components/FeaturedProjects';
 import ProjectsCarousel from '../components/ProjectsCarousel';
 import Testimonials from '../components/Testimonials';
 import CompletedProjects from '../components/CompletedProjects';
@@ -86,7 +87,7 @@ export default function HomePage() {
     <>
       <Seo
         title={null}
-        description="Icon Realty builds premium plotted developments in Indore — 20+ years, 15+ landmark projects and 4,500+ happy families. Explore Oscar Palace on the Indore–Nagpur Highway."
+        description="Icon Realty has designed and marketed residential plotted developments in Indore since 2004 — 20+ years, 15+ landmark projects, 4,500+ happy families and plots from 600 to 20,000 sq ft."
         path="/"
         jsonLd={realEstateAgentSchema()}
       />
@@ -105,6 +106,9 @@ export default function HomePage() {
           <AboutPostcard />
           <PillarsCards />
           <TrustSection />
+          {/* The three the client wants led with, then everything currently
+              selling, then everything delivered (change.md #5, #7). */}
+          <FeaturedProjects />
           <ProjectsCarousel />
           <CompletedProjects />
           {/* Door into the expanded architecture — Why Indore, Investors, NRI,

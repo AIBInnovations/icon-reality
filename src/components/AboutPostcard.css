@@ -2,7 +2,14 @@
   position: relative;
   padding: clamp(56px, 7vw, 104px) 0 clamp(16px, 2.5vw, 40px);
   background: var(--bg);
-  overflow: visible;
+  /* The flank cutouts bleed a few px past the container on purpose. Above
+     1440px the container is capped and centred, so there is gutter to bleed
+     into; at exactly 1440 there is not, and the right-hand cutout pushed the
+     whole page ~9px sideways (CLAUDE.md §7). Clipped on x only — `clip` rather
+     than `hidden`, because `hidden` would make this a scroll container and
+     break the scroll parallax on the cutouts. */
+  overflow-x: clip;
+  overflow-y: visible;
 }
 .postcard-scene .container { position: relative; }
 

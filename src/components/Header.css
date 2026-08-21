@@ -712,13 +712,15 @@ body.has-modal .site-header {
     border-top: 1px solid rgba(255,255,255,0.10);
     padding-left: 0;
     padding-top: 18px;
-    /* email / phone side by side, address and CTA beneath — a quarter of the
-       height of the old stack */
+    /* Email, then phone, then address, then the CTA — each on its own row.
+       They used to share a row two-up, which set the phone number beside the
+       email address and read as one run-on line rather than two tap targets. */
     display: grid;
-    grid-template-columns: repeat(2, minmax(0, 1fr));
-    gap: 4px 16px;
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2px;
   }
   .site-header__sheet-col--contact .site-header__sheet-eyebrow { grid-column: 1 / -1; margin-bottom: 6px; }
+  .site-header__sheet-col--contact .site-header__sheet-link { grid-column: 1 / -1; }
   .site-header__sheet-address { grid-column: 1 / -1; margin: 10px 0 14px; }
   .site-header__sheet-cta { grid-column: 1 / -1; margin-top: 0; }
   /* One column below this: an accordion group and its children cannot share a

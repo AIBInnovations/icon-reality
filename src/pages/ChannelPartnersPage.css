@@ -1,80 +1,588 @@
-.cp-section { padding: clamp(52px, 7vw, 96px) 0; background: var(--bg); }
-.cp-section--alt { background: var(--bg-2); }
-.cp-section__action { margin-top: clamp(26px, 3.2vw, 44px); }
+/* ============================================================================
+   Channel Partners — one page, six sections, six different layouts.
 
-.cp-benefits {
-  margin-top: clamp(36px, 4.5vw, 68px);
-  padding-top: clamp(28px, 3.4vw, 46px);
-  border-top: 1px solid var(--line);
+   Prefix `cpx-`. Same contract as NriPage.css: minmax(0, 1fr) everywhere,
+   horizontal scrollers carry data-lenis-prevent, and every desktop overlap or
+   multi-column is unwound before it can collide on a phone.
+   ============================================================================ */
+
+/* ---------------------------------------------------------------- head --- */
+.cpx-head { max-width: 62ch; margin-bottom: clamp(30px, 4vw, 56px); }
+
+.cpx-head__meta {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 16px;
+  min-width: 0;
 }
+.cpx-head__index {
+  font-family: var(--font-display);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--peach-deep);
+  flex: none;
+}
+.cpx-head__rule {
+  height: 1px;
+  width: clamp(22px, 4vw, 54px);
+  background: var(--peach-deep);
+  opacity: 0.5;
+  flex: none;
+}
+.cpx-head__eyebrow {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+  min-width: 0;
+}
+.cpx-head__title {
+  font-family: var(--font-display);
+  font-size: clamp(27px, 3.6vw, 50px);
+  font-weight: 600;
+  line-height: 1.05;
+  letter-spacing: -0.022em;
+  color: var(--ink);
+  max-width: 18ch;
+}
+.cpx-head__intro {
+  margin-top: 18px;
+  font-size: clamp(15px, 1.15vw, 18px);
+  line-height: 1.68;
+  color: var(--muted);
+  max-width: 62ch;
+}
+.cpx-head--dark .cpx-head__title { color: #F7F4EF; }
+.cpx-head--dark .cpx-head__intro { color: rgba(255, 255, 255, 0.66); }
+.cpx-head--dark .cpx-head__eyebrow { color: rgba(255, 255, 255, 0.5); }
+.cpx-head--dark .cpx-head__index { color: var(--peach); }
+.cpx-head--dark .cpx-head__rule { background: var(--peach); }
 
-/* ---------- portfolio strip ---------- */
-.cp-portfolio {
+/* ============================================ 01 · WHY ICON — ladder ===== */
+.cpx-case { padding: clamp(56px, 7vw, 104px) 0 clamp(40px, 5vw, 70px); background: var(--bg); }
+
+.cpx-rung { border-top: 1px solid var(--line); }
+.cpx-rung:last-child { border-bottom: 1px solid var(--line); }
+
+.cpx-rung__grid {
   display: grid;
-  grid-template-columns: repeat(4, minmax(0, 1fr));
-  gap: clamp(14px, 1.8vw, 26px);
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
+  gap: clamp(20px, 3.5vw, 60px);
+  align-items: center;
+  padding-block: clamp(22px, 3vw, 44px);
 }
-.cp-portfolio__card {
+/* Alternate the sides so the eye zig-zags down the ladder rather than reading
+   four identical rows. Order, not direction: `row-reverse` on a grid would
+   also reverse the DOM order for a screen reader. */
+.cpx-rung:nth-child(even) .cpx-rung__media { order: 2; }
+.cpx-rung:nth-child(even) .cpx-rung__copy { order: 1; }
+
+.cpx-rung__media { min-width: 0; }
+.cpx-rung__copy { min-width: 0; }
+
+.cpx-rung__num {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(34px, 5vw, 68px);
+  font-weight: 300;
+  line-height: 1;
+  color: transparent;
+  -webkit-text-stroke: 1px rgba(232, 157, 111, 0.75);
+  margin-bottom: 14px;
+}
+.cpx-rung__title {
+  font-family: var(--font-display);
+  font-size: clamp(19px, 2.1vw, 30px);
+  font-weight: 600;
+  line-height: 1.16;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  margin-bottom: 12px;
+  max-width: 20ch;
+}
+.cpx-rung__body {
+  font-size: clamp(14px, 1.1vw, 16.5px);
+  line-height: 1.7;
+  color: var(--muted);
+  max-width: 52ch;
+}
+
+/* ======================================= 02 · BENEFITS — dark index ====== */
+.cpx-benefits {
+  padding: clamp(56px, 7vw, 104px) 0;
+  background: var(--charcoal);
+}
+
+.cpx-index {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: clamp(24px, 4vw, 72px);
+  border-top: 1px solid rgba(255, 255, 255, 0.14);
+}
+.cpx-index__row {
+  min-width: 0;
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  grid-template-areas:
+    'num k'
+    '.   v';
+  column-gap: clamp(12px, 1.4vw, 20px);
+  row-gap: 5px;
+  padding: clamp(16px, 1.9vw, 24px) 0;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.09);
+}
+.cpx-index__num {
+  grid-area: num;
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  line-height: 1.9;
+  color: var(--peach);
+  flex: none;
+}
+.cpx-index__k {
+  grid-area: k;
+  font-family: var(--font-display);
+  font-size: clamp(15.5px, 1.35vw, 19px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: #F7F4EF;
+}
+.cpx-index__v {
+  grid-area: v;
+  font-size: clamp(13px, 1vw, 15px);
+  line-height: 1.62;
+  color: rgba(255, 255, 255, 0.58);
+}
+
+/* =================================== 03 · PORTFOLIO — edge-to-edge ====== */
+.cpx-portfolio { padding: clamp(56px, 7vw, 104px) 0; background: var(--bg-2); }
+
+.cpx-track {
+  margin-top: clamp(4px, 1vw, 12px);
+  overflow-x: auto;
+  overscroll-behavior-x: contain;
+  scroll-snap-type: x proximity;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  /* runs to the viewport edge; the first card still lines up with .container */
+  padding-inline: var(--gutter);
+  /* Without this the browser's initial snap aligns card one to the scrollport
+     edge — i.e. it scrolls the gutter away and clips the first card's caption
+     the moment the page loads. Snapping must respect the gutter. */
+  scroll-padding-inline: var(--gutter);
+  padding-bottom: 6px;
+}
+.cpx-track::-webkit-scrollbar { display: none; }
+
+.cpx-track__list {
+  display: flex;
+  gap: clamp(12px, 1.6vw, 22px);
+  width: max-content;
+}
+.cpx-track__item {
+  flex: none;
+  width: clamp(190px, 20vw, 262px);
+  scroll-snap-align: start;
+}
+.cpx-track__item--end { width: clamp(160px, 15vw, 210px); }
+
+.cpx-card {
   display: flex;
   flex-direction: column;
   gap: 3px;
   color: inherit;
+  position: relative;
   min-width: 0;
   transition: transform .35s ease;
 }
-.cp-portfolio__card:hover { transform: translateY(-4px); }
-.cp-portfolio__card .media-figure { margin-bottom: 8px; }
+.cpx-card:hover { transform: translateY(-4px); }
+.cpx-card .media-figure { margin-bottom: 10px; }
 
-.cp-portfolio__name {
-  font-family: var(--font-display);
-  font-size: clamp(15px, 1.25vw, 18px);
+.cpx-card__status {
+  position: absolute;
+  top: 10px;
+  left: 10px;
+  padding: 5px 10px;
+  border-radius: 999px;
+  font-size: 10.5px;
   font-weight: 600;
-  color: var(--ink);
-  line-height: 1.25;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  background: rgba(20, 20, 20, 0.62);
+  backdrop-filter: blur(6px);
+  color: #fff;
 }
-.cp-portfolio__meta {
-  font-size: 12.5px;
-  letter-spacing: 0.04em;
+.cpx-card__status--completed { background: rgba(20, 20, 20, 0.62); }
+.cpx-card__status--trending { background: rgba(232, 157, 111, 0.92); color: var(--ink); }
+
+.cpx-card__name {
+  font-family: var(--font-display);
+  font-size: clamp(15px, 1.2vw, 18px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.cpx-card__meta { font-size: 12.5px; letter-spacing: 0.03em; color: var(--muted); }
+
+/* The trailing "all projects" tile — a card-shaped link, not a photo. */
+.cpx-card--all {
+  height: 100%;
+  min-height: 220px;
+  align-items: flex-start;
+  justify-content: space-between;
+  gap: 18px;
+  padding: clamp(18px, 2vw, 26px);
+  border: 1px dashed rgba(20, 20, 20, 0.24);
+  border-radius: 12px;
+  color: var(--ink);
+  transition: border-color .25s ease, background .25s ease, transform .35s ease;
+}
+.cpx-card--all:hover { border-color: var(--peach-deep); background: rgba(232, 157, 111, 0.1); }
+.cpx-card__all-label {
+  font-family: var(--font-display);
+  font-size: clamp(16px, 1.4vw, 20px);
+  font-weight: 600;
+  line-height: 1.2;
+}
+
+/* ======================================== 04 · JOURNEY — stepped track == */
+.cpx-journey { padding: clamp(56px, 7vw, 104px) 0; background: var(--bg); }
+
+.cpx-stages {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 0;
+}
+.cpx-stage {
+  position: relative;
+  min-width: 0;
+  padding: clamp(30px, 3.4vw, 42px) clamp(14px, 1.8vw, 26px) clamp(22px, 2.6vw, 32px) 0;
+}
+/* The connecting line: a rule across the top of each row, with the node
+   sitting on it. Drawn per-cell so it never runs past the last stage. */
+.cpx-stage::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 1px;
+  background: var(--line);
+}
+.cpx-stage:nth-child(4n)::before { right: 0; }
+
+.cpx-stage__node {
+  position: absolute;
+  top: 0;
+  left: 0;
+  transform: translateY(-50%);
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: var(--bg);
+  display: grid;
+  place-items: center;
+}
+.cpx-stage__dot {
+  width: 9px;
+  height: 9px;
+  border-radius: 50%;
+  border: 1.5px solid var(--peach-deep);
+  background: var(--bg);
+}
+/* Step five — attribution — is the one that decides the commission
+   conversation, so it is the only filled node on the track. */
+.cpx-stage.is-marked .cpx-stage__dot { background: var(--peach-deep); }
+.cpx-stage.is-marked .cpx-stage__title { color: var(--ink); }
+
+.cpx-stage__num {
+  display: block;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--peach-deep);
+  margin-bottom: 9px;
+}
+.cpx-stage__title {
+  font-family: var(--font-display);
+  font-size: clamp(15.5px, 1.35vw, 19px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin-bottom: 8px;
+}
+.cpx-stage__body {
+  font-size: clamp(13px, 1vw, 14.8px);
+  line-height: 1.62;
   color: var(--muted);
 }
 
-/* ---------- commission statement ---------- */
-.cp-commission {
-  margin-top: clamp(32px, 4vw, 56px);
-  padding: clamp(22px, 2.8vw, 34px);
-  border: 1px solid var(--line);
-  border-radius: 14px;
-  background: var(--bg);
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  gap: 22px;
-  flex-wrap: wrap;
+/* ============================= 05 · COMMISSION & SUPPORT — plate/table == */
+.cpx-terms { padding: clamp(56px, 7vw, 104px) 0; background: var(--bg-2); }
+
+.cpx-terms__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 0.86fr) minmax(0, 1.14fr);
+  gap: clamp(24px, 4vw, 64px);
+  align-items: start;
 }
-.cp-commission__statement {
+
+.cpx-plate {
+  min-width: 0;
+  background: var(--charcoal);
+  color: #F7F4EF;
+  border-radius: 18px;
+  padding: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+}
+.cpx-plate__statement {
   font-family: var(--font-display);
-  font-size: clamp(16px, 1.5vw, 21px);
+  font-size: clamp(19px, 2.1vw, 28px);
   font-weight: 600;
-  line-height: 1.35;
+  line-height: 1.24;
+  letter-spacing: -0.015em;
+  color: #F7F4EF;
+  padding-bottom: clamp(20px, 2.4vw, 28px);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.14);
+}
+.cpx-plate__notes {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  margin-top: clamp(20px, 2.4vw, 28px);
+}
+.cpx-plate__notes li {
+  position: relative;
+  padding-left: 20px;
+  font-size: clamp(13.5px, 1.02vw, 15.5px);
+  line-height: 1.66;
+  color: rgba(255, 255, 255, 0.64);
+}
+.cpx-plate__notes li::before {
+  content: '';
+  position: absolute;
+  left: 0;
+  top: 0.72em;
+  width: 10px;
+  height: 1px;
+  background: var(--peach);
+}
+.cpx-plate__cta { margin-top: clamp(24px, 3vw, 34px); align-self: flex-start; }
+
+/* The support structure as a ruled two-column table, not nine cards. */
+.cpx-table { min-width: 0; }
+.cpx-table__head {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 16px;
+  flex-wrap: wrap;
+  padding-bottom: 14px;
+  border-bottom: 2px solid var(--ink);
+  font-size: 11px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
   color: var(--ink);
-  max-width: 48ch;
+}
+.cpx-table__head span:last-child { color: var(--muted); font-weight: 500; }
+
+.cpx-table__rows { display: flex; flex-direction: column; }
+.cpx-table__row {
+  display: grid;
+  grid-template-columns: minmax(0, 0.8fr) minmax(0, 1.2fr);
+  gap: clamp(14px, 2vw, 32px);
+  align-items: baseline;
+  padding: clamp(14px, 1.6vw, 20px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.cpx-table__row dt {
+  display: flex;
+  align-items: baseline;
+  gap: 10px;
+  font-family: var(--font-display);
+  font-size: clamp(14.5px, 1.2vw, 17px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  min-width: 0;
+}
+.cpx-table__num {
+  font-size: 11px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  color: var(--peach-deep);
+  flex: none;
+}
+.cpx-table__row dd {
+  font-size: clamp(13.5px, 1.02vw, 15.5px);
+  line-height: 1.62;
+  color: var(--muted);
+  min-width: 0;
+}
+
+/* =========================================== 06 · REGISTER — the desk === */
+.cpx-register { padding: clamp(56px, 7vw, 104px) 0; background: var(--bg); }
+
+.cpx-register__grid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, 0.95fr);
+  gap: clamp(28px, 4.5vw, 72px);
+  align-items: start;
+}
+
+.cpx-register__form {
+  min-width: 0;
+  padding: clamp(24px, 3vw, 40px);
+  border-radius: 16px;
+  background: #FFFFFF;
+  border: 1px solid var(--line);
+}
+.cpx-register__note {
+  margin-top: 20px;
+  padding-top: 18px;
+  border-top: 1px solid var(--line);
+  font-size: 13px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+.cpx-register__aside {
+  min-width: 0;
+  display: flex;
+  flex-direction: column;
+  gap: clamp(24px, 3vw, 38px);
+}
+.cpx-register__media { min-width: 0; }
+
+.cpx-next__title {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.6vw, 22px);
+  font-weight: 600;
+  line-height: 1.2;
+  color: var(--ink);
+  padding-bottom: 14px;
+  margin-bottom: 4px;
+  border-bottom: 1px solid var(--line);
+}
+.cpx-next__list { display: flex; flex-direction: column; }
+.cpx-next__list li {
+  display: grid;
+  grid-template-columns: auto minmax(0, 1fr);
+  gap: 14px;
+  padding: 15px 0;
+  border-bottom: 1px solid var(--line);
+}
+.cpx-next__list li:last-child { border-bottom: none; }
+.cpx-next__list li > span {
+  font-family: var(--font-display);
+  font-size: 11.5px;
+  font-weight: 700;
+  letter-spacing: 0.14em;
+  line-height: 1.9;
+  color: var(--peach-deep);
+  flex: none;
+}
+.cpx-next__list strong {
+  display: block;
+  font-family: var(--font-display);
+  font-size: clamp(14.5px, 1.15vw, 16.5px);
+  font-weight: 600;
+  line-height: 1.3;
+  color: var(--ink);
+  margin-bottom: 4px;
+}
+.cpx-next__list p {
+  font-size: clamp(13px, 1vw, 14.6px);
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ============================================================================
+   RESPONSIVE
+   ============================================================================ */
+
+@media (min-width: 1025px) {
+  .cpx-plate { position: sticky; top: 186px; }
 }
 
 @media (max-width: 1080px) {
-  .cp-portfolio { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+  .cpx-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cpx-terms__grid { grid-template-columns: 1fr; }
+  .cpx-plate__cta { align-self: stretch; text-align: center; }
 }
+
+@media (max-width: 1000px) {
+  .cpx-rung__grid { grid-template-columns: 1fr; gap: 20px; }
+  /* Reset the alternation — on one column it only shuffles the reading order. */
+  .cpx-rung:nth-child(even) .cpx-rung__media,
+  .cpx-rung:nth-child(even) .cpx-rung__copy { order: 0; }
+  .cpx-rung__num { font-size: clamp(30px, 8vw, 44px); margin-bottom: 10px; }
+
+  .cpx-index { grid-template-columns: 1fr; }
+
+  .cpx-register__grid { grid-template-columns: 1fr; gap: 30px; }
+  /* Form first: the aside is supporting context, not the task. */
+  .cpx-register__aside { order: 2; }
+  .cpx-register__media { max-width: 480px; }
+}
+
 @media (max-width: 860px) {
-  .cp-portfolio { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .cpx-table__row { grid-template-columns: 1fr; gap: 6px; }
 }
 
 @media (max-width: 720px) {
-  .cp-section { padding: 44px 0; }
-  .cp-benefits { margin-top: 30px; padding-top: 24px; }
-  .cp-portfolio { gap: 12px; }
-  .cp-portfolio__name { font-size: 15px; }
-  .cp-portfolio__meta { font-size: 12px; }
-  .cp-section__action > *, .cp-commission > * { width: 100%; }
-  .cp-commission { padding: 18px 16px; gap: 16px; }
-  .cp-commission__statement { font-size: 16.5px; max-width: none; }
-  .cp-commission .cta { justify-content: center; }
+  .cpx-head { margin-bottom: 26px; }
+  .cpx-head__title { font-size: clamp(25px, 7.4vw, 34px); max-width: none; }
+  .cpx-head__intro { font-size: 15px; margin-top: 14px; }
+
+  .cpx-case { padding: 44px 0 30px; }
+  .cpx-benefits, .cpx-portfolio, .cpx-journey, .cpx-terms, .cpx-register { padding: 44px 0; }
+
+  .cpx-rung__grid { padding-block: 22px; }
+  .cpx-rung__title { font-size: 19px; max-width: none; }
+  .cpx-rung__body { font-size: 14.5px; max-width: none; }
+
+  .cpx-index__row { padding: 15px 0; }
+  .cpx-index__k { font-size: 16px; }
+  .cpx-index__v { font-size: 13.5px; }
+
+  .cpx-track__item { width: 62vw; max-width: 260px; }
+  .cpx-track__item--end { width: 52vw; max-width: 220px; }
+  .cpx-card--all { min-height: 180px; padding: 18px 16px; }
+
+  /* The four-across track becomes a single vertical spine: the rule moves to
+     the left of the column and the node sits on it. */
+  .cpx-stages { grid-template-columns: 1fr; padding-left: 22px; }
+  .cpx-stage { padding: 18px 0 18px 0; }
+  .cpx-stage::before {
+    top: 0;
+    bottom: 0;
+    left: -22px;
+    right: auto;
+    width: 1px;
+    height: auto;
+  }
+  .cpx-stage:last-child::before { bottom: auto; height: 22px; }
+  .cpx-stage__node { top: 18px; left: -33px; transform: none; }
+  .cpx-stage__num { margin-bottom: 6px; }
+  .cpx-stage__title { font-size: 16.5px; }
+  .cpx-stage__body { font-size: 14px; }
+
+  .cpx-plate { padding: 22px 18px; border-radius: 14px; }
+  .cpx-plate__statement { font-size: 19px; }
+  .cpx-table__row { padding: 14px 0; }
+  .cpx-table__row dt { font-size: 15.5px; }
+  .cpx-table__row dd { font-size: 14px; }
+
+  .cpx-register__form { padding: 20px 16px; border-radius: 14px; }
+  .cpx-register__media { max-width: none; }
+  .cpx-next__title { font-size: 18px; }
 }

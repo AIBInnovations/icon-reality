@@ -120,14 +120,35 @@
 }
 
 
-/* ============ STATUS FILTER ============ */
-.projects-filter { margin-bottom: clamp(24px, 3vw, 40px); }
+/* ============ STATUS + CATEGORY FILTERS ============ */
+.projects-filter {
+  margin-bottom: clamp(24px, 3vw, 40px);
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
 
 .projects-filter__chips {
   display: flex;
   flex-wrap: wrap;
+  align-items: center;
   gap: 8px;
   justify-content: center;
+}
+
+/* The two rails need naming, or "All 17 / All 17" reads as one broken row. */
+.projects-filter__legend {
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--muted);
+  margin-right: 4px;
+}
+
+.projects-filter__chips--category {
+  padding-top: 12px;
+  border-top: 1px solid var(--line);
 }
 
 .projects-filter__chip {
@@ -168,6 +189,21 @@
   -webkit-backdrop-filter: blur(6px);
 }
 
+/* Positioning band, opposite the status badge. */
+.projects-list__cat {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(217, 189, 150, 0.94);
+  color: #1A1A1A;
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 4px;
+}
+
 .projects-list__empty {
   text-align: center;
   font-size: 16px;
@@ -191,4 +227,10 @@
   }
   .projects-filter__chips::-webkit-scrollbar { display: none; }
   .projects-filter__chip { flex: none; padding: 0 15px; font-size: 13.5px; }
+  .projects-filter__legend { flex: none; }
+  .projects-filter__chips--category { padding-top: 10px; }
+
+  /* Two pills across a narrow card overlap; the status badge carries the
+     meaning on the card, and the band stays available as a filter. */
+  .projects-list__cat { display: none; }
 }

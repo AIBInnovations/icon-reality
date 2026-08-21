@@ -1,4 +1,7 @@
-// Channel Partners — hub, why-partner, commission & support, registration.
+// Channel Partners — one page: why-partner, benefits, portfolio, journey,
+// commission & support, registration. Those were four routes once; they are
+// sections of /channel-partners now, and the old URLs redirect onto the
+// matching anchor (App.jsx).
 //
 // Commission percentages are NOT stated anywhere in this file. Icon Realty has
 // not published them, and inventing a number that a partner would then hold us

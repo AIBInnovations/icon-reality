@@ -286,10 +286,10 @@ export default function Hero({ onReady, onProgress }) {
           <div ref={copyClipRef} className="hero__copy-clip">
             <div ref={copyInnerRef} className="hero__copy-inner">
               <h1 className="display hero__headline">
-                An address that rises,<br/>to your standard.
+                Twenty years of<br/>addresses that last.
               </h1>
               <p className="hero__sub">
-                A premium residential project on the Indore–Nagpur Highway.
+                Icon Realty — designing and marketing residential plotted developments in Indore since 2004.
               </p>
             </div>
           </div>

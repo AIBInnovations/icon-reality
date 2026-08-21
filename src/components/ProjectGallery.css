@@ -50,9 +50,16 @@
   font-weight: 500;
 }
 
+/* The grid packs into complete rectangles rather than leaving a ragged tail.
+   Normal tiles are 4:3, so one grid row is 0.75 of a column. A feature tile
+   spanning 2 columns AND 2 rows therefore lands at very nearly 4:3 as well —
+   it reads as a large frame, and the six tiles around it close the block with
+   no holes. The old rule spanned 2 columns but only 1 row, which left a gap
+   beside every seventh image and a half-empty final row. */
 .project-gallery-v2__grid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  grid-auto-rows: auto;
   gap: clamp(10px, 1.4vw, 20px);
 }
 
@@ -92,14 +99,38 @@
   font-weight: 600;
 }
 
-/* Every third tile runs wide on desktop, so the grid reads as an edited
-   gallery rather than a uniform contact sheet. */
-.project-gallery-v2__item:nth-child(7n + 1) { grid-column: span 2; }
-.project-gallery-v2__item:nth-child(7n + 1) .project-gallery-v2__tile { aspect-ratio: 16 / 9; }
+/* One feature tile per six-tile block: 2x2 of the three-column grid, so the
+   block is exactly three rows tall and completely filled. */
+.project-gallery-v2__item--feature {
+  grid-column: span 2;
+  grid-row: span 2;
+}
+.project-gallery-v2__item--feature .project-gallery-v2__tile {
+  aspect-ratio: auto;
+  height: 100%;
+}
 
 @media (max-width: 900px) {
   .project-gallery-v2__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .project-gallery-v2__item:nth-child(7n + 1) { grid-column: span 2; }
+  /* Two columns: a 2x2 feature would be a full-screen square, and a full-width
+     one mid-list strands the cell on the row above it. So only the LEAD image
+     runs wide here; every later feature drops back to a normal tile. */
+  .project-gallery-v2__item--feature:not(:first-child) {
+    grid-column: auto;
+    grid-row: auto;
+  }
+  .project-gallery-v2__item--feature:not(:first-child) .project-gallery-v2__tile {
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
+  .project-gallery-v2__item--feature:first-child {
+    grid-column: span 2;
+    grid-row: auto;
+  }
+  .project-gallery-v2__item--feature:first-child .project-gallery-v2__tile {
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
 }
 
 @media (max-width: 720px) {
@@ -116,6 +147,6 @@
   .project-gallery-v2__chip { flex: none; padding: 0 16px; font-size: 13.5px; }
   .project-gallery-v2__grid { gap: 8px; }
   /* full-bleed lead image, then a 2-up grid */
-  .project-gallery-v2__item:nth-child(7n + 1) .project-gallery-v2__tile { aspect-ratio: 4 / 3; }
+  .project-gallery-v2__item--feature:first-child .project-gallery-v2__tile { aspect-ratio: 4 / 3; }
   .project-gallery-v2__tag { font-size: 9px; padding: 4px 8px; }
 }

@@ -58,7 +58,7 @@
 
 .completed__grid {
   display: grid;
-  grid-template-columns: repeat(4, 1fr);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
   gap: clamp(16px, 1.8vw, 28px);
 }
 
@@ -107,6 +107,28 @@
   backdrop-filter: blur(4px);
 }
 
+/* Positioning band, opposite the status badge (change.md #4). */
+.completed__cat {
+  position: absolute;
+  top: 14px;
+  right: 14px;
+  background: rgba(217, 189, 150, 0.94);
+  color: var(--ink);
+  font-size: 10px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 600;
+  padding: 6px 10px;
+  border-radius: 4px;
+  backdrop-filter: blur(4px);
+}
+
+.completed__action {
+  display: flex;
+  justify-content: center;
+  margin-top: clamp(28px, 3.4vw, 46px);
+}
+
 .completed__body {
   display: flex;
   flex-direction: column;
@@ -129,9 +151,9 @@
 }
 
 @media (max-width: 980px) {
-  .completed__grid { grid-template-columns: repeat(2, 1fr); }
-  /* 9 completed projects → a lone card on the last row. Span it so the grid
-     never ends with a blank cell at bottom-right. */
+  .completed__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* An odd project count leaves a lone card on the last row. Span it so the
+     grid never ends with a blank cell at bottom-right. */
   .completed__grid > *:last-child:nth-child(odd) { grid-column: 1 / -1; }
   .completed__grid > *:last-child:nth-child(odd) .completed__media { aspect-ratio: 16 / 10; }
 }
@@ -140,11 +162,14 @@
   .completed__head { margin-bottom: 28px; }
   .completed__title { font-size: clamp(28px, 8vw, 42px); margin-bottom: 14px; padding-inline: 12px; }
   .completed__lede { font-size: 15px; padding: 0 12px; }
-  /* 2-col grid all the way down on mobile keeps the 15-card portfolio compact. */
-  .completed__grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  /* 2-col grid all the way down on mobile keeps the card wall compact. */
+  .completed__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .completed__card { gap: 8px; }
   .completed__media { aspect-ratio: 1 / 1; border-radius: 6px; }
   .completed__badge { top: 8px; left: 8px; padding: 4px 8px; font-size: 9px; letter-spacing: 0.16em; }
+  /* Two pills across a half-width phone card collide; the status one carries
+     the meaning here, so the band label steps out below 720px. */
+  .completed__cat { display: none; }
   .completed__body { padding: 0 2px; }
   .completed__name { font-size: 14px; }
   .completed__location { font-size: 11px; letter-spacing: 0.04em; }

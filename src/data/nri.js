@@ -1,10 +1,14 @@
-// NRI Corner — hub + six topic pages, all driven from this file.
+// NRI Corner — one page, six sections, all driven from this file.
 //
-// Every topic renders through the same <NriTopicPage> component, so the six
-// routes share one layout and one lead flow. Content here is general
-// information about how buying property in India works for a non-resident; it
-// is explicitly not personalised legal, tax or financial advice, and the
-// disclaimers below are rendered on the pages that need them (read.md §35, §38).
+// The six topics were separate routes once; they are now sections of /nri, and
+// each renders with its own bespoke layout in NriPage.jsx. `slug` is still the
+// key: it becomes the section's DOM id, so /nri#taxation works from the header
+// dropdown, and the old /nri/taxation URL redirects onto it (App.jsx).
+//
+// Content here is general information about how buying property in India works
+// for a non-resident; it is explicitly not personalised legal, tax or financial
+// advice, and the disclaimers below are rendered with the sections that need
+// them (read.md §35, §38).
 
 import { EMAIL } from './contact';
 
@@ -24,9 +28,9 @@ export const NRI_ASSURANCES = [
 ];
 
 /**
- * The six NRI topics. `slug` becomes /nri/<slug>. Each is content-complete on
- * its own — sections render only if they carry data, so a topic can grow
- * without touching the component.
+ * The six NRI topics. `slug` becomes the id of that topic's section on /nri.
+ * Each is content-complete on its own; the page renders only the keys a topic
+ * actually carries, so a topic can grow without touching the layout.
  */
 export const NRI_TOPICS = [
   {
@@ -180,7 +184,7 @@ export const NRI_TOPICS = [
     nav: 'Virtual Tours',
     title: 'Virtual tours & remote booking',
     summary: 'Inspect the plot, the layout and the site from wherever you are — then book remotely.',
-    hero: { src: '/images/oscar/park/park-7.jpg', credit: 'Oscar Palace' },
+    hero: { src: '/images/oscar/park/park-1.jpg', credit: 'Oscar Palace — plotted layout from the air' },
     intro:
       "A marketing film shows a project at its best. A live video call shows it as it is on the day you ask. We do both, and we would rather you saw the second one before you commit anything.",
     sections: [

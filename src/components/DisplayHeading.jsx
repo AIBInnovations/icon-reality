@@ -4,17 +4,19 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Reveal from './Reveal';
 import './DisplayHeading.css';
 
+// One frame per project rather than ten of the flagship — the trail is the
+// portfolio, not a single address (change.md #2).
 const TRAIL_IMAGES = [
   '/images/oscar/entrance/entrance-1.jpg',
-  '/images/oscar/temple/temple-1.jpg',
-  '/images/oscar/park/park-1.jpg',
-  '/images/oscar/photos/photo-1.jpg',
-  '/images/oscar/entrance/entrance-2.jpg',
-  '/images/oscar/amenities/amenity-1.jpg',
-  '/images/oscar/photos/photo-8.jpg',
-  '/images/oscar/park/park-7.jpg',
-  '/images/oscar/photos/photo-4.jpg',
-  '/images/oscar/entrance/entrance-3.jpg',
+  '/images/eden-garden/eden-1.jpg',
+  '/images/siddhayatan/hero.jpg',
+  '/images/oscar-fort/hero.jpg',
+  '/images/iit-greens/render-1.jpg',
+  '/images/labham-city/photo-1.jpg',
+  '/images/saatvik-vihar/saatvik-1.jpg',
+  '/images/oscar-billionaire/hero.jpg',
+  '/images/ruchi-lifescapes/hero.jpg',
+  '/images/singapore-lifestyle-2/hero.jpg',
 ];
 
 const SPAWN_DISTANCE = 90; // px of mouse movement before spawning next image
@@ -147,20 +149,21 @@ export default function DisplayHeading() {
         <h2 className="display display-section__heading">
           <span className="display-section__line">
             <span className="display-section__line-inner" ref={(el) => (lineRefs.current[0] = el)}>
-              Premium plots
+              Two decades.
             </span>
           </span>
           <span className="display-section__line">
             <span className="display-section__line-inner" ref={(el) => (lineRefs.current[1] = el)}>
-              for refined living.
+              One city.
             </span>
           </span>
         </h2>
         <Reveal as="p" className="display-section__lede" delay={0.05}>
-          Oscar Palace is drawn from the grammar of Indian heritage — the symmetry of royal
-          courtyards, the rhythm of carved arches, and the quiet grandeur once reserved for kings
-          and empires. Every baradari, chhatri, and tree-lined axis is composed so your address
-          carries the dignity of a palace with the ease of a modern home.
+          Icon Realty has been designing and marketing residential plotted developments in and
+          around Indore since 2004 — fifteen-plus landmarks, from 600 sq ft first plots to
+          20,000 sq ft estate parcels. On some we are the developer; on others we are the design
+          and marketing partner. Either way the same thing is true: every project we have built
+          stands in this city, and you can go and walk it.
         </Reveal>
       </div>
 

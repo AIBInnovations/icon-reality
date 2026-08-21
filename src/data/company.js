@@ -132,7 +132,7 @@ export const TRUST_PILLARS = [
   },
   {
     k: 'Delivered, not just launched',
-    v: 'Nine completed communities are lived in today. You can visit them before you buy from us.',
+    v: 'Ten completed communities are lived in today. You can visit them before you buy from us.',
   },
   {
     k: 'Planning you can walk',

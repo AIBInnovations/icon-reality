@@ -10,7 +10,7 @@ const pillars = [
   {
     name: 'Investment',
     variant: 'sand',
-    body: 'Land is limited, opportunities are not. A premium growth corridor on the Indore–Nagpur Highway, structured planning, and the long view in mind — buy early, hold long-term, and let the location do the rest. Bank loans are available on every plot.',
+    body: 'Land is limited, opportunities are not. We build on the corridors Indore is actually growing along — the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau — with structured planning and the long view in mind. Buy early, hold long-term, and let the location do the rest. Bank loans are available on our plots.',
   },
   {
     name: 'Lifestyle',
