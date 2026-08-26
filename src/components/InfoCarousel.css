@@ -1,0 +1,108 @@
+/* Carousel counterpart to InfoGrid. The card is deliberately the same object as
+   .info-grid--text's: hairline rule on top, peach number, display heading, body
+   copy. Only the container changes, so a section can move between grid and
+   carousel without the cards themselves looking like a different design. */
+
+.info-carousel {
+  position: relative;
+}
+
+.info-carousel__viewport {
+  display: grid;
+  grid-auto-flow: column;
+  /* Three across on desktop, easing to one on a phone. minmax(0, …) so a long
+     unbroken word can never widen a track and push the page sideways (§7). */
+  grid-auto-columns: minmax(0, clamp(240px, 30%, 380px));
+  gap: clamp(16px, 2.2vw, 32px);
+  overflow-x: auto;
+  scroll-snap-type: x mandatory;
+  scroll-padding-left: 0;
+  padding-bottom: 4px;
+  /* the arrows are the affordance; a scrollbar under editorial cards is noise */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+  overscroll-behavior-x: contain;
+}
+.info-carousel__viewport::-webkit-scrollbar { display: none; }
+
+.info-carousel__viewport:focus-visible {
+  outline: 2px solid var(--peach-deep);
+  outline-offset: 6px;
+  border-radius: 4px;
+}
+
+.info-carousel__card {
+  scroll-snap-align: start;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  padding-top: 20px;
+  border-top: 1px solid var(--line);
+}
+
+.info-carousel__num {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--peach-deep);
+}
+
+.info-carousel__k {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+  margin: 0;
+}
+
+.info-carousel__v {
+  font-size: clamp(14px, 1.05vw, 16px);
+  line-height: 1.6;
+  color: var(--muted);
+  margin: 0;
+}
+
+.info-carousel__controls {
+  display: flex;
+  justify-content: flex-end;
+  gap: 10px;
+  margin-top: clamp(20px, 2.4vw, 30px);
+}
+
+.info-carousel__nav {
+  width: 44px;
+  height: 44px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 999px;
+  border: 1px solid var(--line);
+  background: transparent;
+  color: var(--ink);
+  cursor: pointer;
+  transition: background .25s ease, border-color .25s ease, opacity .25s ease;
+}
+.info-carousel__nav:hover:not(:disabled) {
+  background: var(--bg-2);
+  border-color: rgba(20, 20, 20, 0.24);
+}
+.info-carousel__nav:disabled {
+  opacity: 0.32;
+  cursor: default;
+}
+
+@media (max-width: 900px) {
+  .info-carousel__viewport { grid-auto-columns: minmax(0, clamp(230px, 62%, 320px)); }
+}
+
+@media (max-width: 560px) {
+  .info-carousel__viewport { grid-auto-columns: minmax(0, 78%); }
+  .info-carousel__controls { justify-content: center; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .info-carousel__viewport { scroll-behavior: auto; }
+}

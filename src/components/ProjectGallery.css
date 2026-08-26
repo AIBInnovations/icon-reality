@@ -100,14 +100,27 @@
 }
 
 /* One feature tile per six-tile block: 2x2 of the three-column grid, so the
-   block is exactly three rows tall and completely filled. */
+   block is exactly three rows tall and completely filled.
+
+   The tile is taken OUT OF FLOW on purpose. `height: 100%` against an `auto`
+   grid row is an indefinite height, so it resolved to the image's intrinsic
+   height instead: a tall portrait render blew rows 1-2 open, the feature became
+   enormous, and the two 4:3 tiles beside it could not fill the rows they had
+   been stretched into, leaving a hole in the third column. Absolutely
+   positioning the tile means the feature contributes no intrinsic height at
+   all, so the rows are sized purely by the normal 4:3 tiles and the tile then
+   fills whatever area that produces. Same technique as TrustSection. */
 .project-gallery-v2__item--feature {
   grid-column: span 2;
   grid-row: span 2;
+  position: relative;
+  min-height: 0;
 }
 .project-gallery-v2__item--feature .project-gallery-v2__tile {
   aspect-ratio: auto;
-  height: 100%;
+  position: absolute;
+  inset: 0;
+  height: auto;
 }
 
 @media (max-width: 900px) {
@@ -115,11 +128,14 @@
   /* Two columns: a 2x2 feature would be a full-screen square, and a full-width
      one mid-list strands the cell on the row above it. So only the LEAD image
      runs wide here; every later feature drops back to a normal tile. */
+  /* Both branches below put the tile back IN flow, so the desktop rule's
+     absolute positioning has to be undone explicitly or the tile collapses. */
   .project-gallery-v2__item--feature:not(:first-child) {
     grid-column: auto;
     grid-row: auto;
   }
   .project-gallery-v2__item--feature:not(:first-child) .project-gallery-v2__tile {
+    position: static;
     aspect-ratio: 4 / 3;
     height: auto;
   }
@@ -128,6 +144,7 @@
     grid-row: auto;
   }
   .project-gallery-v2__item--feature:first-child .project-gallery-v2__tile {
+    position: static;
     aspect-ratio: 16 / 9;
     height: auto;
   }

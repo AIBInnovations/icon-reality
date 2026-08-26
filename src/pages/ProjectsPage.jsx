@@ -24,6 +24,46 @@ const STATUS_LABEL = PROJECT_STATUSES.reduce((acc, s) => {
   return acc;
 }, {});
 
+/**
+ * The hero copy per status filter.
+ *
+ * /projects, ?status=trending and ?status=completed are the same route with a
+ * different query, and the header links to all three separately — so a single
+ * hardcoded headline made the Ongoing and Completed pages read as identical
+ * pages. Each filter now states which half of the portfolio you are looking at,
+ * in the page title and the SEO title alike.
+ */
+const HERO = {
+  all: {
+    eyebrow: 'The portfolio',
+    title: ['Currently building.', 'Already lived in.'],
+    lede: 'A portfolio shaped by patience, landmarks that age into the city, not against it. Browse the projects taking shape now and the ones already lived in.',
+    seoTitle: 'Projects in Indore: plotted developments by Icon Realty',
+    seoDesc: "Explore Icon Realty's plotted developments in Indore, Oscar Palace, Oscar Fort, IIT Greens, Labham City and more. Currently building and already lived in.",
+  },
+  trending: {
+    eyebrow: 'Ongoing projects',
+    title: ['Currently', 'building.'],
+    lede: 'The addresses taking shape right now. Plots are open in each of these, and every one of them can be walked before you decide.',
+    seoTitle: 'Ongoing projects in Indore: plots available now',
+    seoDesc: "Icon Realty's ongoing plotted developments in Indore, including Oscar Palace, Oscar Fort, IIT Greens and Labham City. Plots currently open for booking.",
+  },
+  upcoming: {
+    eyebrow: 'Upcoming projects',
+    title: ['Not open', 'yet.'],
+    lede: 'Planned, drawn and not yet released. Register your interest and you will hear from us before these open publicly.',
+    seoTitle: 'Upcoming projects in Indore by Icon Realty',
+    seoDesc: 'Plotted developments Icon Realty has planned but not yet released in Indore. Register early interest ahead of public launch.',
+  },
+  completed: {
+    eyebrow: 'Completed projects',
+    title: ['Already', 'lived in.'],
+    lede: 'Delivered, occupied and a decade into their lives. Go and see what an Icon Realty address looks like long after handover, before you buy into the next one.',
+    seoTitle: 'Completed projects in Indore: delivered by Icon Realty',
+    seoDesc: 'Icon Realty communities already delivered and lived in across Indore, including Victoria Park, Singapore Corridor, Glamour Hill City and Ruchi Enclave.',
+  },
+};
+
 export default function ProjectsPage() {
   // The filters live in the URL, not in component state: a filtered view is
   // then linkable and survives a back navigation, and the header's mega-menu
@@ -67,6 +107,8 @@ export default function ProjectsPage() {
   const setStatus = (key) => apply({ status: key });
   const setCategory = (key) => apply({ category: key });
 
+  const hero = HERO[active] || HERO.all;
+
   const currentLabel = [
     activeCat === 'all' ? null : CATEGORY_LABEL[activeCat],
     active === 'all' ? 'All projects' : `${STATUS_LABEL[active] || ''} projects`,
@@ -75,16 +117,16 @@ export default function ProjectsPage() {
   return (
     <>
       <Seo
-        title="Projects in Indore: plotted developments by Icon Realty"
-        description="Explore Icon Realty's plotted developments in Indore, Oscar Palace, Oscar Fort, IIT Greens, Labham City and more. Currently building and already lived in."
+        title={hero.seoTitle}
+        description={hero.seoDesc}
         path="/projects"
         jsonLd={[breadcrumbSchema(TRAIL), projectListSchema(projectsList)]}
       />
 
       <PageHero
-        eyebrow="The portfolio"
-        title={['Currently building.', 'Already lived in.']}
-        lede="A portfolio shaped by patience, landmarks that age into the city, not against it. Browse the projects taking shape now and the ones already lived in."
+        eyebrow={hero.eyebrow}
+        title={hero.title}
+        lede={hero.lede}
       />
 
       <Breadcrumbs trail={TRAIL} />

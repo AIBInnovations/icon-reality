@@ -43,8 +43,20 @@
   gap: clamp(10px, 1.4vw, 18px);
   margin-bottom: clamp(28px, 3.4vw, 48px);
 }
-/* the first tile runs two-wide, so the grid reads as an edited spread */
-.amenities__feature:first-child { grid-column: span 2; }
+/* The lead tile runs 2 columns AND 2 rows, so a six-tile block closes as an
+   exact 3x3: lead in cols 1-2 rows 1-2, tiles 2 and 3 stacked in column 3
+   beside it, tiles 4-6 across the bottom row. It previously spanned 2 columns
+   but a single 16:9 row next to a 4:3 tile, which could not close: it left a
+   hole under the tile beside it and two empty cells in the final row.
+
+   The tile is absolutely positioned so it contributes no intrinsic height and
+   the rows are sized purely by the 4:3 tiles, exactly as ProjectGallery does. */
+.amenities__feature:first-child {
+  grid-column: span 2;
+  grid-row: span 2;
+  position: relative;
+  min-height: 0;
+}
 
 .amenities__feature { min-width: 0; }
 
@@ -59,7 +71,12 @@
   cursor: zoom-in;
   text-align: left;
 }
-.amenities__feature:first-child .amenities__feature-tile { aspect-ratio: 16 / 9; }
+.amenities__feature:first-child .amenities__feature-tile {
+  aspect-ratio: auto;
+  position: absolute;
+  inset: 0;
+  height: auto;
+}
 
 .amenities__feature-tile img {
   width: 100%;
@@ -142,7 +159,14 @@
 
 @media (max-width: 900px) {
   .amenities__features { grid-template-columns: repeat(2, minmax(0, 1fr)); }
-  .amenities__feature:first-child { grid-column: span 2; }
+  /* Two columns: a 2x2 lead would be a full-width square. Back to a wide banner,
+     and back into flow, so the desktop absolute rule is undone. */
+  .amenities__feature:first-child { grid-column: span 2; grid-row: auto; }
+  .amenities__feature:first-child .amenities__feature-tile {
+    position: static;
+    aspect-ratio: 16 / 9;
+    height: auto;
+  }
   .amenities__list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 }
 
@@ -152,9 +176,13 @@
   .amenities__heading { font-size: clamp(25px, 7.5vw, 34px); }
   .amenities__lede { font-size: 15px; }
   .amenities__features { grid-template-columns: 1fr; gap: 8px; margin-bottom: 26px; }
-  .amenities__feature:first-child { grid-column: auto; }
+  .amenities__feature:first-child { grid-column: auto; grid-row: auto; }
   .amenities__feature-tile,
-  .amenities__feature:first-child .amenities__feature-tile { aspect-ratio: 4 / 3; }
+  .amenities__feature:first-child .amenities__feature-tile {
+    position: static;
+    aspect-ratio: 4 / 3;
+    height: auto;
+  }
   .amenities__feature-name { font-size: 16px; }
   .amenities__list { grid-template-columns: 1fr; gap: 22px; padding-top: 20px; }
   .amenities__list:not(.amenities__list--grouped) .amenities__group ul {
