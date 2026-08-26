@@ -33,6 +33,25 @@ export const TRUST_STATS = [
   { key: 'delivered',value: DELIVERED, suffix: '', label: 'Projects delivered', sub: 'Completed and lived in' },
 ];
 
+/**
+ * The three figures that were baked into the directors' banner artwork.
+ *
+ * They are rendered as HTML beneath the image rather than living inside the
+ * JPEG, because the client has already revised one of them once ("1500+" to
+ * "4,000+") and a number burned into a composite cannot be corrected without a
+ * re-export from the original design file.
+ *
+ * NOTE, deliberate and previously confirmed with the client: this strip reads
+ * 4,000+ while TRUST_STATS above (and the footer, About page and SEO
+ * descriptions) reads 4,500+. Do not "reconcile" the two on your own; the
+ * banner figure and the site-copy figure were supplied separately.
+ */
+export const BANNER_STATS = [
+  { value: '15+',    label: 'Successful projects delivered' },
+  { value: '4,000+', label: 'Happy families' },
+  { value: '2',      label: 'Decades of trust' },
+];
+
 /** Short editorial paragraphs — the company story, told in three beats. */
 export const STORY = [
   {

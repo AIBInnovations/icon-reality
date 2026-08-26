@@ -778,6 +778,18 @@ export const projectsBySlug = projectsList.reduce((acc, p) => {
  * `trending` is the site's existing word for "currently selling"; the UI shows
  * it as "Ongoing" because that is what a buyer filtering a list expects.
  */
+/**
+ * `total_area` holds a real measurement for some projects ("24 acres") and a
+ * development category for others ("Royal estate", "Township"). Labelling every
+ * one of them "Total area" made the category rows read as wrong data, so the
+ * label follows the value: a measurement keeps "Total area", anything else is
+ * described as what it actually is.
+ */
+const MEASUREMENT = /\d/;
+
+export const areaFactLabel = (value) =>
+  MEASUREMENT.test(String(value ?? '')) ? 'Total area' : 'Estate type';
+
 export const PROJECT_STATUSES = [
   { key: 'trending', label: 'Ongoing', plural: 'Ongoing projects' },
   { key: 'upcoming', label: 'Upcoming', plural: 'Upcoming projects' },

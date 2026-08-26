@@ -4,6 +4,7 @@ import Hero from '../components/Hero';
 import TrustSection from '../components/TrustSection';
 import DisplayHeading from '../components/DisplayHeading';
 import ServicesGrid from '../components/ServicesGrid';
+import InsideSection from '../components/InsideSection';
 import AboutPostcard from '../components/AboutPostcard';
 import ForBuyers from '../components/ForBuyers';
 import PillarsCards from '../components/PillarsCards';
@@ -103,6 +104,7 @@ export default function HomePage() {
         <>
           <DisplayHeading />
           <ServicesGrid />
+          <InsideSection />
           <AboutPostcard />
           <PillarsCards />
           <TrustSection />

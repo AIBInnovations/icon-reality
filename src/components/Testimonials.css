@@ -5,16 +5,18 @@
 
 .testimonials__shell {
   position: relative;
-  background: #EFE8DD;
+  /* Token, not a repeated literal — and a slight vertical deepening so the card
+     has its own body against the flat --bg gutter around it. */
+  background: linear-gradient(180deg, var(--bg-2) 0%, #E9DFD0 100%);
   color: var(--ink);
   border-radius: 18px;
   overflow: hidden;
-  padding: clamp(56px, 7vw, 90px) 0 clamp(36px, 4vw, 56px);
+  padding: clamp(44px, 5vw, 66px) 0 clamp(28px, 3vw, 42px);
 }
 
 .testimonials__head {
   text-align: center;
-  margin-bottom: clamp(40px, 5vw, 70px);
+  margin-bottom: clamp(26px, 3vw, 42px);
 }
 
 .testimonials__eyebrow {
@@ -24,7 +26,7 @@
 }
 
 .testimonials__title {
-  font-size: clamp(38px, 5.4vw, 76px);
+  font-size: clamp(30px, 3.8vw, 54px);
   letter-spacing: -0.02em;
   text-transform: none;
   font-weight: 600;
@@ -35,8 +37,8 @@
   position: relative;
   width: 100%;
   overflow: hidden;
-  padding: 20px 0 60px;
-  height: clamp(360px, calc(var(--svh, 1vh) * 44), 460px);
+  padding: 14px 0 40px;
+  height: clamp(310px, calc(var(--svh, 1vh) * 36), 380px);
 }
 
 .testimonials__track {
@@ -53,10 +55,10 @@
   width: min(640px, 86vw);
   background: #FFFFFF;
   border-radius: 14px;
-  padding: clamp(26px, 3vw, 44px) clamp(24px, 2.6vw, 36px);
+  padding: clamp(22px, 2.4vw, 34px) clamp(20px, 2.2vw, 30px);
   display: flex;
   flex-direction: column;
-  gap: 20px;
+  gap: 16px;
   box-shadow: 0 30px 60px -28px rgba(20, 20, 20, 0.18);
   will-change: transform, opacity;
   left: 50%;
@@ -69,7 +71,7 @@
 }
 
 .testimonial__quote {
-  font-size: clamp(16px, 1.3vw, 21px);
+  font-size: clamp(15px, 1.1vw, 18px);
   line-height: 1.55;
   color: var(--ink-soft);
 }
@@ -139,10 +141,10 @@
 
 @media (max-width: 720px) {
   .testimonials { padding: 8px; }
-  .testimonials__shell { border-radius: 14px; padding: 50px 0 32px; }
-  .testimonials__head { margin-bottom: 32px; }
-  .testimonials__title { font-size: clamp(28px, 8vw, 42px); padding-inline: 12px; }
-  .testimonials__viewport { padding: 14px 0 36px; height: clamp(380px, calc(var(--svh, 1vh) * 56), 460px); }
+  .testimonials__shell { border-radius: 14px; padding: 38px 0 24px; }
+  .testimonials__head { margin-bottom: 22px; }
+  .testimonials__title { font-size: clamp(26px, 6.6vw, 36px); padding-inline: 12px; }
+  .testimonials__viewport { padding: 12px 0 28px; height: clamp(350px, calc(var(--svh, 1vh) * 50), 410px); }
   .testimonial { padding: 22px 20px; gap: 16px; width: min(560px, 90vw); margin-left: calc(min(560px, 90vw) / -2); }
   .testimonial__quote { font-size: 15px; padding-inline: 12px; }
   .testimonial__name { font-size: 15px; }
