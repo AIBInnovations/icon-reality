@@ -1,236 +1,67 @@
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 import { useEnquiry } from '../enquiry/enquiryContext';
+import ServiceCarousel from './ServiceCarousel';
 import './ServicesGrid.css';
 
-// What Icon Realty offers ACROSS the portfolio — not what one project has.
-// Every figure here is either published company data (company.js) or is the
-// true min/max across projects.js; nothing is estimated (CLAUDE.md §5).
+// The two things Icon Realty actually does, as stated in company.js STORY:
+// it designs and markets residential plotted communities. Development features
+// (layouts, amenities, location, investment) are NOT services and live in
+// InsideSection instead. Every claim below is drawn from published company
+// material — nothing estimated (CLAUDE.md §5).
 const services = [
   {
-    title: 'PLOT LAYOUTS',
-    image: '/images/services/plot-layouts.jpg',
-    body: 'Residential plotted developments, planned on the same principles for twenty years: wide avenues, east and west facing plots, and Vastu-compliant orientations across every block.',
-    body2: 'Plots run from 600 sq ft at Saatvik Vihar and Siddhayatan to 20,000 sq ft estate parcels at Oscar Palace, so there is a first plot and a landmark plot inside the same portfolio. Road widths are planned generously, up to 100 ft and 60 ft on the estate projects, and corner frontages are reserved rather than sold off first.',
+    title: 'DESIGNING',
+    // Client-supplied artwork (Aug 2026), replacing the reused Oscar Palace
+    // layout render that stood in until it arrived.
+    image: '/images/services/designing.jpg',
+    body: 'Master planning for residential plotted communities: the layout, the road hierarchy, the orientation of every plot and the amenity programme, all settled before a single boundary is marked.',
+    body2: 'Twenty years of planning the same city has produced a house style: wide avenues, east and west facing plots, Vastu-compliant orientations, and corner frontages reserved rather than sold off first. Where a project calls for a specialist we bring one in, Oscar Palace is designed by Ravi Gupta Ji of Jaipur, but the planning discipline underneath is ours and does not change from project to project.',
     highlights: [
-      'Plot sizes from 600 to 20,000 sq ft across the portfolio',
+      'Master layouts, road hierarchy & plot orientation',
       'East & west facing, Vastu-compliant plotting',
-      'Wide planned roads: up to 100 ft & 60 ft',
-      'Three positioning bands: high end, lower high end, mid range',
+      'Amenity programme planned to the project, not the brochure',
+      'Architecture partners such as Ravi Gupta Ji of Jaipur',
     ],
     stats: [
-      { k: 'Plot range', v: '600 – 20,000 sq ft' },
+      { k: 'Designing since', v: '2004' },
       { k: 'Projects', v: '15+ landmarks' },
-      { k: 'Facing', v: 'East & West' },
+      { k: 'Plot range', v: '600 – 20,000 sq ft' },
     ],
     gallery: [
       '/images/oscar/layout/layout-1.jpg',
       '/images/oscar/layout/layout-2.jpg',
       '/images/siddhayatan/layout-1.jpg',
       '/images/oscar/layout/layout-3.jpg',
+      '/images/iit-greens/render-2.jpg',
     ],
   },
   {
-    title: 'AMENITIES',
-    image: '/images/services/amenities.jpg',
-    body: 'Gardens, temples, turfs, courts and clubhouses, all sized to the project and designed for the hours you actually live in rather than for the brochure.',
-    body2: 'Oscar Palace carries 2,80,000 sq ft of garden and open space, a heritage temple and marble baradaris, tennis and pickleball courts and a multipurpose cricket and football turf. Eden Garden has its football garden and skating rink; IIT Greens its oxygen zone and acupressure track; Saatvik Vihar its yoga and senior-citizen gardens. The scale changes with the project, the intent does not.',
+    title: 'MARKETING',
+    image: '/images/oscar/entrance/entrance-1.jpg',
+    body: 'Positioning, campaigns, the channel partner network and the site team that answers the phone: the whole path from a first enquiry to a registered plot.',
+    body2: 'On some projects Icon Realty is the developer. On others, Oscar Palace among them, we are the marketing and sales partner to the developer. Which role we hold on which project is stated on the project page itself rather than blurred, and the same team that sells you the plot handles registration, loan coordination and the paperwork after it.',
     highlights: [
-      'Landscaped gardens & open space on every project',
-      'Sport: turfs, tennis, pickleball, skating, open gyms',
-      'Temples, baradaris & community halls',
-      '24×7 security and planned utilities',
+      'Positioning & campaigns for plotted communities',
+      'Channel partner network across Indore',
+      'Developer or marketing partner, stated per project',
+      'Registration, loan and post-sale paperwork support',
     ],
     stats: [
-      { k: 'Largest green', v: '2,80,000 sq ft' },
-      { k: 'Security', v: '24×7 multi-tier' },
+      { k: 'Marketing since', v: '2004' },
       { k: 'Delivered', v: '10 communities' },
-    ],
-    gallery: [
-      '/images/oscar/park/park-1.jpg',
-      '/images/oscar/temple/temple-1.jpg',
-      '/images/eden-garden/eden-3.jpg',
-      '/images/oscar/amenities/amenity-1.jpg',
-      '/images/iit-greens/render-3.jpg',
-      '/images/saatvik-vihar/saatvik-3.jpg',
-    ],
-  },
-  {
-    title: 'LOCATION',
-    image: '/images/services/location.jpg',
-    body: 'Every project we have built stands in and around Indore: the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau, Simrol and Pithampur.',
-    body2: 'We are not visitors to this market. We know which corridors are being built and which ones are only being talked about, and the difference between the two is the whole of our job. Oscar Palace sits a minute from the expressway; IIT Greens is opposite the IIT Indore campus; Siddhayatan runs straight through to Ujjain; the Singapore townships line the corporate axis of the Super Corridor.',
-    highlights: [
-      'Every project in and around Indore',
-      'Super Corridor, Indore–Nagpur Highway, Bicholi & Manglia',
-      'Airport, expressway and campus adjacencies',
-      'Twenty years of reading this one city',
-    ],
-    stats: [
-      { k: 'City', v: 'Indore' },
-      { k: 'Since', v: '2004' },
-      { k: 'Corridors', v: '6+' },
+      { k: 'Bank loans', v: 'Available' },
     ],
     gallery: [
       '/images/oscar/entrance/entrance-1.jpg',
+      '/images/projects/oscar-palace-gate.jpg',
+      '/images/eden-garden/eden-3.jpg',
       '/images/singapore-corridor/hero.jpg',
-      '/images/iit-greens/render-2.jpg',
-      '/images/oscar-fort/hero.jpg',
-    ],
-  },
-  {
-    title: 'INVESTMENT',
-    image: '/images/services/investment.jpg',
-    body: 'Buy early, hold long-term, watch appreciation: land you own, on corridors with structural reasons to grow. Bank loans are available on our plots.',
-    body2: 'Plotted developments in growth corridors have historically outperformed apartments on both appreciation and liquidity. Ten of our communities are already delivered and lived in, which means you can go and see what an Icon Realty address looks like a decade after handover before you buy into the next one.',
-    highlights: [
-      'Land you own outright: no depreciation',
-      'Home-loan assistance on our plotted developments',
-      'Ten delivered communities you can visit today',
-      'Resale or self-build, your call',
-    ],
-    stats: [
-      { k: 'Delivered', v: '10 communities' },
-      { k: 'Bank loans', v: 'Available' },
-      { k: 'Flexibility', v: 'Hold · build · resell' },
-    ],
-    gallery: [
-      '/images/ruchi-lifescapes/hero.jpg',
-      '/images/singapore-lifestyle-2/hero.jpg',
-      '/images/dream-victoria/victoria-1.jpg',
-      '/images/oscar-billionaire/hero.jpg',
+      '/images/saatvik-vihar/saatvik-3.jpg',
     ],
   },
 ];
-
-/* Draggable, auto-playing, seamless-looping image carousel for the modal.
-   - Auto-scrolls slowly, pausing while the user hovers or interacts.
-   - Mouse: click-drag to scroll. Touch: native swipe.
-   - Prev / next arrows nudge by one slide.
-   - Slides are tripled and the scroll position wraps inside the middle copy,
-     so it loops forever with no visible jump. */
-function ServiceCarousel({ images, title }) {
-  const viewportRef = useRef(null);
-  const trackRef = useRef(null);
-  const pausedRef = useRef(false);   // true while hovering / touching
-  const dragRef = useRef(null);      // { startX, startScroll } during a mouse drag
-  const resumeRef = useRef(null);    // timer that re-enables auto-scroll after an arrow tap
-  const [grabbing, setGrabbing] = useState(false);
-
-  const slides = [...images, ...images, ...images];
-
-  // Start in the middle copy so there's room to loop in either direction.
-  useEffect(() => {
-    const vp = viewportRef.current;
-    if (vp) vp.scrollLeft = vp.scrollWidth / 3;
-  }, [images]);
-
-  // Auto-advance + seamless wrap.
-  useEffect(() => {
-    const vp = viewportRef.current;
-    if (!vp) return;
-    const reduce = window.matchMedia?.('(prefers-reduced-motion: reduce)').matches;
-    let raf;
-    const step = () => {
-      const third = vp.scrollWidth / 3;
-      if (!reduce && !pausedRef.current && !dragRef.current) {
-        vp.scrollLeft += 0.5;
-      }
-      // wrap while staying inside the identical middle copy → invisible jump
-      if (vp.scrollLeft >= third * 2) vp.scrollLeft -= third;
-      else if (vp.scrollLeft <= 0) vp.scrollLeft += third;
-      raf = requestAnimationFrame(step);
-    };
-    raf = requestAnimationFrame(step);
-    return () => cancelAnimationFrame(raf);
-  }, [images]);
-
-  const slideAmount = () => {
-    const track = trackRef.current;
-    const first = track?.children[0];
-    if (!first) return 240;
-    const gap = parseFloat(getComputedStyle(track).columnGap || '10') || 10;
-    return first.getBoundingClientRect().width + gap;
-  };
-
-  const nudge = (dir) => {
-    const vp = viewportRef.current;
-    if (!vp) return;
-    // Pause auto-scroll so it doesn't overwrite scrollLeft and cancel the arrow's
-    // smooth scroll; resume shortly after the scroll settles.
-    pausedRef.current = true;
-    vp.scrollBy({ left: dir * slideAmount(), behavior: 'smooth' });
-    clearTimeout(resumeRef.current);
-    resumeRef.current = setTimeout(() => { pausedRef.current = false; }, 1500);
-  };
-
-  // Mouse drag-to-scroll (touch relies on native horizontal scrolling).
-  const onPointerDown = (e) => {
-    if (e.pointerType !== 'mouse') return;
-    const vp = viewportRef.current;
-    dragRef.current = { startX: e.clientX, startScroll: vp.scrollLeft };
-    setGrabbing(true);
-    vp.setPointerCapture?.(e.pointerId);
-  };
-  const onPointerMove = (e) => {
-    if (!dragRef.current) return;
-    viewportRef.current.scrollLeft =
-      dragRef.current.startScroll - (e.clientX - dragRef.current.startX);
-  };
-  const endDrag = () => { dragRef.current = null; setGrabbing(false); };
-
-  const pause = () => { pausedRef.current = true; };
-  const resume = () => { pausedRef.current = false; };
-
-  return (
-    <div className="service-modal__carousel-wrap">
-      <div className="service-modal__carousel-stage">
-        <div
-          ref={viewportRef}
-          className={`service-modal__carousel${grabbing ? ' is-grabbing' : ''}`}
-          onPointerDown={onPointerDown}
-          onPointerMove={onPointerMove}
-          onPointerUp={endDrag}
-          onPointerCancel={endDrag}
-          onPointerLeave={(e) => { endDrag(e); resume(); }}
-          onMouseEnter={pause}
-          onTouchStart={pause}
-          onTouchEnd={resume}
-        >
-          <div className="service-modal__track" ref={trackRef}>
-            {slides.map((src, i) => (
-              <div key={i} className="service-modal__slide">
-                <img src={src} alt={`${title} ${(i % images.length) + 1}`} draggable="false" loading="lazy" decoding="async" />
-              </div>
-            ))}
-          </div>
-        </div>
-
-        <button
-          type="button"
-          className="service-modal__nav service-modal__nav--prev"
-          onClick={() => nudge(-1)}
-          aria-label="Previous image"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M10 3L5 8l5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-        <button
-          type="button"
-          className="service-modal__nav service-modal__nav--next"
-          onClick={() => nudge(1)}
-          aria-label="Next image"
-        >
-          <svg width="16" height="16" viewBox="0 0 16 16" fill="none">
-            <path d="M6 3l5 5-5 5" stroke="currentColor" strokeWidth="1.6" strokeLinecap="round" strokeLinejoin="round"/>
-          </svg>
-        </button>
-      </div>
-    </div>
-  );
-}
 
 export default function ServicesGrid() {
   const [openIdx, setOpenIdx] = useState(-1);
@@ -280,7 +111,7 @@ export default function ServicesGrid() {
             <Reveal as="h2" className="display services__title">What we<br/>offer.</Reveal>
             <Reveal as="p" className="services__lede" delay={0.05}>
               Icon Realty designs and markets residential plotted developments, and has done, in this
-              one city, for twenty years. This is what that covers.
+              one city, for twenty years. Two disciplines, one address book.
             </Reveal>
           </div>
 

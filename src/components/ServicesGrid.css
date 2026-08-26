@@ -169,84 +169,6 @@
   transform: rotate(90deg);
 }
 
-/* carousel wrapper — the close button (with its own circular bg) floats over
-   the top of the images, so only a little breathing room is needed up top */
-.service-modal__carousel-wrap {
-  flex: 0 0 auto;
-  padding-top: 16px;
-}
-
-/* stage wraps only the carousel so the nav arrows center on the images */
-.service-modal__carousel-stage {
-  position: relative;
-}
-
-.service-modal__carousel {
-  overflow-x: auto;
-  overflow-y: hidden;
-  background: #FFFFFF;
-  display: flex;
-  align-items: stretch;
-  height: clamp(220px, 30vh, 320px);
-  cursor: grab;
-  scroll-behavior: auto;
-  overscroll-behavior-x: contain;
-  touch-action: pan-x;
-  scrollbar-width: none;        /* Firefox */
-  -ms-overflow-style: none;     /* old Edge */
-}
-.service-modal__carousel::-webkit-scrollbar { display: none; }
-.service-modal__carousel.is-grabbing { cursor: grabbing; }
-
-.service-modal__track {
-  display: flex;
-  gap: 10px;
-  width: max-content;
-  padding-inline: 10px;
-  align-items: stretch;
-  user-select: none;
-}
-
-/* prev / next arrows, vertically centered over the images */
-.service-modal__nav {
-  position: absolute;
-  top: 50%;
-  transform: translateY(-50%);
-  z-index: 3;
-  width: 40px;
-  height: 40px;
-  border-radius: 50%;
-  display: grid;
-  place-items: center;
-  background: rgba(255, 255, 255, 0.9);
-  color: var(--ink);
-  border: 1px solid rgba(0, 0, 0, 0.08);
-  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.14);
-  cursor: pointer;
-  transition: background 0.2s ease, transform 0.2s ease;
-}
-.service-modal__nav:hover { background: #ffffff; transform: translateY(-50%) scale(1.06); }
-.service-modal__nav:active { transform: translateY(-50%) scale(0.96); }
-.service-modal__nav svg { display: block; }
-.service-modal__nav--prev { left: 14px; }
-.service-modal__nav--next { right: 14px; }
-
-.service-modal__slide {
-  flex: 0 0 auto;
-  width: clamp(170px, 18vw, 260px);
-  height: 100%;
-  overflow: hidden;
-  background: #efe8dd;
-}
-.service-modal__slide img {
-  width: 100%;
-  height: 100%;
-  object-fit: cover;
-  -webkit-user-drag: none;
-  user-select: none;
-  pointer-events: none;   /* so drags start on the track, not the image */
-}
-
 .service-modal__body {
   flex: 1 1 auto;
   min-height: 0;
@@ -351,10 +273,6 @@
     transform: translateX(100%);
   }
   .service-modal__close { width: 44px; height: 44px; top: 16px; right: 16px; }
-  .service-modal__carousel-wrap { padding-top: 64px; }
-  .service-modal__carousel { height: calc(var(--svh, 1vh) * 36); }
-  .service-modal__slide { width: 70%; }
-  .service-modal__nav { width: 36px; height: 36px; }
   .service-modal__stat-row { grid-template-columns: repeat(2, 1fr); }
   .service-modal__body { padding: 18px 18px 22px; }
 }
@@ -397,4 +315,22 @@
   .services__thumb { width: 70px; }
   .services__row-title { font-size: 18px; letter-spacing: 0.03em; }
   .services__row-plus { width: 36px; height: 36px; }
+}
+
+/* Compact variant, used by the "What's inside" section. Everything about the
+   overlay stays the same - same entrance, same easing, same carousel - only the
+   panel is narrower and the carousel slides scale down to suit it, so the four
+   pillars open exactly the way the two services do. */
+.service-modal--compact .service-modal__panel {
+  width: clamp(320px, 34vw, 520px);
+  max-width: calc(100vw - 28px);
+}
+.service-modal--compact {
+  --carousel-slide: 62%;
+  --carousel-height: clamp(170px, 22vh, 230px);
+}
+.service-modal--compact .service-modal__close { width: 44px; height: 44px; }
+
+@media (max-width: 560px) {
+  .service-modal--compact .service-modal__panel { width: auto; }
 }

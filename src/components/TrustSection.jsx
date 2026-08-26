@@ -1,4 +1,5 @@
 import Reveal from './Reveal';
+import { BANNER_STATS } from '../data/company';
 import './TrustSection.css';
 
 const points = [
@@ -12,19 +13,34 @@ export default function TrustSection() {
   return (
     <section className="trust" id="about">
       <div className="container trust__grid">
-        {/* PENDING ARTWORK (change.md #6): the supplied trusted.png has
-            "1500+ HAPPY FAMILIES" baked into the composite. The client has
-            corrected the figure to 4,000+, so this file needs re-exporting from
-            the original design — the number cannot be fixed in code.
-            DELIBERATE, CONFIRMED WITH THE CLIENT: the image says 4,000+ while
-            the site copy (company.js TRUST_STATS, the footer, the About and SEO
-            descriptions) says 4,500+. Do not "reconcile" the two — the written
-            figure stays at 4,500+.
-            The alt text therefore does NOT repeat the figure, so it cannot
-            contradict whichever version of the picture is in place. */}
-        <Reveal className="trust__image-wrap">
-          <img src="/images/trusted.png" alt="Mr. Nilesh Porwal, Director of Icon Realty: a summary of projects delivered, families welcomed home, and two decades of trust" loading="lazy" decoding="async" />
-        </Reveal>
+        {/* The supplied banner artwork carried "15+ / 1500+ / 2 DECADES" baked
+            into a band across its foot. The client revised 1500+ to 4,000+, and
+            a number burned into a composite cannot be corrected in code, so the
+            band was cropped off the JPEG and rebuilt below as HTML from
+            company.js BANNER_STATS. Correcting a figure is now a data edit.
+            The alt text does not repeat any figure, so it can never contradict
+            whichever artwork is in place. */}
+        <div className="trust__banner">
+          <Reveal className="trust__image-wrap">
+            <img
+              src="/images/directors-banner.jpg"
+              alt="Mr. Siddharth Porwal and Mr. Nilesh Porwal, Directors of Icon Realty"
+              width="1122"
+              height="1107"
+              loading="lazy"
+              decoding="async"
+            />
+          </Reveal>
+
+          <Reveal as="dl" className="trust__stats" delay={0.06}>
+            {BANNER_STATS.map((s) => (
+              <div key={s.label} className="trust__stat">
+                <dt className="trust__stat-v">{s.value}</dt>
+                <dd className="trust__stat-k">{s.label}</dd>
+              </div>
+            ))}
+          </Reveal>
+        </div>
 
         <div className="trust__copy">
           <Reveal as="h2" className="display trust__heading">

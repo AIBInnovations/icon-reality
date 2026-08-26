@@ -33,7 +33,7 @@ import { LEAD_INTENTS } from '../services/leads';
 import { waMessage } from '../services/whatsapp';
 import { PRIMARY_PHONE, telHref } from '../data/contact';
 import { trackProjectView, trackVideoPlay } from '../analytics/events';
-import { projectsBySlug, projectPlans, relatedProjects } from '../data/projects';
+import { projectsBySlug, projectPlans, relatedProjects, areaFactLabel } from '../data/projects';
 import { buildProjectFaqs } from '../data/projectFaqs';
 import { categoriseGallery } from '../utils/gallery';
 import './ProjectDetailPage.css';
@@ -54,12 +54,20 @@ function ProjectVideo({ src, poster, projectName }) {
   const ref = useRef(null);
   const isMobile = useMediaQuery('(max-width: 860px)');
   const [started, setStarted] = useState(false);
+  // Sound is off to begin with because browsers only allow autoplay while
+  // muted. The ref mirrors the state so the observer effect below can read the
+  // current choice without taking it as a dependency and rebuilding the
+  // IntersectionObserver every time the visitor toggles sound.
+  const [soundOn, setSoundOn] = useState(false);
+  const soundRef = useRef(false);
 
   useEffect(() => {
     const el = ref.current;
     if (!el) return undefined;
-    el.muted = true;                 // required for autoplay to be allowed
-    const setRate = () => { el.playbackRate = 1.5; };
+    el.muted = !soundRef.current;    // muted is required for autoplay to be allowed
+    // 1.5x is the established look for the silent showcase loop, but sped-up
+    // audio is unpleasant, so the film runs at its real speed once sound is on.
+    const setRate = () => { el.playbackRate = soundRef.current ? 1 : 1.5; };
     setRate();
     el.addEventListener('loadedmetadata', setRate);
 
@@ -94,7 +102,23 @@ function ProjectVideo({ src, poster, projectName }) {
     ref.current?.play().catch(() => {});
   };
 
+  const toggleSound = () => {
+    const el = ref.current;
+    const next = !soundOn;
+    soundRef.current = next;
+    setSoundOn(next);
+    if (!el) return;
+    el.muted = !next;
+    el.playbackRate = next ? 1 : 1.5;
+    // The toggle is itself a user gesture, so a play() started here is allowed
+    // to carry sound even if the element was paused off-screen.
+    if (next) el.play().catch(() => {});
+  };
+
   const showPoster = isMobile && !started;
+  // Hidden when the native control bar is showing, which already has a volume
+  // control of its own.
+  const showSoundToggle = !showPoster && !(isMobile && started);
 
   return (
     <>
@@ -113,6 +137,32 @@ function ProjectVideo({ src, poster, projectName }) {
            the hero image for bandwidth on a phone (read.md §56) */
         preload={isMobile ? 'none' : 'metadata'}
       />
+
+      {showSoundToggle && (
+        <button
+          type="button"
+          className="project-video__sound"
+          onClick={toggleSound}
+          aria-pressed={soundOn}
+          aria-label={soundOn ? 'Mute the walkthrough' : 'Unmute the walkthrough'}
+        >
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden>
+            <path
+              d="M4 9.5h3.2L12 5.5v13l-4.8-4H4v-5z"
+              fill="currentColor"
+            />
+            {soundOn ? (
+              <>
+                <path d="M15.8 9a4 4 0 0 1 0 6" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+                <path d="M18.2 6.6a7.4 7.4 0 0 1 0 10.8" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+              </>
+            ) : (
+              <path d="M16 9.5l5 5m0-5l-5 5" stroke="currentColor" strokeWidth="1.7" strokeLinecap="round" />
+            )}
+          </svg>
+          <span className="project-video__sound-label">{soundOn ? 'Sound on' : 'Sound off'}</span>
+        </button>
+      )}
 
       {showPoster && (
         <button
@@ -353,7 +403,7 @@ export default function ProjectDetailPage() {
     { label: 'Location', value: location },
     { label: 'Status', value: statusLabel },
     { label: 'Plot sizes', value: plot_sizes },
-    { label: 'Development', value: total_area },
+    { label: areaFactLabel(total_area), value: total_area },
     { label: 'Possession', value: possession },
     { label: 'Price', value: price?.display },
     { label: 'RERA', value: rera?.number, href: rera?.url },
@@ -463,7 +513,7 @@ export default function ProjectDetailPage() {
           <Reveal className="project-overview__stats" delay={0.1}>
             {total_area && (
               <div className="project-overview__stat">
-                <span className="project-overview__stat-k">Total area</span>
+                <span className="project-overview__stat-k">{areaFactLabel(total_area)}</span>
                 <span className="project-overview__stat-v">{total_area}</span>
               </div>
             )}

@@ -195,15 +195,11 @@ export default function AboutPage() {
       {/* MODUS-STYLE HERO */}
       <section className="about-hero">
         <div className="container about-hero__inner">
+          <Reveal as="span" className="eyebrow about-hero__eyebrow">About Icon Realty</Reveal>
           <h1 className="display about-hero__title">
             <span className="about-hero__line">
               <span className="about-hero__line-inner" ref={(el) => (lineRefs.current[0] = el)}>
-                Because it
-              </span>
-            </span>
-            <span className="about-hero__line">
-              <span className="about-hero__line-inner" ref={(el) => (lineRefs.current[1] = el)}>
-                better can.
+                Built for the decade after.
               </span>
             </span>
           </h1>

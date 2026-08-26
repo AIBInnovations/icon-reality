@@ -1,6 +1,6 @@
+import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
-import MediaFigure from './MediaFigure';
 import './AudiencePaths.css';
 
 /**
@@ -67,22 +67,59 @@ export default function AudiencePaths() {
         <div className="audience-paths__grid">
           {PATHS.map((path, i) => (
             <Reveal key={path.to} delay={Math.min(i, 4) * 0.06}>
-              <Link to={path.to} className="audience-path">
-                <MediaFigure src={path.image} credit={path.credit} alt={path.title} ratio="4 / 5" />
-                <span className="audience-path__eyebrow">{path.eyebrow}</span>
-                <h3 className="audience-path__title">{path.title}</h3>
-                <p className="audience-path__body">{path.body}</p>
-                <span className="audience-path__cta">
-                  Explore
-                  <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden>
-                    <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
-                  </svg>
-                </span>
-              </Link>
+              <PathCard path={path} index={i} />
             </Reveal>
           ))}
         </div>
       </div>
     </section>
+  );
+}
+
+/**
+ * One audience card: the photograph carries the card and the copy sits over it
+ * behind a veil, rather than the copy sitting in a column underneath.
+ *
+ * Written out rather than composed from MediaFigure because the frame there is
+ * a <span>, and this card needs a real <h3> inside it (CLAUDE.md §9). The
+ * failed-load behaviour MediaFigure provides is kept: a path that no longer
+ * resolves collapses to a plain tinted card instead of a broken-image icon.
+ */
+function PathCard({ path, index }) {
+  const [failed, setFailed] = useState(false);
+
+  return (
+    <Link to={path.to} className="audience-path">
+      <span className="audience-path__frame">
+        {!failed && (
+          <img
+            src={path.image}
+            alt=""
+            loading="lazy"
+            decoding="async"
+            fetchPriority="low"
+            onError={() => setFailed(true)}
+          />
+        )}
+        <span className="audience-path__veil" aria-hidden />
+      </span>
+
+      <span className="audience-path__n" aria-hidden>
+        {String(index + 1).padStart(2, '0')}
+      </span>
+
+      <span className="audience-path__content">
+        <span className="audience-path__eyebrow">{path.eyebrow}</span>
+        <h3 className="audience-path__title">{path.title}</h3>
+        <p className="audience-path__body">{path.body}</p>
+        <span className="audience-path__cta">
+          Explore
+          <svg width="13" height="13" viewBox="0 0 14 14" fill="none" aria-hidden>
+            <path d="M3 7h8M7 3l4 4-4 4" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>
+          </svg>
+        </span>
+        {path.credit && <span className="audience-path__credit">{path.credit}</span>}
+      </span>
+    </Link>
   );
 }
