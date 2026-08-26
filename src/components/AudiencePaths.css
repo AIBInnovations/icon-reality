@@ -1,6 +1,18 @@
+/* Sits between CompletedProjects (--bg) above and the Testimonials card
+   (--bg-2 shell inset in a --bg gutter) below. A flat --bg-2 fill left a hard
+   seam at both edges and repeated the exact colour of the testimonials shell,
+   which read as one band interrupted by a stray light stripe. Fading in and out
+   of --bg removes both seams and leaves the testimonials card sitting on --bg,
+   so it reads as a distinct panel rather than a continuation. */
 .audience-paths {
   padding: clamp(56px, 7.5vw, 100px) 0;
-  background: var(--bg-2);
+  background: linear-gradient(
+    180deg,
+    var(--bg) 0%,
+    var(--bg-2) 18%,
+    var(--bg-2) 78%,
+    var(--bg) 100%
+  );
 }
 
 .audience-paths__head {
@@ -33,50 +45,129 @@
   gap: clamp(14px, 1.8vw, 26px);
 }
 
+/* Overlay card: the photograph is the card. Copy sits on it behind a bottom-up
+   veil, so the four routes read as image-led like the rest of the site rather
+   than as four text columns with pictures above them. */
 .audience-path {
+  position: relative;
+  display: block;
+  aspect-ratio: 3 / 4;
+  border-radius: 14px;
+  overflow: hidden;
+  color: #F4F0EA;
+  min-width: 0;
+  background: var(--charcoal);
+  transition: transform .45s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.audience-path:hover { transform: translateY(-5px); }
+
+.audience-path__frame {
+  position: absolute;
+  inset: 0;
+  display: block;
+}
+.audience-path__frame img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.2s cubic-bezier(0.22, 1, 0.36, 1);
+}
+.audience-path:hover .audience-path__frame img { transform: scale(1.06); }
+
+/* Dark enough at the foot to hold body copy at AA, clear at the top so the
+   photograph still reads as a photograph. */
+.audience-path__veil {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    180deg,
+    rgba(18, 16, 14, 0.05) 0%,
+    rgba(18, 16, 14, 0.30) 42%,
+    rgba(18, 16, 14, 0.78) 74%,
+    rgba(18, 16, 14, 0.92) 100%
+  );
+}
+
+.audience-path__n {
+  position: absolute;
+  top: 14px;
+  right: 16px;
+  font-family: var(--font-display);
+  font-size: clamp(13px, 1.1vw, 16px);
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: rgba(244, 240, 234, 0.72);
+}
+
+.audience-path__content {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
   display: flex;
   flex-direction: column;
-  gap: 7px;
-  color: inherit;
-  min-width: 0;
-  height: 100%;
-  transition: transform .35s ease;
+  gap: 6px;
+  padding: clamp(16px, 1.6vw, 24px);
 }
-.audience-path:hover { transform: translateY(-4px); }
-.audience-path .media-figure { margin-bottom: 8px; }
 
 .audience-path__eyebrow {
   font-size: 10px;
   letter-spacing: 0.2em;
   text-transform: uppercase;
-  color: var(--peach-deep);
+  color: var(--peach);
   font-weight: 600;
 }
 .audience-path__title {
   font-family: var(--font-display);
-  font-size: clamp(18px, 1.6vw, 24px);
+  font-size: clamp(19px, 1.7vw, 26px);
   font-weight: 600;
-  line-height: 1.2;
-  color: var(--ink);
+  line-height: 1.15;
+  color: #FFFFFF;
+  margin: 0;
 }
 .audience-path__body {
-  font-size: clamp(13.5px, 1vw, 15.5px);
-  line-height: 1.6;
-  color: var(--muted);
+  font-size: clamp(13px, 0.98vw, 15px);
+  line-height: 1.55;
+  color: rgba(244, 240, 234, 0.86);
+  margin: 0;
+  /* The card's copy is anchored to the bottom edge, so the block grows upward:
+     the NRI and Channel Partner bodies run to three lines where the first two
+     run to two, which lifted their eyebrow and title a line above the others.
+     Reserving the taller height lines all four titles up. */
+  min-height: calc(3 * 1.55em);
 }
 .audience-path__cta {
   display: inline-flex;
   align-items: center;
   gap: 7px;
-  margin-top: auto;
-  padding-top: 10px;
+  margin-top: 6px;
   font-size: 13px;
-  font-weight: 500;
+  font-weight: 600;
   letter-spacing: 0.04em;
-  color: var(--ink);
-  transition: gap .25s ease, color .2s ease;
+  color: var(--peach);
+  transition: gap .25s ease;
 }
-.audience-path:hover .audience-path__cta { gap: 12px; color: var(--peach-deep); }
+.audience-path:hover .audience-path__cta { gap: 12px; }
+
+/* Project attribution, kept from the old caption so a photograph is never
+   mistaken for stock: quiet, at the foot of the card. */
+.audience-path__credit {
+  margin-top: 8px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(244, 240, 234, 0.18);
+  font-size: 9.5px;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: rgba(244, 240, 234, 0.62);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .audience-path,
+  .audience-path__frame img { transition: none; }
+  .audience-path:hover { transform: none; }
+  .audience-path:hover .audience-path__frame img { transform: none; }
+}
 
 @media (max-width: 980px) {
   .audience-paths__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
@@ -87,12 +178,14 @@
   .audience-paths__heading { font-size: clamp(27px, 8vw, 38px); }
   .audience-paths__lede { font-size: 15px; }
   .audience-paths__grid { gap: 14px; }
-  .audience-path__title { font-size: 17px; }
-  .audience-path__body { font-size: 13.5px; }
+  .audience-path { aspect-ratio: 4 / 5; }
+  .audience-path__title { font-size: 18px; }
+  .audience-path__body { font-size: 13px; }
 }
 
 @media (max-width: 420px) {
   .audience-paths__grid { gap: 12px; }
-  /* the four-word body lines get tight at 320px; the title carries the meaning */
-  .audience-path__body { font-size: 13px; }
+  /* the body lines get tight at 320px; the title carries the meaning */
+  .audience-path__body { display: none; }
+  .audience-path__credit { display: none; }
 }
