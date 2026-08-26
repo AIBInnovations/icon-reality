@@ -3,6 +3,7 @@ import PageHero from '../components/PageHero';
 import SectionHeading from '../components/SectionHeading';
 import EditorialSplit from '../components/EditorialSplit';
 import InfoGrid from '../components/InfoGrid';
+import InfoCarousel from '../components/InfoCarousel';
 import MediaFigure from '../components/MediaFigure';
 import Reveal from '../components/Reveal';
 import CtaBand from '../components/CtaBand';
@@ -57,7 +58,9 @@ export default function WhyIndorePage() {
             eyebrow="At a glance"
             title="Six things about this city that don't change with the market."
           />
-          <InfoGrid items={AT_A_GLANCE} variant="text" columns={3} numbered />
+          {/* Carousel rather than a grid: six facts in a 3-up block pushed the
+              rest of the page down before the visitor had read any of them. */}
+          <InfoCarousel items={AT_A_GLANCE} numbered ariaLabel="Indore at a glance" />
         </div>
       </section>
 
