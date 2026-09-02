@@ -8,6 +8,7 @@ import QuickDock from './components/QuickDock';
 import Analytics from './analytics/Analytics';
 import { EnquiryProvider } from './enquiry/EnquiryProvider';
 import { NRI_TOPICS_BY_SLUG } from './data/nri';
+import { LEGACY_POST_PATHS } from './data/blog/slugs';
 
 // code-split each route so the user never downloads About/Projects JS until they navigate there
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -26,6 +27,11 @@ const InvestorPage = lazy(() => import('./pages/InvestorPage'));
 // onto the matching anchor — see the redirect routes below.
 const NriPage = lazy(() => import('./pages/NriPage'));
 const ChannelPartnersPage = lazy(() => import('./pages/ChannelPartnersPage'));
+
+// The blog. Its own chunk, and the post page carries the block renderer, so
+// a visitor who never opens an article never downloads it.
+const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'));
+const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
 
 /**
  * /nri/<topic> → /nri#<topic>.
@@ -89,6 +95,16 @@ export default function App() {
                 <Route path="/channel-partners/why-icon" element={<Navigate to="/channel-partners#why-icon" replace />} />
                 <Route path="/channel-partners/commission-support" element={<Navigate to="/channel-partners#commission-support" replace />} />
                 <Route path="/channel-partners/register" element={<Navigate to="/channel-partners#register" replace />} />
+
+                <Route path="/blog" element={<BlogIndexPage />} />
+                <Route path="/blog/:slug" element={<BlogPostPage />} />
+                {/* The SEO brief's schema was written against flat, root-level
+                    post URLs. The posts live under /blog, so those keep
+                    resolving instead of 404ing — same treatment the old
+                    /nri/<topic> URLs get. */}
+                {LEGACY_POST_PATHS.map(({ from, to }) => (
+                  <Route key={from} path={from} element={<Navigate to={to} replace />} />
+                ))}
 
                 {/* a real 404, not the home page — see NotFoundPage */}
                 <Route path="*" element={<NotFoundPage />} />

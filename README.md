@@ -83,6 +83,12 @@ Routes live in `src/App.jsx`. All are lazily loaded behind one `<Suspense>`.
 /channel-partners/commission-support    ├ → redirect to the matching anchor
 /channel-partners/register              ┘
 
+/blog                           the blog index
+/blog/:slug                     one post (unknown slug 404s)
+/<post-slug>                    → redirects to /blog/<post-slug>. The SEO brief's
+                                schema was written against flat root-level URLs,
+                                so those keep resolving. See data/blog/slugs.js
+
 *                               real 404 (NotFoundPage), never a home-page fallback
 ```
 
@@ -115,7 +121,35 @@ src/data/
   channelPartners.js  partner programme, journey, registration steps
   contact.js          every phone number, email and address on the site
   nav.js              the information architecture
+  blog/               the blog: index.js is the registry and documents the
+                      block model, slugs.js the URL list, rich.js the inline
+                      model, and one file per post
 ```
+
+### The blog
+
+A post is a data file, never markup in a component. `src/data/blog/index.js`
+documents the block model; `ArticleBody` renders it in the browser and
+`src/seo/blogHtml.js` renders the same blocks to static HTML at build time.
+
+Three consequences worth knowing:
+
+* **Heading ids are generated**, not authored, from the heading text. The
+  contents list and the headings it points at therefore cannot disagree. An id
+  is a public anchor once it is linked, so renaming a heading changes a URL.
+* **Meta titles are used verbatim.** `<Seo exactTitle>` skips `TITLE_TEMPLATE`,
+  because the briefed titles already carry the brand.
+* **The FAQ accordion and the FAQPage JSON-LD read the same `faqs` array**, as
+  do the visible article and the BlogPosting schema, so the markup and the
+  structured data describe the same page by construction.
+
+`plugins/seo-assets.js` writes `dist/blog/index.html` and
+`dist/blog/<slug>/index.html` at build time: the app shell with that post's
+title, description, canonical, Open Graph, BlogPosting and FAQPage JSON-LD in
+the head and the article inside `#root`. Vercel matches the filesystem before
+the SPA rewrite in `vercel.json`, so those files are what the blog URLs serve,
+and React clears `#root` and takes over on mount. Crawlers that do not execute
+JavaScript still get the whole article and its schema.
 
 ### The rule about data
 

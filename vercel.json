@@ -1,44 +1,138 @@
 {
+  "redirects": [
+    {
+      "source": "/what-to-check-before-buying-residential-plot-in-indore",
+      "destination": "/blog/what-to-check-before-buying-residential-plot-in-indore",
+      "permanent": true
+    },
+    {
+      "source": "/what-to-check-before-buying-residential-plot-in-indore/",
+      "destination": "/blog/what-to-check-before-buying-residential-plot-in-indore",
+      "permanent": true
+    },
+    {
+      "source": "/best-areas-to-buy-residential-plots-in-indore",
+      "destination": "/blog/best-areas-to-buy-residential-plots-in-indore",
+      "permanent": true
+    },
+    {
+      "source": "/best-areas-to-buy-residential-plots-in-indore/",
+      "destination": "/blog/best-areas-to-buy-residential-plots-in-indore",
+      "permanent": true
+    },
+    {
+      "source": "/gated-plotted-development-vs-open-plot-indore",
+      "destination": "/blog/gated-plotted-development-vs-open-plot-indore",
+      "permanent": true
+    },
+    {
+      "source": "/gated-plotted-development-vs-open-plot-indore/",
+      "destination": "/blog/gated-plotted-development-vs-open-plot-indore",
+      "permanent": true
+    },
+    {
+      "source": "/top-5-residential-projects-in-indore-by-icon-realty",
+      "destination": "/blog/top-5-residential-projects-in-indore-by-icon-realty",
+      "permanent": true
+    },
+    {
+      "source": "/top-5-residential-projects-in-indore-by-icon-realty/",
+      "destination": "/blog/top-5-residential-projects-in-indore-by-icon-realty",
+      "permanent": true
+    },
+    {
+      "source": "/blog/",
+      "destination": "/blog",
+      "permanent": true
+    },
+    {
+      "source": "/blog/what-to-check-before-buying-residential-plot-in-indore/",
+      "destination": "/blog/what-to-check-before-buying-residential-plot-in-indore",
+      "permanent": true
+    },
+    {
+      "source": "/blog/best-areas-to-buy-residential-plots-in-indore/",
+      "destination": "/blog/best-areas-to-buy-residential-plots-in-indore",
+      "permanent": true
+    },
+    {
+      "source": "/blog/gated-plotted-development-vs-open-plot-indore/",
+      "destination": "/blog/gated-plotted-development-vs-open-plot-indore",
+      "permanent": true
+    },
+    {
+      "source": "/blog/top-5-residential-projects-in-indore-by-icon-realty/",
+      "destination": "/blog/top-5-residential-projects-in-indore-by-icon-realty",
+      "permanent": true
+    }
+  ],
   "rewrites": [
-    { "source": "/((?!api/).*)", "destination": "/index.html" }
+    {
+      "source": "/((?!api/).*)",
+      "destination": "/index.html"
+    }
   ],
   "headers": [
     {
       "source": "/assets/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/(frames|about-frames|images|video)/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=31536000, immutable" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=31536000, immutable"
+        }
       ]
     },
     {
       "source": "/downloads/(.*)",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=86400, stale-while-revalidate=604800" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=86400, stale-while-revalidate=604800"
+        }
       ]
     },
     {
       "source": "/sitemap.xml",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/robots.txt",
       "headers": [
-        { "key": "Cache-Control", "value": "public, max-age=0, must-revalidate" }
+        {
+          "key": "Cache-Control",
+          "value": "public, max-age=0, must-revalidate"
+        }
       ]
     },
     {
       "source": "/(.*)",
       "headers": [
-        { "key": "X-Content-Type-Options", "value": "nosniff" },
-        { "key": "Referrer-Policy", "value": "strict-origin-when-cross-origin" },
-        { "key": "Strict-Transport-Security", "value": "max-age=63072000; includeSubDomains" }
+        {
+          "key": "X-Content-Type-Options",
+          "value": "nosniff"
+        },
+        {
+          "key": "Referrer-Policy",
+          "value": "strict-origin-when-cross-origin"
+        },
+        {
+          "key": "Strict-Transport-Security",
+          "value": "max-age=63072000; includeSubDomains"
+        }
       ]
     }
   ]

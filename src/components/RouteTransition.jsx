@@ -37,6 +37,21 @@ export default function RouteTransition() {
     if (hash) {
       const id = decodeURIComponent(hash.slice(1));
 
+      // The visitor outranks us: the moment they touch the page, stop moving
+      // it underneath them, however wrong we think the position is.
+      let userMoved = false;
+      const yieldToUser = () => { userMoved = true; };
+      const USER_EVENTS = ['wheel', 'touchstart', 'keydown', 'pointerdown'];
+      USER_EVENTS.forEach((e) =>
+        window.addEventListener(e, yieldToUser, { passive: true, once: true })
+      );
+
+      const correct = () => {
+        if (cancelled || userMoved) return;
+        ScrollTrigger.refresh();
+        scrollToSection(id, { immediate: true });
+      };
+
       // Arriving from another route, the target lives in a lazily-loaded chunk
       // that has not rendered yet — so poll for it briefly instead of giving
       // up on the first frame. ~1.5s covers a slow chunk on a slow connection.
@@ -46,9 +61,24 @@ export default function RouteTransition() {
         // Measure against the laid-out page, not the one we navigated from.
         ScrollTrigger.refresh();
         if (scrollToSection(id, { immediate: !samePage })) {
-          // One more pass after the reveal animations have settled, in case
-          // images above the target resolved their height in the meantime.
-          later(() => { ScrollTrigger.refresh(); scrollToSection(id, { immediate: true }); }, 320);
+          // One pass after the reveal animations have settled, in case images
+          // above the target resolved their height in the meantime.
+          later(correct, 320);
+
+          // On a cold load that is not enough. Two things reflow a long
+          // document after first paint and both land far below a 320ms
+          // correction: the web font swapping in (index.html loads it
+          // non-render-blocking) and the last of the images resolving. On a
+          // 13,000px article that was the difference between landing on the
+          // heading and landing 4,000px away from it. Correct again for each,
+          // but only while the visitor has not taken over.
+          if (document.readyState !== 'complete') {
+            window.addEventListener('load', correct, { once: true });
+          }
+          if (document.fonts && document.fonts.status !== 'loaded') {
+            document.fonts.ready.then(correct);
+          }
+          later(correct, 1000);
           return;
         }
         if (++tries > 24) return;
@@ -56,7 +86,12 @@ export default function RouteTransition() {
       };
       later(attempt, 0);
 
-      return () => { cancelled = true; timers.forEach(clearTimeout); };
+      return () => {
+        cancelled = true;
+        timers.forEach(clearTimeout);
+        USER_EVENTS.forEach((e) => window.removeEventListener(e, yieldToUser));
+        window.removeEventListener('load', correct);
+      };
     }
 
     /* ---------- no hash: the existing top-of-page reset ---------- */

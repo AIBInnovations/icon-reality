@@ -39,6 +39,12 @@ export const NAV = [
     ],
   },
   { label: 'About', to: '/about', side: 'left', image: '/images/ruchi-enclave/gallery-2.jpg' },
+  // headerBar: false — six top-level entries plus the CTA already fill the
+  // desktop pill (see the note at the 1000px breakpoint in Header.css), so the
+  // blog is reached from the drawer, the footer and in-page links rather than
+  // from the bar. It is a real route and it is in the sitemap; it just isn't a
+  // seventh pill.
+  { label: 'Blog', to: '/blog', side: 'left', headerBar: false, image: '/images/eden-garden/eden-3.jpg' },
   { label: 'Why Indore', to: '/why-indore', side: 'left', image: '/images/labham-city/photo-2.jpg' },
   { label: 'Investors', to: '/investors', side: 'right', image: '/images/oscar-billionaire/gallery-1.jpg' },
   {
@@ -79,8 +85,9 @@ export const NAV = [
   },
 ];
 
-export const navLeft = () => NAV.filter((i) => i.side !== 'right');
-export const navRight = () => NAV.filter((i) => i.side === 'right');
+/** The desktop pill bar only. `headerBar: false` entries are drawer/footer. */
+export const navLeft = () => NAV.filter((i) => i.side !== 'right' && i.headerBar !== false);
+export const navRight = () => NAV.filter((i) => i.side === 'right' && i.headerBar !== false);
 
 /** Resolve the lazily-built children (they read live project counts). */
 export const childrenOf = (item) =>

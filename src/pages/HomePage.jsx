@@ -1,4 +1,4 @@
-import { useState, useEffect, useRef } from 'react';
+import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Hero from '../components/Hero';
 import TrustSection from '../components/TrustSection';
@@ -13,6 +13,11 @@ import Testimonials from '../components/Testimonials';
 import CompletedProjects from '../components/CompletedProjects';
 import AudiencePaths from '../components/AudiencePaths';
 import FinalCTA from '../components/FinalCTA';
+// Lazy, and only this section: it is the one part of the home page that reads
+// the blog data, and that chunk must not be downloading while the hero frame
+// sequence still is. It renders below the fold and only once showRest is true,
+// so by the time it is fetched the hero has already been paid for.
+const HomeBlog = lazy(() => import('../components/HomeBlog'));
 import Seo from '../seo/Seo';
 import { realEstateAgentSchema } from '../seo/schema';
 
@@ -117,6 +122,11 @@ export default function HomePage() {
           <AudiencePaths />
           <Testimonials />
           <ForBuyers />
+          {/* fallback is null: the section simply is not there until its chunk
+              arrives, rather than reserving a box that then jumps */}
+          <Suspense fallback={null}>
+            <HomeBlog />
+          </Suspense>
           <FinalCTA />
         </>
       )}

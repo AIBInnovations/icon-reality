@@ -1,7 +1,8 @@
 // Every indexable URL on the site, in one place. Read by the sitemap generator
 // at build time. Anything not listed here is either noindex (404s) or doesn't
 // exist — which is what keeps "no orphan pages" true.
-import { projectsList } from '../data/projects';
+import { projectsList } from '../data/projects.js';
+import { BLOG_POSTS } from '../data/blog/index.js';
 
 export const STATIC_ROUTES = [
   { path: '/', changefreq: 'weekly', priority: 1.0 },
@@ -17,6 +18,10 @@ export const STATIC_ROUTES = [
   // deliberately NOT listed as separate URLs.
   { path: '/nri', changefreq: 'monthly', priority: 0.8 },
   { path: '/channel-partners', changefreq: 'monthly', priority: 0.7 },
+
+  // The blog index. Each post is added below from the blog data, so a new
+  // post appears in the sitemap the moment its data file is imported.
+  { path: '/blog', changefreq: 'weekly', priority: 0.7 },
 ];
 
 /**
@@ -31,6 +36,12 @@ export function allRoutes() {
       changefreq: 'monthly',
       // trending projects are the ones actively being sold
       priority: p.status === 'trending' ? 0.8 : 0.6,
+    })),
+    ...BLOG_POSTS.map((post) => ({
+      path: post.path,
+      changefreq: 'monthly',
+      priority: 0.6,
+      lastmod: post.dateModified || post.datePublished,
     })),
   ];
 }

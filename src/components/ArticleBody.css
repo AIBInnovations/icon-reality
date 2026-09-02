@@ -1,0 +1,243 @@
+/* The article column. Editorial measure, warm cream ground, the same type
+   scale as the rest of the site — an article page, not a documentation page. */
+
+.article {
+  display: flex;
+  flex-direction: column;
+  /* one rhythm unit; every block below expresses its spacing as a multiple */
+  --article-gap: clamp(18px, 1.6vw, 24px);
+  gap: var(--article-gap);
+  font-size: clamp(16px, 1.15vw, 18px);
+  line-height: 1.75;
+  color: var(--ink-soft);
+}
+
+.article__p { margin: 0; }
+
+/* ---------- headings ---------- */
+.article__h2,
+.article__h3,
+.article__h4 {
+  font-family: var(--font-display);
+  color: var(--ink);
+  letter-spacing: -0.015em;
+  line-height: 1.15;
+  /* Deliberately NO scroll-margin-top. Clearing the floating header is
+     headerOffset()'s job in src/utils/scrollTo.js, and Lenis subtracts an
+     element's scroll-margin-top from its own target on top of that: setting
+     both here landed every heading a further 120px down the page. */
+}
+
+.article__h2 {
+  font-size: clamp(24px, 2.4vw, 34px);
+  font-weight: 600;
+  margin-top: calc(var(--article-gap) * 1.6);
+  padding-top: clamp(20px, 2vw, 28px);
+  border-top: 1px solid var(--line);
+}
+/* the first heading in the body sits under the lede, which already rules off */
+.article > .article__h2:first-child { margin-top: 0; border-top: 0; padding-top: 0; }
+
+.article__h3 {
+  font-size: clamp(19px, 1.6vw, 24px);
+  font-weight: 600;
+  margin-top: calc(var(--article-gap) * 0.6);
+}
+
+.article__h4 {
+  font-size: clamp(16px, 1.2vw, 18px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  margin-top: calc(var(--article-gap) * 0.4);
+  color: var(--ink);
+}
+
+/* ---------- inline ---------- */
+.article__link {
+  color: var(--ink);
+  font-weight: 600;
+  text-decoration: underline;
+  text-decoration-color: var(--peach-deep);
+  text-decoration-thickness: 1.5px;
+  text-underline-offset: 3px;
+  transition: color .2s ease, text-decoration-color .2s ease;
+}
+.article__link:hover { color: var(--peach-deep); text-decoration-color: var(--ink); }
+
+.article__strong { font-weight: 600; color: var(--ink); }
+
+/* ---------- lists ---------- */
+.article__ul,
+.article__ol,
+.article__checklist {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+
+.article__ul > li,
+.article__ol > li { position: relative; padding-left: 26px; }
+
+.article__ul > li::before {
+  content: '';
+  position: absolute;
+  left: 6px;
+  top: 0.72em;
+  width: 6px;
+  height: 1px;
+  background: var(--peach-deep);
+}
+
+.article__ol { counter-reset: article-ol; }
+.article__ol > li { counter-increment: article-ol; }
+.article__ol > li::before {
+  content: counter(article-ol) '.';
+  position: absolute;
+  left: 0;
+  top: 0;
+  font-variant-numeric: tabular-nums;
+  font-weight: 600;
+  color: var(--peach-deep);
+}
+
+.article__checklist > li {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+}
+.article__tick { flex: 0 0 auto; margin-top: 0.45em; color: var(--peach-deep); }
+
+/* ---------- table ---------- */
+.article__table-wrap { margin: calc(var(--article-gap) * 0.4) 0; }
+
+.article__table-scroll {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  /* Scrolling shadows, no JavaScript: the two `local` gradients are painted
+     with the content and cover the two `scroll` shadows pinned to the visible
+     edges, so a shadow only appears on a side there is more table to reach.
+     Without it the third column simply looks missing on a phone rather than
+     looking scrollable. */
+  background:
+    linear-gradient(to right, #FFFDFA 40%, rgba(255, 253, 250, 0)) left center / 40px 100% no-repeat local,
+    linear-gradient(to left, #FFFDFA 40%, rgba(255, 253, 250, 0)) right center / 40px 100% no-repeat local,
+    radial-gradient(farthest-side at 0 50%, rgba(20, 20, 20, 0.22), rgba(20, 20, 20, 0)) left center / 18px 100% no-repeat scroll,
+    radial-gradient(farthest-side at 100% 50%, rgba(20, 20, 20, 0.22), rgba(20, 20, 20, 0)) right center / 18px 100% no-repeat scroll,
+    #FFFDFA;
+}
+.article__table-scroll:focus-visible { outline: 2px solid var(--peach-deep); outline-offset: 2px; }
+
+.article__table {
+  width: 100%;
+  min-width: 520px;
+  border-collapse: collapse;
+  font-size: 15px;
+}
+.article__table caption {
+  caption-side: top;
+  text-align: left;
+  padding: 14px 16px 0;
+  font-size: 12px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.article__table th,
+.article__table td {
+  padding: 13px 16px;
+  text-align: left;
+  vertical-align: top;
+  border-bottom: 1px solid var(--line);
+}
+.article__table thead th {
+  font-weight: 600;
+  color: var(--ink);
+  background: var(--bg-2);
+  white-space: nowrap;
+}
+/* the scrolling shadows are painted on the container, so nothing inside the
+   table may lay an opaque background over the body rows */
+.article__table tbody th,
+.article__table tbody td { background: transparent; }
+.article__table tbody th { font-weight: 600; color: var(--ink); }
+.article__table tbody tr:last-child th,
+.article__table tbody tr:last-child td { border-bottom: 0; }
+
+/* ---------- callout ---------- */
+.article__callout {
+  border-left: 2px solid var(--peach);
+  background: var(--bg-2);
+  border-radius: 0 8px 8px 0;
+  padding: clamp(16px, 1.6vw, 22px) clamp(18px, 1.8vw, 26px);
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+.article__callout-title {
+  font-size: 12px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--peach-deep);
+}
+.article__callout p { margin: 0; }
+
+/* ---------- figure ---------- */
+.article__figure { margin: calc(var(--article-gap) * 0.4) 0; }
+.article__figure .media-figure__frame { border-radius: 8px; }
+
+/* ---------- inline project cards ---------- */
+.article__projects {
+  display: grid;
+  /* minmax(0, 1fr), not 1fr: a project name plus its location does not wrap,
+     and a plain 1fr track would floor at that width (CLAUDE.md §7). */
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.article__project {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: center;
+  gap: 4px 12px;
+  min-height: 64px;
+  padding: 14px 16px;
+  border: 1px solid var(--line);
+  border-radius: 8px;
+  background: #FFFDFA;
+  transition: border-color .25s ease, transform .25s ease;
+}
+.article__project:hover { border-color: var(--peach-deep); transform: translateY(-2px); }
+
+.article__project-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+  min-width: 0;
+}
+.article__project-loc {
+  grid-column: 1;
+  font-size: 13px;
+  color: var(--muted);
+  min-width: 0;
+}
+.article__project-go {
+  grid-column: 2;
+  grid-row: 1 / span 2;
+  color: var(--peach-deep);
+  display: flex;
+}
+
+@media (max-width: 640px) {
+  .article__projects { grid-template-columns: minmax(0, 1fr); }
+  .article__table { min-width: 460px; }
+}

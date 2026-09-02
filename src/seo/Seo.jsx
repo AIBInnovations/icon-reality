@@ -56,6 +56,13 @@ function setJsonLd(blocks) {
 
 export default function Seo({
   title,
+  /**
+   * Use `title` exactly as given, instead of running it through
+   * TITLE_TEMPLATE. The blog's meta titles are written by the SEO brief and
+   * several already end in "| Icon Realty"; appending the suffix again would
+   * produce "… | Icon Realty | Icon Realty" and push them past the SERP cap.
+   */
+  exactTitle = false,
   description = DEFAULT_DESCRIPTION,
   /** Path of THIS page, e.g. "/projects/oscar-palace". Becomes the canonical. */
   path = '/',
@@ -69,7 +76,7 @@ export default function Seo({
   const jsonLdKey = JSON.stringify(blocks);
 
   useEffect(() => {
-    const fullTitle = TITLE_TEMPLATE(title);
+    const fullTitle = exactTitle && title ? title : TITLE_TEMPLATE(title);
     const url = absoluteUrl(path);
     const img = absoluteUrl(image);
 
@@ -93,7 +100,7 @@ export default function Seo({
     upsertMeta('name', 'twitter:image', img);
 
     setJsonLd(JSON.parse(jsonLdKey));
-  }, [title, description, path, image, type, noindex, jsonLdKey]);
+  }, [title, exactTitle, description, path, image, type, noindex, jsonLdKey]);
 
   return null;
 }

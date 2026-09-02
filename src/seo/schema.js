@@ -1,5 +1,5 @@
 // JSON-LD builders. Each returns a plain object ready to hand to <Seo jsonLd>.
-import { SITE_URL, SITE_NAME, ORGANISATION, absoluteUrl } from './site';
+import { SITE_URL, SITE_NAME, ORGANISATION, absoluteUrl } from './site.js';
 
 const ORG_ID = `${SITE_URL}/#organisation`;
 const SITE_ID = `${SITE_URL}/#website`;
@@ -193,5 +193,68 @@ export function webPageSchema(type, { name, description, path }) {
     url: absoluteUrl(path),
     isPartOf: { '@id': `${SITE_URL}/#website` },
     publisher: organisationRef,
+  };
+}
+
+/* ------------------------------------------------------------------ blog -- */
+
+/**
+ * BlogPosting for one post.
+ *
+ * `mainEntityOfPage` is the post's real canonical URL, which is also what the
+ * <Seo> canonical link and the sitemap emit: three places, one value, so a
+ * crawler is never told the page is two different documents.
+ *
+ * Author and publisher are the organisation, not a person — these are Icon
+ * Realty's own editorial pages and no named byline exists to attribute them to.
+ */
+export function blogPostingSchema(post) {
+  if (!post) return null;
+  const url = absoluteUrl(post.path);
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'BlogPosting',
+    '@id': `${url}#blogposting`,
+    headline: post.title,
+    description: post.metaDescription || post.excerpt,
+    ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
+    author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    publisher: organisationRef,
+    mainEntityOfPage: { '@type': 'WebPage', '@id': url },
+    url,
+    datePublished: post.datePublished,
+    dateModified: post.dateModified || post.datePublished,
+    inLanguage: 'en-IN',
+    ...(post.keywords?.length ? { keywords: post.keywords } : {}),
+    ...(post.readingMinutes ? { timeRequired: `PT${post.readingMinutes}M` } : {}),
+    articleSection: post.category,
+    isPartOf: { '@id': `${SITE_URL}/blog#blog` },
+  };
+}
+
+/** The /blog index itself, with its posts as blogPost entries. */
+export function blogSchema(posts = []) {
+  return {
+    '@context': 'https://schema.org',
+    '@type': 'Blog',
+    '@id': `${SITE_URL}/blog#blog`,
+    name: `${SITE_NAME} blog`,
+    description:
+      'Guides to buying residential plots in Indore: legal checks, location comparisons, gated plotted developments and Icon Realty projects.',
+    url: absoluteUrl('/blog'),
+    inLanguage: 'en-IN',
+    publisher: organisationRef,
+    blogPost: posts.map((post) => ({
+      '@type': 'BlogPosting',
+      '@id': `${absoluteUrl(post.path)}#blogposting`,
+      headline: post.title,
+      description: post.excerpt,
+      url: absoluteUrl(post.path),
+      datePublished: post.datePublished,
+      dateModified: post.dateModified || post.datePublished,
+      ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
+      author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      publisher: organisationRef,
+    })),
   };
 }

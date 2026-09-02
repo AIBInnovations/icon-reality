@@ -1,0 +1,145 @@
+.home-blog {
+  padding: clamp(56px, 7.5vw, 100px) 0;
+  background: var(--bg-2);
+}
+
+/* ---------- head ---------- */
+.home-blog__head {
+  display: grid;
+  /* minmax(0, …) on the copy track: the lede's longest line must not be able
+     to set the column's floor and push the link off the row (CLAUDE.md §7). */
+  grid-template-columns: minmax(0, 1fr) auto;
+  align-items: end;
+  gap: clamp(20px, 3vw, 48px);
+  margin-bottom: clamp(28px, 3.4vw, 46px);
+}
+
+.home-blog__intro {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+}
+
+.home-blog__eyebrow { color: var(--peach-deep); margin-bottom: 14px; }
+
+.home-blog__heading {
+  font-size: clamp(30px, 4.4vw, 60px);
+  font-weight: 600;
+  line-height: 1.02;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0;
+}
+
+.home-blog__lede {
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 62ch;
+  margin-top: 16px;
+}
+
+.home-blog__all-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  /* 44px target (CLAUDE.md §9) */
+  min-height: 44px;
+  font-size: 15px;
+  font-weight: 600;
+  color: var(--ink);
+  border-bottom: 1px solid var(--peach-deep);
+  white-space: nowrap;
+  transition: gap .25s ease, color .25s ease;
+}
+.home-blog__all-link:hover { gap: 14px; color: var(--peach-deep); }
+
+/* ---------- cards ---------- */
+.home-blog__grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.home-blog__card {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  height: 100%;
+  color: inherit;
+  transition: transform .35s ease;
+}
+.home-blog__card:hover { transform: translateY(-4px); }
+.home-blog__card .media-figure { margin-bottom: 6px; }
+.home-blog__card .media-figure__frame { border-radius: 8px; }
+
+.home-blog__body {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  flex: 1 1 auto;
+  min-width: 0;
+}
+
+.home-blog__cat {
+  font-size: 10px;
+  letter-spacing: 0.2em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--peach-deep);
+}
+
+.home-blog__title {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.012em;
+  color: var(--ink);
+}
+
+.home-blog__excerpt {
+  font-size: clamp(13.5px, 1vw, 15px);
+  line-height: 1.6;
+  color: var(--muted);
+  flex: 1 1 auto;
+}
+
+.home-blog__meta {
+  margin-top: 4px;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 880px) {
+  .home-blog__head { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .home-blog__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* three cards into two columns leaves the third alone on its row, so it
+     turns sideways and takes the full width instead of leaving a hole */
+  .home-blog__grid > li:last-child { grid-column: 1 / -1; }
+  .home-blog__grid > li:last-child .home-blog__card {
+    flex-direction: row;
+    gap: clamp(16px, 2.6vw, 28px);
+    align-items: center;
+  }
+  .home-blog__grid > li:last-child .media-figure { flex: 0 0 42%; margin-bottom: 0; }
+}
+
+@media (max-width: 720px) {
+  .home-blog { padding: 44px 0; }
+  .home-blog__heading { font-size: clamp(27px, 8vw, 38px); }
+  .home-blog__lede { font-size: 15px; }
+}
+
+@media (max-width: 560px) {
+  .home-blog__grid { grid-template-columns: minmax(0, 1fr); }
+  .home-blog__grid > li:last-child .home-blog__card { flex-direction: column; gap: 8px; align-items: stretch; }
+  .home-blog__grid > li:last-child .media-figure { flex: none; margin-bottom: 6px; }
+}

@@ -175,6 +175,12 @@ and close on Escape, and every interactive target is at least 44×44px.
   `<img>` is still downloaded — that was ~1.2 MB on every page load.
 * The drawer is three columns (nav / contact / picture) and must fit without
   scrolling on desktop. It sheds the picture on phones and on short windows.
+* **Six top-level entries is the ceiling.** Six plus the CTA already stop
+  fitting before the pill itself has to go (see the 1000px breakpoint in
+  `Header.css`). A seventh section belongs in the drawer and the footer, which
+  is what `headerBar: false` in `nav.js` does — `/blog` is one. It is still a
+  real route, still in `allNavPaths()` and still in the sitemap; it is just not
+  a seventh pill.
 
 ## 9. Accessibility expectations
 
@@ -217,12 +223,34 @@ so a filename search reports them as orphans when they are in daily use.
 candidates, and the re-encoding commands for the oversized video. Read it first,
 and get client confirmation before removing anything.
 
-## 12. Before calling a change done
+## 12. The blog is data, not markup
+
+A post lives in `src/data/blog/<slug>.js` as a block model, documented in
+`src/data/blog/index.js`. Never write article copy into a component.
+
+Two renderers read that model and must stay in step: `ArticleBody` (browser)
+and `src/seo/blogHtml.js` (build-time static HTML). Adding a block type means
+adding it to both, or the prerendered page silently drops it.
+
+Heading ids are **generated from the heading text**, never hand-written. They
+are public anchors the moment the contents list links to them, so treat them
+like the section ids in §6: renaming a heading changes a URL.
+
+The FAQ accordion and the FAQPage JSON-LD both read `post.faqs`; the article
+and the BlogPosting JSON-LD both read the same fields. Do not add a second
+copy of either, and do not paste raw `<script type="application/ld+json">` from
+an SEO brief into a page: build it in `src/seo/schema.js` so it stays tied to
+the content it describes.
+
+`metaTitle` and `metaDescription` are supplied by the SEO brief and are used
+verbatim through `<Seo exactTitle>`. Do not re-append the brand.
+
+## 13. Before calling a change done
 
 - [ ] `npm run build` passes
 - [ ] `npm run lint` shows no **new** errors
 - [ ] No console errors on the affected routes
 - [ ] No horizontal scroll at the breakpoints in §7
-- [ ] Existing routes still work: `/`, `/about`, `/projects`, `/projects/:slug`, `/contact`
+- [ ] Existing routes still work: `/`, `/about`, `/projects`, `/projects/:slug`, `/contact`, `/blog`, `/blog/:slug`
 - [ ] Hero and About frame sequences still scrub
 - [ ] No invented facts (§5)

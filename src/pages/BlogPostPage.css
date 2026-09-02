@@ -1,0 +1,313 @@
+/* ---------- header ---------- */
+.post__head {
+  padding: clamp(110px, 12vw, 160px) 0 clamp(24px, 3vw, 40px);
+  background: var(--bg);
+}
+
+.post__head-inner {
+  max-width: 1400px;
+  margin: 0 auto;
+  display: flex;
+  flex-direction: column;
+}
+
+.post__eyebrow { color: var(--peach-deep); margin-bottom: 18px; }
+
+.post__title {
+  font-family: var(--font-display);
+  /* sentence case, not the uppercase .display: these headlines are questions */
+  font-size: clamp(30px, 4.6vw, 62px);
+  font-weight: 600;
+  line-height: 1.06;
+  letter-spacing: -0.025em;
+  color: var(--ink);
+  max-width: 20ch;
+  margin: 0 0 clamp(18px, 2vw, 26px);
+}
+
+.post__lede {
+  font-size: clamp(16px, 1.35vw, 21px);
+  color: var(--muted);
+  max-width: 68ch;
+  line-height: 1.6;
+  margin: 0;
+}
+
+.post__meta {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  margin-top: clamp(18px, 2vw, 26px);
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+.post__meta-sep { color: var(--line); }
+
+/* ---------- banner ----------
+   Matched to .page-hero__banner: 14px outer frame, so the photograph lines up
+   with every other framed section on the site (CLAUDE.md §6). */
+.post__banner { padding: 0 14px; }
+
+.post__banner-shell {
+  position: relative;
+  max-width: calc(var(--maxw) - 28px);
+  margin: 0 auto;
+  border-radius: 10px;
+  overflow: hidden;
+  background: var(--bg-2);
+}
+.post__banner-shell img {
+  width: 100%;
+  aspect-ratio: 21 / 9;
+  object-fit: cover;
+}
+
+.post__banner-credit {
+  position: absolute;
+  left: 16px;
+  bottom: 14px;
+  padding: 6px 12px;
+  border-radius: 4px;
+  background: rgba(20, 20, 20, 0.62);
+  color: #F6F2EC;
+  font-size: 11px;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+}
+
+/* ---------- layout ---------- */
+.post__layout {
+  display: grid;
+  /* minmax(0, …) on the article track: a long unbroken URL or a wide table
+     inside it must not be able to widen the whole grid (CLAUDE.md §7). */
+  grid-template-columns: 260px minmax(0, 1fr);
+  gap: clamp(32px, 5vw, 88px);
+  align-items: start;
+  padding: clamp(44px, 6vw, 80px) var(--gutter) clamp(50px, 7vw, 90px);
+}
+/* no contents list → the article keeps the same measure, centred */
+.post__layout--no-toc { grid-template-columns: minmax(0, 1fr); }
+
+.post__column {
+  /* width:100% matters. The centred variants below give this grid item
+     `margin-inline: auto`, and an auto inline margin overrides the item's
+     default stretch: without an explicit width the item falls back to
+     shrink-to-fit, which is max-content, which is the widest table in the
+     article. That is exactly the sideways-scroll failure CLAUDE.md §7 warns
+     about. With width:100% the item fills its track, max-width still caps the
+     measure, and the auto margins only centre the leftover space. */
+  width: 100%;
+  max-width: 76ch;
+  min-width: 0;
+}
+.post__layout--no-toc .post__column { margin-inline: auto; }
+
+/* ---------- contents ----------
+   A card, not a bare list. Beside a long article the entries have to read as
+   one object with its own edge, or they run into the body copy and look like
+   another column of prose. Same panel language as .article__callout: the
+   section band, a hairline, 8px radius. */
+.post__toc {
+  position: sticky;
+  /* clears the floating header pill */
+  top: 108px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding: clamp(18px, 1.7vw, 24px);
+  background: var(--bg-2);
+  border: 1px solid var(--line);
+  border-radius: 10px;
+}
+
+.post__toc-title {
+  font-size: 11px;
+  letter-spacing: 0.22em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--peach-deep);
+}
+
+.post__toc-list {
+  display: flex;
+  flex-direction: column;
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: post-toc;
+}
+.post__toc-list li { counter-increment: post-toc; }
+/* a hairline between entries, so ten of them read as a list of ten and not as
+   one grey paragraph */
+.post__toc-list li + li { border-top: 1px solid var(--line); }
+
+.post__toc-list a {
+  /* 44px minimum target height (CLAUDE.md §9) */
+  min-height: 44px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 10px 0;
+  font-size: 14px;
+  line-height: 1.35;
+  color: var(--muted);
+  transition: color .2s ease;
+}
+.post__toc-list a::before {
+  content: counter(post-toc, decimal-leading-zero);
+  font-size: 11px;
+  font-variant-numeric: tabular-nums;
+  color: var(--sand);
+  flex: 0 0 auto;
+  /* fixed width so every title starts on the same vertical line */
+  min-width: 18px;
+}
+.post__toc-list a:hover { color: var(--peach-deep); }
+
+/* ---------- direct answer ---------- */
+.post__answer {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: clamp(28px, 3vw, 40px);
+  padding: clamp(20px, 2.2vw, 30px) clamp(22px, 2.4vw, 34px);
+  background: var(--charcoal);
+  color: #EFE8DD;
+  border-radius: 10px;
+}
+.post__answer-label {
+  font-size: 11px;
+  letter-spacing: 0.24em;
+  text-transform: uppercase;
+  font-weight: 600;
+  color: var(--peach);
+}
+.post__answer p {
+  margin: 0;
+  font-size: clamp(15px, 1.15vw, 17.5px);
+  line-height: 1.7;
+}
+
+/* ---------- shared section title ---------- */
+.post__section-title {
+  font-family: var(--font-display);
+  font-size: clamp(22px, 2.2vw, 30px);
+  font-weight: 600;
+  letter-spacing: -0.015em;
+  color: var(--ink);
+  line-height: 1.1;
+}
+
+/* ---------- projects mentioned ---------- */
+.post__projects {
+  margin-top: clamp(48px, 6vw, 76px);
+  padding-top: clamp(30px, 3.4vw, 44px);
+  border-top: 1px solid var(--line);
+}
+
+.post__project-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(14px, 1.6vw, 22px);
+  list-style: none;
+  margin: clamp(22px, 2.4vw, 32px) 0 0;
+  padding: 0;
+}
+
+.post__project {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  min-width: 0;
+  transition: transform .3s ease;
+}
+.post__project:hover { transform: translateY(-3px); }
+.post__project .media-figure__frame { border-radius: 8px; }
+
+.post__project-name {
+  font-family: var(--font-display);
+  font-weight: 600;
+  font-size: 16px;
+  color: var(--ink);
+}
+.post__project-loc { font-size: 13px; color: var(--muted); }
+
+/* ---------- faq ---------- */
+.post__faq { background: var(--bg-2); }
+
+/* ---------- keep reading ---------- */
+.post__more {
+  /* the site's standard section rhythm, same clamp as AudiencePaths and
+     HomeBlog, so a band on a post is the same height as a band on the home
+     page at every width */
+  padding: clamp(56px, 7.5vw, 100px) 0;
+  background: var(--bg);
+  border-top: 1px solid var(--line);
+}
+
+.post__more-list {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: clamp(16px, 2vw, 30px);
+  list-style: none;
+  margin: clamp(26px, 3vw, 40px) 0 0;
+  padding: 0;
+}
+
+.post__more-card {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  min-width: 0;
+  transition: transform .3s ease;
+}
+.post__more-card:hover { transform: translateY(-4px); }
+.post__more-card .media-figure__frame { border-radius: 8px; }
+
+.post__more-cat { color: var(--peach-deep); margin-top: 4px; }
+
+.post__more-name {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.5vw, 21px);
+  font-weight: 600;
+  line-height: 1.2;
+  letter-spacing: -0.01em;
+  color: var(--ink);
+}
+
+.post__more-excerpt {
+  font-size: 14px;
+  line-height: 1.6;
+  color: var(--muted);
+}
+
+/* ---------- responsive ---------- */
+@media (max-width: 1024px) {
+  .post__layout { grid-template-columns: minmax(0, 1fr); }
+  .post__column { margin-inline: auto; }
+  /* the card stays, it just stops sticking and sits above the article */
+  .post__toc {
+    position: static;
+    width: 100%;
+    max-width: 76ch;
+    margin-inline: auto;
+  }
+  .post__project-list,
+  .post__more-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 720px) {
+  .post__banner-shell img { aspect-ratio: 4 / 3; }
+  .post__title { max-width: none; }
+  .post__project-list { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  .post__more-list { grid-template-columns: minmax(0, 1fr); }
+  /* 44px is the phone rhythm every other section on the site drops to */
+  .post__more { padding: 44px 0; }
+  .post__layout { padding-top: 32px; padding-bottom: 40px; }
+}
+
+@media (max-width: 480px) {
+  .post__project-list { grid-template-columns: minmax(0, 1fr); }
+}
