@@ -1,5 +1,6 @@
 import { useState } from 'react';
 import './MediaFigure.css';
+import Picture from './Picture';
 
 /**
  * A framed project photograph with an optional credit caption.
@@ -33,7 +34,7 @@ export default function MediaFigure({
       style={{ '--media-ratio': ratio }}
     >
       <span className="media-figure__frame">
-        <img
+        <Picture
           src={src}
           alt={alt || credit || ''}
           loading={eager ? 'eager' : 'lazy'}

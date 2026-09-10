@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import Reveal from './Reveal';
 import './DisplayHeading.css';
+import Picture from './Picture';
 
 // One frame per project rather than ten of the flagship — the trail is the
 // portfolio, not a single address (change.md #2).
@@ -133,7 +134,7 @@ export default function DisplayHeading() {
     <section ref={sectionRef} className="display-section" id="project">
       <div className="display-section__pool" aria-hidden>
         {TRAIL_IMAGES.map((src, i) => (
-          <img
+          <Picture
             key={src}
             ref={(el) => (trailRefs.current[i] = el)}
             src={src}

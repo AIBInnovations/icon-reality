@@ -12,6 +12,7 @@ import LocationSection from '../components/LocationSection';
 import ProjectGallery from '../components/ProjectGallery';
 import ConstructionUpdates from '../components/ConstructionUpdates';
 import ProjectSpecifications from '../components/ProjectSpecifications';
+import ProjectCampaign from '../components/ProjectCampaign';
 import ProjectCompliance from '../components/ProjectCompliance';
 import BankPartners from '../components/BankPartners';
 import FAQSection from '../components/FAQSection';
@@ -37,6 +38,8 @@ import { projectsBySlug, projectPlans, relatedProjects } from '../data/projects'
 import { buildProjectFaqs } from '../data/projectFaqs';
 import { categoriseGallery } from '../utils/gallery';
 import './ProjectDetailPage.css';
+import Picture from '../components/Picture';
+import { useAvifSrc } from '../utils/avif';
 
 /**
  * Showcase film.
@@ -54,6 +57,42 @@ function ProjectVideo({ src, poster, projectName }) {
   const ref = useRef(null);
   const isMobile = useMediaQuery('(max-width: 860px)');
   const [started, setStarted] = useState(false);
+  const [near, setNear] = useState(false);
+  // `poster` takes a single URL, so it cannot negotiate its own format the way
+  // <Picture> does. Left as the JPEG it was the heaviest thing on the page:
+  // 694 KB for a frame the banner above has already shown, in AVIF, at half
+  // the size. Null until the probe answers, so only one of the two is fetched.
+  const posterSrc = useAvifSrc(poster);
+
+  /**
+   * Attach the `src` only once the film is close to the viewport.
+   *
+   * Arriving here from a card near the bottom of another page, the incoming
+   * route mounts at the OUTGOING page's scroll offset for a frame or two
+   * before RouteTransition resets it. The film was on screen for that frame,
+   * the autoplay observer below fired, and the browser committed to buffering
+   * the whole walkthrough: 85 MB fetched on a click that never went near the
+   * video. That is the "clicking a project takes forever" symptom.
+   *
+   * So: no src until we are genuinely near the film, and don't start looking
+   * until the route's scroll reset has settled (RouteTransition's last
+   * correction lands at 150ms). Below the fold, the wait is unobservable.
+   */
+  useEffect(() => {
+    if (near) return undefined;
+    const el = ref.current;
+    if (!el) return undefined;
+
+    let io = null;
+    const start = setTimeout(() => {
+      io = new IntersectionObserver(([entry]) => {
+        if (entry.isIntersecting) { setNear(true); io.disconnect(); }
+      }, { rootMargin: '400px 0px' });   // load just before it is needed
+      io.observe(el);
+    }, 250);
+
+    return () => { clearTimeout(start); io?.disconnect(); };
+  }, [near]);
 
   useEffect(() => {
     const el = ref.current;
@@ -63,8 +102,10 @@ function ProjectVideo({ src, poster, projectName }) {
     setRate();
     el.addEventListener('loadedmetadata', setRate);
 
-    // On mobile nothing plays until the visitor asks for it.
-    if (isMobile && !started) {
+    // On mobile nothing plays until the visitor asks for it. On desktop
+    // nothing plays until the film has a src, which it only gets once it is
+    // genuinely near the viewport (see the effect above).
+    if ((isMobile && !started) || (!isMobile && !near)) {
       return () => el.removeEventListener('loadedmetadata', setRate);
     }
 
@@ -86,7 +127,7 @@ function ProjectVideo({ src, poster, projectName }) {
       io.disconnect();
       el.removeEventListener('loadedmetadata', setRate);
     };
-  }, [projectName, isMobile, started]);
+  }, [projectName, isMobile, started, near]);
 
   const play = () => {
     setStarted(true);
@@ -101,10 +142,12 @@ function ProjectVideo({ src, poster, projectName }) {
       <video
         ref={ref}
         className="project-video__player"
-        /* No src at all until it is wanted on mobile — with a src set, even
-           preload="none" costs a request, and some browsers fetch more. */
-        src={showPoster ? undefined : src}
-        poster={poster}
+        /* No src until the film is actually wanted — with a src set, even
+           preload="none" costs a request, and some browsers fetch more.
+           Mobile waits for the tap, desktop waits for the film to come near
+           the viewport. */
+        src={(isMobile ? started : near) ? src : undefined}
+        poster={posterSrc || undefined}
         muted
         loop
         playsInline
@@ -264,7 +307,7 @@ export default function ProjectDetailPage() {
     name, tagline, location, total_area, plot_sizes, status,
     description, amenities = [], connectivity = [], highlights = [],
     hero_image, brochure_url, amenityImages = {},
-    video_url, video_poster, specifications, constructionUpdates = [],
+    video_url, video_poster, specifications, campaign = [], constructionUpdates = [],
     rera, developer, marketedBy, documents = [], possession, price, seo,
     mapQuery, coordinates,
   } = project;
@@ -314,7 +357,7 @@ export default function ProjectDetailPage() {
     >
       {flanksDecorative ? (
         <span className="project-hero__flank-link project-hero__flank-link--static">
-          <img src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
+          <Picture src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
         </span>
       ) : (
         <BrochureGate
@@ -323,7 +366,7 @@ export default function ProjectDetailPage() {
           className="project-hero__flank-link"
           label={
             <>
-              <img src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
+              <Picture src={flank[side]} alt="" aria-hidden="true" loading="lazy" />
               <span className="project-hero__flank-hint">
                 {brochure_url ? 'Download Brochure' : 'Request Brochure'}
               </span>
@@ -581,6 +624,16 @@ export default function ProjectDetailPage() {
         specifications={specifications}
         id="specifications"
         className="project-specs"
+      />
+
+      {/* ====== CAMPAIGN CREATIVES ====== */}
+      {/* Sits with the specifications rather than the gallery: both are the
+          project stated plainly. Hides itself when a project has none. */}
+      <ProjectCampaign
+        images={campaign}
+        projectName={name}
+        id="campaign"
+        className="project-campaign"
       />
 
       {/* ====== RERA & DOCUMENTATION ====== */}

@@ -1,5 +1,6 @@
 import Reveal from './Reveal';
 import './ForBuyers.css';
+import Picture from './Picture';
 
 export default function ForBuyers() {
   return (
@@ -16,7 +17,7 @@ export default function ForBuyers() {
           </Reveal>
         </div>
         <Reveal className="forbuyers__image">
-          <img src="/images/for-buyers.jpg" alt="A refined home interior at an Icon Realty development" loading="lazy" decoding="async" />
+          <Picture src="/images/for-buyers.jpg" alt="A refined home interior at an Icon Realty development" loading="lazy" decoding="async" />
         </Reveal>
       </div>
     </section>

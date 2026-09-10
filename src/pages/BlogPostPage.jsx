@@ -12,6 +12,7 @@ import { LEAD_INTENTS } from '../services/leads';
 import { postsBySlug, relatedPosts } from '../data/blog';
 import { projectsBySlug } from '../data/projects';
 import './BlogPostPage.css';
+import Picture from '../components/Picture';
 
 /** 2026-08-24 → 24 August 2026. Fixed locale: the date must read the same for
  *  every visitor and match the ISO date in the BlogPosting schema. */
@@ -83,7 +84,7 @@ export default function BlogPostPage() {
         {post.image && (
           <div className="post__banner">
             <div className="post__banner-shell">
-              <img
+              <Picture
                 src={post.image}
                 alt={post.imageAlt || ''}
                 /* the LCP image on this route */

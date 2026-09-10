@@ -16,7 +16,9 @@ import {
   STORY, VALUES, VISION, MISSION, LEADERSHIP,
   MILESTONES, AWARDS, PRESS, FOUNDER_MESSAGE,
 } from '../data/company';
+import { avifSupported } from '../utils/avif';
 import './AboutPage.css';
+import Picture from '../components/Picture';
 
 const TRAIL = [
   { name: 'Home', path: '/' },
@@ -28,8 +30,11 @@ const ABOUT_BOOTSTRAP = 60;
 // bump ASSET_REV whenever the frame images themselves are re-exported, so
 // browsers holding an older copy re-fetch instead of serving it from cache
 const ASSET_REV = 2;
-const aboutFrame = (i) =>
-  `/about-frames/f${String(i + 1).padStart(3, '0')}.jpg?v=${ASSET_REV}`;
+// AVIF twins exist beside these too (scripts/build-avif.sh): 13.8 MB becomes
+// 6.8 MB. A canvas sequence cannot use <picture>, so the format is chosen once
+// from a decode probe and every frame follows it.
+const aboutFrame = (i, avif) =>
+  `/about-frames/f${String(i + 1).padStart(3, '0')}.${avif ? 'avif' : 'jpg'}?v=${ASSET_REV}`;
 
 export default function AboutPage() {
   const lineRefs = useRef([]);
@@ -119,33 +124,40 @@ export default function AboutPage() {
       }
     };
 
-    // preload frames
+    // preload frames — the elements are created only once the AVIF probe has
+    // answered, so every frame is requested in one format and none is fetched
+    // twice. The probe is a data URI resolved at module load, so in practice
+    // this waits a microtask.
     const images = [];
     let loaded = 0;
-    for (let i = 0; i < ABOUT_FRAME_COUNT; i++) {
-      const img = new Image();
-      img.decoding = 'async';
-      img.onload = () => {
-        loaded++;
-        if (loaded <= ABOUT_BOOTSTRAP) {
-          setBootProgress(Math.min(1, loaded / ABOUT_BOOTSTRAP));
-        }
-      };
-      img.onerror = () => { loaded++; };
-      img.src = aboutFrame(i);
-      images.push(img);
-    }
     stateRef.current.images = images;
 
-    const bootstrap = Promise.all(
-      images.slice(0, ABOUT_BOOTSTRAP).map((img) => new Promise((res) => {
-        if (img.complete) res();
-        else {
-          img.addEventListener('load', () => res(), { once: true });
-          img.addEventListener('error', () => res(), { once: true });
-        }
-      }))
-    );
+    const bootstrap = avifSupported().then((useAvif) => {
+      if (!mounted) return undefined;
+      for (let i = 0; i < ABOUT_FRAME_COUNT; i++) {
+        const img = new Image();
+        img.decoding = 'async';
+        img.onload = () => {
+          loaded++;
+          if (loaded <= ABOUT_BOOTSTRAP) {
+            setBootProgress(Math.min(1, loaded / ABOUT_BOOTSTRAP));
+          }
+        };
+        img.onerror = () => { loaded++; };
+        img.src = aboutFrame(i, useAvif);
+        images.push(img);
+      }
+
+      return Promise.all(
+        images.slice(0, ABOUT_BOOTSTRAP).map((img) => new Promise((res) => {
+          if (img.complete) res();
+          else {
+            img.addEventListener('load', () => res(), { once: true });
+            img.addEventListener('error', () => res(), { once: true });
+          }
+        }))
+      );
+    });
 
     resize();
     window.addEventListener('resize', resize);
@@ -320,7 +332,7 @@ export default function AboutPage() {
               }}
             >
               <div className="team-card__photo">
-                <img src={d.photo} alt={d.name} loading="lazy" decoding="async" />
+                <Picture src={d.photo} alt={d.name} loading="lazy" decoding="async" />
               </div>
               <div className="team-card__veil" aria-hidden />
               <div className="team-card__body">

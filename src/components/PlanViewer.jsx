@@ -3,6 +3,7 @@ import Reveal from './Reveal';
 import ImageViewer from './ImageViewer';
 import { trackFloorPlanView, trackMasterPlanView } from '../analytics/events';
 import './PlanViewer.css';
+import Picture from './Picture';
 
 /**
  * Floor-plan / master-plan viewer.
@@ -87,7 +88,7 @@ export default function PlanViewer({
             onClick={openViewer}
             aria-label={`Open ${plan.label || heading} full screen`}
           >
-            <img
+            <Picture
               src={plan.src}
               alt={`${projectName ? `${projectName}: ` : ''}${plan.label || heading}`}
               loading="lazy"

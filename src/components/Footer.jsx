@@ -6,6 +6,7 @@ import { PHONES, EMAIL, ADDRESS, SOCIALS, telHref } from '../data/contact';
 import { whatsappUrl, waMessage } from '../services/whatsapp';
 import { LEAD_INTENTS } from '../services/leads';
 import './Footer.css';
+import Picture from './Picture';
 
 /**
  * Site footer.
@@ -47,7 +48,7 @@ export default function Footer() {
           {/* ---- brand + contact ---- */}
           <div className="footer__brand">
             <Reveal>
-              <img src="/icon-logo.png" alt="Icon Realty" className="footer__logo" loading="lazy" decoding="async" />
+              <Picture src="/icon-logo.png" alt="Icon Realty" className="footer__logo" loading="lazy" decoding="async" />
             </Reveal>
             <Reveal as="p" className="footer__pitch" delay={0.05}>
               Over two decades of trust, 15+ landmark projects, 4,500+ happy families.

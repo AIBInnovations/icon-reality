@@ -1,13 +1,19 @@
 import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { avifSupported } from '../utils/avif';
 import './Hero.css';
 
 const FRAME_COUNT = 476;
 // bump ASSET_REV whenever the frame images themselves are re-exported, so
 // browsers holding an older copy re-fetch instead of serving it from cache
 const ASSET_REV = 2;
-const frameUrl = (i) => `/frames/f${String(i + 1).padStart(3, '0')}.jpg?v=${ASSET_REV}`;
+// The same 476 frames exist as AVIF alongside the JPEGs (scripts/build-avif.sh):
+// 60.5 MB becomes 24.2 MB, which is most of what the home page weighs. A canvas
+// sequence cannot use <picture>, so the format is chosen once, from a decode
+// probe, and every frame follows it.
+const frameUrl = (i, avif) =>
+  `/frames/f${String(i + 1).padStart(3, '0')}.${avif ? 'avif' : 'jpg'}?v=${ASSET_REV}`;
 
 // ---------------------------------------------------------------------------
 // Progressive frame loading (read.md §57).
@@ -123,6 +129,9 @@ export default function Hero({ onReady, onProgress }) {
     const images = new Array(FRAME_COUNT);
     stateRef.current.images = images;
 
+    // Set once, before the first frame is requested (see the probe below).
+    let useAvif = false;
+
     /**
      * Kick off one frame; resolves on load OR error, never rejects.
      *
@@ -141,7 +150,7 @@ export default function Hero({ onReady, onProgress }) {
       img.onload = res;
       // a missing frame must not stall the queue behind it
       img.onerror = res;
-      img.src = frameUrl(i);
+      img.src = frameUrl(i, useAvif);
     });
 
     let bootstrapped = 0;
@@ -167,6 +176,10 @@ export default function Hero({ onReady, onProgress }) {
 
     // Phase 1 — probe, size the batch to the connection, then load it.
     const bootstrap = (async () => {
+      // Resolved from a 1x1 data URI, and started when the module loaded, so
+      // this is settled by now on any browser that has painted anything.
+      useAvif = await avifSupported();
+
       const probeCount = Math.min(PROBE_FRAMES, FRAME_COUNT);
       const t0 = performance.now();
       await Promise.all(

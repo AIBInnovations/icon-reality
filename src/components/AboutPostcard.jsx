@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEnquiry } from '../enquiry/enquiryContext';
 import './AboutPostcard.css';
+import Picture from './Picture';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -34,14 +35,14 @@ export default function AboutPostcard() {
   return (
     <section className="postcard-scene" id="about-icon">
       <div className="container">
-        <div className="ps-flank ps-flank--l"><img ref={birdLRef} src="/images/oscar/3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" /></div>
-        <div className="ps-flank ps-flank--r"><img ref={birdRRef} src="/images/oscar/4.png" alt="" aria-hidden="true" loading="lazy" decoding="async" /></div>
+        <div className="ps-flank ps-flank--l"><Picture ref={birdLRef} src="/images/oscar/3.png" alt="" aria-hidden="true" loading="lazy" decoding="async" /></div>
+        <div className="ps-flank ps-flank--r"><Picture ref={birdRRef} src="/images/oscar/4.png" alt="" aria-hidden="true" loading="lazy" decoding="async" /></div>
 
         <div className={`pc2-stage ${open ? 'is-open' : ''}`} ref={stageRef}>
 
           {/* revealed photo — slides out from the right */}
           <figure className="pc2-photo">
-            <img src="/images/oscar/oscar-stamp.png" alt="Oscar Palace: the royal gate" loading="lazy" decoding="async" />
+            <Picture src="/images/oscar/oscar-stamp.png" alt="Oscar Palace: the royal gate" loading="lazy" decoding="async" />
           </figure>
 
           {/* the postcard */}

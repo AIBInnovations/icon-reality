@@ -1,5 +1,6 @@
 import { useEffect, useState } from 'react';
 import './PageLoader.css';
+import Picture from './Picture';
 
 export default function PageLoader({ progress, leaving }) {
   // When a real progress value is provided, show a determinate bar + percent so
@@ -27,7 +28,7 @@ export default function PageLoader({ progress, leaving }) {
   return (
     <div className={`page-loader ${leaving ? 'is-leaving' : ''}`} role="status" aria-live="polite">
       <div className="page-loader__inner">
-        <img src="/icon-logo.png" alt="" className="page-loader__logo" aria-hidden />
+        <Picture src="/icon-logo.png" alt="" className="page-loader__logo" aria-hidden />
         <div className="page-loader__bar">
           <span />
         </div>

@@ -3,6 +3,7 @@ import Reveal from './Reveal';
 import ImageViewer from './ImageViewer';
 import { trackGalleryView } from '../analytics/events';
 import './ProjectGallery.css';
+import Picture from './Picture';
 
 /**
  * Project gallery with category filter and a fullscreen lightbox.
@@ -103,7 +104,7 @@ export default function ProjectGallery({
                 onClick={() => { setOpenAt(i); trackGalleryView(projectName, filter); }}
                 aria-label={`Open image ${i + 1} of ${visible.length} full screen`}
               >
-                <img
+                <Picture
                   src={img.src}
                   alt={img.alt || `${projectName || 'Project'}: image ${i + 1}`}
                   /* first row is above the fold on most viewports */

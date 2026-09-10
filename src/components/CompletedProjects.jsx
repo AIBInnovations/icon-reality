@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 import { projectsList, CATEGORY_LABEL } from '../data/projects';
 import './CompletedProjects.css';
+import Picture from './Picture';
 
 /**
  * Delivered projects only (change.md #7).
@@ -62,7 +63,7 @@ export default function CompletedProjects() {
             <div key={p.slug}>
               <Link to={`/projects/${p.slug}`} className="completed__card">
                 <div className="completed__media">
-                  <img src={p.thumbnail || p.hero_image} alt={`${p.name}, ${p.location}`} loading="lazy" />
+                  <Picture src={p.thumbnail || p.hero_image} alt={`${p.name}, ${p.location}`} loading="lazy" />
                   <span className="completed__badge">Completed</span>
                   {p.category && (
                     <span className="completed__cat">{CATEGORY_LABEL[p.category]}</span>

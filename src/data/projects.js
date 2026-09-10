@@ -31,6 +31,10 @@
 //                                 coordinates the client has confirmed (§5).
 //   highlights[]                  what distinguishes the project
 //   gallery[]                     image paths, or { src, category, alt }
+//   campaign[]                    [{ src, alt }] — client campaign creatives.
+//                                 Artwork with its own typography baked in, so
+//                                 it is shown WHOLE in its own carousel rather
+//                                 than cropped into the gallery grid.
 //   video_url, video_poster       walkthrough film
 //   brochure_url                  local PDF; null means "request the brochure"
 //   masterPlan[]                  [{ src, label, note }] — approved layouts
@@ -479,7 +483,7 @@ export const projectsList = [
     status: 'trending',
     category: 'lower-high-end',
     location: 'Simrol, Indore-Khandwa Highway',
-    total_area: '28 acres',
+    total_area: '8.5 acres',
     plot_sizes: 'Education corridor',
     tagline: 'Strategically planned residential development redefining modern living.',
     description:
@@ -531,6 +535,17 @@ export const projectsList = [
       '/images/iit-greens/render-7.jpg',
       '/images/iit-greens/render-8.jpg',
       '/images/iit-greens/render-9.jpg',
+    ],
+    // Client-supplied campaign creatives. Square, with their own typography
+    // baked into the artwork, so they are kept OUT of the gallery grid — that
+    // grid crops to fill its tiles and would cut the wording off. They get
+    // their own carousel instead, which shows each one whole.
+    campaign: [
+      { src: '/images/iit-greens/acres-8-5.jpg', alt: 'Aerial view of the plotted 8.5 acre layout at IIT Greens' },
+      { src: '/images/iit-greens/simrol-location.jpg', alt: 'Simrol on the Indore-Khandwa Highway, seen from the air' },
+      { src: '/images/iit-greens/delivered-6-months.jpg', alt: 'The site before development beside the completed roads and plots' },
+      { src: '/images/iit-greens/why-this-land.jpg', alt: 'Aerial view of the open, plotted land at IIT Greens' },
+      { src: '/images/iit-greens/book-a-site-visit.jpg', alt: 'Book a site visit to IIT Greens' },
     ],
     thumbnail: '/images/projects/iit-greens.jpg',
   },

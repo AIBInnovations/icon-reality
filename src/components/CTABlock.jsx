@@ -3,6 +3,7 @@ import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { useEnquiry } from '../enquiry/enquiryContext';
 import './CTABlock.css';
+import Picture from './Picture';
 
 export default function CTABlock() {
   const ref = useRef(null);
@@ -37,9 +38,9 @@ export default function CTABlock() {
   return (
     <section ref={ref} className="ctablock">
       <div className="container ctablock__inner">
-        <img className="ctablock__float ctablock__float--1" src="/images/cta-1.jpg" alt="" aria-hidden loading="lazy" decoding="async" />
-        <img className="ctablock__float ctablock__float--2" src="/images/cta-2.jpg" alt="" aria-hidden loading="lazy" decoding="async" />
-        <img className="ctablock__float ctablock__float--3" src="/images/cta-3.jpg" alt="" aria-hidden loading="lazy" decoding="async" />
+        <Picture className="ctablock__float ctablock__float--1" src="/images/cta-1.jpg" alt="" aria-hidden loading="lazy" decoding="async" />
+        <Picture className="ctablock__float ctablock__float--2" src="/images/cta-2.jpg" alt="" aria-hidden loading="lazy" decoding="async" />
+        <Picture className="ctablock__float ctablock__float--3" src="/images/cta-3.jpg" alt="" aria-hidden loading="lazy" decoding="async" />
 
         <h2 className="display ctablock__title">
           Live different.<br/>Live better.

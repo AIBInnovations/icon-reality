@@ -122,18 +122,29 @@
 .carousel__card-caption {
   position: absolute;
   left: clamp(20px, 2.4vw, 40px);
+  /* The caption used to set `left` only and `white-space: nowrap`, so its box
+     was as wide as its longest line whatever the card measured. A long meta
+     line (IIT Greens: "Simrol, Indore-Khandwa Highway · Education corridor",
+     504px) ran straight off the 489px card and was clipped mid-word by the
+     card's own overflow:hidden. Bounding it on BOTH edges keeps every caption
+     inside its card at every width, and the meta wraps instead of vanishing. */
+  right: clamp(20px, 2.4vw, 40px);
   bottom: clamp(20px, 2.4vw, 36px);
   z-index: 2;
   display: flex;
   flex-direction: column;
+  align-items: flex-start;
   gap: 4px;
   color: #fff;
+  /* The card is a <button>, and the UA stylesheet's `text-align: center` was
+     inherited straight through to these lines: the name, the location and the
+     cue each centred on their own axis instead of stacking flush left. */
+  text-align: left;
   text-shadow: 0 2px 18px rgba(0,0,0,0.45);
   opacity: 0;
   transform: translateY(8px);
   transition: opacity .55s ease .15s, transform .55s ease .15s;
   pointer-events: none;
-  white-space: nowrap;
 }
 .carousel__card.is-active .carousel__card-caption {
   opacity: 1;
@@ -151,7 +162,11 @@
   font-size: 13px;
   letter-spacing: 0.18em;
   text-transform: uppercase;
+  line-height: 1.45;
   opacity: .88;
+  /* 0.18em of tracking on a long location makes for a very wide single line;
+     let it take two rather than push past the card edge. */
+  text-wrap: pretty;
 }
 /* "View project" cue — only shown on the open card, hints a second tap opens it */
 .carousel__card-open {
@@ -267,7 +282,6 @@
     right: 12px;
     bottom: 11px;
     gap: 2px;
-    white-space: normal;
   }
   .carousel__card-label { font-size: 15px; line-height: 1.15; letter-spacing: 0.02em; }
   .carousel__card-meta { font-size: 9px; letter-spacing: 0.1em; }

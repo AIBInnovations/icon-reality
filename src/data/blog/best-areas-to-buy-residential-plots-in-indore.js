@@ -217,7 +217,7 @@ export default {
     { type: 'h2', text: '7. Simrol and the Indore–Khandwa Highway' },
     {
       type: 'p',
-      text: 'Icon Realty also lists IIT Greens at Simrol, Indore–Khandwa Highway, described as a 28-acre development.',
+      text: 'Icon Realty also lists IIT Greens at Simrol, Indore–Khandwa Highway, described as an 8.5-acre development.',
     },
     {
       type: 'p',

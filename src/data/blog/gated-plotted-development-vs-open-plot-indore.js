@@ -347,7 +347,7 @@ export default {
     },
     {
       type: 'p',
-      text: "Icon Realty's current portfolio includes multiple residential formats across Indore, including Oscar Palace, Eden Garden, IIT Greens, Siddhayatan, Saatvik Vihar, Oscar Fort, Oscar Billionaire and Labham City. The website identifies Eden Garden as a plotted development and IIT Greens as a 28-acre development in Simrol, while Oscar Palace is located on the Indore–Nagpur Highway.",
+      text: "Icon Realty's current portfolio includes multiple residential formats across Indore, including Oscar Palace, Eden Garden, IIT Greens, Siddhayatan, Saatvik Vihar, Oscar Fort, Oscar Billionaire and Labham City. The website identifies Eden Garden as a plotted development and IIT Greens as an 8.5-acre development in Simrol, while Oscar Palace is located on the Indore–Nagpur Highway.",
     },
     {
       type: 'projects',

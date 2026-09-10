@@ -2,6 +2,7 @@ import { useCallback, useEffect, useRef, useState } from 'react';
 import { createPortal } from 'react-dom';
 import { FOCUSABLE } from '../utils/focus';
 import './ImageViewer.css';
+import Picture from './Picture';
 
 /**
  * Fullscreen image viewer — zoom, pan, pinch, swipe.
@@ -273,7 +274,7 @@ export default function ImageViewer({
           {failed ? (
             <p className="image-viewer__error">This image could not be loaded.</p>
           ) : (
-            <img
+            <Picture
               src={typeof current === 'string' ? current : current.src}
               alt={(typeof current === 'string' ? '' : current.alt) || caption || title || ''}
               draggable={false}

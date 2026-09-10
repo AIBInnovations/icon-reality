@@ -3,6 +3,7 @@ import Reveal from './Reveal';
 import { useEnquiry } from '../enquiry/enquiryContext';
 import { featuredProjects, CATEGORY_LABEL, PROJECT_STATUSES } from '../data/projects';
 import './FeaturedProjects.css';
+import Picture from './Picture';
 
 /**
  * The three projects the home page leads with (change.md #5).
@@ -43,7 +44,7 @@ export default function FeaturedProjects() {
             <Reveal key={p.slug} className="featured__cell" delay={i * 0.08}>
               <article className="featured__card">
                 <Link to={`/projects/${p.slug}`} className="featured__media">
-                  <img
+                  <Picture
                     src={p.thumbnail || p.hero_image}
                     alt={`${p.name}, ${p.location}`}
                     loading="lazy"

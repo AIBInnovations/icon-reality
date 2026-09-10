@@ -1,6 +1,7 @@
 import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import ImageViewer from './ImageViewer';
 import './ProjectBannerCarousel.css';
+import Picture from './Picture';
 
 /**
  * The banner at the top of a project page.
@@ -82,7 +83,7 @@ export default function ProjectBannerCarousel({ images = [], projectName = 'Proj
     return (
       <section className="project-banner">
         <div className="project-banner__shell">
-          <img
+          <Picture
             src={slides[0].src}
             alt={slides[0].alt || `${projectName}: hero`}
             loading="eager"
@@ -117,7 +118,7 @@ export default function ProjectBannerCarousel({ images = [], projectName = 'Proj
               className={`project-banner__slide${i === index ? ' is-active' : ''}`}
               aria-hidden={i !== index}
             >
-              <img
+              <Picture
                 src={img.src}
                 alt={img.alt || `${projectName}: image ${i + 1} of ${count}`}
                 /* only the first frame competes with the page's first paint */

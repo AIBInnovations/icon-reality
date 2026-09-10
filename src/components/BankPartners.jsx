@@ -1,6 +1,7 @@
 import Reveal from './Reveal';
 import { BANK_PARTNERS, BANK_PARTNER_NOTE } from '../data/company';
 import './BankPartners.css';
+import Picture from './Picture';
 
 /**
  * Home-loan assistance.
@@ -36,7 +37,7 @@ export default function BankPartners({
               {partners.map((b) => (
                 <li key={b.name}>
                   {b.logo
-                    ? <img src={b.logo} alt={b.name} loading="lazy" decoding="async" />
+                    ? <Picture src={b.logo} alt={b.name} loading="lazy" decoding="async" />
                     : <span>{b.name}</span>}
                 </li>
               ))}

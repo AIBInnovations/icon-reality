@@ -6,6 +6,7 @@ import { NAV, childrenOf, navLeft, navRight } from '../data/nav';
 import { PRIMARY_PHONE, telHref, EMAIL, ADDRESS } from '../data/contact';
 import { LEAD_INTENTS } from '../services/leads';
 import './Header.css';
+import Picture from './Picture';
 
 // Long enough for the incoming route to render and lay out before a cross-page
 // anchor jump. Was 1500 to clear the old route loader's hold + slide-up; with
@@ -199,7 +200,7 @@ export default function Header() {
                     tabIndex={isOpen ? 0 : -1}
                   >
                     <span className="mega__feature-media">
-                      <img src={item.feature.image} alt="" loading="lazy" decoding="async" />
+                      <Picture src={item.feature.image} alt="" loading="lazy" decoding="async" />
                     </span>
                     <span className="mega__feature-body">
                       <span className="mega__feature-title">{item.feature.title}</span>
@@ -239,8 +240,8 @@ export default function Header() {
 
         <Link to="/" className="site-header__brand" aria-label="Icon Realty home" onClick={closeMenu}>
           <span className="site-header__logo-wrap">
-            <img src="/icon-logo.png" alt="Icon Realty" className="site-header__logo" />
-            <img src="/icon-logo.png" alt="" aria-hidden="true" className="site-header__logo site-header__logo--white" />
+            <Picture src="/icon-logo.png" alt="Icon Realty" className="site-header__logo" />
+            <Picture src="/icon-logo.png" alt="" aria-hidden="true" className="site-header__logo site-header__logo--white" />
           </span>
         </Link>
 
@@ -344,7 +345,7 @@ export default function Header() {
               stacking on top of them and doubling the panel's height. */}
           <Link to={drawerFeature.to} className="drawer__feature" onClick={closeMenu}>
             <span className="drawer__feature-media">
-              <img src={drawerFeature.image} alt="" loading="lazy" decoding="async" />
+              <Picture src={drawerFeature.image} alt="" loading="lazy" decoding="async" />
             </span>
             <span className="drawer__feature-body">
               <span className="drawer__feature-title">{drawerFeature.title}</span>

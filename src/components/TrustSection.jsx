@@ -1,5 +1,6 @@
 import Reveal from './Reveal';
 import './TrustSection.css';
+import Picture from './Picture';
 
 const points = [
   'Wide, planned roads',
@@ -23,7 +24,7 @@ export default function TrustSection() {
             The alt text therefore does NOT repeat the figure, so it cannot
             contradict whichever version of the picture is in place. */}
         <Reveal className="trust__image-wrap">
-          <img src="/images/trusted.png" alt="Mr. Nilesh Porwal, Director of Icon Realty: a summary of projects delivered, families welcomed home, and two decades of trust" loading="lazy" decoding="async" />
+          <Picture src="/images/trusted.png" alt="Mr. Nilesh Porwal, Director of Icon Realty: a summary of projects delivered, families welcomed home, and two decades of trust" loading="lazy" decoding="async" />
         </Reveal>
 
         <div className="trust__copy">

@@ -1,0 +1,196 @@
+/* Campaign creatives accordion.
+   Interaction and timing mirror ProjectsCarousel on the home page; the type
+   and rhythm mirror ProjectSpecifications, which it sits next to. */
+
+.campaign {
+  padding: clamp(52px, 7vw, 92px) 0;
+  background: var(--bg-2);
+}
+
+.campaign__head {
+  display: flex;
+  flex-direction: column;
+  margin-bottom: clamp(24px, 3vw, 40px);
+  max-width: 62ch;
+}
+.campaign__eyebrow { color: var(--peach-deep); margin-bottom: 14px; }
+.campaign__heading {
+  font-size: clamp(28px, 4vw, 54px);
+  font-weight: 600;
+  line-height: 1.03;
+  letter-spacing: -0.02em;
+  text-transform: none;
+  margin: 0;
+}
+.campaign__lede {
+  font-size: clamp(15px, 1.1vw, 18px);
+  line-height: 1.6;
+  color: var(--muted);
+  margin-top: 14px;
+}
+
+/* ============ ACCORDION ============ */
+.campaign__accordion {
+  display: flex;
+  gap: 10px;
+  width: 100%;
+  align-items: stretch;
+  /* Height drives everything here, because the image is sized from it (see
+     .campaign__card img). It is kept just BELOW the open card's width at every
+     width so a square creative always fits inside the open card:
+       open card width = 3.7/7.7 of the strip, i.e. ~313px at 768 and
+       ~604px at 1440, against 40vw capped at 575px. */
+  height: clamp(300px, 40vw, 575px);
+}
+
+.campaign__card {
+  position: relative;
+  /* Ratios, never fixed widths — they always add up to exactly the available
+     space, whatever it is (the note in ProjectsCarousel.css applies here). */
+  flex: 1 1 0;
+  min-width: 0;
+  height: 100%;
+  cursor: pointer;
+  overflow: hidden;
+  border-radius: 8px;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  padding: 0;
+  transition: flex-grow .85s cubic-bezier(0.65, 0, 0.18, 1);
+}
+.campaign__card.is-active {
+  /* Tuned so the open card lands close to 1:1 against the height above, which
+     is what keeps a square creative from sitting in wide empty side bars.
+     With five cards this is 3.7 / (3.7 + 4) = 48% of the strip; the content
+     column runs 1248-1296px on desktop, so the open card measures ~580-600px
+     against a 42vw height. Re-check this if the artwork stops being square. */
+  flex-grow: 3.7;
+  cursor: zoom-in;
+}
+.campaign__card:focus-visible {
+  outline: 2px solid var(--peach);
+  outline-offset: 2px;
+}
+
+/* The image is sized from the card's HEIGHT, which never changes, and centred.
+   That is the whole trick, and it is what makes this animate like the home
+   carousel: only the card's width animates, so the picture is revealed rather
+   than resized.
+
+   Sizing it from the card's width instead (object-fit, or width:100%) meant
+   the square artwork shrank to sliver-width and grew back on every step, which
+   is the "small to big" wobble this replaces.
+
+   Because the height is held below the open card's width (see .campaign__accordion),
+   a square creative always lands inside the open card whole, while a collapsed
+   sliver shows a centre crop of the same untouched image. Assumes square-ish
+   artwork, which is what `campaign[]` is for: a very wide image would be
+   cropped at the sides even when open. */
+.campaign__card img {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  height: 100%;
+  width: auto;
+  /* index.css caps every image at max-width:100%; that would re-introduce the
+     width-driven resize this rule exists to avoid. */
+  max-width: none;
+  transform: translateX(-50%) scale(1.04);
+  transition: transform 1.2s ease;
+}
+.campaign__card.is-active img {
+  transform: translateX(-50%) scale(1);
+}
+
+/* A collapsed sliver is a spine, not a thumbnail. Because these creatives have
+   their wording set into the artwork, an undimmed sliver shows half-words and
+   reads as a broken crop. Knocked back and desaturated it reads as texture,
+   and the open card is unmistakably the thing being shown. */
+.campaign__card:not(.is-active) img {
+  filter: saturate(0.55) brightness(0.62);
+  transition: filter .55s ease, transform 1.2s ease;
+}
+.campaign__card:not(.is-active):hover img,
+.campaign__card:not(.is-active):focus-visible img {
+  filter: saturate(0.9) brightness(0.86);
+}
+
+/* ============ CONTROLS ============ */
+.campaign__controls {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 24px;
+  margin-top: clamp(18px, 2vw, 28px);
+}
+
+.campaign__counter {
+  display: inline-flex;
+  align-items: center;
+  gap: 14px;
+  font-size: 13px;
+  letter-spacing: 0.2em;
+  color: var(--muted);
+}
+.campaign__counter .is-current { color: var(--ink); }
+.campaign__counter-sep {
+  width: 36px;
+  height: 1px;
+  background: var(--line);
+  display: inline-block;
+}
+
+.campaign__buttons { display: inline-flex; gap: 10px; }
+.campaign__buttons button {
+  width: 48px;
+  height: 48px;
+  border-radius: 8px;
+  background: rgba(20, 20, 20, 0.06);
+  color: var(--ink);
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  transition: background .25s ease, transform .25s ease;
+}
+.campaign__buttons button:hover { background: rgba(20, 20, 20, 0.12); transform: translateY(-2px); }
+.campaign__buttons button.is-primary { background: var(--peach); color: var(--ink); }
+.campaign__buttons button.is-primary:hover { background: var(--peach-deep); }
+
+@media (max-width: 720px) {
+  .campaign { padding: 44px 0; }
+  /* A sliver is useless on a phone. The open card takes the whole width and
+     stays square; the arrows step through the rest. */
+  .campaign__accordion {
+    height: auto;
+    gap: 0;
+  }
+  .campaign__card {
+    display: none;
+    flex: none;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 1 / 1;
+  }
+  .campaign__card.is-active {
+    display: block;
+    flex: none;
+  }
+  /* One card, full width, square: size from the width here so the creative
+     fills it exactly. Nothing animates its size on this layout, so there is
+     no wobble to avoid. */
+  .campaign__card img,
+  .campaign__card.is-active img {
+    left: 0;
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    object-fit: contain;
+    transform: none;
+  }
+  .campaign__buttons button { width: 44px; height: 44px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .campaign__card { transition: none; }
+  .campaign__card img { transition: none; }
+}

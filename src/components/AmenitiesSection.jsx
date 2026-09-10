@@ -2,6 +2,7 @@ import { useMemo, useState } from 'react';
 import Reveal from './Reveal';
 import ImageViewer from './ImageViewer';
 import './AmenitiesSection.css';
+import Picture from './Picture';
 
 /**
  * Amenities, laid out editorially rather than as thirty identical icon cards
@@ -93,7 +94,7 @@ export default function AmenitiesSection({
                   onClick={() => setViewerAt(i)}
                   aria-label={`View ${f.name}`}
                 >
-                  <img
+                  <Picture
                     src={f.src}
                     alt={`${projectName ? `${projectName}: ` : ''}${f.name}`}
                     loading={i < 2 ? 'eager' : 'lazy'}

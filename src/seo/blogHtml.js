@@ -21,6 +21,22 @@ import {
 
 const esc = escapeHtml;
 
+/**
+ * The static twin of `<Picture>` (src/components/Picture.jsx).
+ *
+ * Prerendered blog HTML has to offer the same AVIF alternative the React tree
+ * does, or a crawler-rendered page and a visitor-rendered page pull different
+ * files. Same rule as the component: local rasters only, original left as the
+ * fallback in the <img>.
+ */
+function imgHtml(src, alt, attrs = '') {
+  const tag = `<img src="${esc(src)}" alt="${esc(alt || '')}"${attrs ? ` ${attrs}` : ''} />`;
+  const local = typeof src === 'string' && !/^[a-z]+:/i.test(src) && !src.startsWith('//');
+  if (!local || !/\.(jpe?g|png|webp)$/i.test(src)) return tag;
+  const avif = src.replace(/\.[^.]+$/, '.avif');
+  return `<picture><source type="image/avif" srcset="${esc(avif)}" />${tag}</picture>`;
+}
+
 /* ----------------------------------------------------------------- inline -- */
 
 function inlineHtml(nodes) {
@@ -83,7 +99,7 @@ function blockHtml(block) {
     case 'figure':
       return (
         `<figure class="media-figure media-figure--rounded article__figure">` +
-        `<span class="media-figure__frame"><img src="${esc(block.src)}" alt="${esc(block.alt || '')}" loading="lazy" decoding="async" /></span>` +
+        `<span class="media-figure__frame">${imgHtml(block.src, block.alt, 'loading="lazy" decoding="async"')}</span>` +
         (block.credit ? `<figcaption class="media-figure__credit">${esc(block.credit)}</figcaption>` : '') +
         `</figure>`
       );
@@ -176,7 +192,7 @@ function postBodyHtml(post) {
     `<span class="post__meta-sep" aria-hidden>/</span><span>${post.readingMinutes} min read</span></p>`,
     `</div></header>`,
     post.image
-      ? `<div class="post__banner"><div class="post__banner-shell"><img src="${esc(post.image)}" alt="${esc(post.imageAlt || '')}" /></div></div>`
+      ? `<div class="post__banner"><div class="post__banner-shell">${imgHtml(post.image, post.imageAlt)}</div></div>`
       : '',
     crumbHtml(postTrail(post)),
     `<div class="container post__layout post__layout--no-toc"><div class="post__column">`,
@@ -213,7 +229,7 @@ function indexBodyHtml(posts) {
     posts
       .map((post) => (
         `<li><a class="blog-card" href="${esc(post.path)}">` +
-        (post.image ? `<img src="${esc(post.image)}" alt="${esc(post.imageAlt || '')}" loading="lazy" />` : '') +
+        (post.image ? imgHtml(post.image, post.imageAlt, 'loading="lazy"') : '') +
         `<span class="eyebrow blog-card__cat">${esc(post.category)}</span>` +
         `<h2 class="blog-card__title">${esc(post.title)}</h2>` +
         `<p class="blog-card__excerpt">${esc(post.excerpt)}</p></a></li>`

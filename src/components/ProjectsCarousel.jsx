@@ -4,6 +4,7 @@ import Reveal from './Reveal';
 import { projectsList } from '../data/projects';
 import { useMediaQuery } from '../hooks/useMediaQuery';
 import './ProjectsCarousel.css';
+import Picture from './Picture';
 
 const projects = projectsList
   .filter((project) => project.status === 'trending')
@@ -55,7 +56,7 @@ export default function ProjectsCarousel() {
               onClick={() => handleCard(i)}
               aria-label={isGrid || i === active ? `Open ${p.name} project page` : `Show ${p.name}`}
             >
-              <img src={p.src} alt={p.name} loading="lazy" />
+              <Picture src={p.src} alt={p.name} loading="lazy" />
               <div className="carousel__card-veil" />
               <div className="carousel__card-caption">
                 <span className="carousel__card-label">{p.name}</span>

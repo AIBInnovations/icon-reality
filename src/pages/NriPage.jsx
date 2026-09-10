@@ -16,6 +16,7 @@ import {
   NRI_INTRO, NRI_TOPICS_BY_SLUG, NRI_ASSURANCES, NRI_MEDIA, NRI_DESK,
 } from '../data/nri';
 import './NriPage.css';
+import Picture from '../components/Picture';
 
 const TRAIL = [
   { name: 'Home', path: '/' },
@@ -279,7 +280,7 @@ export default function NriPage() {
         </div>
 
         <div className="nrix-loans__band">
-          <img
+          <Picture
             src={loans.hero.src}
             alt=""
             loading="lazy"
@@ -327,7 +328,7 @@ export default function NriPage() {
 
           <Reveal className="nrix-viewport">
             <span className="nrix-viewport__frame">
-              <img src={tours.hero.src} alt={tours.hero.credit} loading="lazy" decoding="async" />
+              <Picture src={tours.hero.src} alt={tours.hero.credit} loading="lazy" decoding="async" />
               <span className="nrix-viewport__badge">
                 <span className="nrix-viewport__dot" aria-hidden />
                 Live from site

@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import gsap from 'gsap';
 import Reveal from './Reveal';
 import './PageHero.css';
+import Picture from './Picture';
 
 /**
  * The editorial page hero every new section route uses.
@@ -78,7 +79,7 @@ export default function PageHero({
       {media?.src && (
         <section className="page-hero__banner">
           <div className="page-hero__banner-shell">
-            <img
+            <Picture
               src={media.src}
               alt={media.alt || media.credit || ''}
               /* the LCP image on these routes — decode it eagerly */

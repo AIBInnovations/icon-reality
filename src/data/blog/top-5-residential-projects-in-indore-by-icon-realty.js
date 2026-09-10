@@ -69,7 +69,7 @@ export default {
     { type: 'h2', text: '1. IIT Greens: Residential Project in Simrol, Indore' },
     {
       type: 'p',
-      text: 'IIT Greens is one of the prominent residential developments featured by Icon Realty. The project is located in Simrol on the Indore–Khandwa Highway and covers approximately 28 acres, according to the Icon Realty website.',
+      text: 'IIT Greens is one of the prominent residential developments featured by Icon Realty. The project is located in Simrol on the Indore–Khandwa Highway and covers approximately 8.5 acres, according to the Icon Realty website.',
     },
     {
       type: 'p',
@@ -89,7 +89,7 @@ export default {
       items: [
         'Located in Simrol',
         'Situated on the Indore–Khandwa Highway',
-        'Approximately 28-acre development',
+        'Approximately 8.5-acre development',
         "Part of Icon Realty's residential portfolio",
         'Suitable for buyers comparing developing residential corridors',
       ],
@@ -332,7 +332,7 @@ export default {
     },
     {
       type: 'p',
-      text: 'IIT Greens brings a 28-acre development to Simrol, while Siddhayatan offers a community-focused option in Manglia. Eden Garden provides a plotted-development option in Ambamoliya, and Oscar Palace focuses on premium plotted living along the Indore–Nagpur Highway. Saatvik Vihar adds a township option in Manglia.',
+      text: 'IIT Greens brings an 8.5-acre development to Simrol, while Siddhayatan offers a community-focused option in Manglia. Eden Garden provides a plotted-development option in Ambamoliya, and Oscar Palace focuses on premium plotted living along the Indore–Nagpur Highway. Saatvik Vihar adds a township option in Manglia.',
     },
     {
       type: 'p',
@@ -351,7 +351,7 @@ export default {
     },
     {
       q: 'Where is IIT Greens located?',
-      a: 'IIT Greens is located in Simrol on the Indore–Khandwa Highway and is listed by Icon Realty as a 28-acre development.',
+      a: 'IIT Greens is located in Simrol on the Indore–Khandwa Highway and is listed by Icon Realty as an 8.5-acre development.',
     },
     {
       q: 'Where is Siddhayatan located?',

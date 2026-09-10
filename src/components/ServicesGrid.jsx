@@ -3,6 +3,7 @@ import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 import { useEnquiry } from '../enquiry/enquiryContext';
 import './ServicesGrid.css';
+import Picture from './Picture';
 
 // What Icon Realty offers ACROSS the portfolio — not what one project has.
 // Every figure here is either published company data (company.js) or is the
@@ -201,7 +202,7 @@ function ServiceCarousel({ images, title }) {
           <div className="service-modal__track" ref={trackRef}>
             {slides.map((src, i) => (
               <div key={i} className="service-modal__slide">
-                <img src={src} alt={`${title} ${(i % images.length) + 1}`} draggable="false" loading="lazy" decoding="async" />
+                <Picture src={src} alt={`${title} ${(i % images.length) + 1}`} draggable="false" loading="lazy" decoding="async" />
               </div>
             ))}
           </div>
@@ -293,7 +294,7 @@ export default function ServicesGrid() {
                   aria-label={`Open details for ${s.title}`}
                 >
                   <div className="services__thumb">
-                    <img src={s.image} alt="" loading="lazy" decoding="async" />
+                    <Picture src={s.image} alt="" loading="lazy" decoding="async" />
                   </div>
                   <div className="services__row-main">
                     <span className="services__row-title">{s.title}</span>

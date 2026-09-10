@@ -4,6 +4,7 @@ import { useEnquiry } from '../enquiry/enquiryContext';
 import { whatsappUrl } from '../services/whatsapp';
 import { PRIMARY_PHONE, telHref } from '../data/contact';
 import './CtaBand.css';
+import Picture from './Picture';
 
 /**
  * The contextual call-to-action band.
@@ -52,7 +53,7 @@ export default function CtaBand({
       <div className="cta-band__shell">
         {image && (
           <div className="cta-band__bg" aria-hidden>
-            <img src={image} alt="" loading="lazy" decoding="async" />
+            <Picture src={image} alt="" loading="lazy" decoding="async" />
           </div>
         )}
 

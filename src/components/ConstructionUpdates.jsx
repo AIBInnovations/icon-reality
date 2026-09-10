@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Reveal from './Reveal';
 import ImageViewer from './ImageViewer';
 import './ConstructionUpdates.css';
+import Picture from './Picture';
 
 /**
  * Dated construction progress.
@@ -74,7 +75,7 @@ export default function ConstructionUpdates({
                           onClick={() => setViewer({ images, index: j })}
                           aria-label={`View construction photo ${j + 1} of ${images.length}`}
                         >
-                          <img
+                          <Picture
                             src={src}
                             alt={`${projectName || 'Project'} construction, ${u.date || u.title || `photo ${j + 1}`}`}
                             loading="lazy"
