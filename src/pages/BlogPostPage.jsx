@@ -74,6 +74,8 @@ export default function BlogPostPage() {
             <Reveal as="p" className="post__lede" delay={0.1}>{post.excerpt}</Reveal>
 
             <Reveal as="p" className="post__meta" delay={0.15}>
+              {post.author && <span>By {post.author}</span>}
+              {post.author && <span className="post__meta-sep" aria-hidden>/</span>}
               <time dateTime={post.datePublished}>{formatDate(post.datePublished)}</time>
               <span className="post__meta-sep" aria-hidden>/</span>
               <span>{post.readingMinutes} min read</span>

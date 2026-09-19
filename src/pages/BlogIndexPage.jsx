@@ -26,8 +26,8 @@ export default function BlogIndexPage() {
   return (
     <>
       <Seo
-        title="Blog: guides to buying residential plots in Indore"
-        description="Icon Realty's blog: what to check before buying a residential plot in Indore, the city's best plotting corridors, gated plotted developments versus open plots, and our projects."
+        title="Indore Property Blog: RERA, Titles, Locations & Plot Investment Guides"
+        description="Explore practical Indore property blog guides on plot buying, RERA verification, title checks, investment comparisons and the best residential corridors before you invest."
         path="/blog"
         image={lead?.image}
         jsonLd={[

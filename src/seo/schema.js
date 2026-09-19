@@ -211,6 +211,10 @@ export function webPageSchema(type, { name, description, path }) {
 export function blogPostingSchema(post) {
   if (!post) return null;
   const url = absoluteUrl(post.path);
+  const author = post.author
+    ? { '@type': 'Person', name: post.author }
+    : { '@type': 'Organization', name: SITE_NAME, url: SITE_URL };
+
   return {
     '@context': 'https://schema.org',
     '@type': 'BlogPosting',
@@ -218,7 +222,7 @@ export function blogPostingSchema(post) {
     headline: post.title,
     description: post.metaDescription || post.excerpt,
     ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
-    author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+    author,
     publisher: organisationRef,
     mainEntityOfPage: { '@type': 'WebPage', '@id': url },
     url,
@@ -253,7 +257,9 @@ export function blogSchema(posts = []) {
       datePublished: post.datePublished,
       dateModified: post.dateModified || post.datePublished,
       ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
-      author: { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
+      author: post.author
+        ? { '@type': 'Person', name: post.author }
+        : { '@type': 'Organization', name: SITE_NAME, url: SITE_URL },
       publisher: organisationRef,
     })),
   };

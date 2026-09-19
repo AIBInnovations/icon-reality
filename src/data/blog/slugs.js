@@ -8,10 +8,10 @@
 // src/data/blog/index.js asserts, in dev, that this list and the posts it
 // actually loads describe the same four articles.
 export const POST_SLUGS = [
-  'what-to-check-before-buying-residential-plot-in-indore',
-  'best-areas-to-buy-residential-plots-in-indore',
-  'gated-plotted-development-vs-open-plot-indore',
-  'top-5-residential-projects-in-indore-by-icon-realty',
+  'how-to-verify-rera-title-and-land-documents-before-buying-plot-in-indore',
+  'plot-vs-flat-in-indore-which-is-better-for-investment-in-2026',
+  'super-corridor-vs-ujjain-road-which-is-better-for-buying-a-plot-in-indore',
+  'super-corridor-indore-property-guide-what-buyers-should-know-before-investing',
 ];
 
 /**

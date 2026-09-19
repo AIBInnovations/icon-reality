@@ -55,10 +55,10 @@ import { POST_SLUGS } from './slugs.js';
 
 export { POST_SLUGS, LEGACY_POST_PATHS } from './slugs.js';
 
-import buyingChecklist from './what-to-check-before-buying-residential-plot-in-indore.js';
-import bestAreas from './best-areas-to-buy-residential-plots-in-indore.js';
-import topProjects from './top-5-residential-projects-in-indore-by-icon-realty.js';
-import gatedVsOpen from './gated-plotted-development-vs-open-plot-indore.js';
+import reraDocs from './how-to-verify-rera-title-and-land-documents-before-buying-plot-in-indore.js';
+import plotVsFlat from './plot-vs-flat-in-indore-which-is-better-for-investment-in-2026.js';
+import superCorridorVsUjjain from './super-corridor-vs-ujjain-road-which-is-better-for-buying-a-plot-in-indore.js';
+import superCorridorGuide from './super-corridor-indore-property-guide-what-buyers-should-know-before-investing.js';
 
 /** Reading speed used for the "n min read" line. Nothing else depends on it. */
 const WORDS_PER_MINUTE = 220;
@@ -114,11 +114,11 @@ function normalise(post) {
 }
 
 /**
- * Editorial order, which is also newest-first: the four posts publish together,
- * so the listing runs foundational → location → comparison → portfolio rather
- * than sorting four identical dates.
+ * Editorial order follows the new lead content sequence provided by the client:
+ * document verification, investment comparison, location comparison, and the
+ * Super Corridor market guide.
  */
-export const BLOG_POSTS = [buyingChecklist, bestAreas, gatedVsOpen, topProjects].map(normalise);
+export const BLOG_POSTS = [reraDocs, plotVsFlat, superCorridorVsUjjain, superCorridorGuide].map(normalise);
 
 export const postsBySlug = Object.fromEntries(BLOG_POSTS.map((p) => [p.slug, p]));
 
@@ -127,7 +127,7 @@ export const relatedPosts = (slug, limit = 3) =>
   BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, limit);
 
 export const BLOG_INTRO =
-  "Notes on buying land in Indore: what to verify before you pay, how the city's residential corridors differ, and how a planned plotted development compares with an open plot.";
+  "Practical guides for buying plots in Indore: RERA checks, title verification, investment comparisons and the key differences between leading residential corridors.";
 
 // Dev-only guard: the redirect list and the loaded posts must describe the same
 // articles, or a renamed slug would silently start 404ing at its old URL.
