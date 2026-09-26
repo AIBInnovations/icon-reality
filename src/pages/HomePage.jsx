@@ -7,6 +7,9 @@ import ServicesGrid from '../components/ServicesGrid';
 import InsideSection from '../components/InsideSection';
 import ForBuyers from '../components/ForBuyers';
 import PillarsCards from '../components/PillarsCards';
+import PurposeSection from '../components/PurposeSection';
+import JourneySection from '../components/JourneySection';
+import FootprintSection from '../components/FootprintSection';
 import FeaturedProjects from '../components/FeaturedProjects';
 import ProjectsCarousel from '../components/ProjectsCarousel';
 import Testimonials from '../components/Testimonials';
@@ -109,13 +112,19 @@ export default function HomePage() {
           <DisplayHeading />
           <ServicesGrid />
           <InsideSection />
+          {/* Who we are, vision & mission, the directors, the journey: the
+              company story in the order the client's content.md tells it. */}
           <PillarsCards />
+          <PurposeSection />
           <TrustSection />
+          <JourneySection />
           {/* The three the client wants led with, then everything currently
-              selling, then everything delivered (change.md #5, #7). */}
+              selling, then everything delivered (change.md #5, #7), then
+              where all of it stands. */}
           <FeaturedProjects />
           <ProjectsCarousel />
           <CompletedProjects />
+          <FootprintSection />
           {/* Door into the expanded architecture — Why Indore, Investors, NRI,
               Channel Partners. Placed after the portfolio so a first-time
               visitor has seen the work before being asked which they are. */}

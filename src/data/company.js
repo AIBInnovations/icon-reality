@@ -76,19 +76,72 @@ export const STORY = [
   },
 ];
 
-/** Company philosophy — reused on About and Investor Corner. */
+/*
+ * Who we are, vision, mission, values and milestones below are the client's
+ * own copy (content.md, Sep 2026), set in house style (no em dashes). Where
+ * that copy contradicted this file or projects.js, the published record won
+ * and the claim was left out rather than repeated:
+ *
+ *  - "15+ delivered, every one on time: Oscar Fort, Siddhayatan, Eden Garden"
+ *    All three are ongoing in projects.js.
+ *  - "Icon launches the Oscar Collection: Fort, Billionaire, Palace"
+ *    Oscar Palace is Ruchi Realty's colony; Icon is its design and marketing
+ *    partner. The milestone below says so.
+ *  - "A 10-acre township in a record 6 months"
+ *    IIT Greens is 8.5 acres (corrected Sep 2026). Its six-month timeline was
+ *    already published and is kept; "record" is not a claim we can stand up.
+ *  - "20+ projects", "11 micro-markets" (incl. Ratlam, Hingolia, Bypass)
+ *    projects.js lists 17, none in those three places. The home footprint
+ *    section derives its list from projects.js instead.
+ *  - Award-winning architects, "all projects RERA registered with clear
+ *    titles", AIIMS and Metro Phase 2, brand collaborations, and founder
+ *    profiles still holding "[Founder Name]" placeholders.
+ *
+ * Add any of these back only once the client supplies something verifiable
+ * (CLAUDE.md §5).
+ */
+
+/** "Who we are" on the home page: the belief, then three principles. */
+export const WHO_WE_ARE = {
+  eyebrow: 'Who we are',
+  title: ['We create inspiring spaces', 'that elevate life.'],
+  lede:
+    'Icon Realty was founded on a singular belief: that Indore deserves world-class addresses. Not just buildings, but communities. Not just square footage, but stories.',
+  principles: [
+    {
+      name: 'Innovative design',
+      body: "Our creative team, including collaborators from Jaipur's leading architectural practices, pushes boundaries to deliver unique, modern designs that reflect your vision and the spirit of the city.",
+    },
+    {
+      name: 'Uncompromising quality',
+      body: 'We ensure every detail is perfected using only the finest materials and most skilled craftsmanship. Your address will stand the test of time.',
+    },
+    {
+      name: 'Customer-first culture',
+      body: 'From booking to handover, and beyond. Our clients call us approachable, transparent, and committed to long-term relationships, not one-time transactions.',
+    },
+  ],
+};
+
+/** Company values: shown with the vision and mission on About and the home page. */
 export const VALUES = [
-  { k: 'Integrity',     v: 'Honesty, transparency, and ethical responsibility in every decision.' },
-  { k: 'Craftsmanship', v: 'Superior design, meticulous planning, and an obsession with quality.' },
-  { k: 'Customer-First',v: 'Long-term commitment with post-sales support and quick responsiveness.' },
-  { k: 'Innovation',    v: 'New ideas, technologies, and design philosophies, applied with purpose.' },
+  { k: 'Trust',      v: 'Every promise made during booking, honoured at handover.' },
+  { k: 'Excellence', v: 'Jaipur architects. Premium materials. No compromise.' },
+  { k: 'Innovation', v: 'Designs that anticipate tomorrow. Technology-driven planning. Forward-looking communities.' },
+  { k: 'Legacy',     v: "We don't build projects. We build addresses that define a generation of Indore." },
 ];
 
 export const VISION =
-  'To be a trusted leader in luxury real estate by creating community-centric spaces, defined by dense tree plantations and vibrant greenery, delivering timeless landmarks with enduring quality and a healthier lifestyle.';
+  'To make Indore the most aspirational address in Central India, one iconic project at a time.';
+
+export const VISION_DETAIL =
+  "We envision a city where world-class living is not a compromise, where families from Indore can access architecture, infrastructure and community on par with any metropolitan market in India. Icon Realty exists to make that vision a daily reality: on the Super Corridor, at IIT's doorstep, and across every micro-market we enter.";
 
 export const MISSION =
-  'To create developments that rise beyond architecture: shaped with precision, purpose and refined elegance, through ethical practices and a customer-first approach.';
+  "To deliver landmark developments that honour our buyers' trust: on time, on promise, beyond expectation.";
+
+export const MISSION_DETAIL =
+  'Every plot we sell and every community we plan must represent the best of what Indore has to offer. We achieve this through rigorous planning, best-in-class partnerships and a culture of transparency that has earned us the trust of thousands of families and investors.';
 
 export const LEADERSHIP = [
   {
@@ -111,10 +164,10 @@ export const LEADERSHIP = [
  * push them here and the About timeline renders them automatically.
  */
 export const MILESTONES = [
-  { year: 2004, title: 'Icon Realty is founded', body: 'The first plotted development in Indore.' },
-  { year: null, title: 'Super Corridor townships', body: 'Singapore Corridor, Singapore Lifestyle 2, Dream Victoria and Victoria Park delivered along Indore\'s fastest-growing corporate axis.' },
-  { year: null, title: 'Oscar Palace', body: 'Appointed design and marketing partner for the Ruchi Realty royal-estate colony on the Indore–Nagpur Highway, with architecture by Ravi Gupta Ji of Jaipur.' },
-  { year: null, title: 'IIT Greens', body: 'A premium development opposite IIT Indore, completed on a six-month timeline.' },
+  { year: 2004, title: 'The beginning', body: "Icon Realty is founded in Indore with a mission to redefine Central India's real estate landscape. The first projects, Glamour Hill City in Rau and Ruchi Enclave in Jhalaria, set the benchmark for quality." },
+  { year: null, title: 'The Super Corridor', body: "Icon enters the Super Corridor, Indore's fastest-growing IT and knowledge belt. Singapore Corridor, Singapore Lifestyle 2, Dream Victoria and Victoria Park: four landmark projects at the city's new frontier." },
+  { year: null, title: 'The Oscar series', body: 'A defining moment: Oscar Billionaire, Oscar Fort and Oscar Palace. On Oscar Palace, Icon is the design and marketing partner for Ruchi Realty\'s royal-estate colony on the Indore–Nagpur Highway, with architecture by Ravi Gupta Ji of Jaipur.' },
+  { year: null, title: 'IIT Greens', body: "Opposite IIT Indore and Icon's boldest bet on the city's future: a premium development completed on a six-month timeline." },
 ];
 
 /**

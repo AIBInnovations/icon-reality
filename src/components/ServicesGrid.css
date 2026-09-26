@@ -141,12 +141,16 @@
   border-radius: 18px;
   overflow: hidden;
   transform: translateX(calc(100% + 14px));
-  transition: transform .58s cubic-bezier(0.7, 0, 0.2, 1);
+  transition: transform .58s cubic-bezier(0.7, 0, 0.2, 1), box-shadow .58s ease;
   will-change: transform;
-  box-shadow: -30px 0 80px -20px rgba(0,0,0,0.28);
+  /* Shadow only while open. Parked just off the right edge, the closed panel's
+     shadow still reached ~90px into the viewport and laid a grey band down the
+     right side of every section of the home page. */
+  box-shadow: none;
 }
 .service-modal.is-open .service-modal__panel {
   transform: translateX(0);
+  box-shadow: -30px 0 80px -20px rgba(0,0,0,0.28);
 }
 
 .service-modal__close {
@@ -269,9 +273,10 @@
     top: 0; right: 0; bottom: 0;
     width: 100%;
     border-radius: 0;
-    box-shadow: none;
     transform: translateX(100%);
   }
+  /* full-width panel: nothing beside it for a shadow to fall on */
+  .service-modal.is-open .service-modal__panel { box-shadow: none; }
   .service-modal__close { width: 44px; height: 44px; top: 16px; right: 16px; }
   .service-modal__stat-row { grid-template-columns: repeat(2, 1fr); }
   .service-modal__body { padding: 18px 18px 22px; }

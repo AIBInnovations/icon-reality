@@ -5,9 +5,10 @@
 
 .testimonials__shell {
   position: relative;
-  /* Token, not a repeated literal — and a slight vertical deepening so the card
-     has its own body against the flat --bg gutter around it. */
-  background: linear-gradient(180deg, var(--bg-2) 0%, #E9DFD0 100%);
+  /* Flat --bg-2. It used to deepen towards the foot, which together with the
+     card shadows read as a dark smudge under the cards. The band still stands
+     apart from the --bg gutter around it. */
+  background: var(--bg-2);
   color: var(--ink);
   border-radius: 18px;
   overflow: hidden;
@@ -59,7 +60,7 @@
   display: flex;
   flex-direction: column;
   gap: 16px;
-  box-shadow: 0 30px 60px -28px rgba(20, 20, 20, 0.18);
+  /* no shadow: white on the --bg-2 band separates the card on its own */
   will-change: transform, opacity;
   left: 50%;
   margin-left: calc(min(640px, 86vw) / -2);

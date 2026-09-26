@@ -1,0 +1,8 @@
+.journey {
+  padding: clamp(60px, 8vw, 100px) 0;
+  background: var(--bg);
+}
+
+@media (max-width: 720px) {
+  .journey { padding: 40px 0; }
+}

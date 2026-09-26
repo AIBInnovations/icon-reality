@@ -843,6 +843,23 @@ export const featuredProjects = () => projectsList.filter((p) => p.featured);
 export const projectsByStatus = (status) => projectsList.filter((p) => p.status === status);
 
 /**
+ * The portfolio grouped by micro-market, largest first, for the home page's
+ * footprint. The market is the first part of each project's `location`, so the
+ * list can only ever name a place the portfolio actually has a project in.
+ */
+export const projectsByMarket = () => {
+  const markets = new Map();
+  for (const p of projectsList) {
+    const market = p.location.split(',')[0].trim();
+    if (!markets.has(market)) markets.set(market, []);
+    markets.get(market).push(p);
+  }
+  return [...markets]
+    .map(([market, projects]) => ({ market, projects }))
+    .sort((a, b) => b.projects.length - a.projects.length);
+};
+
+/**
  * Only the statuses that actually have projects, so the filter never offers an
  * "Upcoming" tab that resolves to an empty list. Add a project with
  * status: 'upcoming' and the tab appears on its own.

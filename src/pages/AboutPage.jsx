@@ -6,6 +6,8 @@ import Reveal from '../components/Reveal';
 import TrustModule from '../components/TrustModule';
 import MediaFigure from '../components/MediaFigure';
 import SectionHeading from '../components/SectionHeading';
+import VisionMission from '../components/VisionMission';
+import Milestones from '../components/Milestones';
 import Testimonials from '../components/Testimonials';
 import CtaBand from '../components/CtaBand';
 import Breadcrumbs from '../components/Breadcrumbs';
@@ -13,7 +15,7 @@ import Seo from '../seo/Seo';
 import { breadcrumbSchema, webPageSchema } from '../seo/schema';
 import { LEAD_INTENTS } from '../services/leads';
 import {
-  STORY, VALUES, VISION, MISSION, LEADERSHIP,
+  STORY, LEADERSHIP,
   MILESTONES, AWARDS, PRESS, FOUNDER_MESSAGE,
 } from '../data/company';
 import { avifSupported } from '../utils/avif';
@@ -272,27 +274,8 @@ export default function AboutPage() {
 
       {/* VISION & MISSION */}
       <section className="about-vm">
-        <div className="container about-vm__grid">
-          <Reveal className="about-vm__card about-vm__card--vision">
-            <span className="about-vm__tag">Vision</span>
-            <p>{VISION}</p>
-          </Reveal>
-          <Reveal className="about-vm__card about-vm__card--mission" delay={0.08}>
-            <span className="about-vm__tag">Mission</span>
-            <p>{MISSION}</p>
-          </Reveal>
-        </div>
-
-        <div className="container about-vm__values">
-          <Reveal as="h3" className="about-vm__values-title">Our core values</Reveal>
-          <div className="about-vm__values-grid">
-            {VALUES.map((x, i) => (
-              <Reveal key={x.k} className="about-vm__value" delay={i * 0.06}>
-                <span className="about-vm__value-k">{x.k}</span>
-                <span className="about-vm__value-v">{x.v}</span>
-              </Reveal>
-            ))}
-          </div>
+        <div className="container">
+          <VisionMission />
         </div>
       </section>
 
@@ -363,17 +346,7 @@ export default function AboutPage() {
               title="How the portfolio grew."
               lede="Only entries Icon Realty has published. Where a year has not been stated publicly, it is left blank rather than estimated."
             />
-            <ol className="about-milestones__list">
-              {MILESTONES.map((m, i) => (
-                <Reveal as="li" key={m.title} className="about-milestones__item" delay={Math.min(i, 5) * 0.05} y={20}>
-                  <span className="about-milestones__year">{m.year ?? '·'}</span>
-                  <div className="about-milestones__body">
-                    <h3 className="about-milestones__title">{m.title}</h3>
-                    <p className="about-milestones__copy">{m.body}</p>
-                  </div>
-                </Reveal>
-              ))}
-            </ol>
+            <Milestones />
           </div>
         </section>
       )}

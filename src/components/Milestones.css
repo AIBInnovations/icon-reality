@@ -1,0 +1,49 @@
+/* The ruled milestone list (Milestones.jsx). Moved here unchanged from
+   AboutPage.css when the home page started showing it too. */
+
+.milestones { display: flex; flex-direction: column; }
+
+.milestones__item {
+  display: grid;
+  grid-template-columns: 110px minmax(0, 1fr);
+  gap: clamp(16px, 2.4vw, 40px);
+  padding: clamp(18px, 2.2vw, 28px) 0;
+  border-bottom: 1px solid var(--line);
+}
+.milestones__item:first-child { border-top: 1px solid var(--line); }
+
+.milestones__year {
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.2vw, 30px);
+  font-weight: 600;
+  line-height: 1.1;
+  letter-spacing: -0.03em;
+  color: var(--sand);
+  font-variant-numeric: tabular-nums;
+}
+.milestones__body { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.milestones__title {
+  font-family: var(--font-display);
+  font-size: clamp(17px, 1.5vw, 22px);
+  font-weight: 600;
+  line-height: 1.25;
+  color: var(--ink);
+}
+.milestones__copy {
+  font-size: clamp(14px, 1.02vw, 16px);
+  line-height: 1.62;
+  color: var(--muted);
+  max-width: 62ch;
+}
+
+@media (max-width: 720px) {
+  .milestones__item {
+    /* the year sits above the entry rather than stealing a third of a 320px row */
+    grid-template-columns: minmax(0, 1fr);
+    gap: 6px;
+    padding: 16px 0;
+  }
+  .milestones__year { font-size: 18px; }
+  .milestones__title { font-size: 17px; }
+  .milestones__copy { font-size: 14.5px; }
+}

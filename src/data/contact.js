@@ -16,6 +16,12 @@ export const WHATSAPP_NUMBER = '919425942510';
 
 export const EMAIL = 'iconrealty02@gmail.com';
 
+/**
+ * When the advisors answer. Client-supplied (content.md, Sep 2026). The
+ * non-breaking spaces keep "10 AM" and "7 PM" from splitting across a line.
+ */
+export const OFFICE_HOURS = 'Mon–Sat, 10 AM – 7 PM';
+
 export const ADDRESS = {
   name: 'Icon Realty',
   locality: 'Indore',

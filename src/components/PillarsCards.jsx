@@ -1,36 +1,29 @@
 import Reveal from './Reveal';
+import { WHO_WE_ARE } from '../data/company';
 import './PillarsCards.css';
 
-const pillars = [
-  {
-    name: 'Status',
-    variant: 'dark',
-    body: 'Not every address reflects your standard. Icon Realty designs for those who recognise quality without needing it announced: a place that carries quiet weight in every detail, from the gate to the garden.',
-  },
-  {
-    name: 'Investment',
-    variant: 'sand',
-    body: 'Land is limited, opportunities are not. We build on the corridors Indore is actually growing along, the Super Corridor, the Indore–Nagpur Highway, Bicholi, Manglia, Rau, with structured planning and the long view in mind. Buy early, hold long-term, and let the location do the rest. Bank loans are available on our plots.',
-  },
-  {
-    name: 'Lifestyle',
-    variant: 'peach',
-    body: 'Upgrade from living to breathing. Open spaces, green surroundings, and a peaceful environment crafted for everyday life, where mornings feel slower and weekends feel longer.',
-  },
-];
+// "Who we are": the company's belief and three principles (company.js), set in
+// the three-card layout. The card colours run in this order.
+const VARIANTS = ['dark', 'sand', 'peach'];
 
 export default function PillarsCards() {
+  const { eyebrow, title, lede, principles } = WHO_WE_ARE;
+
   return (
     <section className="pillars" id="pillars">
       <div className="container">
-        <Reveal as="h2" className="display pillars__title">
-          Three pillars.<br/>One standard.
-        </Reveal>
+        <div className="pillars__head">
+          <Reveal as="span" className="eyebrow pillars__eyebrow">{eyebrow}</Reveal>
+          <Reveal as="h2" className="display pillars__title" delay={0.05}>
+            {title[0]}<br/>{title[1]}
+          </Reveal>
+          <Reveal as="p" className="pillars__lede" delay={0.1}>{lede}</Reveal>
+        </div>
 
         <div className="pillars__grid">
-          {pillars.map((p, i) => (
+          {principles.map((p, i) => (
             <Reveal key={p.name} delay={i * 0.08}>
-              <article className={`pillar pillar--${p.variant}`}>
+              <article className={`pillar pillar--${VARIANTS[i % VARIANTS.length]}`}>
                 <h3 className="pillar__name">{p.name}</h3>
                 <p className="pillar__body">{p.body}</p>
                 <span className="pillar__deco" aria-hidden />

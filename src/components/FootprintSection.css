@@ -1,0 +1,10 @@
+/* --bg, not a --bg-2 band: AudiencePaths below fades in from --bg, and a band
+   here would put back the seam its gradient exists to remove. */
+.footprint {
+  padding: clamp(60px, 8vw, 100px) 0;
+  background: var(--bg);
+}
+
+@media (max-width: 720px) {
+  .footprint { padding: 40px 0; }
+}

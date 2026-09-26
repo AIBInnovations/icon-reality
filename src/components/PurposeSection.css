@@ -1,0 +1,9 @@
+/* A --bg-2 band between Who we are and the Twenty years section, both --bg. */
+.purpose {
+  padding: clamp(60px, 8vw, 100px) 0;
+  background: var(--bg-2);
+}
+
+@media (max-width: 720px) {
+  .purpose { padding: 40px 0; }
+}

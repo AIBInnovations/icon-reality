@@ -3,13 +3,35 @@
   background: var(--bg);
 }
 
+/* Eyebrow, title, lede: the SectionHeading rhythm around this section's larger
+   title. */
+.pillars__head {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  text-align: center;
+  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.pillars__eyebrow {
+  color: var(--peach-deep);
+  margin-bottom: 14px;
+}
+
 .pillars__title {
   font-size: clamp(40px, 6vw, 88px);
   letter-spacing: -0.02em;
   text-transform: none;
   font-weight: 600;
   text-align: center;
-  margin-bottom: clamp(48px, 6vw, 80px);
+}
+
+.pillars__lede {
+  font-size: clamp(15px, 1.15vw, 19px);
+  line-height: 1.6;
+  color: var(--muted);
+  max-width: 60ch;
+  margin-top: 18px;
 }
 
 .pillars__grid {
@@ -40,6 +62,11 @@
   font-weight: 500;
   font-family: var(--font-body);
   letter-spacing: 0.01em;
+  line-height: 1.15;
+  /* Three across, "Uncompromising quality" and "Customer-first culture" take
+     two lines where "Innovative design" can take one. Reserving two lines on
+     every card starts all three bodies on the same line. */
+  min-height: 2.3em;
 }
 
 .pillar__body {
@@ -70,11 +97,15 @@
 @media (max-width: 880px) {
   .pillars__grid { grid-template-columns: 1fr; }
   .pillar { min-height: 340px; }
+  /* stacked, each card is full width and every name fits on one line */
+  .pillar__name { min-height: 0; }
 }
 
 @media (max-width: 720px) {
   .pillars { padding: 40px 0; }
-  .pillars__title { font-size: clamp(30px, 9vw, 48px); margin-bottom: 36px; padding-inline: 12px; }
+  .pillars__head { margin-bottom: 36px; }
+  .pillars__title { font-size: clamp(30px, 9vw, 48px); padding-inline: 12px; }
+  .pillars__lede { font-size: 15px; margin-top: 14px; padding-inline: 12px; }
   /* These are text cards — 2-up would be unreadable at 390px, so they stay
      stacked but size to their content instead of holding a 280px floor that
      made each one fill the screen. */
