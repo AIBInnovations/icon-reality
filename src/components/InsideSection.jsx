@@ -7,6 +7,7 @@ import { FOCUSABLE } from '../utils/focus';
 import './ServicesGrid.css';
 import './InsideSection.css';
 import Picture from './Picture';
+import { lockPageScroll } from '../utils/scroller';
 
 /**
  * What is inside an Icon Realty development, as distinct from what the company
@@ -160,11 +161,10 @@ export default function InsideSection() {
   // modal does, so the two overlays behave identically.
   useEffect(() => {
     if (!isOpen) return undefined;
-    const prev = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const unlockScroll = lockPageScroll();
     document.body.classList.add('has-modal');
     return () => {
-      document.body.style.overflow = prev;
+      unlockScroll();
       document.body.classList.remove('has-modal');
     };
   }, [isOpen]);

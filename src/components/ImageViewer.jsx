@@ -3,6 +3,7 @@ import { createPortal } from 'react-dom';
 import { FOCUSABLE } from '../utils/focus';
 import './ImageViewer.css';
 import Picture from './Picture';
+import { lockPageScroll } from '../utils/scroller';
 
 /**
  * Fullscreen image viewer — zoom, pan, pinch, swipe.
@@ -130,8 +131,7 @@ export default function ImageViewer({
 
     window.addEventListener('keydown', onKey);
 
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const unlockScroll = lockPageScroll();
     // hides the floating header, which would otherwise sit over the viewer
     document.body.classList.add('has-modal');
     window.lenis?.stop();
@@ -139,7 +139,7 @@ export default function ImageViewer({
 
     return () => {
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
+      unlockScroll();
       document.body.classList.remove('has-modal');
       window.lenis?.start();
       if (opener instanceof HTMLElement && opener.isConnected) opener.focus();

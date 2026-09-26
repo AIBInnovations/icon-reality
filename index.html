@@ -65,6 +65,13 @@
           set();
         });
       })();
+      /* Touch-first devices scroll inside #root, not the document, so the
+         browser keeps its address and tab bars in place instead of sliding
+         them in and out as the page moves (src/utils/scroller.js). Decided
+         here, before first paint, so the page never re-lays out. */
+      if (window.matchMedia('(hover: none) and (pointer: coarse)').matches) {
+        document.documentElement.classList.add('scroll-lock');
+      }
     </script>
     <style>
       html, body { background: #F6F2EC; margin: 0; }

@@ -10,6 +10,7 @@ import { EMAIL, PHONES, PRIMARY_PHONE, ADDRESS, MAPS_URL, SOCIALS, telHref } fro
 import { whatsappUrl, waMessage } from '../services/whatsapp';
 import { LEAD_INTENTS } from '../services/leads';
 import './ContactPage.css';
+import { scrollToTop } from '../utils/scroller';
 
 const TRAIL = [
   { name: 'Home', path: '/' },
@@ -68,7 +69,7 @@ const channels = [
 const socials = SOCIALS;
 
 export default function ContactPage() {
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { scrollToTop(); }, []);
 
   return (
     <>

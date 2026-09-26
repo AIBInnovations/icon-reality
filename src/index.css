@@ -90,6 +90,24 @@ main {
   .page-fade { animation: none; }
 }
 
+/* Touch-first devices (index.html adds .scroll-lock): the document never
+   scrolls, #root does, so the browser's bars stay put and the site sits
+   between them. src/utils/scroller.js is the JS side of this. */
+html.scroll-lock,
+html.scroll-lock body {
+  height: 100%;
+  overflow: hidden;
+}
+html.scroll-lock #root {
+  position: fixed;
+  inset: 0;
+  overflow-x: hidden;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  /* no scroll chaining out to the (unscrollable) document */
+  overscroll-behavior-y: contain;
+}
+
 /* lenis */
 html.lenis, html.lenis body { height: auto; }
 .lenis.lenis-smooth { scroll-behavior: auto !important; }

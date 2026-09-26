@@ -21,6 +21,7 @@ import {
 import { avifSupported } from '../utils/avif';
 import './AboutPage.css';
 import Picture from '../components/Picture';
+import { scrollToTop } from '../utils/scroller';
 
 const TRAIL = [
   { name: 'Home', path: '/' },
@@ -51,7 +52,7 @@ export default function AboutPage() {
   const [openBio, setOpenBio] = useState(null);
 
   useEffect(() => {
-    window.scrollTo(0, 0);
+    scrollToTop();
   }, []);
 
   useEffect(() => {

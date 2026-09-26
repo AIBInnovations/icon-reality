@@ -13,6 +13,8 @@
  * native smooth scroll when it is not.
  */
 
+import { scrollTop, scrollToY } from './scroller';
+
 /**
  * How far down the viewport a section has to land so the fixed header is not
  * sitting on top of its heading. The bar sits at top:28px with a ~78px pill on
@@ -38,8 +40,8 @@ export function scrollToSection(id, { immediate = false } = {}) {
     return true;
   }
 
-  const top = el.getBoundingClientRect().top + window.scrollY + offset;
+  const top = el.getBoundingClientRect().top + scrollTop() + offset;
   const reduce = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-  window.scrollTo({ top, behavior: immediate || reduce ? 'auto' : 'smooth' });
+  scrollToY(top, immediate || reduce ? 'auto' : 'smooth');
   return true;
 }

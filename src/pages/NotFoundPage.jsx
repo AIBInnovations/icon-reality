@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import { Link, useLocation } from 'react-router-dom';
 import Seo from '../seo/Seo';
 import './NotFoundPage.css';
+import { scrollToTop } from '../utils/scroller';
 
 /**
  * Real 404. Previously the catch-all route rendered the home page, which makes
@@ -11,7 +12,7 @@ import './NotFoundPage.css';
 export default function NotFoundPage() {
   const { pathname } = useLocation();
 
-  useEffect(() => { window.scrollTo(0, 0); }, []);
+  useEffect(() => { scrollToTop(); }, []);
 
   return (
     <section className="notfound">

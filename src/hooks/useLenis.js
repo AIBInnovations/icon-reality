@@ -2,6 +2,7 @@ import { useEffect } from 'react';
 import Lenis from 'lenis';
 import gsap from 'gsap';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
+import { isScrollLocked } from '../utils/scroller';
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -10,6 +11,12 @@ gsap.registerPlugin(ScrollTrigger);
 // sections visibly jump. Only genuine size changes (rotation, split-screen)
 // should trigger a refresh.
 ScrollTrigger.config({ ignoreMobileResize: true });
+
+// Touch devices scroll #root, not the window (utils/scroller.js). Every
+// ScrollTrigger, on every page, measures against it: set once, here, before
+// any component has created one.
+const SCROLL_ROOT = isScrollLocked() ? document.getElementById('root') : null;
+if (SCROLL_ROOT) ScrollTrigger.defaults({ scroller: SCROLL_ROOT });
 
 export function useLenis() {
   useEffect(() => {
@@ -20,6 +27,12 @@ export function useLenis() {
     }
 
     const lenis = new Lenis({
+      // The same single instance either way (CLAUDE.md §2); on touch devices
+      // it drives #root. `content` is only watched for growth, and <main> is
+      // what grows as sections mount.
+      ...(SCROLL_ROOT
+        ? { wrapper: SCROLL_ROOT, content: SCROLL_ROOT.querySelector(':scope > main') || SCROLL_ROOT }
+        : {}),
       duration: 1.15,
       easing: (t) => Math.min(1, 1.001 - Math.pow(2, -10 * t)),
       smoothWheel: true,

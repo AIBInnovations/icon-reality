@@ -4,6 +4,7 @@ import { whatsappUrl, waMessage } from '../services/whatsapp';
 import { telHref } from '../data/contact';
 import { LEAD_INTENTS } from '../services/leads';
 import './StickyMobileCTA.css';
+import { scrollTop, onPageScroll } from '../utils/scroller';
 
 /**
  * Bottom-fixed conversion bar on high-intent pages (project detail, NRI,
@@ -29,10 +30,9 @@ export default function StickyMobileCTA({
   const { openEnquiry } = useEnquiry();
 
   useEffect(() => {
-    const onScroll = () => setVisible(window.scrollY > 420);
+    const onScroll = () => setVisible(scrollTop() > 420);
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return onPageScroll(onScroll);
   }, []);
 
   // The QuickDock's floating button sits bottom-right at the same height as

@@ -24,6 +24,15 @@ by the GSAP ticker, exposed as `window.lenis`.
 * Anything that scrolls internally (the nav drawer, modal cards, the plan
   viewer) needs `data-lenis-prevent`, or Lenis eats the gesture.
 
+**On touch devices the window does not scroll; `#root` does.** `index.html`
+puts `.scroll-lock` on `<html>` for touch-first devices, so mobile browsers
+keep their address and tab bars fixed instead of sliding them in and out
+(client request, Sep 2026). Lenis and every ScrollTrigger are pointed at
+`#root` there. So never read `window.scrollY`, call `window.scrollTo`, listen
+for `scroll` on `window`, or freeze the page with `document.body.style.overflow`
+directly: use `src/utils/scroller.js` (`scrollTop`, `scrollToTop`, `scrollToY`,
+`onPageScroll`, `lockPageScroll`), or it will silently do nothing on phones.
+
 ## 3. Do not casually alter the frame-sequence architecture
 
 Two scroll-scrubbed canvas sequences are the site's signature:
@@ -162,6 +171,13 @@ it. Test whether the page actually scrolls:
 
 ```js
 window.scrollTo(400, 0); const bad = window.scrollX > 0; window.scrollTo(0, 0);
+```
+
+With touch emulated (`.scroll-lock`, see §2) the page scrolls inside `#root`,
+so test that instead:
+
+```js
+const r = document.getElementById('root'); r.scrollLeft = 400; const bad = r.scrollLeft > 0; r.scrollLeft = 0;
 ```
 
 Also re-check: no broken GSAP pins, no console errors, modals still trap focus

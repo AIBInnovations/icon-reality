@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { useLocation } from 'react-router-dom';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
 import { scrollToSection } from '../utils/scrollTo';
+import { scrollToTop, clearPageScrollLock } from '../utils/scroller';
 
 /**
  * Route-change side effects. No cover, no loader — navigating from the nav bar
@@ -24,7 +25,7 @@ export default function RouteTransition() {
   const lastPath = useRef(pathname);
 
   useEffect(() => {
-    document.body.style.overflow = '';
+    clearPageScrollLock();
 
     const samePage = lastPath.current === pathname;
     lastPath.current = pathname;
@@ -102,7 +103,7 @@ export default function RouteTransition() {
     // bottom), the reset gets clamped to the new page's bottom = the footer.
     const toTop = () => {
       if (window.lenis) window.lenis.scrollTo(0, { immediate: true, force: true });
-      window.scrollTo(0, 0);
+      scrollToTop();
     };
     toTop();
     // and again next frame, once the new route has rendered

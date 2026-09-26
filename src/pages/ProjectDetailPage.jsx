@@ -40,6 +40,7 @@ import { categoriseGallery } from '../utils/gallery';
 import './ProjectDetailPage.css';
 import Picture from '../components/Picture';
 import { useAvifSrc } from '../utils/avif';
+import { scrollToTop } from '../utils/scroller';
 
 /**
  * Showcase film.
@@ -275,7 +276,7 @@ export default function ProjectDetailPage() {
 
   useEffect(() => {
     if (window.lenis) window.lenis.scrollTo(0, { immediate: true });
-    else window.scrollTo(0, 0);
+    else scrollToTop();
   }, [slug]);
 
   useEffect(() => {

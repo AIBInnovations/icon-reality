@@ -7,6 +7,7 @@ import { PRIMARY_PHONE, telHref, EMAIL, ADDRESS } from '../data/contact';
 import { LEAD_INTENTS } from '../services/leads';
 import './Header.css';
 import Picture from './Picture';
+import { scrollTop, onPageScroll } from '../utils/scroller';
 
 // Long enough for the incoming route to render and lay out before a cross-page
 // anchor jump. Was 1500 to clear the old route loader's hold + slide-up; with
@@ -38,10 +39,9 @@ export default function Header() {
   const navigate = useNavigate();
 
   useEffect(() => {
-    const onScroll = () => setScrolled(window.scrollY > 40);
+    const onScroll = () => setScrolled(scrollTop() > 40);
     onScroll();
-    window.addEventListener('scroll', onScroll, { passive: true });
-    return () => window.removeEventListener('scroll', onScroll);
+    return onPageScroll(onScroll);
   }, []);
 
   // Backstop: close everything on route change. Adjusted during render rather

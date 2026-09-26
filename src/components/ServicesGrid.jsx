@@ -5,6 +5,7 @@ import { useEnquiry } from '../enquiry/enquiryContext';
 import ServiceCarousel from './ServiceCarousel';
 import './ServicesGrid.css';
 import Picture from './Picture';
+import { lockPageScroll } from '../utils/scroller';
 
 // The two things Icon Realty actually does, as stated in company.js STORY:
 // it designs and markets residential plotted communities. Development features
@@ -83,11 +84,10 @@ export default function ServicesGrid() {
   // Lock body scroll while modal is open, and hide the fixed header behind it
   useEffect(() => {
     if (openIdx >= 0) {
-      const prev = document.body.style.overflow;
-      document.body.style.overflow = 'hidden';
+      const unlockScroll = lockPageScroll();
       document.body.classList.add('has-modal');
       return () => {
-        document.body.style.overflow = prev;
+        unlockScroll();
         document.body.classList.remove('has-modal');
       };
     }

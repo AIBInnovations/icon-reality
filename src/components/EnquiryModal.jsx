@@ -2,6 +2,7 @@ import { useEffect, useRef } from 'react';
 import { createPortal } from 'react-dom';
 import EnquiryForm from './EnquiryForm';
 import { FOCUSABLE } from '../utils/focus';
+import { lockPageScroll } from '../utils/scroller';
 
 /**
  * The one enquiry-form modal, shared by the Header and the QuickDock so both
@@ -51,8 +52,7 @@ export default function EnquiryModal({ open, onClose, headingId = 'enquiry-modal
     };
     window.addEventListener('keydown', onKey);
 
-    const prevOverflow = document.body.style.overflow;
-    document.body.style.overflow = 'hidden';
+    const unlockScroll = lockPageScroll();
     // Drops the fixed header — the scrim is translucent, so the logo and
     // hamburger otherwise read straight through it (see Header.css).
     document.body.classList.add('has-modal');
@@ -61,7 +61,7 @@ export default function EnquiryModal({ open, onClose, headingId = 'enquiry-modal
 
     return () => {
       window.removeEventListener('keydown', onKey);
-      document.body.style.overflow = prevOverflow;
+      unlockScroll();
       document.body.classList.remove('has-modal');
       window.lenis?.start();
       if (opener instanceof HTMLElement && opener.isConnected) opener.focus();
