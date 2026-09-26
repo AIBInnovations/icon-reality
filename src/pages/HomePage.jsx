@@ -1,6 +1,11 @@
 import { useState, useEffect, useRef, lazy, Suspense } from 'react';
 import { ScrollTrigger } from 'gsap/ScrollTrigger';
-import Hero from '../components/Hero';
+// The scroll-scrubbed frame sequence is switched off for now, at the client's
+// request, in favour of a montage of the project films. Hero.jsx and
+// public/frames are untouched: swap these two imports and the two hero
+// elements below to bring it back (and restore the preload in index.html).
+// import Hero from '../components/Hero';
+import HeroMontage from '../components/HeroMontage';
 import TrustSection from '../components/TrustSection';
 import DisplayHeading from '../components/DisplayHeading';
 import ServicesGrid from '../components/ServicesGrid';
@@ -100,7 +105,14 @@ export default function HomePage() {
         jsonLd={realEstateAgentSchema()}
       />
 
-      <Hero
+      {/* <Hero
+        onProgress={setStaticLoaderProgress}
+        onReady={() => {
+          setStaticLoaderProgress(1);
+          setHeroReady(true);
+        }}
+      /> */}
+      <HeroMontage
         onProgress={setStaticLoaderProgress}
         onReady={() => {
           setStaticLoaderProgress(1);

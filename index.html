@@ -36,8 +36,12 @@
       />
     </noscript>
     <!-- LCP on the home page is the first hero frame; fetch it at highest
-         priority alongside the HTML instead of waiting for the JS to ask. -->
+         priority alongside the HTML instead of waiting for the JS to ask.
+         Off while the home hero is the video montage (HeroMontage.jsx): this
+         tag runs on every route, and nothing would use the frame. Restore it
+         with the frame-sequence hero.
     <link rel="preload" as="image" href="/frames/f001.jpg" fetchpriority="high" />
+    -->
     <title>Icon Realty: Residential Projects, Designing &amp; Marketing in Indore</title>
     <script>
       /* Freeze the viewport-height unit (--svh) in px so mobile browsers /

@@ -34,6 +34,13 @@ Two scroll-scrubbed canvas sequences are the site's signature:
 They are not videos, they must not become videos, and they must not become
 carousels. Performance work on them is welcome; replacing them is not.
 
+**Current exception (Sep 2026, at the client's request):** the home hero shows
+a montage of the project films instead (`src/components/HeroMontage.jsx`,
+built by `scripts/build-hero-montage.py` into `public/video/hero/`). The frame
+sequence is switched off, not removed: `Hero.jsx` and `public/frames` are
+untouched, and `HomePage.jsx` and `index.html` say how to switch it back. The
+About page sequence is unchanged.
+
 The home sequence loads progressively (probe → sized bootstrap → reveal →
 background stream). If you change `BOOTSTRAP_FRAMES`, `REVEAL_BUDGET_MS` or the
 fallback logic in `draw()`, re-measure on a throttled connection before and

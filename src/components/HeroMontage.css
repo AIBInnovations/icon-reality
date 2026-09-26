@@ -1,0 +1,50 @@
+/* The montage hero (HeroMontage.jsx). Frame, veil, headline and scroll cue come
+   from Hero.css unchanged; only what differs from the frame-sequence hero is
+   here. Two classes on the section so these win over Hero.css wherever the
+   bundle happens to put it. */
+
+/* No scrub, so no extra scroll length: exactly one screen. */
+.hero.hero--montage { height: calc(var(--svh, 1vh) * 100); }
+
+.hero-montage__video {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  pointer-events: none;
+}
+
+/* Film is brighter and busier than the frame sequence was (sky, signage, white
+   render interiors), so a flat black layer sits under the usual veil to keep
+   the headline legible over any clip. */
+.hero--montage .hero__veil {
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.3), rgba(0, 0, 0, 0.3)),
+    linear-gradient(180deg, rgba(0,0,0,0.40) 0%, rgba(0,0,0,0.10) 35%, rgba(0,0,0,0.0) 55%, rgba(0,0,0,0.55) 100%),
+    radial-gradient(120% 60% at 50% 30%, rgba(0,0,0,0.0) 30%, rgba(0,0,0,0.35) 100%);
+}
+
+/* The headline rises in as the loader lifts, the one entrance the frame
+   sequence used to give it. */
+.hero-montage__copy {
+  opacity: 0;
+  transform: translateY(28px);
+  transition: opacity .9s ease .25s, transform 1.1s cubic-bezier(0.2, 0.8, 0.2, 1) .25s;
+}
+.hero--montage.is-ready .hero-montage__copy {
+  opacity: 1;
+  transform: none;
+}
+
+@media (max-width: 720px) {
+  .hero.hero--montage { height: calc(var(--svh, 1vh) * 100); }
+  /* clear air between the subline and the scroll cue */
+  .hero--montage .hero__copy { padding-bottom: 116px; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hero-montage__copy { opacity: 1; transform: none; transition: none; }
+}
