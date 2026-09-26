@@ -143,6 +143,11 @@
   .inside__media { aspect-ratio: 4 / 3; }
 }
 
+@media (max-width: 720px) {
+  .inside { padding: var(--section-y-m) 0; }
+  .inside__head { padding-inline: var(--text-inset-m); }
+}
+
 @media (prefers-reduced-motion: reduce) {
   .inside__media img { transition: none; }
   .inside__card:hover .inside__media img { transform: none; }

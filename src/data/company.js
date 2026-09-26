@@ -10,9 +10,12 @@
 // out, so adding a project can never leave the trust stats contradicting the
 // portfolio page.
 
-import { projectsByStatus } from './projects';
+import { projectsByStatus, projectsBySlug } from './projects';
 
 const DELIVERED = projectsByStatus('completed').length;
+
+/** A project's card photograph, the same one its cards use across the site. */
+const coverOf = (slug) => projectsBySlug[slug]?.thumbnail || projectsBySlug[slug]?.hero_image || null;
 
 export const COMPANY = {
   name: 'Icon Realty',
@@ -123,12 +126,15 @@ export const WHO_WE_ARE = {
   ],
 };
 
-/** Company values: shown with the vision and mission on About and the home page. */
+/**
+ * Company values: shown with the vision and mission on About and the home page.
+ * `icon` names a drawing in VisionMission.jsx.
+ */
 export const VALUES = [
-  { k: 'Trust',      v: 'Every promise made during booking, honoured at handover.' },
-  { k: 'Excellence', v: 'Jaipur architects. Premium materials. No compromise.' },
-  { k: 'Innovation', v: 'Designs that anticipate tomorrow. Technology-driven planning. Forward-looking communities.' },
-  { k: 'Legacy',     v: "We don't build projects. We build addresses that define a generation of Indore." },
+  { k: 'Trust',      icon: 'handshake', v: 'Every promise made during booking, honoured at handover.' },
+  { k: 'Excellence', icon: 'award',     v: 'Jaipur architects. Premium materials. No compromise.' },
+  { k: 'Innovation', icon: 'lightbulb', v: 'Designs that anticipate tomorrow. Technology-driven planning. Forward-looking communities.' },
+  { k: 'Legacy',     icon: 'landmark',  v: "We don't build projects. We build addresses that define a generation of Indore." },
 ];
 
 export const VISION =
@@ -159,15 +165,41 @@ export const LEADERSHIP = [
 ];
 
 /**
- * Milestones. Only entries with a year the company has published are listed.
+ * Milestones. A year is shown only where the company has published one; the
+ * others are numbered, never given an estimated date. Each is illustrated with
+ * a project it names, using that project's own card photograph.
  * When the client supplies dated milestones (launches, deliveries, awards),
- * push them here and the About timeline renders them automatically.
+ * push them here and both timelines render them automatically.
  */
 export const MILESTONES = [
-  { year: 2004, title: 'The beginning', body: "Icon Realty is founded in Indore with a mission to redefine Central India's real estate landscape. The first projects, Glamour Hill City in Rau and Ruchi Enclave in Jhalaria, set the benchmark for quality." },
-  { year: null, title: 'The Super Corridor', body: "Icon enters the Super Corridor, Indore's fastest-growing IT and knowledge belt. Singapore Corridor, Singapore Lifestyle 2, Dream Victoria and Victoria Park: four landmark projects at the city's new frontier." },
-  { year: null, title: 'The Oscar series', body: 'A defining moment: Oscar Billionaire, Oscar Fort and Oscar Palace. On Oscar Palace, Icon is the design and marketing partner for Ruchi Realty\'s royal-estate colony on the Indore–Nagpur Highway, with architecture by Ravi Gupta Ji of Jaipur.' },
-  { year: null, title: 'IIT Greens', body: "Opposite IIT Indore and Icon's boldest bet on the city's future: a premium development completed on a six-month timeline." },
+  {
+    year: 2004,
+    title: 'The beginning',
+    image: coverOf('glamour-hill-city'),
+    imageAlt: 'Glamour Hill City, Rau',
+    body: "Icon Realty is founded in Indore with a mission to redefine Central India's real estate landscape. The first projects, Glamour Hill City in Rau and Ruchi Enclave in Jhalaria, set the benchmark for quality.",
+  },
+  {
+    year: null,
+    title: 'The Super Corridor',
+    image: coverOf('dream-victoria'),
+    imageAlt: 'Dream Victoria on the Super Corridor',
+    body: "Icon enters the Super Corridor, Indore's fastest-growing IT and knowledge belt. Singapore Corridor, Singapore Lifestyle 2, Dream Victoria and Victoria Park: four landmark projects at the city's new frontier.",
+  },
+  {
+    year: null,
+    title: 'The Oscar series',
+    image: coverOf('oscar-palace'),
+    imageAlt: 'The gate of Oscar Palace',
+    body: "A defining moment: Oscar Billionaire, Oscar Fort and Oscar Palace. On Oscar Palace, Icon is the design and marketing partner for Ruchi Realty's royal-estate colony on the Indore–Nagpur Highway, with architecture by Ravi Gupta Ji of Jaipur.",
+  },
+  {
+    year: null,
+    title: 'IIT Greens',
+    image: coverOf('iit-greens'),
+    imageAlt: 'The gardens of IIT Greens',
+    body: "Opposite IIT Indore and Icon's boldest bet on the city's future: a premium development completed on a six-month timeline.",
+  },
 ];
 
 /**

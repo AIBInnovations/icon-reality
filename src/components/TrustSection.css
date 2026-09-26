@@ -186,9 +186,9 @@
 }
 
 @media (max-width: 720px) {
-  .trust { padding: 40px 0; }
-  .trust__heading { font-size: clamp(28px, 8vw, 40px); margin-bottom: 20px; padding-inline: 12px; }
-  .trust__lede { font-size: 15px; margin-bottom: 26px; padding-inline: 12px; }
+  .trust { padding: var(--section-y-m) 0; }
+  .trust__heading { font-size: clamp(28px, 8vw, 40px); margin-bottom: 20px; padding-inline: var(--text-inset-m); }
+  .trust__lede { font-size: 15px; margin-bottom: 26px; padding-inline: var(--text-inset-m); }
   .trust__points ul { grid-template-columns: minmax(0, 1fr); }
   .trust__points li { font-size: 15px; padding: 16px 0; }
   .trust__points li:nth-last-child(2) { border-bottom: 0; }

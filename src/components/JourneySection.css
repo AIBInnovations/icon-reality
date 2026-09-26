@@ -1,8 +1,10 @@
+/* A --bg-2 band between the Twenty years section and the projects carousel,
+   both on --bg. */
 .journey {
   padding: clamp(60px, 8vw, 100px) 0;
-  background: var(--bg);
+  background: var(--bg-2);
 }
 
 @media (max-width: 720px) {
-  .journey { padding: 40px 0; }
+  .journey { padding: var(--section-y-m) 0; }
 }

@@ -64,6 +64,13 @@ main {
 @media (max-width: 720px) {
   :root {
     --gutter: 8px;
+    /* One vertical rhythm for every unframed section on a phone, and one inset
+       for the text that sits on the 8px gutter (eyebrows, headings, ledes), so
+       every section's copy starts on the same line, 20px in. Cards and
+       photographs stay on the gutter itself. Use these rather than one-off
+       numbers in a component. */
+    --section-y-m: 48px;
+    --text-inset-m: 12px;
   }
   /* svh: stable while the mobile browser's bars hide/show on scroll */
   main { min-height: 100svh; }

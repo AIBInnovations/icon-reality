@@ -1,49 +1,97 @@
-/* The ruled milestone list (Milestones.jsx). Moved here unchanged from
-   AboutPage.css when the home page started showing it too. */
+/* The company timeline (Milestones.jsx), shared by the home and About pages.
+   Each page's own section sets the padding and band. */
 
-.milestones { display: flex; flex-direction: column; }
-
-.milestones__item {
+.milestones {
   display: grid;
-  grid-template-columns: 110px minmax(0, 1fr);
-  gap: clamp(16px, 2.4vw, 40px);
-  padding: clamp(18px, 2.2vw, 28px) 0;
-  border-bottom: 1px solid var(--line);
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(18px, 2vw, 32px);
 }
-.milestones__item:first-child { border-top: 1px solid var(--line); }
+.milestones__item { display: flex; flex-direction: column; min-width: 0; }
 
-.milestones__year {
-  font-family: var(--font-display);
-  font-size: clamp(20px, 2.2vw, 30px);
-  font-weight: 600;
-  line-height: 1.1;
-  letter-spacing: -0.03em;
-  color: var(--sand);
-  font-variant-numeric: tabular-nums;
+.milestones__media {
+  position: relative;
+  aspect-ratio: 4 / 3;
+  border-radius: 6px;
+  overflow: hidden;
+  background: var(--bg-2);
 }
-.milestones__body { display: flex; flex-direction: column; gap: 7px; min-width: 0; }
+.milestones__media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 1.2s cubic-bezier(0.2, 0.8, 0.2, 1);
+}
+.milestones__item:hover .milestones__media img { transform: scale(1.04); }
+
+/* Step number, the year where one is published, then a rule that runs on to
+   the next card, so the row reads as one line of time. */
+.milestones__marker {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  /* the height of the year chip, on every card, so the titles line up
+     whether or not a milestone has a published year */
+  min-height: 28px;
+  margin: 18px 0 12px;
+}
+.milestones__marker::after {
+  content: '';
+  flex: 1;
+  height: 1px;
+  background: var(--line);
+}
+.milestones__step {
+  font-family: var(--font-display);
+  font-size: 13px;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  color: var(--peach-deep);
+}
+.milestones__year {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  color: var(--ink);
+  padding: 4px 10px;
+  border: 1px solid var(--line);
+  border-radius: 999px;
+}
+
+.milestones__body { display: flex; flex-direction: column; min-width: 0; }
 .milestones__title {
   font-family: var(--font-display);
-  font-size: clamp(17px, 1.5vw, 22px);
+  font-size: clamp(18px, 1.5vw, 22px);
   font-weight: 600;
   line-height: 1.25;
   color: var(--ink);
+  margin-bottom: 8px;
 }
 .milestones__copy {
-  font-size: clamp(14px, 1.02vw, 16px);
-  line-height: 1.62;
+  font-size: clamp(14px, 1.02vw, 15.5px);
+  line-height: 1.6;
   color: var(--muted);
-  max-width: 62ch;
+}
+
+@media (max-width: 1024px) {
+  .milestones { grid-template-columns: repeat(2, minmax(0, 1fr)); row-gap: 40px; }
 }
 
 @media (max-width: 720px) {
+  /* Photograph beside the text, so all four stay one short scroll on a phone
+     rather than four screen-height cards. */
+  .milestones { grid-template-columns: minmax(0, 1fr); gap: 0; }
   .milestones__item {
-    /* the year sits above the entry rather than stealing a third of a 320px row */
-    grid-template-columns: minmax(0, 1fr);
-    gap: 6px;
+    display: grid;
+    grid-template-columns: 36% minmax(0, 1fr);
+    gap: 14px;
+    align-items: start;
     padding: 16px 0;
+    border-top: 1px solid var(--line);
   }
-  .milestones__year { font-size: 18px; }
-  .milestones__title { font-size: 17px; }
-  .milestones__copy { font-size: 14.5px; }
+  .milestones__item:last-child { border-bottom: 1px solid var(--line); }
+  .milestones__media { aspect-ratio: 4 / 5; }
+  .milestones__marker { margin: 2px 0 8px; }
+  .milestones__title { font-size: 17px; margin-bottom: 6px; }
+  .milestones__copy { font-size: 14px; line-height: 1.55; }
 }

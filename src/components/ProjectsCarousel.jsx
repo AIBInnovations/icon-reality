@@ -15,10 +15,12 @@ const projects = projectsList
     src: project.thumbnail || project.hero_image,
   }));
 
+// Opens on Siddhayatan (client's choice, Sep 2026) rather than the first card;
+// back to the first, Oscar Palace, should it ever leave the trending list.
+const OPEN_ON = Math.max(0, projects.findIndex((p) => p.slug === 'siddhayatan'));
+
 export default function ProjectsCarousel() {
-  // Open on the first card — Oscar Palace, the flagship — rather than whatever
-  // happens to sit in the middle of the trending list.
-  const [active, setActive] = useState(0);
+  const [active, setActive] = useState(OPEN_ON);
   const navigate = useNavigate();
   // On phones the accordion is laid out as a 2-up grid (see the CSS) — every
   // card is already open, so there is nothing to expand and a tap should go

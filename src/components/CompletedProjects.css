@@ -158,10 +158,10 @@
   .completed__grid > *:last-child:nth-child(odd) .completed__media { aspect-ratio: 16 / 10; }
 }
 @media (max-width: 720px) {
-  .completed { padding: 50px 0; }
+  .completed { padding: var(--section-y-m) 0; }
   .completed__head { margin-bottom: 28px; }
-  .completed__title { font-size: clamp(28px, 8vw, 42px); margin-bottom: 14px; padding-inline: 12px; }
-  .completed__lede { font-size: 15px; padding: 0 12px; }
+  .completed__title { font-size: clamp(28px, 8vw, 42px); margin-bottom: 14px; padding-inline: var(--text-inset-m); }
+  .completed__lede { font-size: 15px; padding: 0 var(--text-inset-m); }
   /* 2-col grid all the way down on mobile keeps the card wall compact. */
   .completed__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; }
   .completed__card { gap: 8px; }

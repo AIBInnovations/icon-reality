@@ -102,10 +102,10 @@
 }
 
 @media (max-width: 720px) {
-  .pillars { padding: 40px 0; }
+  .pillars { padding: var(--section-y-m) 0; }
   .pillars__head { margin-bottom: 36px; }
-  .pillars__title { font-size: clamp(30px, 9vw, 48px); padding-inline: 12px; }
-  .pillars__lede { font-size: 15px; margin-top: 14px; padding-inline: 12px; }
+  .pillars__title { font-size: clamp(30px, 9vw, 48px); padding-inline: var(--text-inset-m); }
+  .pillars__lede { font-size: 15px; margin-top: 14px; padding-inline: var(--text-inset-m); }
   /* These are text cards — 2-up would be unreadable at 390px, so they stay
      stacked but size to their content instead of holding a 280px floor that
      made each one fill the screen. */

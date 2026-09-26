@@ -133,7 +133,8 @@
 }
 
 @media (max-width: 720px) {
-  .home-blog { padding: 44px 0; }
+  .home-blog { padding: var(--section-y-m) 0; }
+  .home-blog__head { padding-inline: var(--text-inset-m); }
   .home-blog__heading { font-size: clamp(27px, 8vw, 38px); }
   .home-blog__lede { font-size: 15px; }
 }

@@ -174,7 +174,8 @@
 }
 
 @media (max-width: 720px) {
-  .audience-paths { padding: 44px 0; }
+  .audience-paths { padding: var(--section-y-m) 0; }
+  .audience-paths__head { padding-inline: var(--text-inset-m); }
   .audience-paths__heading { font-size: clamp(27px, 8vw, 38px); }
   .audience-paths__lede { font-size: 15px; }
   .audience-paths__grid { gap: 14px; }

@@ -205,7 +205,9 @@
 }
 
 @media (max-width: 720px) {
-  .featured { padding: 50px 0; }
+  .featured { padding: var(--section-y-m) 0; }
+  /* the head is itself the .container: add the inset to its gutter */
+  .featured__head { padding-inline: calc(var(--gutter) + var(--text-inset-m)); }
   .featured__title { font-size: clamp(28px, 9vw, 40px); }
   .featured__lede { font-size: 15px; }
   .featured__grid { grid-template-columns: minmax(0, 1fr); gap: 14px; }

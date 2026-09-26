@@ -41,7 +41,7 @@
 }
 
 @media (max-width: 720px) {
-  .forbuyers { padding: 40px 0; }
-  .forbuyers__heading { font-size: clamp(30px, 8.5vw, 44px); margin-bottom: 22px; padding-inline: 12px; }
-  .forbuyers__lede { font-size: 15px; padding-inline: 12px; }
+  .forbuyers { padding: var(--section-y-m) 0; }
+  .forbuyers__heading { font-size: clamp(30px, 8.5vw, 44px); margin-bottom: 22px; padding-inline: var(--text-inset-m); }
+  .forbuyers__lede { font-size: 15px; padding-inline: var(--text-inset-m); }
 }

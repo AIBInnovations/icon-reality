@@ -124,16 +124,16 @@ export default function HomePage() {
           <DisplayHeading />
           <ServicesGrid />
           <InsideSection />
-          {/* Who we are, vision & mission, the directors, the journey: the
-              company story in the order the client's content.md tells it. */}
+          {/* Who we are, then the three projects the client wants led with
+              (change.md #5), ahead of vision & mission, the directors and the
+              journey. */}
           <PillarsCards />
+          <FeaturedProjects />
           <PurposeSection />
           <TrustSection />
           <JourneySection />
-          {/* The three the client wants led with, then everything currently
-              selling, then everything delivered (change.md #5, #7), then
-              where all of it stands. */}
-          <FeaturedProjects />
+          {/* Everything currently selling, then everything delivered
+              (change.md #7), then where all of it stands. */}
           <ProjectsCarousel />
           <CompletedProjects />
           <FootprintSection />

@@ -38,7 +38,7 @@
 .section-heading--dark .section-heading__eyebrow { color: var(--peach); }
 
 @media (max-width: 720px) {
-  .section-heading { margin-bottom: 28px; }
+  .section-heading { margin-bottom: 28px; padding-inline: var(--text-inset-m); }
   .section-heading__title { font-size: clamp(26px, 8vw, 38px); max-width: none; }
   .section-heading__lede { font-size: 15px; margin-top: 14px; }
 }
