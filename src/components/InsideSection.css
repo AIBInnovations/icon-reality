@@ -1,0 +1,149 @@
+/* "What's inside." — the light counterpart to the dark ServicesGrid row list.
+   Deliberately a different shape: a numbered editorial card grid, everything
+   visible on the page, no modal. */
+
+.inside {
+  background: var(--bg-2);
+  padding: clamp(70px, 9vw, 120px) 0;
+}
+
+.inside__head {
+  display: grid;
+  grid-template-columns: 1fr 1.1fr;
+  gap: clamp(24px, 6vw, 96px);
+  align-items: end;
+  margin-bottom: clamp(40px, 5vw, 72px);
+}
+
+.inside__title {
+  font-size: clamp(38px, 5.4vw, 76px);
+  letter-spacing: -0.02em;
+  text-transform: none;
+  font-weight: 600;
+  color: var(--ink);
+  margin: 0;
+}
+
+.inside__lede {
+  font-size: clamp(17px, 1.35vw, 21px);
+  line-height: 1.55;
+  color: var(--muted);
+  max-width: 46ch;
+  margin: 0;
+}
+
+.inside__grid {
+  display: grid;
+  /* Four across rather than two: at 2-up each card was half the viewport wide
+     and the section ran well over a screen tall for four items. */
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: clamp(12px, 1.5vw, 20px);
+}
+
+.inside__card {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  text-align: left;
+  background: var(--bg);
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  overflow: hidden;
+  cursor: pointer;
+  transition: transform .35s cubic-bezier(0.22, 1, 0.36, 1), border-color .25s ease;
+}
+.inside__card:hover {
+  transform: translateY(-4px);
+  border-color: rgba(20, 20, 20, 0.2);
+}
+.inside__card:focus-visible {
+  outline: 2px solid var(--peach-deep);
+  outline-offset: 3px;
+}
+
+.inside__media {
+  position: relative;
+  display: block;
+  aspect-ratio: 4 / 3;
+  overflow: hidden;
+}
+
+.inside__media img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 1.1s cubic-bezier(0.22, 1, 0.36, 1);
+}
+
+.inside__card:hover .inside__media img { transform: scale(1.04); }
+
+/* Index badge, bottom-left of the image */
+.inside__n {
+  position: absolute;
+  left: 12px;
+  bottom: 9px;
+  font-family: var(--font-display);
+  font-size: clamp(20px, 2.1vw, 28px);
+  font-weight: 600;
+  line-height: 1;
+  letter-spacing: -0.02em;
+  color: #F4F0EA;
+  text-shadow: 0 2px 18px rgba(0, 0, 0, 0.45);
+}
+
+.inside__body {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 10px;
+  padding: clamp(12px, 1.2vw, 16px) clamp(13px, 1.3vw, 18px);
+}
+
+.inside__card-title {
+  font-family: var(--font-display);
+  font-size: clamp(14px, 1.05vw, 17px);
+  font-weight: 600;
+  letter-spacing: 0.01em;
+  line-height: 1.2;
+  color: var(--ink);
+}
+
+.inside__plus {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 24px;
+  height: 24px;
+  flex: none;
+  border-radius: 50%;
+  border: 1px solid var(--line);
+  color: var(--ink);
+  transition: background .25s ease, transform .35s ease;
+}
+.inside__card:hover .inside__plus {
+  background: var(--peach);
+  transform: rotate(90deg);
+}
+
+@media (max-width: 900px) {
+  .inside__head {
+    grid-template-columns: 1fr;
+    align-items: start;
+    gap: 18px;
+  }
+}
+
+@media (max-width: 1000px) {
+  .inside__grid { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+
+@media (max-width: 560px) {
+  .inside__grid { gap: 10px; }
+  .inside__media { aspect-ratio: 4 / 3; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .inside__media img { transition: none; }
+  .inside__card:hover .inside__media img { transform: none; }
+}

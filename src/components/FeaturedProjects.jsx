@@ -1,7 +1,7 @@
 import { Link } from 'react-router-dom';
 import Reveal from './Reveal';
 import { useEnquiry } from '../enquiry/enquiryContext';
-import { featuredProjects, CATEGORY_LABEL, PROJECT_STATUSES } from '../data/projects';
+import { featuredProjects, CATEGORY_LABEL, PROJECT_STATUSES, areaFactLabel } from '../data/projects';
 import './FeaturedProjects.css';
 import Picture from './Picture';
 
@@ -79,7 +79,7 @@ export default function FeaturedProjects() {
                     )}
                     {p.total_area && (
                       <div>
-                        <dt>Development</dt>
+                        <dt>{areaFactLabel(p.total_area)}</dt>
                         <dd>{p.total_area}</dd>
                       </div>
                     )}

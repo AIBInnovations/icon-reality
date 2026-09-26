@@ -17,7 +17,7 @@ export const SITE_URL = envSiteUrl.replace(/\/+$/, '');
 
 export const SITE_NAME = 'Icon Realty';
 
-export const DEFAULT_TITLE = 'Icon Realty: Premium plotted developments in Indore';
+export const DEFAULT_TITLE = 'Icon Realty: Residential Projects, Designing & Marketing in Indore';
 export const TITLE_TEMPLATE = (t) => (t ? `${t} | ${SITE_NAME}` : DEFAULT_TITLE);
 
 export const DEFAULT_DESCRIPTION =
