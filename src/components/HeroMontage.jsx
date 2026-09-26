@@ -150,8 +150,14 @@ export default function HeroMontage({ onReady, onProgress }) {
           <div className="hero__copy container">
             <div className="hero__copy-clip">
               <div className="hero__copy-inner hero-montage__copy">
+                {/* Two lines on wide screens, "Twenty years of / addresses that
+                    last."; three on phones, "Twenty years / of addresses /
+                    that last.", where the two-line break left "of" alone on a
+                    line. HeroMontage.css switches between them. */}
                 <h1 className="display hero__headline">
-                  Twenty years of<br/>addresses that last.
+                  <span className="hero-montage__hl">Twenty years </span>
+                  <span className="hero-montage__hl">of<br className="hero-montage__hl-break" /> addresses </span>
+                  <span className="hero-montage__hl">that last.</span>
                 </h1>
                 <p className="hero__sub">
                   Icon Realty. Designing and marketing residential plotted developments in Indore since 2004.

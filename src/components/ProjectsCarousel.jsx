@@ -11,7 +11,8 @@ const projects = projectsList
   .map((project) => ({
     name: project.name.toUpperCase(),
     slug: project.slug,
-    meta: `${project.location.replace(/, Indore$/, '')} · ${project.plot_sizes || project.total_area}`,
+    place: project.location.replace(/, Indore$/, ''),
+    size: project.plot_sizes || project.total_area,
     src: project.thumbnail || project.hero_image,
   }));
 
@@ -62,7 +63,10 @@ export default function ProjectsCarousel() {
               <div className="carousel__card-veil" />
               <div className="carousel__card-caption">
                 <span className="carousel__card-label">{p.name}</span>
-                <span className="carousel__card-meta">{p.meta}</span>
+                <span className="carousel__card-meta">
+                  <span className="carousel__card-place">{p.place}</span>
+                  {p.size && <span className="carousel__card-size">{p.size}</span>}
+                </span>
                 <span className="carousel__card-open">View project →</span>
               </div>
             </button>

@@ -41,6 +41,10 @@
 
 @media (max-width: 720px) {
   .hero.hero--montage { height: calc(var(--svh, 1vh) * 100); }
+  /* three whole lines, "Twenty years / of addresses / that last." */
+  .hero-montage__hl { display: block; }
+  .hero-montage__hl-break { display: none; }
+  .hero--montage .hero__headline { max-width: none; }
   /* clear air between the subline and the scroll cue */
   .hero--montage .hero__copy { padding-bottom: 116px; }
 }

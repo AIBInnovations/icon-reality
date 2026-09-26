@@ -70,102 +70,73 @@
 }
 
 @media (max-width: 720px) {
-  /* MOBILE: tight scattered photo collage. No rotation, compact spacing.
-     3 rows (top L/C/R, mid L/R flank heading, bottom L/C/R) with 8 photos. */
+  /* MOBILE: the photographs frame the text instead of floating over it: three
+     above, the heading and lede in the middle, three below, all in one grid,
+     so nothing can overlap whatever the text length or screen width.
+
+     Each photo is placed by its own --N class, never :nth-child: <Picture>
+     wraps every <img> in its own <picture>, which makes each one the second
+     child of its wrapper, and :nth-child once stacked all ten in one slot. */
   .display-section {
-    position: relative;
-    padding: 0;
+    display: grid;
+    grid-template-columns: repeat(3, minmax(0, 1fr));
+    grid-template-areas:
+      "p1 p2 p3"
+      "text text text"
+      "p6 p7 p8";
+    column-gap: 8px;
+    row-gap: 28px;
+    padding: var(--section-y-m) var(--gutter);
     overflow: hidden;
-    height: 680px;
-    display: flex;
-    align-items: center;
-    justify-content: center;
   }
 
-  .display-section__inner {
-    position: relative;
-    z-index: 4;
-    width: 340px;
-    max-width: 88vw;
-    text-align: center;
-    padding: 0;
-  }
-  .display-section__heading {
-    font-size: clamp(21px, 6vw, 28px);
-    line-height: 1.06;
-  }
-  .display-section__lede {
-    font-size: 13px;
-    line-height: 1.55;
-    margin: 12px auto 0;
-    padding: 0;
-    color: var(--muted);
-  }
+  /* the pool (and each <picture>, globally) steps aside, so the photos
+     themselves are the grid items */
+  .display-section__pool { display: contents; }
 
-  .display-section__pool {
-    display: block;
-    position: absolute;
-    inset: 0;
-    pointer-events: none;
-    z-index: 1;
-  }
   .display-section__trail-img {
+    position: static;
     opacity: 1;
-    position: absolute;
-    top: auto;
-    left: auto;
-    right: auto;
-    bottom: auto;
+    width: 100%;
+    height: auto;
+    aspect-ratio: 4 / 5;
     border-radius: 10px;
     box-shadow: 0 10px 22px -12px rgba(0, 0, 0, 0.3);
-    object-fit: cover;
-    pointer-events: none;
+    transform: none;
   }
 
-  /* ===== TOP ROW — left / center / right ===== */
-  .display-section__trail-img:nth-child(1) {       /* TOP-LEFT */
-    top: 16px; left: 6px;
-    width: 100px; height: 140px;
-  }
-  .display-section__trail-img:nth-child(2) {       /* TOP-CENTER — tall */
-    top: 16px; left: 50%;
-    width: 116px; height: 168px;
-    transform: translateX(-50%);
-  }
-  .display-section__trail-img:nth-child(3) {       /* TOP-RIGHT */
-    top: 16px; right: 6px;
-    width: 100px; height: 140px;
-  }
+  /* top row sits on the text, bottom row hangs from it; the centre photo of
+     each is taller, which keeps the scattered, pinned-up feel */
+  .display-section__trail-img--1 { grid-area: p1; align-self: end; }
+  .display-section__trail-img--2 { grid-area: p2; align-self: end; aspect-ratio: 5 / 7; }
+  .display-section__trail-img--3 { grid-area: p3; align-self: end; }
+  .display-section__trail-img--6 { grid-area: p6; align-self: start; }
+  .display-section__trail-img--7 { grid-area: p7; align-self: start; aspect-ratio: 5 / 7; }
+  .display-section__trail-img--8 { grid-area: p8; align-self: start; }
 
-  /* ===== MIDDLE ROW — flank the centered text, kept inside equal side padding
-     (positive left/right so they no longer bleed off the screen edges) ===== */
-  .display-section__trail-img:nth-child(4) {       /* MID-LEFT */
-    top: 290px; left: 8px;
-    width: 64px; height: 124px;
-  }
-  .display-section__trail-img:nth-child(5) {       /* MID-RIGHT */
-    top: 310px; right: 8px;
-    width: 64px; height: 124px;
-  }
+  .display-section__trail-img--4,
+  .display-section__trail-img--5,
+  .display-section__trail-img--9,
+  .display-section__trail-img--10 { display: none; }
 
-  /* ===== BOTTOM ROW — left / center / right ===== */
-  .display-section__trail-img:nth-child(6) {       /* BOTTOM-LEFT */
-    bottom: 16px; left: 6px;
-    width: 100px; height: 140px;
+  .display-section__inner {
+    grid-area: text;
+    width: auto;
+    max-width: none;
+    margin: 0;
+    padding: 0 var(--text-inset-m);
+    text-align: center;
   }
-  .display-section__trail-img:nth-child(7) {       /* BOTTOM-CENTER — biggest */
-    bottom: 16px; left: 50%;
-    width: 116px; height: 168px;
-    transform: translateX(-50%);
+  .display-section__heading {
+    font-size: clamp(26px, 7.4vw, 32px);
+    line-height: 1.06;
+    margin-bottom: 14px;
   }
-  .display-section__trail-img:nth-child(8) {       /* BOTTOM-RIGHT */
-    bottom: 16px; right: 6px;
-    width: 100px; height: 140px;
+  .display-section__lede {
+    font-size: 14.5px;
+    line-height: 1.6;
+    margin: 0 auto;
+    max-width: 40ch;
+    color: var(--muted);
   }
-
-  /* hide the two middle-row images on mobile */
-  .display-section__trail-img:nth-child(4),
-  .display-section__trail-img:nth-child(5),
-  .display-section__trail-img:nth-child(9),
-  .display-section__trail-img:nth-child(10) { display: none; }
 }

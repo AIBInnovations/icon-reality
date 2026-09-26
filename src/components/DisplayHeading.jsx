@@ -139,7 +139,7 @@ export default function DisplayHeading() {
             ref={(el) => (trailRefs.current[i] = el)}
             src={src}
             alt=""
-            className="display-section__trail-img"
+            className={`display-section__trail-img display-section__trail-img--${i + 1}`}
             loading="lazy"
             decoding="async"
           />

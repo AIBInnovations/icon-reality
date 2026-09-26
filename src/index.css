@@ -13,6 +13,12 @@ img, picture, video, canvas, svg { display: block; max-width: 100%; }
    rules, percentage heights and absolute positioning all keep resolving
    against the same parent they did when the <img> was a direct child. */
 picture { display: contents; }
+/* With the wrapper gone, its <source> children would otherwise land in the
+   parent's layout: in a grid or flex container each one becomes an empty item,
+   and the grid's row gaps pile up behind them (the phone photo collage gained
+   four empty rows, 112px, this way). The browser picks the image from them
+   whatever their display, so they never need a box. */
+picture > source { display: none; }
 input, button, textarea, select { font: inherit; color: inherit; }
 button { background: none; border: 0; cursor: pointer; font-family: inherit; }
 a { color: inherit; text-decoration: none; }

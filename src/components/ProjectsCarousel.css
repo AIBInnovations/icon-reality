@@ -168,6 +168,9 @@
      let it take two rather than push past the card edge. */
   text-wrap: pretty;
 }
+/* place and plot sizes read as one line on desktop, "PLACE · SIZES" */
+.carousel__card-size::before { content: ' · '; }
+
 /* "View project" cue — only shown on the open card, hints a second tap opens it */
 .carousel__card-open {
   margin-top: 8px;
@@ -232,7 +235,7 @@
 
 @media (max-width: 720px) {
   .carousel { padding: 8px; }
-  .carousel__shell { border-radius: 14px; padding: 40px 0 32px; }
+  .carousel__shell { border-radius: 14px; padding: 40px 0 10px; }
   .carousel__head { margin-bottom: 32px; }
   .carousel__title { font-size: clamp(30px, 8vw, 44px); padding-inline: 12px; }
   .carousel__lede { font-size: 15px; padding: 0 12px; }
@@ -245,9 +248,9 @@
     grid-template-columns: repeat(2, minmax(0, 1fr));
     gap: 10px;
     height: auto;
-    /* the shell's own 8px frame already equals the mobile --gutter, so the
-       grid needs no padding of its own to line up with every other section */
-    padding: 0;
+    /* the same 10px from the panel's edges as between the cards: they sat
+       flush against the dark panel, into its rounded corners */
+    padding: 0 10px;
     width: 100%;
     max-width: none;
     margin-inline: 0;
@@ -283,8 +286,15 @@
     bottom: 11px;
     gap: 2px;
   }
-  .carousel__card-label { font-size: 15px; line-height: 1.15; letter-spacing: 0.02em; }
-  .carousel__card-meta { font-size: 9px; letter-spacing: 0.1em; }
+  /* scales down on the narrowest phones so a name stays on one line and the
+     names across a row line up */
+  .carousel__card-label { font-size: clamp(12.5px, 3.9vw, 15px); line-height: 1.15; letter-spacing: 0.02em; }
+  .carousel__card-meta { font-size: 9px; letter-spacing: 0.1em; display: flex; flex-direction: column; width: 100%; }
+  /* place and plot sizes on a line each, never wrapping, so every caption is
+     the same height and the names across a row line up */
+  .carousel__card-place,
+  .carousel__card-size { white-space: nowrap; overflow: hidden; text-overflow: ellipsis; }
+  .carousel__card-size::before { content: none; }
   .carousel__card-open { display: none; }
   .carousel__card-veil,
   .carousel__card:not(.is-active) .carousel__card-veil {
