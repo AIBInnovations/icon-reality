@@ -5,12 +5,13 @@
 
 .trust__grid {
   display: grid;
-  grid-template-columns: 1fr 1fr;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1fr);
   gap: clamp(40px, 6vw, 120px);
-  /* not stretch: the banner column is sized by its own artwork plus the stat
-     band and must never be stretched to match the copy column, or the poster
-     gets cropped. Each column then sets its own alignment. */
-  align-items: center;
+  /* stretch: both columns share one height, so the heading lines up with the
+     top of the banner and the last checkpoint rule with the foot of the stat
+     band. The banner sets that height and the copy column fills it (see
+     .trust__copy). */
+  align-items: stretch;
 }
 
 /* The banner column: full artwork, then the stat band that was cropped off it.
@@ -20,12 +21,6 @@
 .trust__banner {
   display: flex;
   flex-direction: column;
-  /* centre, not start: the copy column beside this one runs taller, and pinning
-     the banner to the top dumped the whole difference as dead space underneath
-     the stat band. Centring splits it above and below so the artwork sits with
-     the text rather than hanging off the top of it. It is still not stretched,
-     so the poster is never cropped. */
-  align-self: center;
 }
 
 .trust__image-wrap {
@@ -48,6 +43,12 @@
 .trust__stats {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
+  /* The banner is normally the taller column and this band keeps its natural
+     height. If a browser wraps the copy onto an extra line and the copy runs
+     taller, the band absorbs the difference rather than the artwork, so the
+     poster is never cropped and both columns still end level. */
+  flex: 1 0 auto;
+  align-content: center;
   gap: 0;
   margin: 0;
   padding: clamp(18px, 2.2vw, 26px) clamp(10px, 1.6vw, 20px);
@@ -95,29 +96,44 @@
   .trust__image-wrap:hover img { transform: none; }
 }
 
+/* Stretched to the banner's height, with its blocks spread across it: the
+   heading starts level with the artwork and the checkpoints end level with the
+   stat band. The type and spacing below keep the copy SHORTER than the banner
+   at every two-column width (measured 1150 to 1920), so the spare height only
+   ever opens the gaps between blocks, evenly. */
+.trust__copy {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+}
+
 .trust__heading {
   font-size: clamp(34px, 4.4vw, 64px);
   font-weight: 600;
   line-height: 1.02;
-  margin-bottom: 28px;
+  /* Outfit's capitals start 0.18em below the top of this line box, so this
+     lines up the letters, not the box, with the top of the banner. */
+  margin-top: -0.18em;
+  margin-bottom: 18px;
   text-transform: none;
 }
 
 .trust__lede {
-  font-size: clamp(19px, 1.55vw, 24px);
+  font-size: clamp(17px, 1.45vw, 21px);
   color: var(--muted);
-  max-width: 44ch;
-  margin-bottom: 36px;
+  /* only bites once the section stacks and the copy runs the full width */
+  max-width: 62ch;
+  margin-bottom: 24px;
   line-height: 1.55;
 }
 
 .trust__architect {
-  margin-bottom: 36px;
-  padding: 20px 22px;
+  margin-bottom: 24px;
+  padding: 16px 20px;
   border: 1px solid var(--line);
   border-radius: 8px;
   background: var(--bg-2);
-  font-size: clamp(15px, 1.05vw, 17px);
+  font-size: clamp(14.5px, 1.05vw, 15.5px);
   line-height: 1.6;
   color: var(--muted);
 }
@@ -132,24 +148,36 @@
   margin-bottom: 8px;
 }
 
+/* Two by two rather than four rows: stacked, the list alone left the copy
+   column over 100px taller than the banner beside it. */
 .trust__points ul {
-  display: flex;
-  flex-direction: column;
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  column-gap: 28px;
 }
 .trust__points li {
   display: flex;
   align-items: center;
-  gap: 18px;
-  padding: 20px 0;
+  gap: 12px;
+  padding: 16px 0;
   border-top: 1px solid var(--line);
-  font-size: 17px;
+  font-size: 16px;
   font-weight: 400;
 }
-.trust__points li:last-child { border-bottom: 1px solid var(--line); }
+/* both cells of the bottom row close the list, not just the last one */
+.trust__points li:nth-last-child(-n+2) { border-bottom: 1px solid var(--line); }
 .trust__points svg { color: var(--ink); flex-shrink: 0; }
+/* At half a column, "Plots from 600 to 20,000 sq ft" wraps between 1150 and
+   ~1300 and left "ft" alone on the second line. */
+.trust__points span { text-wrap: balance; }
 
-@media (max-width: 880px) {
-  .trust__grid { grid-template-columns: 1fr; }
+/* Stacks at 1149, not 880: below 1150 the copy cannot fit beside the banner at
+   a readable size (at 881 it runs over 200px taller), and a banner floating in
+   the middle of a taller column is the misalignment this layout exists to
+   avoid. */
+@media (max-width: 1149px) {
+  .trust__grid { grid-template-columns: minmax(0, 1fr); }
+  .trust__heading { margin-top: 0; }
   /* The 4/3 crop and object-position that used to live here were tuned for the
      old artwork, whose stat figures sat in its lower third and had to be framed
      into view. The banner is now shown whole at its own aspect ratio and the
@@ -161,5 +189,7 @@
   .trust { padding: 40px 0; }
   .trust__heading { font-size: clamp(28px, 8vw, 40px); margin-bottom: 20px; padding-inline: 12px; }
   .trust__lede { font-size: 15px; margin-bottom: 26px; padding-inline: 12px; }
+  .trust__points ul { grid-template-columns: minmax(0, 1fr); }
   .trust__points li { font-size: 15px; padding: 16px 0; }
+  .trust__points li:nth-last-child(2) { border-bottom: 0; }
 }

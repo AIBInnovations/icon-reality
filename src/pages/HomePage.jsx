@@ -5,7 +5,6 @@ import TrustSection from '../components/TrustSection';
 import DisplayHeading from '../components/DisplayHeading';
 import ServicesGrid from '../components/ServicesGrid';
 import InsideSection from '../components/InsideSection';
-import AboutPostcard from '../components/AboutPostcard';
 import ForBuyers from '../components/ForBuyers';
 import PillarsCards from '../components/PillarsCards';
 import FeaturedProjects from '../components/FeaturedProjects';
@@ -110,7 +109,6 @@ export default function HomePage() {
           <DisplayHeading />
           <ServicesGrid />
           <InsideSection />
-          <AboutPostcard />
           <PillarsCards />
           <TrustSection />
           {/* The three the client wants led with, then everything currently
