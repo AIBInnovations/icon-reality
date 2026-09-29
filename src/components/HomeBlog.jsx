@@ -7,7 +7,7 @@ import './HomeBlog.css';
 /**
  * The homepage's door into the blog.
  *
- * Three posts, not four: this is a teaser, and the fourth is one click away
+ * Three posts, not all of them: this is a teaser, and the rest are one click away
  * behind "All articles". Deliberately a different shape from AudiencePaths
  * above it — a left-aligned head with the index link opposite, and short
  * landscape cards rather than four tall portrait ones, so two card sections

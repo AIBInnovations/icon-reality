@@ -1,0 +1,18 @@
+{
+  "default_branch": "main",
+  "branches": [
+    "blog-eight-posts-from-seo-briefs",
+    "client-feedback-round-1",
+    "main"
+  ],
+  "parent": {
+    "blog-eight-posts-from-seo-briefs": "main",
+    "client-feedback-round-1": "main",
+    "main": null
+  },
+  "order": [
+    "main",
+    "blog-eight-posts-from-seo-briefs",
+    "client-feedback-round-1"
+  ]
+}
