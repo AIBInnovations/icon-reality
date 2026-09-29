@@ -52,7 +52,7 @@ export default function BlogIndexPage() {
       {/* ---------- lead article ----------
           The first post gets the full-width editorial treatment and the rest
           run as a grid below it, so the index reads as a front page rather
-          than four identical cards. */}
+          than a wall of identical cards. */}
       {lead && (
         <section className="blog-lead">
           <div className="container">
