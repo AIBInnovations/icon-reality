@@ -15,7 +15,10 @@
 //   slug              URL segment. The post lives at /blog/<slug>.
 //   title             the H1, verbatim. Also the BlogPosting headline.
 //   cardTitle         short label for listing cards and related-post links
-//   category          'Buying guide' | 'Location guide' | 'Projects' | 'Explainer'
+//   category          'Buying guide' | 'Location guide' | 'Investment guide' |
+//                     'Projects' | 'Explainer'
+//   articleSection    optional BlogPosting articleSection, when the SEO brief
+//                     names one; otherwise the schema falls back to `category`
 //   metaTitle         <title>, from the SEO brief, verbatim
 //   metaDescription   <meta name="description">, from the brief, verbatim
 //   excerpt           one-sentence summary: listing cards + OG description fallback
@@ -55,10 +58,14 @@ import { POST_SLUGS } from './slugs.js';
 
 export { POST_SLUGS, LEGACY_POST_PATHS } from './slugs.js';
 
-import reraDocs from './how-to-verify-rera-title-and-land-documents-before-buying-plot-in-indore.js';
-import plotVsFlat from './plot-vs-flat-in-indore-which-is-better-for-investment-in-2026.js';
-import superCorridorVsUjjain from './super-corridor-vs-ujjain-road-which-is-better-for-buying-a-plot-in-indore.js';
-import superCorridorGuide from './super-corridor-indore-property-guide-what-buyers-should-know-before-investing.js';
+import reraDocs from './verify-rera-title-land-documents-before-buying-plot-indore.js';
+import plotVsFlat from './plot-vs-flat-in-indore-investment-2026.js';
+import superCorridorVsUjjain from './super-corridor-vs-ujjain-road-buying-plot-indore.js';
+import superCorridorGuide from './super-corridor-indore-property-guide-investment.js';
+import buyingChecklist from './what-to-check-before-buying-residential-plot-in-indore.js';
+import bestAreas from './best-areas-to-buy-residential-plots-in-indore.js';
+import topProjects from './top-5-residential-projects-in-indore-by-icon-realty.js';
+import gatedVsOpen from './gated-plotted-development-vs-open-plot-indore.js';
 
 /** Reading speed used for the "n min read" line. Nothing else depends on it. */
 const WORDS_PER_MINUTE = 220;
@@ -114,11 +121,21 @@ function normalise(post) {
 }
 
 /**
- * Editorial order follows the new lead content sequence provided by the client:
- * document verification, investment comparison, location comparison, and the
- * Super Corridor market guide.
+ * Editorial order, which is also newest-first. The September briefs lead, in the
+ * client's sequence: document verification, investment comparison, location
+ * comparison, the Super Corridor guide. The August briefs follow in their
+ * original order: foundational checklist, locations, gated vs open, portfolio.
  */
-export const BLOG_POSTS = [reraDocs, plotVsFlat, superCorridorVsUjjain, superCorridorGuide].map(normalise);
+export const BLOG_POSTS = [
+  reraDocs,
+  plotVsFlat,
+  superCorridorVsUjjain,
+  superCorridorGuide,
+  buyingChecklist,
+  bestAreas,
+  gatedVsOpen,
+  topProjects,
+].map(normalise);
 
 export const postsBySlug = Object.fromEntries(BLOG_POSTS.map((p) => [p.slug, p]));
 
