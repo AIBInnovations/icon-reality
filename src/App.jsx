@@ -8,7 +8,7 @@ import QuickDock from './components/QuickDock';
 import Analytics from './analytics/Analytics';
 import { EnquiryProvider } from './enquiry/EnquiryProvider';
 import { NRI_TOPICS_BY_SLUG } from './data/nri';
-import { LEGACY_POST_PATHS } from './data/blog/slugs';
+import { LEGACY_POST_PATHS, RENAMED_POST_PATHS } from './data/blog/slugs';
 
 // code-split each route so the user never downloads About/Projects JS until they navigate there
 const HomePage = lazy(() => import('./pages/HomePage'));
@@ -102,7 +102,10 @@ export default function App() {
                     post URLs. The posts live under /blog, so those keep
                     resolving instead of 404ing — same treatment the old
                     /nri/<topic> URLs get. */}
-                {LEGACY_POST_PATHS.map(({ from, to }) => (
+                {/* ...and posts that moved to their brief's slug keep their
+                    first URL working too. Static routes, so they outrank
+                    /blog/:slug. */}
+                {[...LEGACY_POST_PATHS, ...RENAMED_POST_PATHS].map(({ from, to }) => (
                   <Route key={from} path={from} element={<Navigate to={to} replace />} />
                 ))}
 
