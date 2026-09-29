@@ -231,7 +231,9 @@ export function blogPostingSchema(post) {
     inLanguage: 'en-IN',
     ...(post.keywords?.length ? { keywords: post.keywords } : {}),
     ...(post.readingMinutes ? { timeRequired: `PT${post.readingMinutes}M` } : {}),
-    articleSection: post.category,
+    // the brief's own section name where it gives one ("Real Estate Buying
+    // Guide"), else the category the page shows
+    articleSection: post.articleSection || post.category,
     isPartOf: { '@id': `${SITE_URL}/blog#blog` },
   };
 }
