@@ -81,6 +81,46 @@
       "permanent": true
     },
     {
+      "source": "/residential-plots-in-simrol-indore",
+      "destination": "/blog/residential-plots-in-simrol-indore",
+      "permanent": true
+    },
+    {
+      "source": "/residential-plots-in-simrol-indore/",
+      "destination": "/blog/residential-plots-in-simrol-indore",
+      "permanent": true
+    },
+    {
+      "source": "/plots-near-iit-indore-simrol",
+      "destination": "/blog/plots-near-iit-indore-simrol",
+      "permanent": true
+    },
+    {
+      "source": "/plots-near-iit-indore-simrol/",
+      "destination": "/blog/plots-near-iit-indore-simrol",
+      "permanent": true
+    },
+    {
+      "source": "/siddhayatan-indore-premium-residential-plots-manglia",
+      "destination": "/blog/siddhayatan-indore-premium-residential-plots-manglia",
+      "permanent": true
+    },
+    {
+      "source": "/siddhayatan-indore-premium-residential-plots-manglia/",
+      "destination": "/blog/siddhayatan-indore-premium-residential-plots-manglia",
+      "permanent": true
+    },
+    {
+      "source": "/why-choose-siddhayatan-manglia-residential-plot-indore",
+      "destination": "/blog/why-choose-siddhayatan-manglia-residential-plot-indore",
+      "permanent": true
+    },
+    {
+      "source": "/why-choose-siddhayatan-manglia-residential-plot-indore/",
+      "destination": "/blog/why-choose-siddhayatan-manglia-residential-plot-indore",
+      "permanent": true
+    },
+    {
       "source": "/blog/",
       "destination": "/blog",
       "permanent": true
@@ -123,6 +163,26 @@
     {
       "source": "/blog/super-corridor-indore-property-guide-investment/",
       "destination": "/blog/super-corridor-indore-property-guide-investment",
+      "permanent": true
+    },
+    {
+      "source": "/blog/residential-plots-in-simrol-indore/",
+      "destination": "/blog/residential-plots-in-simrol-indore",
+      "permanent": true
+    },
+    {
+      "source": "/blog/plots-near-iit-indore-simrol/",
+      "destination": "/blog/plots-near-iit-indore-simrol",
+      "permanent": true
+    },
+    {
+      "source": "/blog/siddhayatan-indore-premium-residential-plots-manglia/",
+      "destination": "/blog/siddhayatan-indore-premium-residential-plots-manglia",
+      "permanent": true
+    },
+    {
+      "source": "/blog/why-choose-siddhayatan-manglia-residential-plot-indore/",
+      "destination": "/blog/why-choose-siddhayatan-manglia-residential-plot-indore",
       "permanent": true
     },
     {
