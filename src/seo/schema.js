@@ -234,6 +234,15 @@ export function blogPostingSchema(post) {
     // the brief's own section name where it gives one ("Real Estate Buying
     // Guide"), else the category the page shows
     articleSection: post.articleSection || post.category,
+    ...(post.about?.length
+      ? { about: post.about.map(({ type, name }) => ({ '@type': type, name })) }
+      : {}),
+    // The briefs ask for Speakable on the answer block and the introduction.
+    // These are the classes both renderers actually give them (the "In short"
+    // answer and the lede), not the brief's placeholder selectors.
+    ...(post.answer
+      ? { speakable: { '@type': 'SpeakableSpecification', cssSelector: ['.post__answer', '.post__lede'] } }
+      : {}),
     isPartOf: { '@id': `${SITE_URL}/blog#blog` },
   };
 }

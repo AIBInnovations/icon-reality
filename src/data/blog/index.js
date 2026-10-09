@@ -19,6 +19,8 @@
 //                     'Projects' | 'Explainer'
 //   articleSection    optional BlogPosting articleSection, when the SEO brief
 //                     names one; otherwise the schema falls back to `category`
+//   about             optional [{ type, name }], the brief's BlogPosting `about`
+//                     entities ({ type: 'Place', name: 'Simrol, Indore' })
 //   metaTitle         <title>, from the SEO brief, verbatim
 //   metaDescription   <meta name="description">, from the brief, verbatim
 //   excerpt           one-sentence summary: listing cards + OG description fallback
@@ -58,6 +60,10 @@ import { POST_SLUGS } from './slugs.js';
 
 export { POST_SLUGS, LEGACY_POST_PATHS } from './slugs.js';
 
+import simrolPlots from './residential-plots-in-simrol-indore.js';
+import nearIitIndore from './plots-near-iit-indore-simrol.js';
+import siddhayatanIndore from './siddhayatan-indore-premium-residential-plots-manglia.js';
+import whySiddhayatan from './why-choose-siddhayatan-manglia-residential-plot-indore.js';
 import reraDocs from './verify-rera-title-land-documents-before-buying-plot-indore.js';
 import plotVsFlat from './plot-vs-flat-in-indore-investment-2026.js';
 import superCorridorVsUjjain from './super-corridor-vs-ujjain-road-buying-plot-indore.js';
@@ -121,12 +127,18 @@ function normalise(post) {
 }
 
 /**
- * Editorial order, which is also newest-first. The September briefs lead, in the
- * client's sequence: document verification, investment comparison, location
- * comparison, the Super Corridor guide. The August briefs follow in their
- * original order: foundational checklist, locations, gated vs open, portfolio.
+ * Editorial order, which is also newest-first. The October briefs lead, in the
+ * client's sequence: the Simrol guide, plots near IIT Indore, Siddhayatan
+ * Indore, why choose Siddhayatan. The September briefs follow in theirs:
+ * document verification, investment comparison, location comparison, the Super
+ * Corridor guide. Then the August briefs in their original order: foundational
+ * checklist, locations, gated vs open, portfolio.
  */
 export const BLOG_POSTS = [
+  simrolPlots,
+  nearIitIndore,
+  siddhayatanIndore,
+  whySiddhayatan,
   reraDocs,
   plotVsFlat,
   superCorridorVsUjjain,
