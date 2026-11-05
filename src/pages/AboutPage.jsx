@@ -362,7 +362,7 @@ export default function AboutPage() {
               {[...AWARDS, ...PRESS].map((a) => (
                 <li key={a.title}>
                   {a.url
-                    ? <a href={a.url} target="_blank" rel="noreferrer">{a.title}</a>
+                    ? <a href={a.url} target="_blank" rel="noopener noreferrer">{a.title}</a>
                     : <span>{a.title}</span>}
                   <span className="about-awards__meta">
                     {[a.issuer, a.year].filter(Boolean).join(' · ')}

@@ -59,7 +59,7 @@ export default function BrochureGate({
         href={brochureUrl}
         download
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className={`${className} brochure-gate__btn`}
         aria-label={`Download the ${projectName} brochure`}
       >

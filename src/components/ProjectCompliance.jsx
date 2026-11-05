@@ -45,7 +45,7 @@ export default function ProjectCompliance({
                   <a
                     href={rera.url}
                     target="_blank"
-                    rel="noreferrer"
+                    rel="noopener noreferrer"
                     className="compliance__badge-link"
                   >
                     Verify on the authority's website
@@ -86,7 +86,7 @@ export default function ProjectCompliance({
                 <ul>
                   {documents.map((d) => (
                     <li key={d.href}>
-                      <a href={d.href} target="_blank" rel="noreferrer" download>
+                      <a href={d.href} target="_blank" rel="noopener noreferrer" download>
                         {d.label}
                         <svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden>
                           <path d="M8 3v8m0 0l-3-3m3 3l3-3M3 13h10" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>

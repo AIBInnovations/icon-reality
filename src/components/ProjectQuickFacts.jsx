@@ -29,7 +29,7 @@ export default function ProjectQuickFacts({ facts = [], className = '', id }) {
               <dt className="quick-facts__k">{f.label}</dt>
               <dd className="quick-facts__v">
                 {f.href ? (
-                  <a href={f.href} target="_blank" rel="noreferrer" className="quick-facts__link">
+                  <a href={f.href} target="_blank" rel="noopener noreferrer" className="quick-facts__link">
                     {f.value}
                     <svg width="12" height="12" viewBox="0 0 14 14" fill="none" aria-hidden>
                       <path d="M4 10L10 4M10 4H5.5M10 4v4.5" stroke="currentColor" strokeWidth="1.4" strokeLinecap="round" strokeLinejoin="round"/>

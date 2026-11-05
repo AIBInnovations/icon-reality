@@ -74,7 +74,7 @@ export default function CtaBand({
               <a
                 href={whatsappUrl(whatsappMessage)}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="cta cta--ghost cta-band__secondary"
               >
                 WhatsApp us

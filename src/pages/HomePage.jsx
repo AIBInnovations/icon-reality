@@ -46,7 +46,7 @@ export default function HomePage() {
   // The cap fires on its own timer; the hero being ready is the normal path.
   // Derived rather than stored, so there is no state to keep in sync.
   const [capReached, setCapReached] = useState(false);
-  const showRest = heroReady || capReached;
+  const showRest = typeof window === 'undefined' || heroReady || capReached;
   // The static #initial-loader (index.html) covers the very first load and is the
   // ONLY loader shown during the hero-frame preload — no React loader on top, so
   // it never looks like it loads twice. On client-side nav, RouteTransition's
@@ -100,7 +100,6 @@ export default function HomePage() {
     <>
       <Seo
         title={null}
-        description="Icon Realty has designed and marketed residential plotted developments in Indore since 2004, 20+ years, 15+ landmark projects, 4,500+ happy families and plots from 600 to 20,000 sq ft."
         path="/"
         jsonLd={realEstateAgentSchema()}
       />

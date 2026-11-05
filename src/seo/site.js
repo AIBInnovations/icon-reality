@@ -17,11 +17,11 @@ export const SITE_URL = envSiteUrl.replace(/\/+$/, '');
 
 export const SITE_NAME = 'Icon Realty';
 
-export const DEFAULT_TITLE = 'Icon Realty: Residential Projects, Designing & Marketing in Indore';
+export const DEFAULT_TITLE = 'Residential Plots in Indore | Icon Realty';
 export const TITLE_TEMPLATE = (t) => (t ? `${t} | ${SITE_NAME}` : DEFAULT_TITLE);
 
 export const DEFAULT_DESCRIPTION =
-  'Icon Realty builds premium plotted developments in Indore, 20+ years, 15+ landmark projects and 4,500+ happy families. Explore Oscar Palace and our other addresses.';
+  'Explore residential plotted developments in Indore with Icon Realty. Discover our projects, locations and amenities, and enquire about a site visit.';
 
 export const DEFAULT_OG_IMAGE = '/images/oscar/entrance/entrance-1.jpg';
 

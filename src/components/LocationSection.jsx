@@ -98,7 +98,7 @@ export default function LocationSection({
               <a
                 href={openSrc}
                 target="_blank"
-                rel="noreferrer"
+                rel="noopener noreferrer"
                 className="cta cta--ghost location__map-cta"
               >
                 Open in Google Maps

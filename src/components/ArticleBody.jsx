@@ -33,7 +33,7 @@ function RichText({ nodes }) {
     }
     if (node.href) {
       return (
-        <a key={i} href={node.href} target="_blank" rel="noreferrer" className="article__link">
+        <a key={i} href={node.href} target="_blank" rel="noopener noreferrer" className="article__link">
           {node.text}
         </a>
       );

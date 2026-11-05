@@ -1,4 +1,5 @@
-import { useEffect } from 'react';
+import { useContext, useEffect } from 'react';
+import { SeoContext } from './context';
 import {
   SITE_NAME,
   TITLE_TEMPLATE,
@@ -71,6 +72,9 @@ export default function Seo({
   noindex = false,
   jsonLd,
 }) {
+  const capture = useContext(SeoContext);
+  if (capture) capture({ title: exactTitle && title ? title : TITLE_TEMPLATE(title), description, path, image, type, noindex, jsonLd });
+
   const blocks = jsonLd ? (Array.isArray(jsonLd) ? jsonLd : [jsonLd]) : [];
   // serialise so the effect re-runs when the schema content actually changes
   const jsonLdKey = JSON.stringify(blocks);
@@ -83,7 +87,7 @@ export default function Seo({
     document.title = fullTitle;
 
     upsertMeta('name', 'description', description);
-    upsertMeta('name', 'robots', noindex ? 'noindex, nofollow' : 'index, follow');
+    upsertMeta('name', 'robots', noindex || import.meta.env.VITE_NOINDEX === 'true' ? 'noindex, nofollow' : 'index, follow');
     upsertLink('canonical', url);
 
     upsertMeta('property', 'og:site_name', SITE_NAME);

@@ -6,7 +6,8 @@
 //                     defaults injected as STATIC markup, so crawlers and
 //                     social scrapers that don't execute JavaScript still see
 //                     them. Per-route tags are layered on top by <Seo>.
-//   • blog/**       — one real HTML file per blog URL, carrying that post's
+//   • all routes    — real HTML from existing React components. Blog URLs
+//                     use the established block renderer, carrying each post's
 //                     title, description, canonical, Open Graph, BlogPosting
 //                     and FAQPage JSON-LD and the article text. Google renders
 //                     JavaScript and would see <Seo>'s runtime tags anyway;
@@ -20,6 +21,7 @@
 // source of truth for the domain and the business details.
 import { mkdir, readFile, writeFile } from 'node:fs/promises';
 import { dirname, join } from 'node:path';
+import { createServer } from 'vite';
 
 /**
  * @param {object} opts
@@ -48,21 +50,22 @@ export function seoAssets({ indexable = true } = {}) {
       // Google Search Console ownership token, meta-tag method. Set
       // VITE_GSC_VERIFICATION in the Vercel dashboard; only rendered when set.
       const gscToken = process.env.VITE_GSC_VERIFICATION;
+      const esc = (value) => String(value).replace(/&/g, '&amp;').replace(/"/g, '&quot;').replace(/</g, '&lt;');
 
       staticHead = [
-        ...(gscToken ? [`<meta name="google-site-verification" content="${gscToken}" />`] : []),
+        ...(gscToken ? [`<meta name="google-site-verification" content="${esc(gscToken)}" />`] : []),
         `<link rel="canonical" href="${SITE_URL}/" />`,
         `<meta name="robots" content="${indexable ? 'index, follow' : 'noindex, nofollow'}" />`,
         `<meta property="og:site_name" content="${SITE_NAME}" />`,
         `<meta property="og:locale" content="en_IN" />`,
         `<meta property="og:type" content="website" />`,
-        `<meta property="og:title" content="${DEFAULT_TITLE}" />`,
-        `<meta property="og:description" content="${DEFAULT_DESCRIPTION}" />`,
+        `<meta property="og:title" content="${esc(DEFAULT_TITLE)}" />`,
+        `<meta property="og:description" content="${esc(DEFAULT_DESCRIPTION)}" />`,
         `<meta property="og:url" content="${SITE_URL}/" />`,
         `<meta property="og:image" content="${ogImage}" />`,
         `<meta name="twitter:card" content="summary_large_image" />`,
-        `<meta name="twitter:title" content="${DEFAULT_TITLE}" />`,
-        `<meta name="twitter:description" content="${DEFAULT_DESCRIPTION}" />`,
+        `<meta name="twitter:title" content="${esc(DEFAULT_TITLE)}" />`,
+        `<meta name="twitter:description" content="${esc(DEFAULT_DESCRIPTION)}" />`,
         `<meta name="twitter:image" content="${ogImage}" />`,
         ld(organisationSchema()),
         ld(websiteSchema()),
@@ -76,7 +79,6 @@ export function seoAssets({ indexable = true } = {}) {
     async generateBundle() {
       const { allRoutes } = await import('../src/seo/routes.js');
       const routes = allRoutes();
-      const today = new Date().toISOString().slice(0, 10);
 
       const sitemap =
         `<?xml version="1.0" encoding="UTF-8"?>\n` +
@@ -86,7 +88,7 @@ export function seoAssets({ indexable = true } = {}) {
             (r) =>
               `  <url>\n` +
               `    <loc>${siteUrl}${r.path === '/' ? '/' : r.path}</loc>\n` +
-              `    <lastmod>${r.lastmod || today}</lastmod>\n` +
+              (r.lastmod ? `    <lastmod>${r.lastmod}</lastmod>\n` : '') +
               `    <changefreq>${r.changefreq}</changefreq>\n` +
               `    <priority>${r.priority.toFixed(1)}</priority>\n` +
               `  </url>`
@@ -112,7 +114,7 @@ export function seoAssets({ indexable = true } = {}) {
     },
 
     /**
-     * Static HTML for the blog URLs.
+     * Static HTML for every indexable URL.
      *
      * Runs in writeBundle, not generateBundle, because it needs the FINISHED
      * index.html: the hashed script and stylesheet tags in it are what boot the
@@ -131,6 +133,38 @@ export function seoAssets({ indexable = true } = {}) {
       const { BLOG_POSTS } = await import('../src/data/blog/index.js');
 
       const pages = blogStaticPages({ indexable });
+      const { allRoutes } = await import('../src/seo/routes.js');
+      const { SITE_NAME, absoluteUrl } = await import('../src/seo/site.js');
+      const { escapeHtml: esc } = await import('../src/data/blog/rich.js');
+      // A separate Vite module runner handles JSX/CSS without changing the
+      // browser build or introducing a production rendering service.
+      const renderer = await createServer({
+        server: { middlewareMode: true, watch: null },
+        appType: 'custom',
+      });
+      try {
+        const { renderPage } = await renderer.ssrLoadModule('/src/seo/render.jsx');
+        for (const route of allRoutes().filter((r) => !r.path.startsWith('/blog'))) {
+          const { body, metadata: m } = renderPage(route.path);
+          const url = absoluteUrl(m.path);
+          const image = absoluteUrl(m.image);
+          const blocks = m.jsonLd ? (Array.isArray(m.jsonLd) ? m.jsonLd : [m.jsonLd]) : [];
+          const head = [
+            `<title>${esc(m.title)}</title>`,
+            `<meta name="description" content="${esc(m.description)}" />`,
+            `<meta name="robots" content="${indexable && !m.noindex ? 'index, follow' : 'noindex, nofollow'}" />`,
+            `<link rel="canonical" href="${esc(url)}" />`,
+            ...Object.entries({ 'site_name': SITE_NAME, locale: 'en_IN', type: m.type, title: m.title, description: m.description, url, image })
+              .map(([key, value]) => `<meta property="og:${key}" content="${esc(value)}" />`),
+            ...Object.entries({ card: 'summary_large_image', title: m.title, description: m.description, image })
+              .map(([key, value]) => `<meta name="twitter:${key}" content="${esc(value)}" />`),
+            ...blocks.filter(Boolean).map((block) => `<script type="application/ld+json" data-seo-jsonld>${JSON.stringify(block).replace(/</g, '\\u003c')}</script>`),
+          ].join('\n');
+          pages.push({ file: route.path === '/' ? 'index.html' : `${route.path.slice(1)}/index.html`, head, body });
+        }
+      } finally {
+        await renderer.close();
+      }
 
       for (const page of pages) {
         // Strip the tags this page is about to replace. Leaving any of them
@@ -148,7 +182,7 @@ export function seoAssets({ indexable = true } = {}) {
 
         const rootTag = '<div id="root"></div>';
         if (!html.includes(rootTag)) {
-          this.error(`seo-assets: could not find ${rootTag} in index.html; blog prerender aborted`);
+          this.error(`seo-assets: could not find ${rootTag} in index.html; prerender aborted`);
         }
         html = html.replace(rootTag, `<div id="root">${page.body}</div>`);
 
@@ -173,7 +207,7 @@ export function seoAssets({ indexable = true } = {}) {
 
       const words = BLOG_POSTS.reduce((n, p) => n + postWordCount(p), 0);
       this.info(
-        `seo-assets: prerendered ${pages.length} blog pages ` +
+        `seo-assets: prerendered ${pages.length} pages ` +
         `(${BLOG_POSTS.length} posts, ${words} words) with BlogPosting + FAQPage JSON-LD`
       );
     },

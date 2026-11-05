@@ -134,7 +134,7 @@ export default function ContactPage() {
               <span className="eyebrow">Follow</span>
               <div className="contact-info__socials-list">
                 {socials.map((s) => (
-                  <a key={s.name} href={s.url} target="_blank" rel="noreferrer">
+                  <a key={s.name} href={s.url} target="_blank" rel="noopener noreferrer">
                     {s.name}
                   </a>
                 ))}

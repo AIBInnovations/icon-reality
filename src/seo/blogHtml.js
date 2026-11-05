@@ -127,7 +127,7 @@ const meta = (attr, key, content) =>
   content ? `<meta ${attr}="${esc(key)}" content="${esc(content)}" />` : '';
 
 const ld = (obj) =>
-  obj ? `<script type="application/ld+json">${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>` : '';
+  obj ? `<script type="application/ld+json" data-seo-jsonld>${JSON.stringify(obj).replace(/</g, '\\u003c')}</script>` : '';
 
 /**
  * The head block for one blog URL: exactly the tags <Seo> would write at

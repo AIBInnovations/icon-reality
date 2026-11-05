@@ -61,7 +61,7 @@ export default function StickyMobileCTA({
       <a
         href={whatsappUrl(wa)}
         target="_blank"
-        rel="noreferrer"
+        rel="noopener noreferrer"
         className="sticky-cta__action sticky-cta__action--wa"
         tabIndex={visible ? 0 : -1}
       >

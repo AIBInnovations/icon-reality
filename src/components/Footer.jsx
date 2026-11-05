@@ -100,7 +100,7 @@ export default function Footer() {
           </div>
           <div className="footer__contact-item">
             <span className="footer__contact-k">WhatsApp</span>
-            <a href={whatsappUrl(waMessage.general())} target="_blank" rel="noreferrer">
+            <a href={whatsappUrl(waMessage.general())} target="_blank" rel="noopener noreferrer">
               Chat with the team
             </a>
           </div>
@@ -119,7 +119,7 @@ export default function Footer() {
 
           <div className="footer__socials">
             {SOCIALS.map((s) => (
-              <a key={s.name} href={s.url} rel="noreferrer" target="_blank">{s.name}</a>
+              <a key={s.name} href={s.url} rel="noopener noreferrer" target="_blank">{s.name}</a>
             ))}
           </div>
 
