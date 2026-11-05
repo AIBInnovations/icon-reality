@@ -1,4 +1,5 @@
-import { lazy, Suspense } from 'react';
+import { Suspense } from 'react';
+import { pageComponent } from './routes/pages';
 import { BrowserRouter, Routes, Route, Navigate, useLocation, useParams } from 'react-router-dom';
 import { useLenis } from './hooks/useLenis';
 import Header from './components/Header';
@@ -11,27 +12,27 @@ import { NRI_TOPICS_BY_SLUG } from './data/nri';
 import { LEGACY_POST_PATHS, RENAMED_POST_PATHS } from './data/blog/slugs';
 
 // code-split each route so the user never downloads About/Projects JS until they navigate there
-const HomePage = lazy(() => import('./pages/HomePage'));
-const AboutPage = lazy(() => import('./pages/AboutPage'));
-const ProjectsPage = lazy(() => import('./pages/ProjectsPage'));
-const ProjectDetailPage = lazy(() => import('./pages/ProjectDetailPage'));
-const ContactPage = lazy(() => import('./pages/ContactPage'));
-const NotFoundPage = lazy(() => import('./pages/NotFoundPage'));
+const HomePage = pageComponent('home');
+const AboutPage = pageComponent('about');
+const ProjectsPage = pageComponent('projects');
+const ProjectDetailPage = pageComponent('project');
+const ContactPage = pageComponent('contact');
+const NotFoundPage = pageComponent('notFound');
 
 // Business sections. Each is its own chunk for the same reason the originals
 // are: a homebuyer never downloads the channel-partner JS.
-const WhyIndorePage = lazy(() => import('./pages/WhyIndorePage'));
-const InvestorPage = lazy(() => import('./pages/InvestorPage'));
+const WhyIndorePage = pageComponent('whyIndore');
+const InvestorPage = pageComponent('investors');
 // The NRI Corner and the Channel Partner programme are ONE page each. Their
 // former sub-routes are sections of those pages now, and the old URLs redirect
 // onto the matching anchor — see the redirect routes below.
-const NriPage = lazy(() => import('./pages/NriPage'));
-const ChannelPartnersPage = lazy(() => import('./pages/ChannelPartnersPage'));
+const NriPage = pageComponent('nri');
+const ChannelPartnersPage = pageComponent('partners');
 
 // The blog. Its own chunk, and the post page carries the block renderer, so
 // a visitor who never opens an article never downloads it.
-const BlogIndexPage = lazy(() => import('./pages/BlogIndexPage'));
-const BlogPostPage = lazy(() => import('./pages/BlogPostPage'));
+const BlogIndexPage = pageComponent('blog');
+const BlogPostPage = pageComponent('post');
 
 /**
  * /nri/<topic> → /nri#<topic>.

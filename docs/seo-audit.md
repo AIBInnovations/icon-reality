@@ -45,4 +45,32 @@ Google recommends static or server rendering because some crawlers cannot run Ja
 - Chrome checked `/`, `/about`, `/projects`, `/projects/oscar-palace`, `/contact`, `/blog` and a blog post at widths 390 and 1440: one H1, correct canonicals, no page errors and no horizontal overflow. Blog-to-About client navigation removed BlogPosting schema correctly. Homepage screenshot visually inspected.
 - Targeted ESLint passed for the SEO changes. Full lint has five pre-existing errors (four unused ScrollTrigger imports and ServicesGrid's synchronous state update in an effect), plus the existing Hero hook dependency warning. These were verified against HEAD and left outside this change.
 
-Changes are local; nothing has been deployed or submitted to search engines.
+The first changes were pushed in commit `75afe5b`; build-loader cleanup followed
+in `2fdfd9d`. A subsequent live check confirmed the new HTML and metadata were
+being served, but also found a startup regression: React cleared the static page
+before the first route chunk was ready, then the homepage hid its lower sections
+until the decorative hero loaded. The static-only checks above did not detect it.
+
+## Follow-up: continuous content during startup
+
+- Preload only the initial URL's route module before mounting React. Existing
+  generated HTML remains in the DOM while the module downloads. Other routes
+  remain code split. A failed initial module leaves the static page readable.
+- Mount homepage text and links immediately. Existing below-fold images retain
+  native lazy loading, and HomeBlog still waits for hero readiness. Keep the
+  hero montage, loading-cover animation, section order and visual styles.
+- Refresh ScrollTrigger after initial mounting and hero readiness.
+- Add `scripts/check-loading.mjs` as a browser regression check. It samples the
+  DOM every 20 ms through startup and requires one H1, at least 300 words and
+  project links, including delayed route JS, broken video and failed route JS.
+  It also tests About with a delayed route module. The normal loader must leave.
+- Local checks passed: more than 300 samples per scenario, with at least 1,504
+  homepage words and 1,076 About words throughout the observed loading window.
+  These are minimum observations, not complete-page word counts or new SEO scores.
+
+Run the optional browser check with Playwright installed and a running preview:
+`node scripts/check-loading.mjs`. `SEO_TEST_URL` selects the URL,
+`CHROME_PATH` selects an installed Chrome executable, and `PLAYWRIGHT_MODULE`
+can select an existing Playwright module installation.
+
+No updated third-party SEO score or Search Console indexing result is claimed.

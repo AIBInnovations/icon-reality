@@ -55,8 +55,11 @@ background stream). If you change `BOOTSTRAP_FRAMES`, `REVEAL_BUDGET_MS` or the
 fallback logic in `draw()`, re-measure on a throttled connection before and
 after. Bump `ASSET_REV` in either file if the frames are re-exported.
 
-The home page defers everything below the hero until the hero is ready. If you
-mount content late anywhere, call `ScrollTrigger.refresh()` afterwards.
+The home page keeps text and links mounted while the hero loads so crawlers
+never see a hero-only page. Below-fold images use native lazy loading, and
+HomeBlog still waits for hero readiness. The initial route is preloaded before
+React replaces static HTML. Preserve this continuous content availability. If
+you mount content late anywhere, call `ScrollTrigger.refresh()` afterwards.
 
 ## 4. Keep project data centralised
 
