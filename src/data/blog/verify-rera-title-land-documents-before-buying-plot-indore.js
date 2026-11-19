@@ -28,7 +28,7 @@ export default {
     'Before buying a plot in Indore, verify the applicable RERA registration, ownership and title chain, sale deed, encumbrance status, Khasra/Khatauni records, land-use classification, approved layout, development permissions, mutation, property-tax status, legal road access and physical boundaries. Compare the documents with government records and conduct an independent legal and physical verification before making a substantial payment.',
 
   datePublished: '2026-09-16',
-  dateModified: '2026-09-29',
+  dateModified: '2026-11-19',
 
   image: '/images/oscar/entrance/entrance-3.jpg',
   imageAlt:
@@ -84,6 +84,7 @@ export default {
 
     // ------------------------------------------------------------------- 1
     { type: 'h2', text: '1. Start With RERA Verification' },
+    { type: 'h3', text: 'Check Whether RERA Applies' },
     {
       type: 'p',
       text: [
@@ -92,6 +93,7 @@ export default {
         " rather than relying only on a brochure or salesperson's statement.",
       ],
     },
+    { type: 'h4', text: 'Verify the Registered Project Information' },
     {
       type: 'p',
       text: 'For a RERA-registered project, verify the project name, promoter details, registration number, approved information and other disclosures available through the relevant authority.',
@@ -383,7 +385,8 @@ export default {
     {
       type: 'p',
       text: [
-        "Icon Realty's own website positions its business around ",
+        { text: "Icon Realty", to: "/" },
+        "'s own website positions its business around ",
         { text: 'designing and marketing residential plotted developments', to: '/about' },
         ' in and around Indore, while also publishing ',
         {
@@ -426,6 +429,14 @@ export default {
           text: '“Can I independently verify that this is the plot I am legally being offered, that the seller has the right to sell it, and that the proposed use and development are properly authorised?”',
           b: true,
         },
+      ],
+    },
+    {
+      type: 'p',
+      text: [
+        'For project details and ',
+        { text: 'residential plot site visits', to: '/contact' },
+        ', contact the Icon Realty team.',
       ],
     },
   ],

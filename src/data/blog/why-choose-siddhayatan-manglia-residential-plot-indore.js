@@ -36,7 +36,7 @@ export default {
     "Siddhayatan Manglia can be considered by homebuyers looking for a premium plotted residential development in eastern Indore. Icon Realty currently lists Siddhayatan as a community development in Manglia with 600–1,500 sq. ft. plots. The plotted format gives buyers flexibility to plan a future home around their lifestyle, while Manglia's position along the eastern residential growth corridor provides access to major road networks. Buyers should compare plot dimensions, infrastructure, legal documentation, approvals, total cost and their own commuting requirements before purchasing.",
 
   datePublished: '2026-10-09',
-  dateModified: '2026-10-09',
+  dateModified: '2026-11-19',
 
   image: '/images/siddhayatan/gallery-4.jpg',
   imageAlt:
@@ -67,7 +67,9 @@ export default {
           text: 'Siddhayatan Manglia is worth considering for homebuyers who want a residential plot in Indore with the flexibility to create a home around their own lifestyle.',
           b: true,
         },
-        ' Located in Manglia, an eastern Indore residential micro-market, Siddhayatan is positioned by Icon Realty as a premium community plotted development with plot sizes ranging from ',
+        " Located in Manglia, an eastern Indore residential micro-market, Siddhayatan is positioned by ",
+        { text: "Icon Realty", to: "/" },
+        " as a premium community plotted development with plot sizes ranging from ",
         { text: '600 to 1,500 sq. ft.', b: true },
       ],
     },
@@ -479,6 +481,7 @@ export default {
       ],
     },
     { type: 'h3', text: 'Title and Ownership' },
+    { type: 'h4', text: 'Confirm the Seller and Ownership Chain' },
     { type: 'p', text: 'Confirm who legally owns the land and review the title chain.' },
     { type: 'h3', text: 'Land Use' },
     { type: 'p', text: 'Verify that the land is approved or permitted for the intended residential use.' },

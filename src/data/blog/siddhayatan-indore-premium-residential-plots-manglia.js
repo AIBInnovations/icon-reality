@@ -36,7 +36,7 @@ export default {
     'Siddhayatan Indore is a premium plotted residential development in Manglia by Icon Realty, offering plot sizes from 600 to 1,500 sq. ft. The project is positioned as a community development for buyers who want the flexibility to create a home around their lifestyle. For buyers considering Siddhayatan plots, important factors include plot dimensions, location, road access, infrastructure, legal documentation, applicable approvals and total purchase cost.',
 
   datePublished: '2026-10-09',
-  dateModified: '2026-10-09',
+  dateModified: '2026-11-19',
 
   image: '/images/siddhayatan/gallery-5.jpg',
   imageAlt:
@@ -87,7 +87,9 @@ export default {
     {
       type: 'p',
       text: [
-        'Among the plotted developments featured by Icon Realty, ',
+        "Among the plotted developments featured by ",
+        { text: "Icon Realty", to: "/" },
+        ", ",
         { text: 'Siddhayatan Manglia', to: '/projects/siddhayatan' },
         ' is positioned as a premium community development with plot sizes ranging from ',
         { text: '600 to 1,500 sq. ft.', b: true },
@@ -495,6 +497,7 @@ export default {
       ],
     },
     { type: 'h3', text: 'Verify the Title' },
+    { type: 'h4', text: 'Ownership History and Encumbrances' },
     {
       type: 'p',
       text: 'Check ownership documents, title history and encumbrances with the help of a qualified property lawyer.',

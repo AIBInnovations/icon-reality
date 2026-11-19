@@ -17,7 +17,7 @@ export default {
   answer:
     "Icon Realty's portfolio includes several residential developments across Indore. Five notable projects are IIT Greens in Simrol, Siddhayatan in Manglia, Eden Garden in Ambamoliya, Oscar Palace on the Indore–Nagpur Highway and Saatvik Vihar in Manglia. Each project has a different location and residential positioning, allowing buyers to compare options based on connectivity, community planning, plot requirements, lifestyle preferences and long-term goals.",
   datePublished: '2026-08-24',
-  dateModified: '2026-08-24',
+  dateModified: '2026-11-19',
   image: '/images/siddhayatan/hero.jpg',
   imageAlt:
     'The gated entrance archway at Siddhayatan in Manglia, with a flowering tree and landscaped boundary wall along the approach road',
@@ -53,7 +53,9 @@ export default {
       text: [
         'For buyers searching for the ',
         { text: 'top residential projects in Indore', to: '/projects' },
-        ", Icon Realty has a portfolio covering several important locations across the city. Its website currently showcases eight flagship developments, including IIT Greens, Siddhayatan, Eden Garden, Oscar Palace, Saatvik Vihar, Oscar Fort, Oscar Billionaire and Labham City.",
+        ", ",
+        { text: "Icon Realty", to: "/" },
+        " has a portfolio covering several important locations across the city. Its website currently showcases eight flagship developments, including IIT Greens, Siddhayatan, Eden Garden, Oscar Palace, Saatvik Vihar, Oscar Fort, Oscar Billionaire and Labham City.",
       ],
     },
     {
@@ -316,12 +318,20 @@ export default {
     },
     {
       type: 'p',
-      text: "The company's website states that it has over two decades of experience, 15+ landmark projects and 4,500+ families. These are company-provided figures and should be considered as part of the overall developer evaluation.",
+      text: [
+        "The company's website states that it has ",
+        { text: "over two decades of experience", to: "/about" },
+        ", 15+ landmark projects and 4,500+ families. These are company-provided figures and should be considered as part of the overall developer evaluation.",
+      ],
     },
     {
       type: 'callout',
       title: 'VERIFY BEFORE YOU BUY',
-      text: 'Before choosing a project, prospective buyers should independently verify title, approvals, applicable RERA information, development status, utilities, pricing, plot specifications and other legal documentation.',
+      text: [
+        "Before choosing a project, prospective buyers should independently verify title, approvals, applicable RERA information, development status, utilities, pricing, plot specifications and other ",
+        { text: "legal documentation", to: "/blog/verify-rera-title-land-documents-before-buying-plot-indore" },
+        ".",
+      ],
     },
 
     // ---- close -----------------------------------------------------------
@@ -340,7 +350,11 @@ export default {
     },
     {
       type: 'p',
-      text: 'For buyers searching for Icon Realty residential projects in Indore, these five developments provide a useful starting point for research and site visits.',
+      text: [
+        "For buyers searching for Icon Realty residential projects in Indore, these five developments provide a useful starting point for research and ",
+        { text: "site visits", to: "/contact" },
+        ".",
+      ],
     },
   ],
 

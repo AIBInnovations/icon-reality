@@ -21,7 +21,7 @@ export default {
     "Before buying a residential plot in Indore, check the property's title and ownership, land-use approval, RERA details where applicable, layout approval, road access, infrastructure, location, development potential, documentation, utilities and total purchase cost. Buyers should also evaluate the developer's track record and physically visit the site before making a decision.",
 
   datePublished: '2026-08-24',
-  dateModified: '2026-08-24',
+  dateModified: '2026-11-19',
 
   image: '/images/oscar/entrance/entrance-1.jpg',
   imageAlt:
@@ -60,7 +60,11 @@ export default {
     },
     {
       type: 'p',
-      text: "Projects such as Icon Realty's Oscar Palace, positioned on the Indore–Nagpur Highway, reflect a more planned approach to plotted residential development, with features including wide planned roads, green and open spaces and a secure gated community.",
+      text: [
+        "Projects such as ",
+        { text: "Icon Realty", to: "/" },
+        "'s Oscar Palace, positioned on the Indore–Nagpur Highway, reflect a more planned approach to plotted residential development, with features including wide planned roads, green and open spaces and a secure gated community.",
+      ],
     },
     {
       type: 'p',
@@ -357,7 +361,11 @@ export default {
     },
     {
       type: 'p',
-      text: 'Icon Realty specifically encourages prospective buyers to schedule a site visit to understand the plots, planning and location firsthand.',
+      text: [
+        "Icon Realty specifically encourages prospective buyers to ",
+        { text: "schedule a site visit", to: "/contact" },
+        " to understand the plots, planning and location firsthand.",
+      ],
     },
 
     // ------------------------------------------------------ planned or not

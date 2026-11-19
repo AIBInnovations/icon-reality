@@ -29,7 +29,7 @@ export default {
     "Connectivity, airport access, the TCS and Infosys campuses, infrastructure, residential plots, the risks and a buyer's checklist: what to know about Super Corridor before you invest.",
 
   datePublished: '2026-09-16',
-  dateModified: '2026-09-29',
+  dateModified: '2026-11-19',
 
   image: '/images/labham-city/photo-6.jpg',
   imageAlt:
@@ -220,7 +220,9 @@ export default {
     {
       type: 'p',
       text: [
-        "Super Corridor has a mix of residential plots, plotted developments and other residential formats. Current market listings show residential plots and residential projects in the corridor, while Icon Realty's website identifies ",
+        "Super Corridor has a mix of residential plots, plotted developments and other residential formats. Current market listings show residential plots and residential projects in the corridor, while ",
+        { text: "Icon Realty's website", to: "/" },
+        " identifies ",
         { text: 'Labham City', to: '/projects/labham-city' },
         ' as one of its Super Corridor developments. Icon Realty also lists several ',
         { text: 'completed projects in the corridor', to: '/projects' },
@@ -381,7 +383,7 @@ export default {
           ': Check the current status of water, electricity, drainage and other services.',
         ],
         [
-          { text: 'Site inspection', b: true },
+          { text: "Site inspection", to: "/contact" },
           ': Visit the property instead of relying only on maps or brochures.',
         ],
         [

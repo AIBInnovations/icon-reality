@@ -23,6 +23,8 @@
 //                     entities ({ type: 'Place', name: 'Simrol, Indore' })
 //   metaTitle         <title>, from the SEO brief, verbatim
 //   metaDescription   <meta name="description">, from the brief, verbatim
+//   schemaDescription optional BlogPosting description when the brief supplies
+//                     different wording from the meta description
 //   excerpt           one-sentence summary: listing cards + OG description fallback
 //   answer            optional direct-answer paragraph rendered above the intro,
 //                     which is the passage AI overviews and featured snippets lift
@@ -32,6 +34,7 @@
 //   imageAlt          what the photograph shows
 //   imageCredit       which project it is, so it is never read as a stock photo
 //   keywords          BlogPosting keywords, from the brief
+//   mentions          optional [{ type, name, url }] entities from the schema
 //   relatedProjects   project slugs linked at the foot of the article
 //   blocks            the article body, see BLOCK TYPES
 //   faqs              [{ q, a }] rendered as the FAQ accordion AND as FAQPage
@@ -72,6 +75,16 @@ import buyingChecklist from './what-to-check-before-buying-residential-plot-in-i
 import bestAreas from './best-areas-to-buy-residential-plots-in-indore.js';
 import topProjects from './top-5-residential-projects-in-indore-by-icon-realty.js';
 import gatedVsOpen from './gated-plotted-development-vs-open-plot-indore.js';
+import iitGreensLiving from './iit-greens-indore-residential-plots-near-iit-indore.js';
+import simrolBuyerGuide from './is-simrol-a-good-place-to-buy-property-in-indore.js';
+import khandwaHighway from './property-on-indore-khandwa-highway.js';
+import nearIitFamilyLiving from './living-near-iit-indore-education-corridor.js';
+import mangliaBuyerGuide from './residential-plots-in-manglia-indore-buyers-investors-guide.js';
+import mangliaChecklist from './plots-for-sale-in-manglia-indore-buyers-checklist.js';
+import plotSizes from './which-plot-size-is-right-for-your-home.js';
+import plotVsFlatFlexibility from './plot-vs-flat-in-indore-flexibility.js';
+import greenCommunities from './green-residential-communities-in-indore.js';
+import ambamoliyaGuide from './residential-plots-in-ambamoliya-indore.js';
 
 /** Reading speed used for the "n min read" line. Nothing else depends on it. */
 const WORDS_PER_MINUTE = 220;
@@ -127,14 +140,24 @@ function normalise(post) {
 }
 
 /**
- * Editorial order, which is also newest-first. The October briefs lead, in the
- * client's sequence: the Simrol guide, plots near IIT Indore, Siddhayatan
- * Indore, why choose Siddhayatan. The September briefs follow in theirs:
+ * Editorial order, with the newest batch first in the client's sequence.
+ * November's ten briefs lead, followed by October's Simrol and Siddhayatan
+ * guides. The September briefs follow in theirs:
  * document verification, investment comparison, location comparison, the Super
  * Corridor guide. Then the August briefs in their original order: foundational
  * checklist, locations, gated vs open, portfolio.
  */
 export const BLOG_POSTS = [
+  iitGreensLiving,
+  simrolBuyerGuide,
+  khandwaHighway,
+  nearIitFamilyLiving,
+  mangliaBuyerGuide,
+  mangliaChecklist,
+  plotSizes,
+  plotVsFlatFlexibility,
+  greenCommunities,
+  ambamoliyaGuide,
   simrolPlots,
   nearIitIndore,
   siddhayatanIndore,
@@ -151,9 +174,20 @@ export const BLOG_POSTS = [
 
 export const postsBySlug = Object.fromEntries(BLOG_POSTS.map((p) => [p.slug, p]));
 
-/** Other posts, in editorial order, for the "keep reading" rail. */
-export const relatedPosts = (slug, limit = 3) =>
-  BLOG_POSTS.filter((p) => p.slug !== slug).slice(0, limit);
+/** Shared projects lead the "keep reading" rail; editorial order breaks ties. */
+export function relatedPosts(slug, limit = 3) {
+  const current = postsBySlug[slug];
+  return BLOG_POSTS
+    .filter((post) => post.slug !== slug)
+    .map((post) => ({
+      post,
+      score: (post.relatedProjects || []).filter((project) => current?.relatedProjects?.includes(project)).length * 3
+        + Number(Boolean(current && post.category === current.category)),
+    }))
+    .sort((a, b) => b.score - a.score)
+    .slice(0, limit)
+    .map(({ post }) => post);
+}
 
 export const BLOG_INTRO =
   "Practical guides for buying plots in Indore: RERA checks, title verification, investment comparisons and the key differences between leading residential corridors.";

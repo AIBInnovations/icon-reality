@@ -12,7 +12,7 @@ export default {
   excerpt:
     "A guide to Indore's residential plot corridors, from the Indore–Nagpur Highway and Bicholi Mardana to Manglia, Ambamoliya, Super Corridor and Simrol.",
   datePublished: '2026-08-24',
-  dateModified: '2026-08-24',
+  dateModified: '2026-11-19',
   image: '/images/labham-city/photo-1.jpg',
   imageAlt:
     'The sandstone entrance wall at Labham City on Super Corridor, the project name cut into a bronze panel, with date palms and a paved footpath beside it.',
@@ -58,7 +58,10 @@ export default {
     },
     {
       type: 'p',
-      text: "Icon Realty's portfolio provides an interesting starting point because its projects are spread across several established and developing locations in Indore, including Bicholi Mardana, Bicholi Hapsi, Manglia, Ambamoliya, Super Corridor, Simrol and the Indore–Nagpur Highway.",
+      text: [
+        { text: "Icon Realty", to: "/" },
+        "'s portfolio provides an interesting starting point because its projects are spread across several established and developing locations in Indore, including Bicholi Mardana, Bicholi Hapsi, Manglia, Ambamoliya, Super Corridor, Simrol and the Indore–Nagpur Highway.",
+      ],
     },
     {
       type: 'p',
@@ -316,7 +319,11 @@ export default {
     },
     {
       type: 'p',
-      text: 'The company states that it has over two decades of experience, 15+ landmark projects and 4,500+ families, according to its website.',
+      text: [
+        "The company states that it has ",
+        { text: "over two decades of experience", to: "/about" },
+        ", 15+ landmark projects and 4,500+ families, according to its website.",
+      ],
     },
     {
       type: 'p',
@@ -331,7 +338,11 @@ export default {
     },
     {
       type: 'p',
-      text: 'Most importantly, visit the location personally. A map can show distance, but a site visit helps you understand the actual road access, surroundings, development quality and overall environment.',
+      text: [
+        "Most importantly, visit the location personally. A map can show distance, but a ",
+        { text: "site visit", to: "/contact" },
+        " helps you understand the actual road access, surroundings, development quality and overall environment.",
+      ],
     },
     {
       type: 'p',

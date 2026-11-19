@@ -34,7 +34,7 @@ export default {
     "Residential plots in Simrol, Indore offer buyers the opportunity to build a customised home in a developing part of the city. Simrol's proximity to IIT Indore and its location along the Indore–Khandwa Highway make connectivity and the education corridor important factors when evaluating the area. IIT Greens Simrol is a plotted development positioned opposite IIT Indore and is listed by Icon Realty as one of its projects in the Simrol corridor. Buyers should compare plot size, connectivity, infrastructure, approvals, title documents and project-specific terms before purchasing.",
 
   datePublished: '2026-10-09',
-  dateModified: '2026-10-09',
+  dateModified: '2026-11-19',
 
   image: '/images/iit-greens/render-1.jpg',
   imageAlt:
@@ -157,7 +157,10 @@ export default {
     },
     {
       type: 'p',
-      text: "Icon Realty's broader approach to plotted developments focuses on planned layouts, location, amenities and investment considerations. The company says it has designed and marketed residential plotted developments across Indore since 2004 and has worked across 15+ landmarks.",
+      text: [
+        { text: "Icon Realty", to: "/" },
+        "'s broader approach to plotted developments focuses on planned layouts, location, amenities and investment considerations. The company says it has designed and marketed residential plotted developments across Indore since 2004 and has worked across 15+ landmarks.",
+      ],
     },
 
     // ------------------------------------------------------ buyers' intent
@@ -189,6 +192,7 @@ export default {
 
     // ---------------------------------------------------------------- checks
     { type: 'h2', text: 'What to Check Before Buying Plots in Simrol' },
+    { type: 'h3', text: 'A Practical Buying Checklist' },
     {
       type: 'p',
       text: [
@@ -199,6 +203,7 @@ export default {
         '. Important checks include:',
       ],
     },
+    { type: 'h4', text: 'Documents, Site Conditions and Costs' },
     {
       type: 'checklist',
       items: [

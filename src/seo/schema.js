@@ -220,7 +220,7 @@ export function blogPostingSchema(post) {
     '@type': 'BlogPosting',
     '@id': `${url}#blogposting`,
     headline: post.title,
-    description: post.metaDescription || post.excerpt,
+    description: post.schemaDescription || post.metaDescription || post.excerpt,
     ...(post.image ? { image: [absoluteUrl(post.image)] } : {}),
     author,
     publisher: organisationRef,
@@ -236,6 +236,11 @@ export function blogPostingSchema(post) {
     articleSection: post.articleSection || post.category,
     ...(post.about?.length
       ? { about: post.about.map(({ type, name }) => ({ '@type': type, name })) }
+      : {}),
+    ...(post.mentions?.length
+      ? { mentions: post.mentions.map(({ type, name, url: entityUrl }) => ({
+        '@type': type, name, ...(entityUrl ? { url: entityUrl } : {}),
+      })) }
       : {}),
     // The briefs ask for Speakable on the answer block and the introduction.
     // These are the classes both renderers actually give them (the "In short"

@@ -38,7 +38,7 @@ export default {
     "Plots near IIT Indore are gaining attention because Simrol combines the presence of IIT Indore's established 501-acre campus with the Khandwa Road corridor and emerging residential development. IIT Greens Simrol, featured by Icon Realty, is positioned on the Indore–Khandwa Highway within the education corridor. Buyers should evaluate location, road access, project approvals, RERA details, plot dimensions, infrastructure, title documents and total acquisition cost before purchasing.",
 
   datePublished: '2026-10-09',
-  dateModified: '2026-10-09',
+  dateModified: '2026-11-19',
 
   image: '/images/iit-greens/render-9.jpg',
   imageAlt:
@@ -84,7 +84,9 @@ export default {
       text: [
         'One project positioned in this micro-market is ',
         { text: 'IIT Greens Simrol', to: '/projects/iit-greens' },
-        ', which Icon Realty features among its residential plotted developments in Indore. Icon Realty describes IIT Greens as being in Simrol on the Indore–Khandwa Highway and identifies it as part of the education corridor.',
+        ", which ",
+        { text: "Icon Realty", to: "/" },
+        " features among its residential plotted developments in Indore. Icon Realty describes IIT Greens as being in Simrol on the Indore–Khandwa Highway and identifies it as part of the education corridor.",
       ],
     },
 
@@ -339,6 +341,7 @@ export default {
       ],
     },
     { type: 'h3', text: 'Verify RERA Details' },
+    { type: 'h4', text: 'Verify the Registration With the State Authority' },
     {
       type: 'p',
       text: 'If the project is RERA registered, check the registration number and project information through the relevant state RERA authority. Available third-party listings currently associate IIT Greens with RERA number P-OTH-25-5912.',
@@ -454,6 +457,14 @@ export default {
     {
       type: 'p',
       text: 'If your objective is to build a future home or evaluate land as a long-term asset, compare the location, documentation, infrastructure and total cost carefully rather than making a decision based on proximity alone.',
+    },
+    {
+      type: 'p',
+      text: [
+        'For project details and ',
+        { text: 'residential plot site visits', to: '/contact' },
+        ', contact the Icon Realty team.',
+      ],
     },
   ],
 

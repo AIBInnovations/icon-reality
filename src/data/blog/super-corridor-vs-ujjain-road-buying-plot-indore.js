@@ -29,7 +29,7 @@ export default {
     "Neither location is universally better for every buyer. Super Corridor is particularly relevant for buyers who prioritise planned infrastructure, airport access, employment hubs and currently operational metro connectivity. Ujjain Road is relevant for buyers looking at the Indore–Ujjain growth corridor, larger regional connectivity and longer-term infrastructure development. For building a home, buyers should compare the exact plot's road access, surrounding development, approved layout, land use, utilities and daily connectivity rather than choosing an entire corridor based only on future appreciation.",
 
   datePublished: '2026-09-16',
-  dateModified: '2026-09-29',
+  dateModified: '2026-11-19',
 
   image: '/images/labham-city/photo-7.jpg',
   imageAlt:
@@ -156,7 +156,8 @@ export default {
     {
       type: 'p',
       text: [
-        "Icon Realty's current portfolio also reflects the importance of the corridor. Its website lists ",
+        { text: "Icon Realty", to: "/" },
+        "'s current portfolio also reflects the importance of the corridor. Its website lists ",
         { text: 'Labham City on Super Corridor', to: '/projects/labham-city' },
         ' among its current developments and identifies Super Corridor as one of the corridors where the company has focused its plotted-development activity.',
       ],
@@ -401,7 +402,9 @@ export default {
       text: [
         'Before you ',
         { text: 'buy a residential property in Indore', b: true },
-        ', visit the site, verify the documents, compare the approved layout with the actual site and independently assess the surrounding infrastructure.',
+        ", ",
+        { text: "visit the site", to: "/contact" },
+        ", verify the documents, compare the approved layout with the actual site and independently assess the surrounding infrastructure.",
       ],
     },
     {

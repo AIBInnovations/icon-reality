@@ -11,7 +11,7 @@ export default {
   answer:
     "A gated plotted development is a planned residential layout where individual plots are located within a defined, access-controlled community with features such as internal roads, open spaces, infrastructure and security. An open plot is generally an individual parcel without the same community-level planning or controlled-access environment. For buyers who value security, organised development, community living and lifestyle infrastructure, a gated plotted development can offer advantages over an open plot. However, the right choice depends on budget, location, documentation, development status and the buyer's long-term goals.",
   datePublished: '2026-08-24',
-  dateModified: '2026-08-24',
+  dateModified: '2026-11-19',
   image: '/images/eden-garden/eden-1.jpg',
   imageAlt:
     'The gated entrance to Eden Garden in Ambamoliya, its name lit between tall stone columns with landscaped planting either side of the approach road.',
@@ -54,7 +54,9 @@ export default {
       text: [
         'For buyers researching ',
         { text: 'residential plots in Indore', to: '/projects' },
-        ", understanding this difference is particularly important. Icon Realty's portfolio, for example, includes plotted and community-focused developments across locations such as Ambamoliya, Simrol, Manglia and the Indore–Nagpur Highway. Its Oscar Palace project specifically highlights wide planned roads, green and open spaces and a secure, gated community.",
+        ", understanding this difference is particularly important. ",
+        { text: "Icon Realty", to: "/" },
+        "'s portfolio, for example, includes plotted and community-focused developments across locations such as Ambamoliya, Simrol, Manglia and the Indore–Nagpur Highway. Its Oscar Palace project specifically highlights wide planned roads, green and open spaces and a secure, gated community.",
       ],
     },
     { type: 'p', text: "Let's understand how the two options compare." },
@@ -170,7 +172,10 @@ export default {
     },
     {
       type: 'p',
-      text: 'Icon Realty describes its Oscar Palace development as featuring wide planned roads and green and open spaces, alongside a secure gated community.',
+      text: [
+        { text: "Icon Realty", to: "/about" },
+        " describes its Oscar Palace development as featuring wide planned roads and green and open spaces, alongside a secure gated community.",
+      ],
     },
     {
       type: 'figure',

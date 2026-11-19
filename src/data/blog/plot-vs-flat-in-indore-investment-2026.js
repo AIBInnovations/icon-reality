@@ -26,7 +26,7 @@ export default {
     'There is no universal answer. A plot may suit buyers who prioritise land ownership, construction flexibility and long-term use, while a flat may suit buyers who want immediate occupancy, rental potential and a managed residential community. The right choice depends on budget, investment horizon, income requirements, construction plans, maintenance preferences and location. Buyers should compare the total acquisition cost, legal documentation, development quality, recurring expenses and intended use before investing.',
 
   datePublished: '2026-09-16',
-  dateModified: '2026-09-29',
+  dateModified: '2026-11-19',
 
   image: '/images/oscar/park/park-1.jpg',
   imageAlt:
@@ -123,7 +123,9 @@ export default {
       text: [
         'For buyers considering ',
         { text: 'luxury homes in Indore', b: true },
-        ' or personalised residences, a residential plot can provide more freedom than purchasing a pre-designed apartment.',
+        " or personalised residences, a ",
+        { text: "residential plot", to: "/projects/oscar-palace" },
+        " can provide more freedom than purchasing a pre-designed apartment.",
       ],
     },
 
@@ -156,7 +158,9 @@ export default {
       type: 'p',
       text: [
         { text: "Icon Realty's current portfolio", to: '/projects' },
-        ' reflects this plotted-development approach, with residential communities across locations such as Manglia, Ambamoliya, Bicholi Mardana, Super Corridor and the Indore–Nagpur Highway.',
+        " reflects this plotted-development approach, with ",
+        { text: "residential communities", to: "/" },
+        " across locations such as Manglia, Ambamoliya, Bicholi Mardana, Super Corridor and the Indore–Nagpur Highway.",
       ],
     },
     {
@@ -314,7 +318,8 @@ export default {
     {
       type: 'p',
       text: [
-        "Icon Realty's own ",
+        { text: "Icon Realty", to: "/about" },
+        "'s own ",
         {
           text: 'buyer-focused resources',
           to: '/blog/what-to-check-before-buying-residential-plot-in-indore',
@@ -353,6 +358,14 @@ export default {
         ' Ask ',
         { text: '"Which property fits my financial and lifestyle goals better?"', b: true },
         ' That is the more useful starting point for a 2026 property decision.',
+      ],
+    },
+    {
+      type: 'p',
+      text: [
+        'For project details and ',
+        { text: 'residential plot site visits', to: '/contact' },
+        ', contact the Icon Realty team.',
       ],
     },
   ],

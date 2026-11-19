@@ -11,6 +11,16 @@
 // Every slug is the one the post's SEO brief wrote its schema against, so the
 // brief's mainEntityOfPage URL and the live URL differ only by the /blog prefix.
 export const POST_SLUGS = [
+  'iit-greens-indore-residential-plots-near-iit-indore',
+  'is-simrol-a-good-place-to-buy-property-in-indore',
+  'property-on-indore-khandwa-highway',
+  'living-near-iit-indore-education-corridor',
+  'residential-plots-in-manglia-indore-buyers-investors-guide',
+  'plots-for-sale-in-manglia-indore-buyers-checklist',
+  'which-plot-size-is-right-for-your-home',
+  'plot-vs-flat-in-indore-flexibility',
+  'green-residential-communities-in-indore',
+  'residential-plots-in-ambamoliya-indore',
   'residential-plots-in-simrol-indore',
   'plots-near-iit-indore-simrol',
   'siddhayatan-indore-premium-residential-plots-manglia',
